@@ -1,17 +1,134 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-display: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
+:root {
+  color-scheme: light;
+  --bg-page: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-alt: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-muted: #f1f5f9;
+  --bg-hover: #f8fafc;
+  --bg-input: #f8fafc;
+  --bg-header: rgba(255, 255, 255, 0.9);
+  --bg-header-scrolled: rgba(255, 255, 255, 0.96);
+  --bg-obsidian: #020617;
+  --bg-obsidian-card: rgba(15, 23, 42, 0.65);
+
+  --border-subtle: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --border-divider: #f1f5f9;
+
+  --text-heading: #020617;
+  --text-primary: #0f172a;
+  --text-body: #334155;
+  --text-muted: #526071;
+  --text-accent: #0369a1;
+  --text-accent-hover: #0c4a6e;
+  --text-success: #047857;
+  --text-error: #b91c1c;
+
+  --btn-primary-bg: #020617;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover-bg: #0369a1;
+
+  --grid-line: rgba(15, 23, 42, 0.035);
+  --grid-line-obsidian: rgba(148, 163, 184, 0.07);
+  --progress-bar: #0369a1;
+  --selection-bg: #0369a1;
+  --selection-text: #ffffff;
+}
+
+:root.dark {
+  color-scheme: dark;
+  --bg-page: #060a13;
+  --bg-surface: #0b1120;
+  --bg-surface-alt: #080d19;
+  --bg-card: #11192c;
+  --bg-muted: #182338;
+  --bg-hover: #1a2640;
+  --bg-input: #0e1628;
+  --bg-header: rgba(11, 17, 32, 0.88);
+  --bg-header-scrolled: rgba(11, 17, 32, 0.96);
+  --bg-obsidian: #04070f;
+  --bg-obsidian-card: rgba(17, 25, 44, 0.8);
+
+  --border-subtle: #1e293b;
+  --border-strong: #334155;
+  --border-divider: #172033;
+
+  --text-heading: #f8fafc;
+  --text-primary: #e2e8f0;
+  --text-body: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-accent: #38bdf8;
+  --text-accent-hover: #7dd3fc;
+  --text-success: #34d399;
+  --text-error: #f87171;
+
+  --btn-primary-bg: #0284c7;
+  --btn-primary-text: #ffffff;
+  --btn-primary-hover-bg: #0ea5e9;
+
+  --grid-line: rgba(148, 163, 184, 0.065);
+  --grid-line-obsidian: rgba(148, 163, 184, 0.07);
+  --progress-bar: #38bdf8;
+  --selection-bg: #0284c7;
+  --selection-text: #ffffff;
+}
+
 @layer base {
+  html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+  }
+
   body {
     font-family: var(--font-sans);
+    line-height: 1.65;
+    background-color: var(--bg-page);
+    color: var(--text-primary);
+    transition: background-color 220ms ease, color 220ms ease;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
 
   h1, h2, h3, h4 {
     font-family: var(--font-display);
+    text-wrap: balance;
+    letter-spacing: -0.02em;
   }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background-color: var(--selection-bg);
+    color: var(--selection-text);
+  }
+}
+
+.bg-architectural-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.bg-obsidian-grid {
+  background-image:
+    linear-gradient(to right, var(--grid-line-obsidian) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-obsidian) 1px, transparent 1px);
+  background-size: 48px 48px;
 }

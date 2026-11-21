@@ -9,6 +9,7 @@ export interface ServiceLandingDetail {
   startingPriceGbp: string;
   typicalTimeline: string;
   ukStandard: string;
+  buildStack: string[];
   idealFor: string[];
   deliverables: Array<{ title: string; detail: string }>;
   processSteps: Array<{ step: string; title: string; detail: string }>;
@@ -29,6 +30,7 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     startingPriceGbp: 'From £1,450',
     typicalTimeline: '2 – 4 weeks',
     ukStandard: 'UK GDPR · WCAG AA · < 1.2s LCP',
+    buildStack: ['TypeScript', 'React / Next.js', 'PHP 8.4', 'WordPress Gutenberg', 'Tailwind CSS', 'Cloudflare CDN'],
     idealFor: [
       'UK service businesses replacing an outdated or slow website',
       'Companies rebuilding a lost or broken .co.uk site from scratch',
@@ -77,9 +79,9 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
       },
       {
         step: '03.',
-        title: 'Zero-Downtime Launch',
+        title: 'Zero-Downtime Release',
         detail:
-          'DNS cutover, SSL verification, Search Console submission, and team handover training.',
+          'Controlled DNS cut-over, SSL verification, Search Console submission, and executive team training.',
       },
     ],
     faqs: [
@@ -117,6 +119,7 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     startingPriceGbp: 'From £2,400',
     typicalTimeline: '3 – 6 weeks',
     ukStandard: 'GBP & UK VAT · PCI-DSS · < 1.2s LCP',
+    buildStack: ['WooCommerce HPOS', 'PHP 8.4', 'TypeScript', 'MySQL 8', 'Stripe / Apple Pay', 'Royal Mail / DPD API'],
     idealFor: [
       'UK retail brands outgrowing slow, template-heavy WooCommerce stores',
       'B2B and wholesale suppliers needing trade pricing or VAT invoicing',
@@ -205,6 +208,7 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     startingPriceGbp: 'From £1,800',
     typicalTimeline: '2 – 6 weeks',
     ukStandard: 'REST / GraphQL · UK GDPR · TypeScript / PHP',
+    buildStack: ['TypeScript 5', 'Node.js / FastAPI', 'PostgreSQL', 'PHP 8.4', 'Xero & HubSpot API', 'GitHub Actions CI'],
     idealFor: [
       'Businesses stitching together spreadsheets and disconnected SaaS tools',
       'Agencies or clinics needing custom booking, quote, or client portals',
@@ -287,12 +291,13 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     name: 'AI-Powered Website Development',
     pillarTitle: '01. Web, E-commerce & Custom Engineering',
     pillarCategory: 'web',
-    heroHeadline: 'Practical AI-powered website features that qualify leads and help buyers.',
+    heroHeadline: 'Bespoke AI-powered website capabilities that qualify commercial demand.',
     heroSummary:
-      'Move beyond generic pop-up chatbots. We build grounded site search, interactive diagnostics, and intelligent quote builders that genuinely assist UK visitors and increase conversions.',
+      'Move beyond generic dialogue widgets. We engineer grounded knowledge search, interactive diagnostics, and structured quotation tools that genuinely serve UK decision-makers.',
     startingPriceGbp: 'From £1,950',
     typicalTimeline: '2 – 5 weeks',
     ukStandard: 'Grounded Data · UK GDPR Safe · Server-Side Keys',
+    buildStack: ['TypeScript', 'Python FastAPI', 'Gemini / OpenAI API', 'React 19', 'PostgreSQL pgvector', 'Server-Side Proxy'],
     idealFor: [
       'Service firms with complex offerings wanting guided visitor recommendations',
       'Content-rich sites needing semantic natural-language search',
@@ -381,11 +386,12 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     startingPriceGbp: 'From £950',
     typicalTimeline: '2 – 3 weeks',
     ukStandard: 'Vector Assets · WCAG Contrast · Brand Guidelines',
+    buildStack: ['Figma Design System', 'SVG Vector Suite', 'Tailwind Tokens', 'WCAG AA Contrast', 'OpenGraph Cards'],
     idealFor: [
-      'New UK startups and agencies launching a flagship domain',
-      'Established businesses rebranding after a merger or site rebuild',
-      'Companies whose current logo and website look inconsistent across channels',
-      'Teams needing ready-to-use design tokens for web and social media',
+      'Ambitious UK start-ups and consultancies establishing a flagship digital presence',
+      'Established organisations commissioning a rebrand following growth or acquisition',
+      'Firms whose visual identity lacks consistency across web, print, and investor materials',
+      'Product teams requiring tokenised design systems ready for engineering',
     ],
     deliverables: [
       {
@@ -396,49 +402,49 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
       {
         title: 'Typography & Colour System',
         detail:
-          'Web-safe font pairings and WCAG AA-verified colour palettes tailored to your industry.',
+          'Licensed font pairings and WCAG AA-verified colour palettes tailored to your UK sector.',
       },
       {
         title: 'Digital Brand Guidelines',
         detail:
-          'Clear usage documentation covering spacing, tone of voice, imagery style, and iconography.',
+          'Comprehensive governance documentation covering spacing, editorial tone, photography, and iconography.',
       },
       {
-        title: 'Social & Document Templates',
+        title: 'Social & Proposal Templates',
         detail:
-          'Cohesive OpenGraph share cards, LinkedIn banners, and proposal header assets.',
+          'Cohesive OpenGraph share cards, LinkedIn banners, and executive tender assets.',
       },
       {
-        title: 'Direct Web Design Integration',
+        title: 'Direct Engineering Integration',
         detail:
-          'Brand tokens delivered ready for immediate CSS/Tailwind or WordPress theme implementation.',
+          'Brand tokens delivered ready for immediate Tailwind CSS or custom WordPress implementation.',
       },
     ],
     processSteps: [
       {
         step: '01.',
-        title: 'Positioning & Competitor Audit',
+        title: 'Positioning & Peer Benchmarking',
         detail:
-          'We review UK sector peers to ensure your visual identity stands apart clearly.',
+          'We audit comparable UK sector leaders to ensure your identity commands clear differentiation.',
       },
       {
         step: '02.',
         title: 'Concept Direction & Refinement',
         detail:
-          'Focused identity directions refined around typography, restraint, and real-world legibility.',
+          'Disciplined identity routes refined around typographic authority, restraint, and legibility.',
       },
       {
         step: '03.',
-        title: 'Final Asset Kit Handover',
+        title: 'Complete Identity Suite Handover',
         detail:
-          'Complete vector, web, and guideline package ready for launch.',
+          'Full vector, web token, and governance documentation prepared for deployment.',
       },
     ],
     faqs: [
       {
-        question: 'Can you refresh our brand and build the new website together?',
+        question: 'Can you commission our brand refresh alongside the website engineering?',
         answer:
-          'Yes—combining Branding and Website Development avoids disconnect between designers and engineers and speeds up launch by 2–3 weeks.',
+          'Yes—integrating Branding and Website Development under one studio eliminates hand-off friction and compresses time to launch by 2–3 weeks.',
       },
       {
         question: 'What file formats do we receive?',
@@ -463,43 +469,44 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     name: 'Search Engine Optimisation (SEO)',
     pillarTitle: '02. SEO, GEO & AI Search Visibility',
     pillarCategory: 'visibility',
-    heroHeadline: 'Technical & UK local SEO built to compound qualified organic enquiries.',
+    heroHeadline: 'Technical & regional UK SEO engineered to compound qualified organic pipeline.',
     heroSummary:
-      'No vanity traffic or risky link schemes. We fix crawl architecture, Core Web Vitals, UK local signals, and high-intent commercial pages that bring UK buyers directly to your site.',
+      'Without vanity metrics or artificial link schemes. We resolve crawl architecture, Core Web Vitals, UK regional signals, and high-intent commercial pages.',
     startingPriceGbp: 'From £650 / mo',
     typicalTimeline: 'Ongoing · 30-day audit sprint',
     ukStandard: 'Google UK · Core Web Vitals · Schema.org',
+    buildStack: ['Schema.org JSON-LD', 'Google Search Console', 'Core Web Vitals', 'Server 301 Rules', 'XML Sitemaps', 'hreflang en-GB'],
     idealFor: [
-      'UK businesses recovering rankings after a lost or redesigned .co.uk website',
-      'Service firms competing across London, Manchester, Birmingham, or UK-wide searches',
-      'E-commerce sites with unindexed product categories or duplicate URLs',
-      'Companies tired of generic SEO reports with zero commercial lead growth',
+      'UK organisations recovering search equity after a disrupted .co.uk migration',
+      'Practices competing across London, Manchester, Birmingham, or nationwide UK terms',
+      'E-commerce catalogues suffering from unindexed categories or duplicate URLs',
+      'Leadership teams requiring commercially accountable reporting over vanity traffic',
     ],
     deliverables: [
       {
-        title: 'Full Technical & Crawl Audit',
+        title: 'Comprehensive Technical & Crawl Audit',
         detail:
-          'Fixing 404s, redirect chains, canonical tags, XML sitemaps, and index bloat in Search Console.',
+          'Resolving 404 errors, redirect chains, canonical conflicts, XML sitemaps, and index bloat.',
       },
       {
-        title: 'UK Local & Regional Architecture',
+        title: 'UK Regional & Jurisdiction Architecture',
         detail:
-          'en-GB hreflang, LocalBusiness JSON-LD, and location-specific service pages built without spam.',
+          'en-GB hreflang, LocalBusiness JSON-LD, and regional landing pages engineered without doorway spam.',
       },
       {
-        title: 'Commercial Keyword & Page Mapping',
+        title: 'Commercial Intent Page Mapping',
         detail:
-          'Mapping high-intent UK search terms directly to dedicated service and landing pages.',
+          'Aligning high-value UK search terms directly with dedicated practice and specification pages.',
       },
       {
         title: 'Core Web Vitals Engineering',
         detail:
-          'Hands-on developer fixes for LCP, INP, and CLS rather than handing you a PDF checklist.',
+          'Direct engineering fixes for LCP, INP, and CLS rather than delegating a theoretical checklist.',
       },
       {
-        title: 'Monthly Outcome Reporting',
+        title: 'Executive Outcome Reporting',
         detail:
-          'Transparent tracking of qualified UK impressions, rankings, and enquiry conversions.',
+          'Transparent monthly attribution covering UK organic visibility, rankings, and qualified enquiries.',
       },
     ],
     processSteps: [
@@ -507,36 +514,36 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
         step: '01.',
         title: 'Technical & Search Console Audit',
         detail:
-          'Identify indexing blockers, cannibalisation, and quick-win UK ranking opportunities.',
+          'Identify indexing blockers, keyword cannibalisation, and high-impact UK ranking gains.',
       },
       {
         step: '02.',
-        title: 'On-Page & Schema Implementation',
+        title: 'On-Page & Schema Deployment',
         detail:
-          'We directly update headings, internal links, 301 maps, and JSON-LD structured data.',
+          'Our engineers directly deploy semantic headings, internal linking, 301 maps, and JSON-LD.',
       },
       {
         step: '03.',
-        title: 'Authority & Content Expansion',
+        title: 'Authority & Briefing Expansion',
         detail:
-          'Monthly expansion of high-intent UK service guides and conversion tracking.',
+          'Iterative expansion of commercial UK practice guides paired with conversion attribution.',
       },
     ],
     faqs: [
       {
-        question: 'Can you recover rankings if we lost our old .co.uk website?',
+        question: 'Can you recover rankings if we lost our previous .co.uk website?',
         answer:
-          'Yes. We inspect Google Search Console and Wayback Machine archives to recreate high-performing slugs and set up server-level 301 redirects.',
+          'Yes. We inspect Google Search Console and archival snapshots to restore high-performing slugs and deploy server-level 301 redirects.',
       },
       {
-        question: 'Do you implement the technical fixes yourselves?',
+        question: 'Do you implement technical fixes in-house?',
         answer:
-          'Yes. Unlike non-technical SEO agencies, our engineers directly implement Schema, speed improvements, and redirect rules.',
+          'Yes. Unlike advisory-only SEO agencies, our senior engineers deploy Schema markup, speed tuning, and server redirect rules directly.',
       },
       {
-        question: 'How long before UK SEO improvements show measurable results?',
+        question: 'What timeframe is realistic for measurable UK SEO progress?',
         answer:
-          'Technical crawl and speed gains often reflect within 2–4 weeks, while competitive UK commercial keyword growth compounds over 3–6 months.',
+          'Technical crawl and latency gains typically register within 2–4 weeks, whilst competitive commercial keyword authority compounds over 3–6 months.',
       },
     ],
     relatedSlugs: [
@@ -557,6 +564,7 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     startingPriceGbp: 'From £750 / mo',
     typicalTimeline: '2 – 4 week initial sprint',
     ukStandard: 'Entity Graph · JSON-LD · Citation-Ready Copy',
+    buildStack: ['Entity JSON-LD', 'Semantic HTML5', 'Pre-Rendered SSR', 'FAQPage Schema', 'OfferCatalog', 'Citation Benchmarking'],
     idealFor: [
       'UK B2B and professional service brands losing clicks to Google AI Overviews',
       'Agencies and SaaS teams wanting authoritative entity recognition',
@@ -645,6 +653,7 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     startingPriceGbp: 'From £750',
     typicalTimeline: '2 – 3 weeks setup',
     ukStandard: '/llms.txt · OAI-SearchBot · ClaudeBot · Gemini',
+    buildStack: ['/llms.txt Standard', 'robots.txt AI Rules', 'OAI-SearchBot', 'ClaudeBot & Gemini', 'Canonical Routing', 'Prompt QA'],
     idealFor: [
       'UK firms wanting inbound leads from ChatGPT Search, Perplexity, and Gemini',
       'Companies whose brand is currently omitted or misdescribed by AI assistants',
@@ -727,43 +736,44 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     name: 'Digital Marketing and Online Growth',
     pillarTitle: '04. Branding & Digital Growth',
     pillarCategory: 'brand',
-    heroHeadline: 'Measurable digital marketing focused on UK enquiries, not vanity clicks.',
+    heroHeadline: 'Commercially accountable digital growth focused on UK pipeline.',
     heroSummary:
-      'We pair high-converting landing pages with targeted search, content, and conversion rate optimisation so every pound of marketing spend produces trackable UK pipeline.',
+      'We pair high-velocity landing architecture with targeted search and conversion optimisation so every pound invested delivers trackable UK pipeline.',
     startingPriceGbp: 'From £700 / mo',
     typicalTimeline: 'Monthly growth sprints',
     ukStandard: 'UK GDPR Tracking · GA4 · Conversion Focus',
+    buildStack: ['React Landing Funnels', 'GA4 Consent Mode', 'UK PECR Compliance', 'CRM Attribution', 'A/B Speed Tests'],
     idealFor: [
-      'UK businesses launching a new website that needs immediate qualified enquiries',
-      'Companies getting traffic that fails to convert into phone calls or bookings',
-      'B2B and local UK brands expanding into new regional cities',
-      'Store owners looking to raise average order value and repeat purchases',
+      'UK organisations launching a flagship platform requiring immediate commercial pipeline',
+      'Practices generating traffic that underperforms on consultation bookings',
+      'B2B and regional firms expanding across London, Manchester, Edinburgh, or UK-wide',
+      'Retailers seeking higher average order value and repeat client retention',
     ],
     deliverables: [
       {
-        title: 'Dedicated Campaign Landing Pages',
+        title: 'Dedicated Campaign Architecture',
         detail:
-          'Fast, focused conversion pages matched cleanly to search intent and ad copy.',
+          'High-speed conversion pages engineered cleanly around commercial search intent.',
       },
       {
         title: 'Conversion Rate Optimisation (CRO)',
         detail:
-          'Form friction audits, clear GBP pricing presentation, and trust-signal placement.',
+          'Form friction audits, transparent GBP fee structure, and strategic proof placement.',
       },
       {
-        title: 'Privacy-Safe UK Analytics',
+        title: 'PECR-Compliant Attribution',
         detail:
-          'Server-side or consent-mode GA4 conversion tracking aligned with UK PECR rules.',
+          'Consent-mode GA4 and server-side conversion tracking aligned with UK ICO guidance.',
       },
       {
-        title: 'Email & Lead Nurture Flows',
+        title: 'Structured Follow-Up Workflows',
         detail:
-          'Automated welcome sequences and follow-up workflows that turn enquiries into booked calls.',
+          'Automated acknowledgement and lead nurturing flows that convert enquiries into consultations.',
       },
       {
-        title: 'Clear ROI Reporting',
+        title: 'Executive ROI Reporting',
         detail:
-          'Plain-English monthly breakdowns of cost per enquiry, conversion rate, and channel attribution.',
+          'Clear monthly reporting covering cost per enquiry, conversion rate, and channel attribution.',
       },
     ],
     processSteps: [
@@ -771,36 +781,36 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
         step: '01.',
         title: 'Funnel & Conversion Audit',
         detail:
-          'Identify where UK prospects drop off between landing on your site and booking a call.',
+          'Identify where UK prospects disengage between initial arrival and booking a consultation.',
       },
       {
         step: '02.',
-        title: 'Landing Page & Tracking Setup',
+        title: 'Landing Page & Attribution Setup',
         detail:
-          'Launch focused campaign pages with clean goal tracking and CRM integration.',
+          'Release dedicated campaign pages with clean goal tracking and CRM integration.',
       },
       {
         step: '03.',
         title: 'Iterative Testing & Scaling',
         detail:
-          'Monthly headline, offer, and channel optimisation based on real enquiry quality.',
+          'Monthly proposition, offer, and channel refinement guided by verified enquiry quality.',
       },
     ],
     faqs: [
       {
-        question: 'Do you work on fixed monthly retainers without lock-in?',
+        question: 'Do you operate on rolling monthly retainers without lock-in?',
         answer:
-          'Yes. Our digital growth retainers run on transparent rolling monthly terms with clear deliverables.',
+          'Yes. Our growth programmes operate on transparent rolling monthly terms with clearly defined deliverables.',
       },
       {
-        question: 'Do you build the landing pages as well as run the campaigns?',
+        question: 'Do your engineers build the campaign landing pages directly?',
         answer:
-          'Yes—because we are engineers as well as marketers, we build and A/B test fast landing pages directly without waiting on external developers.',
+          'Yes—because our strategists work alongside senior engineers, we build and A/B test landing pages in-house without external bottlenecks.',
       },
       {
-        question: 'Is analytics tracking compliant with UK cookie rules?',
+        question: 'Is analytics tracking compliant with UK cookie legislation?',
         answer:
-          'Yes. We configure consent-aware tracking and clean server-side attribution aligned with UK ICO guidance.',
+          'Yes. We deploy consent-aware tracking and server-side attribution aligned with UK GDPR and ICO PECR standards.',
       },
     ],
     relatedSlugs: [
@@ -815,70 +825,71 @@ export const SERVICE_LANDING_PAGES: ServiceLandingDetail[] = [
     name: 'AI Automation and Business Process Automation',
     pillarTitle: '03. AI Automation & Business Operations',
     pillarCategory: 'automation',
-    heroHeadline: 'AI & business process automation that saves UK teams hours every week.',
+    heroHeadline: 'AI & business process automation that reclaims hours across UK operations.',
     heroSummary:
-      'Connect your website enquiries, emails, CRM, and accounting tools with dependable automated workflows—cutting manual copy-pasting while keeping human oversight and UK GDPR compliance.',
+      'Unite website enquiries, correspondence, CRM records, and accounting systems with auditable workflows—eliminating manual data entry whilst preserving human governance and UK GDPR compliance.',
     startingPriceGbp: 'From £1,250',
     typicalTimeline: '1 – 3 weeks',
     ukStandard: 'UK GDPR Safe · Human-in-Loop · Full Audit Logs',
+    buildStack: ['Node.js / TypeScript', 'Python FastAPI', 'n8n & Make', 'Signed Webhooks', 'HubSpot & Xero API', 'Zero-Retention LLM'],
     idealFor: [
-      'UK teams manually copying website form leads into spreadsheets or CRMs',
-      'Businesses spending hours drafting repetitive quotes, triage emails, or briefs',
-      'E-commerce stores automating order exceptions, stock alerts, and invoicing',
-      'Growing agencies wanting reliable background operations without extra headcount',
+      'UK teams manually re-keying website enquiries into spreadsheets or CRMs',
+      'Practices spending hours drafting repetitive proposals, triage notes, or briefs',
+      'E-commerce operations automating order exceptions, stock alerts, and Xero invoicing',
+      'Consultancies scaling operational throughput without proportional headcount growth',
     ],
     deliverables: [
       {
         title: 'Intelligent Enquiry Triage & Routing',
         detail:
-          'Automatically classify incoming leads, enrich company details, and route urgent requests to the right person.',
+          'Automatically classify inbound enquiries, enrich corporate details, and route priority matters to the appropriate partner.',
       },
       {
-        title: 'CRM, Email & Accounting Sync',
+        title: 'CRM, Email & Accounting Synchronisation',
         detail:
-          'Seamless workflows connecting your website, Gmail/Outlook, Slack/Teams, HubSpot, and Xero.',
+          'Dependable workflows uniting your website, Microsoft 365/Google Workspace, Slack/Teams, HubSpot, and Xero.',
       },
       {
         title: 'Automated Proposal & Brief Drafting',
         detail:
-          'Turn structured client intake forms into ready-to-review project briefs and draft proposals.',
+          'Convert structured intake questionnaires into ready-to-review scoping briefs and draft proposals.',
       },
       {
-        title: 'Error Alerts & Human Approval Gates',
+        title: 'Exception Alerts & Human Approval Gates',
         detail:
-          'Every external client communication or financial action includes optional one-click human sign-off.',
+          'Every external client communication or financial dispatch incorporates optional partner sign-off.',
       },
       {
         title: 'Privacy & Data Minimisation',
         detail:
-          'Encrypted credentials, UK/EEA processing options, and zero training on your private business data.',
+          'Encrypted credentials, UK/EEA processing guarantees, and zero model training on proprietary business records.',
       },
     ],
     processSteps: [
       {
         step: '01.',
-        title: 'Workflow Bottleneck Mapping',
+        title: 'Operational Bottleneck Mapping',
         detail:
-          'We shadow your current manual steps to identify tasks with the highest weekly time savings.',
+          'We shadow your existing workflows to pinpoint processes with the highest weekly time recovery.',
       },
       {
         step: '02.',
         title: 'Build, Guardrails & Sandbox Run',
         detail:
-          'Automations are engineered with strict validation, fallback notifications, and dry-run testing.',
+          'Automations are engineered with strict schema validation, fallback notifications, and dry-run verification.',
       },
       {
         step: '03.',
-        title: 'Live Rollout & Team Handover',
+        title: 'Controlled Roll-Out & Handover',
         detail:
-          'Full deployment with monitoring dashboards and simple documentation for your staff.',
+          'Live deployment with health monitoring and concise documentation for your internal team.',
       },
     ],
     faqs: [
       {
-        question: 'Which automation tools and APIs do you build with?',
+        question: 'Which automation frameworks and APIs do you engineer with?',
         answer:
-          'We engineer custom Node.js/TypeScript services as well as Make, n8n, Zapier, and direct REST webhooks depending on volume, privacy, and cost.',
+          'We build bespoke Node.js and TypeScript microservices alongside Make, n8n, Zapier, and signed REST webhooks matched to your throughput and governance needs.',
       },
       {
         question: 'Will our confidential client data be used to train public AI models?',

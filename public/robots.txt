@@ -1,22 +1,55 @@
+# WPCarePoint UK — 2026–2027 Search Engine & AI Search Crawler Policy
+# Sitemap & AI Knowledge Index
+Sitemap: https://wpcarepoint.co.uk/sitemap.xml
+
 User-agent: *
 Allow: /
 
+# Google Search, Google AI Overviews, AI Mode & Gemini
 User-agent: Googlebot
 Allow: /
 
+User-agent: Google-Extended
+Allow: /
+
+# Microsoft Bing & Copilot
 User-agent: Bingbot
 Allow: /
 
+# OpenAI ChatGPT Search & Deep Research
 User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
 Allow: /
 
 User-agent: GPTBot
 Allow: /
 
+# Perplexity Search & Citation Engine
 User-agent: PerplexityBot
 Allow: /
 
+User-agent: Perplexity-User
+Allow: /
+
+# Anthropic Claude Search & Citations
 User-agent: ClaudeBot
 Allow: /
 
-Sitemap: https://wpcarepoint.co.uk/sitemap.xml
+User-agent: Claude-Web
+Allow: /
+
+# Apple Intelligence, Siri & Spotlight
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# DuckDuckGo & Amazon Assistants
+User-agent: DuckAssistBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /

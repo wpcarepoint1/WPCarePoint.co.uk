@@ -64,6 +64,39 @@ export interface UkFaqItem {
   answer: string;
 }
 
+export type TechDomainId =
+  | 'languages'
+  | 'frontend'
+  | 'ai-geo'
+  | 'cloud'
+  | 'commerce';
+
+export interface TechStackEntry {
+  name: string;
+  role: string;
+  rationale: string;
+}
+
+export interface TechStackDomain {
+  id: TechDomainId;
+  label: string;
+  summary: string;
+  entries: TechStackEntry[];
+}
+
+export interface UkSectorItem {
+  index: string;
+  sector: string;
+  standard: string;
+  outcome: string;
+}
+
+export interface ComplianceStandard {
+  code: string;
+  title: string;
+  detail: string;
+}
+
 export const HERO_STUDIO_IMAGE =
   '/src/assets/images/hero_agency_studio_1795213974094.jpg';
 export const SERVICE_ENGINEERING_IMAGE =
@@ -79,6 +112,227 @@ export const UK_REGIONS_SERVED = [
   'Edinburgh',
   'Bristol',
   'Leeds',
+];
+
+export const ENGINEERING_STACK_DOMAINS: TechStackDomain[] = [
+  {
+    id: 'languages',
+    label: 'Languages & Core',
+    summary:
+      'Strictly typed web languages and battle-tested server runtimes chosen for security, speed, and long-term UK team maintainability.',
+    entries: [
+      {
+        name: 'TypeScript 5 & JavaScript',
+        role: 'Primary Web & API Language',
+        rationale:
+          'Compile-time type safety across complex web apps, custom dashboards, and booking portals.',
+      },
+      {
+        name: 'PHP 8.4 (Strict WordPress)',
+        role: 'Enterprise CMS & Plugins',
+        rationale:
+          'Lean, composer-managed custom modules without bloated page-builder overhead.',
+      },
+      {
+        name: 'Python 3.12 (FastAPI)',
+        role: 'AI Pipelines & Automation',
+        rationale:
+          'Server-side LLM orchestration, document parsing, and UK GDPR–safe data routing.',
+      },
+      {
+        name: 'PostgreSQL & MySQL 8',
+        role: 'Relational Data & HPOS',
+        rationale:
+          'Indexed query tuning so high-volume WooCommerce catalogues and portals stay instant.',
+      },
+    ],
+  },
+  {
+    id: 'frontend',
+    label: 'Frontend & UX',
+    summary:
+      'Accessible, component-driven interfaces aligned with UK GDS / WCAG 2.2 AA standards and strict sub-1.2s Core Web Vitals.',
+    entries: [
+      {
+        name: 'React 19, Next.js & Vite',
+        role: 'Modern App & Static Architecture',
+        rationale:
+          'Edge-ready bundles and crisp UI state transitions with zero layout shift.',
+      },
+      {
+        name: 'WordPress Block Themes',
+        role: 'Custom Gutenberg Engineering',
+        rationale:
+          'Gives UK marketing teams effortless page editing with locked brand typography.',
+      },
+      {
+        name: 'Tailwind CSS v4 & Design Tokens',
+        role: 'Utility Design Systems',
+        rationale:
+          'Minimal CSS payloads, strict contrast ratios, and consistent component kits.',
+      },
+      {
+        name: 'Semantic HTML5 & WAI-ARIA',
+        role: 'WCAG 2.2 AA Compliance',
+        rationale:
+          'Full keyboard navigation, screen-reader landmarks, and accessible form validation.',
+      },
+    ],
+  },
+  {
+    id: 'ai-geo',
+    label: 'AI, GEO & Search',
+    summary:
+      'Structured entity graphs and grounded AI engineering that make your business citable inside Google UK, ChatGPT, Gemini, and Claude.',
+    entries: [
+      {
+        name: 'Schema.org JSON-LD Graphs',
+        role: 'Entity & Offer Markup',
+        rationale:
+          'Links your UK locations, GBP pricing, FAQs, and services cleanly for rich results.',
+      },
+      {
+        name: '/llms.txt & Crawler Control',
+        role: 'AI Search Readiness',
+        rationale:
+          'Dedicated directives for OAI-SearchBot, Googlebot, PerplexityBot, and ClaudeBot.',
+      },
+      {
+        name: 'Grounded RAG & Server Proxies',
+        role: 'Zero-Hallucination AI Tools',
+        rationale:
+          'Private API keys on the backend grounded strictly in your verified UK documentation.',
+      },
+      {
+        name: 'n8n, Make & Signed Webhooks',
+        role: 'Business Process Automation',
+        rationale:
+          'Connects forms, HubSpot/CRM, Slack, and Xero with human approval checkpoints.',
+      },
+    ],
+  },
+  {
+    id: 'cloud',
+    label: 'Cloud, Edge & CI/CD',
+    summary:
+      'UK/EEA-compliant hosting topology, automated CI/CD checks, and isolated staging pipelines that eliminate launch downtime.',
+    entries: [
+      {
+        name: 'Cloudflare Workers & Edge CDN',
+        role: 'Global Edge & WAF Security',
+        rationale:
+          'Anycast routing across London & UK edge nodes with DDoS and bot protection.',
+      },
+      {
+        name: 'GitHub Actions CI/CD',
+        role: 'Automated Build & Lint Gates',
+        rationale:
+          'Every update is compiled, type-checked, and deployed cleanly without manual FTP risk.',
+      },
+      {
+        name: '20i, Krystal UK & AWS London',
+        role: 'UK Data Residency (eu-west-2)',
+        rationale:
+          'Low-latency British hosting paired with encrypted daily off-site UK/EEA backups.',
+      },
+      {
+        name: 'Server 301 & DNS Governance',
+        role: 'Zero-Downtime Transitions',
+        rationale:
+          'Preserves historical Google UK equity and Nominet .co.uk DNS records throughout the cut-over.',
+      },
+    ],
+  },
+  {
+    id: 'commerce',
+    label: 'Commerce & APIs',
+    summary:
+      'Commercial integrations built around British currency, VAT rules, courier APIs, and finance stacks.',
+    entries: [
+      {
+        name: 'WooCommerce HPOS Architecture',
+        role: 'High-Volume UK Retail',
+        rationale:
+          'Custom order tables, instant AJAX filtering, and stripped-down mobile checkout flows.',
+      },
+      {
+        name: 'Stripe, Apple Pay & Klarna',
+        role: 'SCA / 3D Secure Payments',
+        rationale:
+          'Fast one-tap mobile payments tuned for UK banking and Strong Customer Authentication.',
+      },
+      {
+        name: 'Xero, QuickBooks UK & HubSpot',
+        role: 'CRM & Finance Sync',
+        rationale:
+          'Two-way invoice, customer, and lead attribution sync with retry queues.',
+      },
+      {
+        name: 'Royal Mail & DPD Shipping APIs',
+        role: 'Postcode & Dispatch Rules',
+        rationale:
+          'Live UK postcode lookup, tracked courier tiers, and standard/zero-rated VAT logic.',
+      },
+    ],
+  },
+];
+
+export const UK_SECTORS: UkSectorItem[] = [
+  {
+    index: '01.',
+    sector: 'Private Healthcare & Clinics',
+    standard: 'UK GDPR · Booking Portals · Local Schema',
+    outcome:
+      'High-trust clinic websites with compliant patient intake forms, Harley Street / regional SEO, and automated CRM appointment routing.',
+  },
+  {
+    index: '02.',
+    sector: 'UK Retail & WooCommerce',
+    standard: 'GBP & UK VAT · Royal Mail/DPD · < 1.2s LCP',
+    outcome:
+      'Fast mobile checkouts using WooCommerce HPOS, Stripe/Apple Pay, and rich Product JSON-LD engineered to convert UK 4G/5G shoppers.',
+  },
+  {
+    index: '03.',
+    sector: 'B2B, Legal & Financial Advisory',
+    standard: 'WCAG 2.2 AA · GEO Citations · Enquiry Triage',
+    outcome:
+      'Editorial authority sites structured for ChatGPT, Gemini, and Google UK visibility—capturing qualified commercial retainers directly.',
+  },
+  {
+    index: '04.',
+    sector: 'SaaS, Property & Multi-Site SMEs',
+    standard: 'TypeScript APIs · Xero/HubSpot · Automation',
+    outcome:
+      'Custom client portals, interactive pricing calculators, and workflow automations that eliminate manual spreadsheet admin.',
+  },
+];
+
+export const UK_COMPLIANCE_STANDARDS: ComplianceStandard[] = [
+  {
+    code: 'UK GDPR & PECR',
+    title: 'UK / EEA Data Sovereignty',
+    detail:
+      'Encrypted UK/EEA backup residency, granular ICO consent controls, and zero model training on client enquiry data.',
+  },
+  {
+    code: 'WCAG 2.2 Level AA',
+    title: 'Accessible Interface Standard',
+    detail:
+      'Keyboard-navigable menus, tested contrast ratios, and clean semantic landmarks modelled on top UK digital standards.',
+  },
+  {
+    code: 'OWASP Top-10 Hardening',
+    title: 'Application & Edge Security',
+    detail:
+      'Strict server-side API keys, parameterised SQL queries, Cloudflare WAF rules, and 24/7 malware & downtime triage.',
+  },
+  {
+    code: '< 1.2s Core Web Vitals',
+    title: 'Verified Performance Budget',
+    detail:
+      'Pre-rendered HTML for instant first paint, automated CI checks, and 301 migration protection on every .co.uk launch.',
+  },
 ];
 
 export const SERVICE_PILLARS: AgencyServicePillar[] = [
@@ -194,50 +448,50 @@ export const CARE_PLANS: CarePlan[] = [
   {
     id: 'essential',
     name: 'Essential Care',
-    audience: 'For brochure sites & UK small businesses',
+    audience: 'For corporate brochure sites & UK SMEs',
     monthlyPriceGbp: 59,
     annualMonthlyGbp: 49,
     summary:
-      'Reliable UK/EEA backups, tested updates, and continuous uptime protection for standard business websites.',
+      'Dependable UK/EEA backups, tested updates, and continuous availability monitoring for business websites.',
     limits: [
       { label: 'Off-Site Backups', value: 'Daily (30-day retention)' },
-      { label: 'Core & Plugin Updates', value: 'Weekly on staging' },
-      { label: 'Uptime Monitoring', value: '5-minute intervals' },
-      { label: 'Developer Support', value: '1 hour / month included' },
-      { label: 'Malware Cleanup', value: 'Priority discounted rate' },
+      { label: 'Core & Plugin Governance', value: 'Weekly on UK staging' },
+      { label: 'Availability Monitoring', value: '5-minute intervals' },
+      { label: 'Senior Engineering Time', value: '1 hour / month included' },
+      { label: 'Malware Remediation', value: 'Priority retainer rate' },
     ],
   },
   {
     id: 'growth',
     name: 'Growth & Speed',
-    audience: 'For scaling UK service companies',
+    audience: 'For scaling British service firms',
     monthlyPriceGbp: 119,
     annualMonthlyGbp: 99,
     highlighted: true,
     summary:
-      'Full performance engineering, unlimited emergency malware cleanup, and proactive monthly enhancements.',
+      'Comprehensive performance engineering, unlimited priority malware remediation, and proactive monthly enhancements.',
     limits: [
       { label: 'Off-Site Backups', value: 'Twice daily (60-day retention)' },
-      { label: 'Core & Plugin Updates', value: 'Weekly + visual check' },
-      { label: 'Uptime Monitoring', value: '1-minute intervals' },
-      { label: 'Developer Support', value: '3 hours / month included' },
-      { label: 'Malware Cleanup', value: 'Included at zero extra cost' },
+      { label: 'Core & Plugin Governance', value: 'Weekly + visual QA check' },
+      { label: 'Availability Monitoring', value: '1-minute intervals' },
+      { label: 'Senior Engineering Time', value: '3 hours / month included' },
+      { label: 'Malware Remediation', value: 'Included at zero surcharge' },
     ],
   },
   {
     id: 'scale',
     name: 'Scale & WooCommerce',
-    audience: 'For high-traffic UK stores & agencies',
+    audience: 'For high-volume UK stores & agencies',
     monthlyPriceGbp: 229,
     annualMonthlyGbp: 189,
     summary:
-      'Hourly database snapshots, checkout flow monitoring, and rapid 30-minute SLA response for revenue-critical stores.',
+      'Hourly database snapshots, checkout telemetry monitoring, and contractual 30-minute SLA response for revenue-critical commerce.',
     limits: [
       { label: 'Off-Site Backups', value: 'Hourly DB + daily files (90 days)' },
-      { label: 'Core & Plugin Updates', value: 'Bi-weekly + staging sign-off' },
-      { label: 'Uptime Monitoring', value: '30-second + checkout alerts' },
-      { label: 'Developer Support', value: '6 hours / month included' },
-      { label: 'Emergency SLA', value: 'Under 30 minutes response' },
+      { label: 'Core & Plugin Governance', value: 'Bi-weekly + staging sign-off' },
+      { label: 'Availability Monitoring', value: '30-second + checkout alerts' },
+      { label: 'Senior Engineering Time', value: '6 hours / month included' },
+      { label: 'Priority Incident SLA', value: 'Under 30 minutes response' },
     ],
   },
 ];
@@ -286,27 +540,27 @@ export const CASE_STUDIES: CaseStudy[] = [
 export const WORK_PROCESS = [
   {
     step: '01.',
-    title: 'Discovery, SEO & AI Audit',
+    title: 'Technical, SEO & AI Discovery Audit',
     detail:
-      'We inspect your market, DNS, Core Web Vitals, AI search visibility, and manual workflows to map the highest-impact technical roadmap.',
+      'We inspect your commercial sector, DNS posture, Core Web Vitals, AI search visibility, and operational workflows to define a fixed-milestone roadmap.',
   },
   {
     step: '02.',
     title: 'Brand, UX & Staging Engineering',
     detail:
-      'Design, custom integrations, GEO/Schema architecture, and AI automations are built and tested on an isolated UK staging environment.',
+      'Visual systems, bespoke APIs, GEO/Schema architecture, and compliant AI automations are engineered and validated on an isolated UK staging server.',
   },
   {
     step: '03.',
-    title: 'Zero-Downtime Launch & Verification',
+    title: 'Zero-Downtime Release & Verification',
     detail:
-      'We switch DNS cleanly, verify SSL, 301 redirects, and CRM automations, and submit XML sitemaps and llms.txt to search and AI engines.',
+      'We execute controlled DNS cut-over, validate SSL, 301 redirects, and CRM pipelines, and submit XML sitemaps and llms.txt to search and AI engines.',
   },
   {
     step: '04.',
-    title: 'Care Plans & Continuous Growth',
+    title: 'Managed Stewardship & Growth',
     detail:
-      'Ongoing UK/EEA backups, speed monitoring, and iterative SEO, GEO, and digital growth campaigns keep momentum compounding.',
+      'Encrypted UK/EEA backups, continuous availability telemetry, and iterative SEO, GEO, and acquisition programmes sustain commercial momentum.',
   },
 ];
 
@@ -316,17 +570,17 @@ export const WORDPRESS_GUIDES: WordPressGuide[] = [
     topic: 'GEO & AI Search',
     readTime: '5 min read',
     publishedAt: 'November 2026',
-    title: 'How UK Businesses Rank Inside ChatGPT, Gemini & Claude Answers',
+    title: 'How British Organisations Earn Citations in ChatGPT, Gemini & Claude',
     excerpt:
-      'Why traditional keyword stuffing fails in generative search—and how entity schema, llms.txt, and direct factual copy earn AI citations.',
+      'Why legacy keyword repetition fails in generative search—and how entity schema, llms.txt, and structured commercial data earn authoritative AI citations.',
     sections: [
       {
-        heading: 'From Ten Blue Links to Direct Entity Citations',
-        body: 'AI answer engines synthesise recommendations from structured entities rather than vague marketing slogans. Publishing clear GBP pricing, UK service coverage, and verifiable case-study outcomes helps ChatGPT, Gemini, and Claude cite your brand accurately.',
+        heading: 'From Ten Blue Links to Verified Entity Citations',
+        body: 'AI answer engines synthesise supplier recommendations from structured entities rather than marketing slogans. Publishing transparent GBP fee structures, UK jurisdiction coverage, and verifiable outcomes enables ChatGPT, Gemini, and Claude to cite your practice accurately.',
       },
       {
         heading: 'Deploy Schema.org JSON-LD and /llms.txt',
-        body: 'Pairing ProfessionalService and FAQPage JSON-LD with a clean /llms.txt summary ensures crawlers like OAI-SearchBot, PerplexityBot, and Googlebot read your exact capabilities without guessing.',
+        body: 'Pairing ProfessionalService and FAQPage JSON-LD with a curated /llms.txt index ensures crawlers such as OAI-SearchBot, PerplexityBot, and Googlebot parse your exact capabilities without ambiguity.',
       },
     ],
   },
@@ -335,17 +589,17 @@ export const WORDPRESS_GUIDES: WordPressGuide[] = [
     topic: 'AI Automation',
     readTime: '6 min read',
     publishedAt: 'November 2026',
-    title: 'Practical AI Business Process Automation Without Replacing Your Team',
+    title: 'Compliant AI Business Process Automation Under UK GDPR Governance',
     excerpt:
-      'Connect website enquiries, quoting, CRM updates, and client onboarding securely under UK GDPR rules.',
+      'Unite website enquiries, quoting, CRM records, and client onboarding securely with zero external model training.',
     sections: [
       {
-        heading: 'Start With High-Friction Admin Bottlenecks',
-        body: 'The fastest ROI comes from automating repetitive tasks: classifying incoming website enquiries, syncing customer records into Xero or HubSpot, and generating structured project briefs.',
+        heading: 'Target High-Friction Administrative Bottlenecks',
+        body: 'The most dependable operational return comes from automating repetitive administration: classifying inbound enquiries, synchronising client records into Xero or HubSpot, and assembling structured scoping briefs.',
       },
       {
-        heading: 'Keep Human Sign-Off and UK Data Hygiene',
-        body: 'Well-engineered automations route sensitive customer data through UK/EEA endpoints with clear audit logs and human approval before external emails are sent.',
+        heading: 'Preserve Human Governance and Data Sovereignty',
+        body: 'Well-architected automations process commercial data exclusively across UK/EEA endpoints with immutable audit logs and mandatory partner sign-off prior to external dispatch.',
       },
     ],
   },
@@ -354,17 +608,17 @@ export const WORDPRESS_GUIDES: WordPressGuide[] = [
     topic: 'Web & E-commerce',
     readTime: '4 min read',
     publishedAt: 'October 2026',
-    title: 'Hitting Under 1.2s Largest Contentful Paint on UK E-commerce Sites',
+    title: 'Achieving Sub-1.2s Largest Contentful Paint Across UK Retail Stores',
     excerpt:
-      'Practical server caching, database tuning, and asset discipline that lift mobile checkout conversion rates across the UK.',
+      'Practical edge caching, relational database indexing, and payload discipline that materially raise mobile checkout conversion rates.',
     sections: [
       {
-        heading: 'Trim Bloat Before Adding Plugins',
-        body: 'Heavy page builders and unindexed database queries slow mobile checkouts on UK 4G connections. Custom lightweight themes paired with server caching keep time-to-interactive crisp.',
+        heading: 'Eliminate Architectural Bloat Before Launch',
+        body: 'Heavy visual builders and unindexed database queries degrade mobile checkouts across UK 4G and 5G networks. Lean bespoke Gutenberg themes paired with edge caching maintain near-instantaneous responsiveness.',
       },
       {
-        heading: 'Protect Rankings With 301 Redirects',
-        body: 'Whenever redesigning or migrating a UK store, map every historical URL slug directly with server-level 301 rules so organic revenue never dips.',
+        heading: 'Safeguard Organic Equity With 301 Rules',
+        body: 'Whenever replatforming a UK retail domain, map every historical product and category slug directly via server-level 301 redirects so organic commercial revenue remains undisturbed.',
       },
     ],
   },
