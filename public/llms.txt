@@ -1,0 +1,27 @@
+# WPCarePoint (wpcarepoint.co.uk)
+
+> UK Web Engineering, E-commerce, SEO, GEO, AI Search Optimisation, Branding & AI Automation Agency. Serving businesses across London, Manchester, Birmingham, Edinburgh, Bristol, Leeds, and the wider United Kingdom since 2019.
+
+## Dedicated Service Pages
+- [Website Development](https://wpcarepoint.co.uk/services/website-development) — From £1,450 · Fast, UK GDPR–compliant business websites under 1.2s LCP.
+- [E-commerce Website Development](https://wpcarepoint.co.uk/services/ecommerce-website-development) — From £2,400 · WooCommerce & bespoke stores configured for GBP, UK VAT & Royal Mail/DPD.
+- [Custom Web Solutions and Integrations](https://wpcarepoint.co.uk/services/custom-web-solutions-integrations) — From £1,800 · Bespoke portals, booking tools, and Xero/HubSpot/Stripe API integrations.
+- [AI-Powered Website Development](https://wpcarepoint.co.uk/services/ai-powered-website-development) — From £1,950 · Grounded site search, qualification calculators & server-side AI tools.
+- [Branding and Brand Identity](https://wpcarepoint.co.uk/services/branding-brand-identity) — From £950 · Vector brand marks, WCAG AA colour systems & digital brand guidelines.
+- [Search Engine Optimisation (SEO)](https://wpcarepoint.co.uk/services/search-engine-optimisation) — From £650/mo · Google UK technical SEO, Core Web Vitals & 301 migration protection.
+- [Generative Engine Optimisation (GEO)](https://wpcarepoint.co.uk/services/generative-engine-optimisation) — From £750/mo · Entity Schema.org markup & citation-ready copy for generative answers.
+- [AI Search Optimisation for ChatGPT, Gemini and Claude](https://wpcarepoint.co.uk/services/ai-search-optimisation) — From £750 · /llms.txt architecture, crawler governance & UK citation testing.
+- [Digital Marketing and Online Growth](https://wpcarepoint.co.uk/services/digital-marketing-online-growth) — From £700/mo · Dedicated UK landing pages, CRO & privacy-safe GA4 attribution.
+- [AI Automation and Business Process Automation](https://wpcarepoint.co.uk/services/ai-automation-business-process-automation) — From £1,250 · Automated enquiry triage, CRM sync & UK GDPR–safe team workflows.
+
+## UK Care Plan Pricing (GBP)
+- **Essential Care**: £59/month (£49/month billed annually)
+- **Growth & Speed**: £119/month (£99/month billed annually)
+- **Scale & WooCommerce**: £229/month (£189/month billed annually)
+
+## Contact & Hours
+- Website: https://wpcarepoint.co.uk/
+- Email: wpcarepoint@gmail.com
+- Address: Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom
+- Hours: Monday–Friday, 08:30–18:00 GMT/BST (24/7 emergency triage)
+- Coverage: United Kingdom (Surrey, London, Manchester, Birmingham, Edinburgh, Bristol, Leeds)

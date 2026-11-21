@@ -1,0 +1,6 @@
+{
+  "name": "SiteRecover — Website & Domain Recovery Workbench",
+  "description": "Live DNS, RDAP registration, Wayback Machine archive recovery, and step-by-step WordPress restoration toolkit for lost websites like wpcarepoint.co.uk.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
