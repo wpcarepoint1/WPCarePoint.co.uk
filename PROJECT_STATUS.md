@@ -2,7 +2,7 @@
 
 **Last Updated:** 2026-11-22  
 **Current Stage:** Stage 1 — Discovery, Verification & Planning Blueprint  
-**Current Task:** Task 1.4 — Design & UX Strategy (`IN PROGRESS`)  
+**Current Task:** Task 1.5 — Functionality & User Journey Strategy (`IN PROGRESS`)  
 **Implementation Status:** **HOLD / NOT STARTED** (Stage 2 development, package installation, DNS changes, hosting migration, and deployment remain blocked pending explicit owner approval.)
 
 ---
@@ -14,9 +14,10 @@
 | Stage 1, Task 1.1: Technology, Architecture & SEO Discovery Audit | **COMPLETED** | Read-only audit of live `https://wpcarepoint.co.uk/`, workspace codebase, DNS, HTTP headers, and Wayback Machine history. |
 | Stage 1, Task 1.2: Business Verification & Website Blueprint | **COMPLETED (REVIEWED)** | Blueprint reviewed by owner on 2026-11-22 with formal conditions and page-count correction. |
 | Stage 1, Task 1.3: Verification Alignment, Corrected Sitemap, Individual URL Migration Map & Cloudflare Feasibility | **SUBMITTED FOR OWNER REVIEW** | Addresses owner conditions, establishes 23-page sitemap, maps historical URL groups, assesses Cloudflare feasibility, and initiates `PROJECT_STATUS.md`. Final GSC/VER items remain open. |
-| Stage 1, Task 1.4: Design & UX Strategy | **IN PROGRESS (REVISED FOR OWNER REVIEW)** | Revised per owner design review: clean white header (`#003b4f` nav / `#00749c` CTA), dark `#003b4f` footer & feature bands, light-first design (no dark-mode toggle), Care Plans `"Enquire for Pricing"`, unpublished/conditional Portfolio, dual-intent Contact form (no booking app), and strict requirement/claim hygiene. |
-| Stage 1, Task 1.5: Search Console Audit & Final Redirect/410 List | **PENDING** | Blocked on Google Search Console access/export from owner. |
-| Stage 1, Task 1.6: Verified Copy & Legal Content Finalisation | **PENDING** | Blocked on official email, approved pricing/inclusions, verified portfolio/proof, and legal entity details. |
+| Stage 1, Task 1.4: Design & UX Strategy | **COMPLETED (APPROVED WITH FINAL DECISIONS)** | Strategy approved with owner decisions on Care Plan CTA routing, Quick Fix compact banner, image asset inspection & WebP/AVIF rules, Contact Form privacy/launch blocker, FAQPage 1:1 parity, and server-side contact safeguards. |
+| Stage 1, Task 1.5: Functionality & User Journey Strategy | **IN PROGRESS** | Planning-only specification for navigation behaviour, contact workflows, enquiry validation, CTA destinations, maintenance/emergency flows, mobile interactions, accessibility, error states, and dependencies. |
+| Stage 1, Task 1.6: Search Console Audit & Final Redirect/410 List | **PENDING** | Blocked on Google Search Console access/export from owner. |
+| Stage 1, Task 1.7: Verified Copy & Legal Content Finalisation | **PENDING** | Blocked on official email, approved pricing/inclusions, verified portfolio/proof, and legal entity/data controller details. |
 | Stage 2: Implementation, Asset Optimisation & Edge Setup | **NOT STARTED (BLOCKED)** | Must NOT begin without explicit owner approval after Stage 1 sign-off. |
 
 ---
@@ -38,6 +39,10 @@
 13. **Care Plans Presentation (Task 1.4):** Retain `Essential`, `Advanced`, and `Elite` layout using `"Enquire for Pricing"` CTAs; do not publish prices, package inclusions, VAT details, contract terms, or SLA commitments until separately approved.
 14. **Portfolio & Homepage Section Rules (Task 1.4):** Keep `/wordpress-projects-portfolio` in the planned sitemap, but do NOT publish it or show it in primary nav/footer until genuine projects are verified. Keep Homepage Portfolio (conditional) and UK FAQ as separate sections; use `"Our Working Principles"` and `"Planned Migration & Controlled Launch"` (never "zero-downtime"); treat UK GDPR, PECR, and WCAG 2.2 AA as design/implementation requirements, never certified/guaranteed claims.
 15. **Contact Form & Concise Footer (Task 1.4):** Dual-intent enquiry form (`New Website / WooCommerce Projects` vs `Maintenance / Urgent Support`) with NO Calendly/Cal.com integration and NO unapproved `24–48 hour` response commitment. Keep footer concise with 4 logical link groups (do not force all 23 pages into the footer).
+16. **Care Plans Destinations & Quick Fix Banner (Task 1.4 Final):** Header `"Care Plans"` -> `/wordpress-maintenance-support`; Homepage `"Explore Maintenance Plans"` -> `/#care-plans`; Individual plan CTAs (`Essential`, `Advanced`, `Elite`) -> `/contact?intent=maintenance&plan=essential|advanced|elite`. Keep compact banner below cards (`"Need a One-Off WordPress Fix?"` / CTA: `"Enquire About a Quick Fix"`). No prices, inclusions, VAT, contract terms, or unverified SLA claims until approved.
+17. **Images & Responsive Media Standard (Task 1.4 Final):** `hero_agency_studio_1795213974094.jpg` (`1376x768`) and `service_speed_engineering_1795213974447.jpg` (`1200x896`) inspected — both are AI-generated studio photos containing garbled monitor/UI text and unverified London office/team visuals (owner approval or non-fabricated replacement required; do not fabricate new office/team photos). Stage 2 media spec requires WebP/AVIF conversion, responsive `srcset`/`sizes`, explicit `width`/`height`, eager hero loading (`fetchPriority="high"`), and lazy below-the-fold loading.
+18. **Contact Form Privacy & Launch Blocker (Task 1.4 Final):** Clear privacy notice + visible `/privacy-policy` link required on form; marketing consent must NEVER be mandatory for service enquiries (if offered, use a separate optional, unchecked checkbox). Incomplete `/privacy-policy`, missing data controller details, or unverified lawful basis remains a hard **launch blocker** for the public form.
+19. **Schema Parity & Form Safeguards (Task 1.4 Final):** `FAQPage` JSON-LD must match visible FAQ text exactly without promising Google FAQ rich results. Planned contact architecture must include server-side validation, duplicate submission protection, spam prevention, and accurate success/error feedback.
 
 ---
 
@@ -63,6 +68,7 @@
 | VER-16 | Blog Strategy | Decision on whether to restore/rewrite any of the 86 pre-hack WordPress blog articles or retire `/blog/*` cleanly | `PENDING` |
 | VER-17 | Email Provider | Choice & account access for transactional email API (e.g. Resend / Postmark / Brevo) for Cloudflare Worker `/api/contact` | `PENDING FEASIBILITY REVIEW` |
 | VER-18 | Brand & Repo | Confirm GitHub repository location (`main` branch workflow) & domain registrar access for future cut-over planning | `PENDING` |
+| VER-19 | Visual Assets | Approve or choose non-fabricated replacement for inspected AI-generated `hero_agency_studio_1795213974094.jpg` and `service_speed_engineering_1795213974447.jpg` (contain garbled UI text / non-agency office visuals) | `PENDING OWNER DECISION` |
 
 ---
 
@@ -91,14 +97,14 @@ Earlier drafts cited "20 pages" while listing 25 due to overlaps across Core, Wo
 
 ## 6. Recommended Next Action
 
-1. Review and approve the revised **Stage 1, Task 1.4 Design & UX Strategy** (and answer the remaining narrow UX/data questions at the end of Task 1.4).
-2. Provide **Google Search Console export/access** (or URL coverage list) to unblock **Task 1.5** (`/blog/*` spam vs legacy WP post `410`/`301` finalisation).
-3. Supply **VER-01 through VER-17** confirmations (official email, approved care plan terms/inclusions, legal entity details, and real portfolio/proof) prior to copy finalisation and any Stage 2 approval.
+1. Review **Stage 1, Task 1.5: Functionality & User Journey Strategy** and confirm the remaining functional/asset choices (`VER-19` image decision, email delivery provider choice, emergency triage fields, and duplicate-submission cooldown preference).
+2. Provide **Google Search Console export/access** (or URL coverage list) to unblock **Task 1.6** (`/blog/*` spam vs legacy WP post `410`/`301` finalisation).
+3. Supply **VER-01 through VER-18** confirmations (official email, data controller/Privacy Policy details, approved care plan pricing/inclusions, and real portfolio/proof) prior to Task 1.7 copy finalisation and any Stage 2 approval.
 
 ---
 
 ## 7. Files Created or Modified
 
 - **Created:** `/PROJECT_STATUS.md` (Stage 1 tracking document).
-- **Updated:** `/PROJECT_STATUS.md` (recorded revised Task 1.4 design decisions; Task 1.4 remains `IN PROGRESS` pending owner approval).
+- **Updated:** `/PROJECT_STATUS.md` (marked Task 1.4 `COMPLETED`, recorded final Task 1.4 owner decisions & image inspection results, and opened **Task 1.5: Functionality & User Journey Strategy** as `IN PROGRESS`).
 - **Modified Application Files:** None. (All website source files, routes, CSS, configs, packages, DNS, and live deployments remain untouched.)
