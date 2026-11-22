@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Language" content="en-GB, cy" />
     <meta name="theme-color" content="#f8fafc" />
     <title>WPCarePoint – UK Web Engineering, Brand, SEO, GEO &amp; AI</title>
     <script>
@@ -19,6 +20,37 @@
           } else {
             document.documentElement.classList.remove('dark');
             document.documentElement.setAttribute('data-theme', 'light');
+          }
+
+          var savedLang = localStorage.getItem('wpcarepoint-lang');
+          var detectedLang = 'en-GB';
+          if (savedLang === 'cy') {
+            detectedLang = 'cy';
+          } else if (savedLang === 'en') {
+            detectedLang = 'en-GB';
+          } else if (typeof navigator !== 'undefined') {
+            var langs =
+              Array.isArray(navigator.languages) && navigator.languages.length
+                ? navigator.languages
+                : [navigator.language];
+            for (var i = 0; i < langs.length; i++) {
+              var code = (langs[i] || '').toLowerCase().trim();
+              if (code === 'cy' || code.indexOf('cy-') === 0) {
+                detectedLang = 'cy';
+                break;
+              }
+              if (code === 'en' || code.indexOf('en-') === 0) {
+                detectedLang = 'en-GB';
+                break;
+              }
+            }
+          }
+          document.documentElement.lang = detectedLang;
+          var contentLangMeta = document.querySelector(
+            'meta[http-equiv="Content-Language"]'
+          );
+          if (contentLangMeta) {
+            contentLangMeta.setAttribute('content', detectedLang);
           }
         } catch (e) {}
       })();
@@ -80,10 +112,16 @@
       content="https://wpcarepoint.co.uk/src/assets/images/hero_agency_studio_1795213974094.jpg"
     />
 
+    <link
+      rel="preload"
+      as="image"
+      href="/src/assets/images/hero_agency_studio_1795213974094.jpg"
+      fetchpriority="high"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..500&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..700;1,9..40,400..500&family=JetBrains+Mono:wght@400..600&family=Plus+Jakarta+Sans:wght@600..700&subset=latin,latin-ext&display=swap"
       rel="stylesheet"
     />
 

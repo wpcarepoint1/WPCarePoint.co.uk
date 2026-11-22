@@ -26,6 +26,10 @@ function ResilientImage({
     <img
       src={src}
       alt={alt}
+      width={1200}
+      height={896}
+      loading="lazy"
+      decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
       className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]"

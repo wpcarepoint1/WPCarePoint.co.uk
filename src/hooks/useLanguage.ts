@@ -43,7 +43,17 @@ export function useLanguage() {
   const [state, setState] = useState(getInitialLocaleState);
 
   useEffect(() => {
-    document.documentElement.lang = state.locale === 'cy' ? 'cy' : 'en-GB';
+    const htmlLang = state.locale === 'cy' ? 'cy' : 'en-GB';
+    const ogLocale = state.locale === 'cy' ? 'cy_GB' : 'en_GB';
+
+    document.documentElement.lang = htmlLang;
+    document
+      .querySelector('meta[http-equiv="Content-Language"]')
+      ?.setAttribute('content', htmlLang);
+    document
+      .querySelector('meta[property="og:locale"]')
+      ?.setAttribute('content', ogLocale);
+
     if (state.manualOverride) {
       try {
         localStorage.setItem(STORAGE_KEY, state.locale);

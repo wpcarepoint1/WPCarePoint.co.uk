@@ -182,6 +182,18 @@ function buildServicePrerenderHtml(
       `<link rel="canonical" href="${canonicalUrl}" />`
     )
     .replace(
+      /<link\s+rel="alternate"\s+hreflang="en-gb"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-gb" href="${canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="cy"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="cy" href="${canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="x-default"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="x-default" href="${canonicalUrl}" />`
+    )
+    .replace(
       /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/,
       `<meta property="og:url" content="${canonicalUrl}" />`
     )

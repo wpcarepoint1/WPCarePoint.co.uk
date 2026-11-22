@@ -1,5 +1,6 @@
 import express from 'express';
 import dns from 'node:dns';
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import type {
@@ -624,18 +625,66 @@ async function startServer() {
     });
   });
 
+  const resolveBrowserHtmlLang = (acceptLanguage?: string): 'cy' | 'en-GB' => {
+    if (!acceptLanguage) return 'en-GB';
+    const langs = acceptLanguage
+      .split(',')
+      .map((part) => part.split(';')[0]?.trim().toLowerCase() || '');
+    for (const code of langs) {
+      if (code === 'cy' || code.startsWith('cy-')) return 'cy';
+      if (code === 'en' || code.startsWith('en-')) return 'en-GB';
+    }
+    return 'en-GB';
+  };
+
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
+    app.use((req, res, next) => {
+      const lang = resolveBrowserHtmlLang(req.headers['accept-language']);
+      res.setHeader('Content-Language', lang);
+      res.setHeader('Vary', 'Accept-Language');
+      next();
+    });
     app.use(vite.middlewares);
   } else {
     const distPath = path.resolve(__dirname, 'dist');
-    app.use(express.static(distPath));
-    app.get('*', (_req, res) => {
-      res.sendFile(path.join(distPath, 'index.html'));
+    app.use(
+      express.static(distPath, {
+        index: false,
+      })
+    );
+    app.get('*', (req, res) => {
+      const lang = resolveBrowserHtmlLang(req.headers['accept-language']);
+      res.setHeader('Content-Language', lang);
+      res.setHeader('Vary', 'Accept-Language');
+
+      const serviceMatch = req.path.match(/^\/services\/([a-z0-9-]+)\/?$/i);
+      const serviceFile = serviceMatch
+        ? path.join(distPath, 'services', `${serviceMatch[1].toLowerCase()}.html`)
+        : null;
+      const targetFile =
+        serviceFile && fs.existsSync(serviceFile)
+          ? serviceFile
+          : path.join(distPath, 'index.html');
+
+      if (!fs.existsSync(targetFile)) {
+        res.status(404).send('Not found');
+        return;
+      }
+
+      const rawHtml = fs.readFileSync(targetFile, 'utf-8');
+      const localizedHtml = rawHtml
+        .replace(/<html\s+lang="[^"]*"/i, `<html lang="${lang}"`)
+        .replace(
+          /<meta\s+http-equiv="Content-Language"\s+content="[^"]*"\s*\/?>/i,
+          `<meta http-equiv="Content-Language" content="${lang}" />`
+        );
+
+      res.type('html').send(localizedHtml);
     });
   }
 

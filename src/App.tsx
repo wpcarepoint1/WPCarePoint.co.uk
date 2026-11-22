@@ -45,10 +45,16 @@ import {
 function StudioPhoto({
   src,
   alt,
+  width,
+  height,
+  priority = false,
   className = '',
 }: {
   src: string;
   alt: string;
+  width: number;
+  height: number;
+  priority?: boolean;
   className?: string;
 }) {
   const [failed, setFailed] = useState(false);
@@ -68,6 +74,11 @@ function StudioPhoto({
     <img
       src={src}
       alt={alt}
+      width={width}
+      height={height}
+      loading={priority ? 'eager' : 'lazy'}
+      decoding={priority ? 'sync' : 'async'}
+      fetchPriority={priority ? 'high' : 'auto'}
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
       className={`w-full h-full object-cover ${className}`}
@@ -298,6 +309,9 @@ export default function App() {
                           <StudioPhoto
                             src={HERO_STUDIO_IMAGE}
                             alt={t.hero.studioAlt}
+                            width={1376}
+                            height={768}
+                            priority
                           />
                           <div
                             aria-hidden="true"
@@ -507,6 +521,8 @@ export default function App() {
                             <StudioPhoto
                               src={SERVICE_ENGINEERING_IMAGE}
                               alt="Senior UK engineer auditing website performance, SEO schema, and AI workflows"
+                              width={1200}
+                              height={896}
                               className="transition-transform duration-500 ease-out group-hover:scale-[1.03]"
                             />
                           </div>
