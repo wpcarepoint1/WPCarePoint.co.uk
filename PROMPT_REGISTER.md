@@ -1,0 +1,93 @@
+# WPCarePoint Prompt Register & Governance Standard (`PROMPT_REGISTER.md`)
+
+**Last Updated:** 2026-11-23  
+**Project:** `WPCarePoint.co.uk` Rebuild & Controlled Reopening  
+**Current Stage:** Stage 1 — Discovery & Planning (`IN PROGRESS`)  
+**Current Task:** Task 1.6 — Website Architecture & SEO Foundation (`IN PROGRESS`)  
+**Stage 2 Status:** **`NOT STARTED — BLOCKED`** *(Strict non-execution lock active until explicit owner Task 1.6 closure & Stage 2 approval.)*
+
+---
+
+## Part A: Mandatory Prompt Versioning & Governance Standard
+
+All future instructions, tasks, reviews, and development prompts for the `WPCarePoint.co.uk` Rebuild Project MUST comply with this standard:
+
+### 1. Mandatory Prompt Identification Header
+Every prompt MUST open with all `10` fields:
+```text
+<Prompt ID>
+Project: WPCarePoint.co.uk Rebuild
+Stage: <Stage 1, Discovery & Planning | Stage 2, Design & Development | Stage 3, Testing, Launch & Growth>
+Task: <Task Number and Name>
+Prompt Version: <V01 | V02 | V03 ...>
+Title: <Clear Prompt Title>
+Purpose: <New Requirement | Revision / Correction | Technical / Readiness Review | Implementation Task>
+Execution Mode: <Planning & Documentation Only | Design Work | Development Work | Testing | Production Deployment>
+Approval Status: <Not Approved for Development | Planning Approved | Stage Authorised>
+Dependencies: <Related Prompt IDs, VER-* items, or Milestone Gates>
+```
+
+### 2. Versioning & Non-Overwrite Rules
+- **`V01`** = Initial prompt for a given track/Prompt ID series.
+- **`V02`** = First revision; **`V03`** = Second revision; increment sequentially (`V04`, `V05`, ...).
+- **Never** reuse an existing Prompt ID.
+- **Never** overwrite historical decisions (`#1–#47+`) or previous prompt records.
+- Every prompt MUST explicitly declare whether it introduces a **new requirement**, **corrects an earlier requirement**, or **requests a review**.
+
+### 3. Official Stage Taxonomy
+- **Stage 1:** Discovery & Planning
+- **Stage 2:** Design & Development
+- **Stage 3:** Testing, Launch & Growth
+
+### 4. Mandatory Authorisation Scope
+Every prompt MUST explicitly specify whether it authorises:
+- Planning only
+- Design work
+- Development work
+- Testing
+- Production deployment
+
+**Rule:** Never assume approval for a subsequent stage. A newer prompt **never** automatically overrides an older approved decision; if a conflict exists, identify it explicitly and request owner approval.
+
+### 5. Mandatory AI Studio Response Structure (`8` Required Points)
+Every completed prompt response MUST include:
+1. Prompt ID and version acknowledged.
+2. Documents created or updated.
+3. Summary of changes.
+4. Decisions affected.
+5. Dependencies.
+6. Remaining questions.
+7. Governance status.
+8. Confirmation of whether code or production changes occurred.
+
+---
+
+## Part B: Master Prompt Register
+
+*(Note on Historical Continuity: Prompts issued prior to `2026-11-23` governance adoption are preserved cleanly under `WPCP-PRE-STD` without retroactive fabrication. The Task 1.6 platform/roadmap/review/governance prompts from `2026-11-23` are indexed sequentially as `WPCP-P1.6-V01` through `WPCP-P1.6-V05`.)*
+
+| Prompt ID | Version | Date | Stage and Task | Title | Purpose | Previous Version | Status | AI Studio Execution Result | Related Decisions | Outstanding Dependencies |
+|---|---|---|---|---|---|---|---|---|---|---|
+| **`WPCP-PRE-STD`** | `Baseline` | `2026-11-16` – `2026-11-23` | `Stage 1, Tasks 1.1–1.6` | Pre-Standard Audit, Blueprint, Design, Functionality, Hybrid Agency, Option B SEO, `VER-20`/`VER-15`, `RH1 4HW` & Speed URL Baseline | Historical Baseline Record *(Preserved Unchanged)* | `None` | **Archived / Preserved** | Produced `PROJECT_STATUS.md`, `56`-row CSV, Reconciliation, `VER-20`, `VER-15`, SEO/GEO/AIO review, `22`-page Option B Sitemap, Portfolio/Blog & `8`-module Admin Plan, Decision Pack. Zero code edits. | **`#1–#40`** *(Preserved Verbatim)* | `VER-04`–`VER-06` (Legal), `VER-17` (Email), `VER-18` (GitHub/DNS), `VER-13`/`VER-16` (Recovery), `VER-15` (`DEFERRED`), Migration lock. |
+| **`WPCP-P1.6-V01`** | `V01` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | Advanced Analytics, External AI Agent Connectivity (`MCP`), BI & `26`-Module Admin Expansion | New Requirement *(Planning Only — extends `22`-module baseline to `26` modules)* | `WPCP-PRE-STD` | **Documented — Planning Only** | Created `/TASK_1_6_ANALYTICS_MCP_BI_ARCHITECTURE.md`; updated Admin Plan, Decision Pack & `PROJECT_STATUS.md`. Defined GA4+GSC+PostHog layer, Remote MCP (`15` read-only tools), Privacy Centre `#24`, KB `#25`, Automation `#26`. Zero code/tracking. | **`#41–#47`** *(Preserves `#1–#40`)* | Legal & Email (`VER-04`–`VER-06`, `VER-17`) `DEFERRED BY OWNER`; Module `#24` privacy gate blocks all tracking/MCP; `VER-15` `DEFERRED`. |
+| **`WPCP-P1.6-V02`** | `V02` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | Development Priority (`P0–P7`), Release Roadmap, MVP Strategy & Technical Architecture Evaluation | Revision / Extension of `V01` *(Planning Only)* | `WPCP-P1.6-V01` | **Documented — Stack & MVP Proposals Awaiting Owner Approval** | Created `/TASK_1_6_DEVELOPMENT_ROADMAP_AND_ARCHITECTURE.md`; added `৭. আমার প্রস্তাবিত Development Priority` (`P0–P7`), `26`-module `Release 1–4` mapping, 3-tier MVP, `11`-domain stack evaluation, `13` Ops/Sec controls, `14` SEO gates & `Planned ≠ Designed ≠ Implemented ≠ Tested ≠ Production-Enabled` rule. | Preserves `#1–#47`; surfaces proposed stack & MVP split for approval | Owner approval of stack & Release 1 MVP scope; Decision `#15` vs P3 Booking alignment; `VER-18`, `VER-13`/`VER-16`, deferred gates. |
+| **`WPCP-P1.6-V03`** | `V03` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | Additional Review: CMS Comparison, Multi-Region Architecture, Backup/DR, QA & Data Portability | Pre-Approval Technical Review *(Planning Only — refines CMS recommendation for approval)* | `WPCP-P1.6-V02` | **Documented — Architecture Refinement & `RPO`/`RTO` Awaiting Owner Approval** | Created `/TASK_1_6_ARCHITECTURE_AND_READINESS_REVIEW.md`; compared `Custom Next.js` vs `Payload v3 (MIT)` vs `Directus`; evaluated Multi-Region DB Federation (`.co.uk`/`.com`/`.us`/`.eu`); proposed `RPO`/`RTO`, `12`-layer QA & `9`-asset portability. Zero code changes. | Preserves `#1–#47`; surfaces `Payload v3 (MIT)` refinement & Multi-Region/RPO-RTO for approval | Owner approval on `Payload v3` vs custom, Multi-Region federation, `RPO`/`RTO` targets, `VER-04`–`VER-06`, `VER-17`, `VER-18`, Migration lock. |
+| **`WPCP-P1.6-V04`** | `V04` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | WPCarePoint Prompt Versioning & Project Governance Standard | New Governance Standard *(Planning & Documentation Only)* | `WPCP-P1.6-V03` | **Active Governance Standard (Task 1.6 `IN PROGRESS`; Stage 2 `BLOCKED`)** | Created `/PROMPT_REGISTER.md` (this register + 10-field prompt header & 8-point response standard); updated `/PROJECT_STATUS.md` & `/OWNER_DECISION_PACK.md` (`Decision #48`). Zero code/DB/live changes. | **`#48`** *(Preserves `#1–#47` verbatim)* | Future prompts must open with the 10-field identification header; all prior Task 1.6 architecture & deferred blockers remain pending. |
+| **`WPCP-P1.6-V05`** | `V05` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | Future AI-Powered Digital Agency Platform, Business Model, Human Approval Governance & Regular Blog Publishing Strategy | Owner-Confirmed Strategic Direction & Planning Expansion *(Planning & Documentation Only)* | `WPCP-P1.6-V04` | **Documented — Owner Direction `#49–#51` Recorded (`PLANNED ONLY`; Task 1.6 `IN PROGRESS`; Stage 2 `BLOCKED`)** | Created `/TASK_1_6_FUTURE_AI_AGENCY_PLATFORM_STRATEGY.md`; updated Roadmap, Analytics/MCP, Portfolio/Blog/Admin Plan, Decision Pack, `PROJECT_STATUS.md` & `PROMPT_REGISTER.md`. Kept `26` modules (no 27th module), separated MVP vs Internal vs SaaS vs `2026–2030` R&D, documented SSRF URL workflow & `7`-stage Blog workflow. Zero code/DB/live edits. | **`#49–#51`** *(Preserves `#1–#48` verbatim)* | Tech stack (`Next.js`/`Payload`/`Postgres`/`Drizzle`/`Hono`/`Cloudflare`), `RPO`/`RTO`, Multi-Region/Tenant DB, Legal/Email (`VER-04`–`VER-06`, `VER-17`), Migration lock, `VER-18`, `VER-13`/`VER-16`, `VER-07`–`VER-12`/`VER-14`, `VER-15` (`DEFERRED`). |
+| **`WPCP-P1.6-V06`** | `V06` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | Final Architecture Evaluation, MVP Scope Validation & Owner Decision Preparation | Technical / Readiness Review & Owner Decision Preparation *(Planning & Documentation Only)* | `WPCP-P1.6-V05` | **Documented — Preserved (`Initial-Launch CMS/DB Proposals `OD-01`/`OD-02` Superseded by `Decision #52` in `V07`)** | Created `/TASK_1_6_FINAL_ARCHITECTURE_AND_DECISION_PREP.md`; updated `/OWNER_DECISION_PACK.md`, `/PROJECT_STATUS.md`, & `/PROMPT_REGISTER.md`. | Preserves `#1–#51` verbatim; initial MVP CMS superseded by `#52` (`V07`) | Future platform `OD-03`–`OD-08`, `VER-18`, deferred `VER-04`–`VER-06`/`VER-17`/Migration lock. |
+| **`WPCP-P1.6-V07`** *(Submitted Header: `WPCP-P1.6-V06` — Collision Resolved per `#48`)* | `V07` | `2026-11-23` | `Stage 1, Task 1.6 (Website Architecture & SEO Foundation)` | No-CMS Next.js Technology Direction, Initial Website MVP Architecture & Launch Readiness Planning | Owner-Confirmed Initial Launch Direction & Technical Evaluation *(Planning & Documentation Only)* | `WPCP-P1.6-V06` | **Documented — Owner Direction `#52` Recorded (`NO-CMS` Initial MVP; Task 1.6 `IN PROGRESS`; Stage 2 `BLOCKED`)** | Created `/TASK_1_6_NO_CMS_INITIAL_MVP_ARCHITECTURE.md`; updated Roadmap, Future Strategy, Portfolio/Blog/Admin Plan, Decision Pack, `PROJECT_STATUS.md` & `PROMPT_REGISTER.md`. Documented `12`-field MDX blog + GitHub PR publishing, `12`-point cPanel compatibility checklist, `Approaches A/B/C` evaluation, and clean separation from Future `26`-Module Admin/AI/SaaS Platform. Zero code/hosting/DNS edits. | **`#52`** *(Preserves `#1–#51` verbatim; supersedes `Payload`/`PostgreSQL` for Initial Launch only)* | `12`-point cPanel hosting check + `Approaches A/B/C` choice, `VER-18` (GitHub/Cloudflare), `VER-04`–`VER-06`/`VER-17`/Migration (`DEFERRED`), `VER-13`/`VER-16`, `VER-07`–`VER-12`/`VER-14`, `VER-15` (`DEFERRED`). |
+
+---
+
+## Part C: Chronological Change History
+
+| Date | Entry / Version | Summary of Governance or Specification Change | Author / Trigger |
+|---|---|---|---|
+| `2026-11-16` – `2026-11-23` | `WPCP-PRE-STD` | Completed Tasks `1.1–1.5` and initial Task `1.6` baselines (`Decisions #1–#40`), `22`-page Option B Sitemap, `VER-20` (`13/13`), `VER-15` (`DEFERRED`), Contact `RH1 4HW`, `/wordpress-speed-optimisation/` target, Portfolio/Blog recovery & `8`-module CMS spec. | Owner Decisions `#1–#40` |
+| `2026-11-23` | `WPCP-P1.6-V01` | Extended Admin Dashboard to `26` modules (`+#23–#26`); added Remote MCP (`15` read-only tools), GA4+GSC+PostHog Integration Layer, Privacy Centre lock, AI BI Assistant, Knowledge Base, Workflow Automation Studio, and `4`-Release Roadmap (`Decisions #41–#47`). | Owner Requirement |
+| `2026-11-23` | `WPCP-P1.6-V02` | Added `P0–P7` Development Priority (`৭. আমার প্রস্তাবিত Development Priority`), `26`-module Release mapping, MVP 3-tier split, `11`-layer architecture evaluation, `13` Ops/Security controls, `14` SEO Migration gates, and strict 5-stage lifecycle distinction. | Owner Roadmap Request |
+| `2026-11-23` | `WPCP-P1.6-V03` | Completed pre-approval review: `Custom Next.js` vs `Payload v3 (MIT)` vs `Directus` (`11` criteria), Phased Multi-Region DB Federation, Backup/DR with proposed `RPO`/`RTO`, Measured-vs-AI BI matrix, `12`-layer Testing/QA framework, `9`-asset Portability policy, and Risk Register. | Owner Pre-Sign-Off Review |
+| `2026-11-23` | `WPCP-P1.6-V04` | Established mandatory Prompt Versioning & Governance Standard (`WPCP-*` IDs, `10`-field header, `V01/V02/V03` rules, stage authorisation lock, non-override conflict rule, `8`-point response format) and initiated `/PROMPT_REGISTER.md` (`Decision #48`). | Owner Governance Standard |
+| `2026-11-23` | `WPCP-P1.6-V05` | Recorded Owner-Confirmed Decisions `#49–#51` (Dual Business Model: Internal Agency + Customer-Facing SaaS with strict tenant isolation; Human Approval Policy with `5` trust tiers & `9`-item pre-prod package; `12` Logical AI Agents + SSRF-hardened URL Submission Workflow; `7`-stage Regular Blog Publishing & Repurposing inside `Module #3` + `#6` + `Content Intelligence Agent`, preserving `26` modules and keeping MVP free of SaaS/robotics). | Owner Strategic Direction (`WPCP-P1.6-V05`) |
+| `2026-11-23` | `WPCP-P1.6-V06` | Consolidated Final Architecture Evaluation (`Custom Next.js` vs `Payload CMS v3 MIT` vs `Directus BSL 1.1`), Multi-Region + SaaS Tenant Isolation architecture, Backup/DR `RPO`/`RTO` assessment, validated lean `Release 1 MVP` scope, 3-phase Blog Publishing release strategy (`#3`+`#6`), structured `OD-01`–`OD-08` Owner Decision Recommendations, and `15`-item Task 1.6 Completion Checklist (`/TASK_1_6_FINAL_ARCHITECTURE_AND_DECISION_PREP.md`). | Owner Decision Prep Review (`WPCP-P1.6-V06`) |
+| `2026-11-23` | `WPCP-P1.6-V07` *(Submitted as `WPCP-P1.6-V06`)* | Recorded Owner-Confirmed **`Decision #52`** (No-CMS `Next.js + React + TypeScript + Tailwind + MDX + Metadata API + GitHub + Cloudflare` Initial Launch Direction; excludes CMS, Custom Admin, PostgreSQL, AI execution, SaaS & MCP from Initial Launch while preserving `26`-module Future Admin & Decisions `#49–#51`). Documented `12`-field MDX blog + GitHub PR publishing, `12`-point unknown-cPanel checklist, and `Approaches A/B/C` hosting evaluation (`/TASK_1_6_NO_CMS_INITIAL_MVP_ARCHITECTURE.md`). | Owner Technology Direction (`Submitted WPCP-P1.6-V06` -> Indexed `V07` per `#48`) |
