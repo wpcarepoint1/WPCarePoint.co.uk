@@ -1,8 +1,8 @@
 # WPCarePoint.co.uk Rebuild — Project Status
 
-**Last Updated:** 2026-11-22  
-**Current Stage:** Stage 1 — Discovery, Verification & Planning Blueprint  
-**Current Task:** Task 1.6 — Website Architecture & SEO Foundation (`IN PROGRESS`)  
+**Last Updated:** 2026-11-23  
+**Current Stage:** Stage 1 — Discovery & Planning (`IN PROGRESS`)  
+**Current Task:** Task 1.6 — Website Architecture & SEO Foundation (`IN FINAL REVIEW — OWNER APPROVAL PENDING`)  
 **Implementation Status:** **HOLD / NOT STARTED** (Stage 2 development, package installation, DNS changes, hosting migration, and deployment remain blocked pending explicit owner approval.)
 
 ---
@@ -11,15 +11,14 @@
 
 | Stage / Task | Status | Notes |
 |---|---|---|
-| Stage 1, Task 1.1: Technology, Architecture & SEO Discovery Audit | **COMPLETED** | Read-only audit of live `https://wpcarepoint.co.uk/`, workspace codebase, DNS, HTTP headers, and Wayback Machine history. |
-| Stage 1, Task 1.2: Business Verification & Website Blueprint | **COMPLETED (REVIEWED)** | Blueprint reviewed by owner on 2026-11-22 with formal conditions and page-count correction. |
-| Stage 1, Task 1.3: Verification Alignment, Corrected Sitemap, Individual URL Migration Map & Cloudflare Feasibility | **SUBMITTED FOR OWNER REVIEW** | Addresses owner conditions, establishes 23-page sitemap, maps historical URL groups, assesses Cloudflare feasibility, and initiates `PROJECT_STATUS.md`. Final GSC/VER items remain open. |
+| Stage 1, Task 1.1: Website Audit | **COMPLETED** | Read-only technology, architecture & SEO audit of live `https://wpcarepoint.co.uk/`, workspace codebase, DNS, HTTP headers, and Wayback Machine history. |
+| Stage 1, Task 1.2: Business Blueprint | **COMPLETED (REVIEWED)** | Blueprint reviewed by owner on 2026-11-22 with formal conditions and overlap-free sitemap correction. |
+| Stage 1, Task 1.3: Competitor Research & Verification Alignment | **SUBMITTED FOR OWNER REVIEW** | Owner conditions alignment, corrected 23-page sitemap, Cloudflare feasibility, and `PROJECT_STATUS.md` initiation; remaining verification/GSC dependencies merged into Task 1.6 finalisation. |
 | Stage 1, Task 1.4: Design & UX Strategy | **COMPLETED (APPROVED WITH FINAL DECISIONS)** | Strategy approved with owner decisions on Care Plan CTA routing, Quick Fix compact banner, image asset inspection & WebP/AVIF rules, Contact Form privacy/launch blocker, FAQPage 1:1 parity, and server-side contact safeguards. |
-| Stage 1, Task 1.5: Functionality & User Journey Strategy | **COMPLETED (APPROVED WITH TECHNICAL CORRECTIONS)** | Finalised navigation, dual-intent CTA routing, Resend (+ Postmark fallback) plan, Turnstile-gated visitor auto-acknowledgement, required 4-option `Issue Type`, `http/https` URL validation, context encoding, atomic idempotency caveats (non-KV), and `HTTP 201` acceptance semantics. |
-| Stage 1, Task 1.6: Website Architecture & SEO Foundation | **IN PROGRESS** | Planning-only architecture & technical SEO specification (23-page IA, `en-GB` hreflang/canonical, Schema.org graph, pre-render/crawlability, Core Web Vitals budgets, `/llms.txt` & `robots.txt` rules, `301`/`410` edge routing, Cloudflare security headers, and GSC verification blockers). |
-| Stage 1, Task 1.7: Search Console Audit & Final Redirect/410 List | **PENDING** | Blocked on Google Search Console access/export from owner. |
-| Stage 1, Task 1.8: Verified Copy & Legal Content Finalisation | **PENDING** | Blocked on official email, approved pricing/inclusions, verified portfolio/proof, and legal entity/data controller details. |
-| Stage 2: Implementation, Asset Optimisation & Edge Setup | **NOT STARTED (BLOCKED)** | Must NOT begin without explicit owner approval after Stage 1 sign-off. |
+| Stage 1, Task 1.5: Functionality Planning | **COMPLETED (APPROVED WITH TECHNICAL CORRECTIONS)** | Finalised navigation, dual-intent CTA routing, Resend (+ Postmark fallback) plan, Turnstile-gated visitor auto-acknowledgement, required 4-option `Issue Type`, `http/https` URL validation, context encoding, atomic idempotency caveats (non-KV), and `HTTP 201` acceptance semantics. |
+| Stage 1, Task 1.6: Website Architecture & SEO Foundation | **IN PROGRESS (GSC SCOPE UPDATED — RECONCILIATION & OWNER APPROVAL PENDING)** | Official Stage 1 final gate. Preserves all 32 confirmed decisions, `23`-page sitemap, and Wayback CDX `766`-path audit. `Not Indexed Pages` is permanently **SKIPPED** and `Links` is confirmed **`No Data`**. Completion & approval now require only: (a) workspace ingestion/reconciliation of the `54`-URL `Performance Pages` export alongside the confirmed `305` `Indexed Pages` (`2026-11-16`), (b) evidence-based final URL migration matrix (`622` post-hack, `86` pre-hack, `24` tags, `19` categories, `15` core), (c) overlap resolution (`GEO` vs `AI Search`, `/wordpress-seo-speed-optimization/`), and (d) legal/data controller & contact form readiness. |
+| Stage 2: Design & Development | **NOT STARTED (BLOCKED)** | Website design, frontend development, asset optimisation & functionality implementation. Must NOT begin without explicit owner approval after Stage 1 completion. |
+| Stage 3: Testing, Launch & Growth | **NOT STARTED (BLOCKED)** | Technical testing, SEO validation, controlled launch, and performance/growth. Must NOT begin until Stage 2 is completed and approved. |
 
 ---
 
@@ -48,6 +47,15 @@
 21. **Transactional Email Provider (`VER-17` Decided — Verification Pending):** Use **Resend** (primary) and **Postmark** (fallback) for Cloudflare Worker `/api/contact`. Before Stage 2 implementation, verify account availability, pricing, domain verification, API requirements, and `SPF`/`DKIM`/`DMARC` DNS records.
 22. **Visitor Auto-Acknowledgement & Issue Type (Task 1.5 Final):** Send concise non-marketing confirmation email with genuine reference ID (no response-time promise; requires Turnstile verification first). Maintenance / Urgent Support form requires `Issue Type` dropdown (`Ongoing Care Plan Enquiry`, `One-Off Quick Fix`, `Site Down or Error`, `Suspected Malware or Hack`) included in internal email & reference record.
 23. **Contact Technical Guardrails (Task 1.5 Corrections):** `HTTP 201` means email provider accepted the request (not guaranteed inbox delivery without webhook confirmation); accept valid `http://` and `https://` website URLs; validate & encode per output context without altering original message text; do NOT rely on Cloudflare KV alone for atomic duplicate-submission prevention (pair client lock with Resend `Idempotency-Key` / Durable Objects + rate limiting).
+24. **Legal Pages & Public Launch Separation (Task 1.6):** Do NOT publish incomplete/placeholder Legal pages (`/privacy-policy`, `/cookie-policy`, `/terms-and-conditions`). Unfinished legal pages must remain unpublished or `noindex` and excluded from `sitemap.xml` (do not treat `noindex` as a substitute for compliance). Do NOT block the entire site launch solely for unfinished legal pages, **but keep the public contact form disabled until Privacy Policy, actual data controller info, and data-processing details are verified**.
+25. **Recovery Option for 86 Pre-Hack WordPress Blog Posts (Task 1.6):** Keep option open to recover valuable original articles into a future `/guides/` or `/blog/` section (do NOT auto-recreate all 86). Within Task 1.6 GSC reconciliation, review individually via GSC, backlinks, URL history, and content quality (`301` only for genuinely relevant replacements; `410 Gone` for irrelevant/removed content; post-hack spam evaluated separately via evidence). Never bulk-redirect old blog URLs to `/` or unrelated service pages.
+26. **Clean Language, Hreflang & Dynamic Sitemap Rules (Task 1.6):** Use `<html lang="en-GB">` as primary declaration without unnecessary `Content-Language` meta tags. Keep `hreflang` self-referencing and accurate without unnecessary alternate declarations. Generate `sitemap.xml` dynamically from published, `HTTP 200`, indexable canonical URLs only (22 launch-active URLs when legal pages are verified; exclude unpublished Portfolio and incomplete Legal pages).
+27. **HTTP 410 Semantics (Task 1.6):** A genuine `HTTP 410 Gone` response already signals permanent removal; do NOT make `X-Robots-Tag: noindex` mandatory on every `410` URL without a specific reason.
+28. **Individual Tag Review & Confirmed Spam `410` (Task 1.6 Final):** Review all 24 historical `/blog/tag/*` URLs, 19 `/blog/category/*` URLs, 86 pre-hack posts, and 622 post-hack URLs based on historical value, backlinks, and GSC evidence within Task 1.6 (do NOT auto-assign `410` or `301` blindly). Confirmed casino and gambling spam URLs must remain permanently removed via `HTTP 410 Gone`.
+29. **Single-Hop Canonical Edge Rules (Task 1.6 Final):** Prevent redirect chains. Combine `http -> https`, `www -> apex`, and trailing-slash normalisation directly into the final canonical URL in a single hop wherever possible.
+30. **Hero & Image Performance Standards (Task 1.6 Final):** Apply `fetchPriority="high"` to the critical hero image, do NOT lazy-load critical above-the-fold imagery, apply lazy loading to appropriate below-the-fold images, and include responsive `srcset`, `sizes`, and explicit image dimensions (`width`/`height`).
+31. **Pre-Deploy CSP Verification & GSC Policy (Task 1.6 Final):** Test the planned Content Security Policy against all required production resources (fonts, local/bundled assets, Cloudflare Turnstile, and the contact workflow) before deployment. Never invent GSC data or finalise GSC-dependent redirect/`410` decisions while `VER-15` remains `PENDING`.
+32. **Skip `Not Indexed Pages` & Lock GSC Evidence Scope (Task 1.6):** Do **NOT** request or wait for the GSC `Not Indexed Pages` report (explicitly skipped by owner on `2026-11-23`). Finalise Task 1.6 using the confirmed `305` `Indexed Pages` (`2026-11-16`), GSC `Links` (`No Data`), and GSC `Performance Pages` (`54` URLs).
 
 ---
 
@@ -69,22 +77,22 @@
 | VER-12 | Proof | Real completed project count & verifiable client reviews/platforms | `PENDING` |
 | VER-13 | Portfolio | 3–5 real WordPress / WooCommerce projects (or decision to launch without portfolio page initially) | `PENDING` |
 | VER-14 | Leadership | Real founder/team names & roles for `/about` (and historical `/leadership/` disposition) | `PENDING` |
-| VER-15 | SEO / GSC | Google Search Console property access & export of indexed / historical URLs (especially `/blog/*` spam vs legacy WP posts) | `PENDING` |
-| VER-16 | Blog Strategy | Decision on whether to restore/rewrite any of the 86 pre-hack WordPress blog articles or retire `/blog/*` cleanly | `PENDING` |
+| VER-15 | SEO / GSC | **Confirmed in Workspace:** `305`-URL `Indexed Pages` (`2026-11-16`; `Last crawled` `2026-07-23`–`2026-10-20` in `/public/assets/aistudio/Paste_November_23__2026_-_7_51PM_72c06835` — raw file lacks report header, classified per owner confirmation) & `Links` report (`No Data` — confirmed empty by owner). **Skipped by Owner:** `Not Indexed Pages` report will NOT be requested or awaited. **Workspace Sync Needed:** `Performance Pages` (`54` URLs, cited by owner as previously supplied) is NOT saved in the current workspace files/session and must be re-supplied here (plus `Queries`/`Countries` if available) to cross-reference against the `305` Indexed & `766` Wayback URLs | `PARTIALLY SYNCED — RE-ATTACH 54-URL PERFORMANCE PAGES EXPORT (NOT INDEXED SKIPPED; LINKS = NO DATA)` |
+| VER-16 | Blog Strategy | Keep recovery option open for valuable subset of 86 pre-hack WP posts (`17` confirmed still present in the `305`-URL GSC `Indexed Pages` export; `Links = No Data`) into future `/guides/` or `/blog/` after reconciling against the `54`-URL `Performance Pages` data & content quality review | `PENDING 54-URL PERFORMANCE PAGES RECONCILIATION` |
 | VER-17 | Email Provider | **Resend** (primary) / **Postmark** (fallback) selected; verify account, pricing, API limits, and `SPF`/`DKIM`/`DMARC` domain auth before Stage 2 | `PROVIDER SELECTED — ACCOUNT & DNS VERIFICATION PENDING` |
 | VER-18 | Brand & Repo | Confirm GitHub repository location (`main` branch workflow) & domain registrar access for future cut-over planning | `PENDING` |
 | VER-19 | Visual Assets | Existing AI images rejected in current form; plan editorial UI visuals / WordPress mockups / diagrams (or owner-supplied genuine photos later) | `DECIDED FOR REPLACEMENT IN STAGE 2` |
 
 ---
 
-## 4. Corrected Sitemap Summary (23 Active Pages — Overlap Resolved)
+## 4. Corrected Sitemap Summary (23 Planned / 22 Launch-Active Target)
 
-Earlier drafts cited "20 pages" while listing 25 due to overlaps across Core, WordPress, and Supporting pages. The overlap-free structure is **23 active pages** (plus 1 optional future conditional section):
+Earlier drafts cited "20 pages" while listing 25 due to overlaps across Core, WordPress, and Supporting pages. The overlap-free structure is **23 planned pages** (**22 launch-active target** once legal pages are verified, or **19** while legal pages remain unpublished/`noindex` and the public contact form remains disabled):
 
-- **Core Pages (`5`):** `/` (Home), `/services` (Services Hub), `/wordpress-projects-portfolio` (Portfolio — planned in sitemap, **unpublished & hidden from nav/footer until real projects verified**), `/about` (About & Agency Governance), `/contact` (Dual-Intent Enquiry & Consultation — consolidates `/contact` + `/book-a-consultation`).
+- **Core Pages (`5` planned / `4` launch-active):** `/` (Home), `/services` (Services Hub), `/wordpress-projects-portfolio` (Portfolio — planned in sitemap, **unpublished & hidden from nav/footer until real projects verified**), `/about` (About & Agency Governance), `/contact` (Dual-Intent Enquiry Page — consolidates `/contact` + `/book-a-consultation`; public contact form stays **disabled** until `/privacy-policy` & data controller details are verified).
 - **Primary WordPress & WooCommerce Pages (`5`):** `/wordpress-design-development` (includes Redesign), `/woocommerce-development`, `/wordpress-maintenance-support`, `/wordpress-speed-optimisation`, `/wordpress-security-emergency-support` (consolidates Security + Hacked Site Repair). *(WordPress SEO is integrated cleanly with `/services/search-engine-optimisation` to avoid cannibalisation.)*
 - **Existing Supporting Digital Service Pages (`10`):** `/services/website-development` (Non-WP / Bespoke React & Next.js focus), `/services/ecommerce-website-development` (Broader / Headless / Multi-channel commerce focus), `/services/custom-web-solutions-integrations`, `/services/ai-powered-website-development`, `/services/branding-brand-identity`, `/services/search-engine-optimisation`, `/services/generative-engine-optimisation`, `/services/ai-search-optimisation`, `/services/digital-marketing-online-growth`, `/services/ai-automation-business-process-automation`.
-- **Legal Pages (`3`):** `/privacy-policy`, `/cookie-policy`, `/terms-and-conditions` *(draft placeholders/missing entity details marked for verification before publication).*
+- **Legal Pages (`3`):** `/privacy-policy`, `/cookie-policy`, `/terms-and-conditions` *(excluded from sitemap and kept unpublished/`noindex` until entity, controller & processing details are complete and verified).*
 
 ---
 
@@ -95,21 +103,21 @@ Earlier drafts cited "20 pages" while listing 25 due to overlaps across Core, Wo
 3. **Production vs Workspace Drift:** Live `wpcarepoint.co.uk` (deployed `2026-11-21`) still serves the `hreflang="en-gb"` bug pointing `/services/*` back to `/` and lacks `Content-Language` headers. Local workspace contains fixes not yet deployed (and no git remote is linked in the local workspace).
 4. **Live Unverified Claims & Wrong Pricing:** Live site currently publishes `£59 / £119 / £229`, `wpcarepoint@gmail.com`, `Atelier Lumière UK`, `The Cavendish Clinic`, `900+`, `4.9/5`, `98/100`, `since 2019`, and `useServiceViews.ts` fake `localStorage` counters.
 5. **Cloudflare Pages `_redirects` & `wrangler.jsonc` Soft-404 Hazard:** Cloudflare Pages `_redirects` does not support `HTTP 410 Gone`, and current `wrangler.jsonc` sets `"not_found_handling": "single-page-application"`, which would serve `HTTP 200` `index.html` instead of `410` or `404`. Custom Cloudflare Worker / Pages Function routing is required.
-6. **Historical Casino Spam Footprint:** Wayback Machine CDX recorded **~639+ post-hack casino/gambling `/blog/*` URLs** (July–August 2026) mixed alongside **86 pre-hack WordPress blog posts**, **18 category archives**, **24 tag archives**, and **15 non-blog core URLs**. Exact live Google index impact requires Search Console inspection.
+6. **Historical & GSC Indexed Breach Footprint:** Deduplicated Wayback CDX recorded `766` paths (`622` post-hack `/blog/*` July–Aug 2026), while the **GSC `Indexed Pages`** trend (**Google Search Console → Indexing → Pages → `Indexed Pages`**, last updated `2026-11-16`, owner-confirmed `2026-11-23`) peaked at `975` (`2026-09-15`–`18`) from `719` (`2026-08-28`) and declined to **`305`** (`2026-11-14`–`16`). Classification of the confirmed `305` GSC `Indexed Pages` URLs (`Last crawled` `2026-07-23`–`2026-10-20` in `/public/assets/aistudio/Paste_November_23__2026_-_7_51PM_72c06835`): `258` confirmed gambling/casino spam (**including `9` root-level casino pages outside `/blog/`**), `19` suspected hacked/injected content, `6` uncertain URLs, `17` potentially legitimate pre-hack WordPress posts, `2` legacy core/service URLs (`/site-map/`, `/wordpress-services/`), and `3` category/pagination URLs (`/blog/category/wordpress-seo/`, `/page/4/`, `/page/6/`). *GSC scope update (`2026-11-23`):* raw `305`-URL workspace file lacks an embedded GSC header (classified as `Indexed Pages` per owner confirmation); `Not Indexed Pages` is **skipped by owner**; `Links` is confirmed **`No Data`** (no external backlinks reported in GSC); and the `54`-URL `Performance Pages` export cited by the owner is not yet saved in workspace files/session history.
 7. **Unoptimised Media & Unused Code Bloat:** Four JPEGs in `src/assets/images/` total ~3.31 MB (`709–868 KB` each); live bundle JS is `~560 KB`; orphaned `SiteRecover` components/routes remain in the repository; `deploy.yml` creates a soft-404 `dist/404.html`.
 
 ---
 
 ## 6. Recommended Next Action
 
-1. Review **Stage 1, Task 1.6: Website Architecture & SEO Foundation** and confirm architectural/SEO sign-off.
-2. Provide **Google Search Console export/access** (or URL coverage list) to unblock **Task 1.7** (`/blog/*` spam vs legacy WP post `410`/`301` finalisation).
-3. Supply **VER-01 through VER-18** confirmations (official email, data controller/Privacy Policy details, Resend/Postmark account & domain auth readiness, approved care plan pricing/inclusions, and real portfolio/proof) prior to Task 1.8 copy finalisation and any Stage 2 approval.
+1. **Provide/Re-attach the `54`-URL `Performance Pages` Export (`VER-15` — Highest Priority):** Do NOT send `Not Indexed Pages` (skipped) or `Links` (`No Data` confirmed). Re-paste or upload the already-exported **`54`-URL `Performance Pages` data** (plus `Queries`/`Countries` if available) into this workspace so it can be cross-referenced directly with the `305` `Indexed Pages` and `766` Wayback paths to lock the final Task 1.6 URL Migration Matrix (`17` indexed pre-hack posts, `86` pre-hack archive, `24` tags, `19` categories, `2` legacy core URLs, `6` uncertain URLs, and `9` root-level + `249` blog casino URLs).
+2. **Resolve Architecture Overlaps & Edge Rules:** Confirm handling of `/services/generative-engine-optimisation` vs `/services/ai-search-optimisation`, historical `/wordpress-seo-speed-optimization/` consolidation, and root-level edge `410` allowlist/pattern rules covering the `9` root-level casino pages outside `/blog/`.
+3. **Supply Minimum Legal & Contact Blockers:** Provide official enquiry email (`VER-01`), legal entity/data controller details (`VER-04`, `VER-05`, `VER-06`), address permission (`VER-03`), and confirm Resend/Postmark DNS readiness (`VER-17`) to enable `/privacy-policy`, `/cookie-policy`, `/terms-and-conditions`, and `/contact` form readiness before final Stage 1 approval.
 
 ---
 
 ## 7. Files Created or Modified
 
 - **Created:** `/PROJECT_STATUS.md` (Stage 1 tracking document).
-- **Updated:** `/PROJECT_STATUS.md` (recorded Task 1.5 owner decisions & technical corrections, marked Task 1.5 `COMPLETED`, and opened **Task 1.6: Website Architecture & SEO Foundation** as `IN PROGRESS`).
-- **Modified Application Files:** None. (All website source files, routes, CSS, configs, packages, DNS, and live deployments remain untouched.)
+- **Updated:** `/PROJECT_STATUS.md` (recorded `305`-URL `Indexed Pages` (`2026-11-16`) confirmation with original file header limitation; subsequently updated Task 1.6 roadmap scope, added Decision #32 to **skip `Not Indexed Pages`**, recorded `Links = No Data`, and flagged missing workspace sync for the `54`-URL `Performance Pages` export while keeping Task 1.6 unapproved and Stage 2 blocked).
+- **Modified Application Files:** None. (All website source files, CSS, routes, configs, packages, DNS, and live deployments remain untouched.)
