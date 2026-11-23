@@ -11,10 +11,17 @@ import { EASE_OUT_EXPO, ScrollProgressBar } from './components/MotionPrimitives'
 import { HeroSection } from './components/sections/HeroSection';
 import { ServicesSections } from './components/sections/ServicesSections';
 import { TrustAndProcessSections } from './components/sections/TrustAndProcessSections';
+import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
 import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { CtaSection } from './components/ui/CtaSection';
+import { DEDICATED_SERVICE_PAGES_BY_PATH } from './data/dedicatedServicePagesData';
 import { getServiceBySlug } from './data/servicePagesData';
 import { TRANSLATIONS } from './data/translations';
+
+function normalizePathname(pathname: string): string {
+  const cleaned = pathname.trim().toLowerCase();
+  return cleaned === '' ? '/' : cleaned;
+}
 
 function getSlugFromPath(pathname: string): string | null {
   const match = pathname.match(/^\/services\/([a-z0-9-]+)\/?$/i);
@@ -22,41 +29,59 @@ function getSlugFromPath(pathname: string): string | null {
 }
 
 export default function App() {
-  const [activeServiceSlug, setActiveServiceSlug] = useState<string | null>(() =>
-    getSlugFromPath(window.location.pathname)
+  const [currentPath, setCurrentPath] = useState<string>(() =>
+    normalizePathname(window.location.pathname)
   );
 
   useEffect(() => {
     const handlePopState = () => {
-      setActiveServiceSlug(getSlugFromPath(window.location.pathname));
+      setCurrentPath(normalizePathname(window.location.pathname));
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
-  const activeService = useMemo(() => {
-    if (!activeServiceSlug) return undefined;
-    return getServiceBySlug(activeServiceSlug);
-  }, [activeServiceSlug]);
+  const activeDedicatedPage = useMemo(
+    () => DEDICATED_SERVICE_PAGES_BY_PATH[currentPath],
+    [currentPath]
+  );
 
-  const navigateToService = useCallback((slug: string) => {
-    const targetPath = `/services/${slug}`;
-    if (window.location.pathname !== targetPath) {
-      window.history.pushState({}, '', targetPath);
+  const activeFallbackService = useMemo(() => {
+    if (activeDedicatedPage) return undefined;
+    const slug = getSlugFromPath(currentPath);
+    return slug ? getServiceBySlug(slug) : undefined;
+  }, [activeDedicatedPage, currentPath]);
+
+  const navigateToPath = useCallback((rawPath: string) => {
+    const normalized = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+    if (window.location.pathname !== normalized) {
+      window.history.pushState({}, '', normalized);
     }
-    setActiveServiceSlug(slug);
+    setCurrentPath(normalizePathname(normalized));
+    window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
+
+  const navigateToService = useCallback(
+    (slug: string) => {
+      if (slug === 'website-development') {
+        navigateToPath('/services/website-development/');
+        return;
+      }
+      navigateToPath(`/services/${slug}`);
+    },
+    [navigateToPath]
+  );
 
   const navigateHome = useCallback((hash?: string) => {
     const targetUrl = hash ? `/${hash}` : '/';
     if (window.location.pathname !== '/') {
       window.history.pushState({}, '', targetUrl);
-      setActiveServiceSlug(null);
+      setCurrentPath('/');
       if (hash) {
         const id = hash.replace('#', '');
         setTimeout(() => {
           document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-        }, 80);
+        }, 90);
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
@@ -87,20 +112,36 @@ export default function App() {
         <SiteHeader
           onNavigateHome={navigateHome}
           onNavigateService={navigateToService}
+          onNavigatePath={navigateToPath}
+          hasLocalContact={Boolean(activeDedicatedPage || currentPath === '/')}
         />
 
         <main id="main-content" className="flex-1">
           <AnimatePresence mode="wait">
-            {activeService ? (
+            {activeDedicatedPage ? (
               <motion.div
-                key={`service-${activeService.slug}`}
-                initial={{ opacity: 0, y: 8 }}
+                key={`dedicated-${activeDedicatedPage.id}`}
+                initial={{ opacity: 0.94, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.22, ease: EASE_OUT_EXPO }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <DedicatedServicePage
+                  page={activeDedicatedPage}
+                  onNavigateHome={navigateHome}
+                  onNavigatePath={navigateToPath}
+                />
+              </motion.div>
+            ) : activeFallbackService ? (
+              <motion.div
+                key={`service-${activeFallbackService.slug}`}
+                initial={{ opacity: 0.94, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
               >
                 <ServiceLandingPage
-                  service={activeService}
+                  service={activeFallbackService}
                   onNavigateHome={navigateHome}
                   onNavigateService={navigateToService}
                   t={TRANSLATIONS.en}
@@ -109,10 +150,10 @@ export default function App() {
             ) : (
               <motion.div
                 key="wpcarepoint-homepage"
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 0.96 }}
                 animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                exit={{ opacity: 0.96 }}
+                transition={{ duration: 0.18 }}
               >
                 {/* Section 2: Hero Section */}
                 <HeroSection onJumpToSection={navigateHome} />
@@ -120,6 +161,7 @@ export default function App() {
                 {/* Sections 3-8: Services Overview, Web Dev, eCommerce, AI Automation, Website Care + Quick Fix, SEO & AI Search */}
                 <ServicesSections
                   onExploreService={navigateToService}
+                  onNavigatePath={navigateToPath}
                   onJumpToSection={navigateHome}
                 />
 
@@ -134,7 +176,10 @@ export default function App() {
         </main>
 
         {/* Section 15: Professional Footer */}
-        <SiteFooter onNavigateHome={navigateHome} />
+        <SiteFooter
+          onNavigateHome={navigateHome}
+          onNavigatePath={navigateToPath}
+        />
       </div>
     </MotionConfig>
   );

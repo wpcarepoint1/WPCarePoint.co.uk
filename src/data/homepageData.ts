@@ -2,6 +2,7 @@ export interface NavServiceItem {
   label: string;
   description: string;
   href: string;
+  routePath?: string;
   serviceSlug?: string;
 }
 
@@ -90,7 +91,14 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
     label: 'Website Design & Development',
     description: 'Bespoke WordPress block builds, React & Next.js web applications.',
     href: '#website-development',
+    routePath: '/services/website-development/',
     serviceSlug: 'website-development',
+  },
+  {
+    label: 'WordPress Speed Optimisation',
+    description: 'Core Web Vitals tuning, image payloads, caching & database hygiene.',
+    href: '/wordpress-speed-optimisation/',
+    routePath: '/wordpress-speed-optimisation/',
   },
   {
     label: 'eCommerce Development',

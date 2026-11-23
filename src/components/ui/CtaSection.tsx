@@ -8,6 +8,8 @@ interface CtaSectionProps {
   eyebrow?: string;
   headline?: string;
   description?: string;
+  mailtoSubject?: string;
+  primaryButtonLabel?: string;
 }
 
 export function CtaSection({
@@ -15,6 +17,8 @@ export function CtaSection({
   eyebrow = 'Start a Conversation',
   headline = 'Plan your next website, store, or care agreement directly by email.',
   description = 'Share your website URL, commercial priorities, or WordPress support issue with our team. All enquiries are handled directly via email—no automated sales queues or call centres.',
+  mailtoSubject = 'WPCarePoint Project & Support Enquiry',
+  primaryButtonLabel = 'Send Email Enquiry',
 }: CtaSectionProps) {
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
   const emailLinkRef = useRef<HTMLAnchorElement>(null);
@@ -88,13 +92,13 @@ export function CtaSection({
             <div className="pt-4 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
               <Button
                 href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
-                  'WPCarePoint Project & Support Enquiry'
+                  mailtoSubject
                 )}`}
                 variant="onDark"
                 size="lg"
               >
                 <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>Send Email Enquiry</span>
+                <span>{primaryButtonLabel}</span>
                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Button>
 

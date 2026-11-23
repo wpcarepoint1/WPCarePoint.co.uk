@@ -11,11 +11,13 @@ import { ServiceCard } from '../ui/ServiceCard';
 
 interface ServicesSectionsProps {
   onExploreService: (slug: string) => void;
+  onNavigatePath?: (path: string) => void;
   onJumpToSection: (hash: string) => void;
 }
 
 export function ServicesSections({
   onExploreService,
+  onNavigatePath,
   onJumpToSection,
 }: ServicesSectionsProps) {
   const [archFailed, setArchFailed] = useState(false);
@@ -334,19 +336,33 @@ export function ServicesSections({
                 </div>
 
                 <div className="mt-5 pt-3 border-t border-[#e9eff2] flex flex-wrap items-center justify-between gap-3">
-                  <span className="text-xs font-mono text-[#6c757d]">
-                    /wordpress-speed-optimisation/
-                  </span>
+                  <a
+                    href="/wordpress-speed-optimisation/"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (onNavigatePath) {
+                        onNavigatePath('/wordpress-speed-optimisation/');
+                      } else {
+                        onJumpToSection('#contact');
+                      }
+                    }}
+                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap group"
+                  >
+                    <span>Explore Speed Optimisation</span>
+                    <ArrowRight
+                      className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+                      aria-hidden="true"
+                    />
+                  </a>
                   <a
                     href="#contact"
                     onClick={(e) => {
                       e.preventDefault();
                       onJumpToSection('#contact');
                     }}
-                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#6c757d] hover:text-[#003b4f] transition-colors whitespace-nowrap"
                   >
                     <span>Book Speed Audit</span>
-                    <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
                   </a>
                 </div>
               </aside>

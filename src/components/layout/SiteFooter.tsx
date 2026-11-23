@@ -3,14 +3,23 @@ import { BRAND_INFO } from '../../data/homepageData';
 
 interface SiteFooterProps {
   onNavigateHome: (hash?: string) => void;
+  onNavigatePath?: (path: string) => void;
 }
 
 const FOOTER_LINK_CLASS =
   'inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center hover:text-[#00b2d4] transition-colors';
 
-export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
+export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) {
   const handleAnchor = (hash: string) => {
     onNavigateHome(hash);
+  };
+
+  const handleRoute = (path: string, fallbackHash: string) => {
+    if (onNavigatePath) {
+      onNavigatePath(path);
+    } else {
+      onNavigateHome(fallbackHash);
+    }
   };
 
   return (
@@ -72,10 +81,10 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
             <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
               <li>
                 <a
-                  href="#website-development"
+                  href="/services/website-development/"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAnchor('#website-development');
+                    handleRoute('/services/website-development/', '#website-development');
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
@@ -84,7 +93,19 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#ecommerce-development"
+                  href="/wordpress-speed-optimisation/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRoute('/wordpress-speed-optimisation/', '#seo-ai-search');
+                  }}
+                  className={FOOTER_LINK_CLASS}
+                >
+                  WordPress Speed Optimisation
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/#ecommerce-development"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#ecommerce-development');
@@ -96,7 +117,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#ai-automation"
+                  href="/#ai-automation"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#ai-automation');
@@ -108,7 +129,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#website-care"
+                  href="/#website-care"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#website-care');
@@ -116,18 +137,6 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
                   className={FOOTER_LINK_CLASS}
                 >
                   Website Care &amp; Support
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#seo-ai-search"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    handleAnchor('#seo-ai-search');
-                  }}
-                  className={FOOTER_LINK_CLASS}
-                >
-                  SEO &amp; AI Search Optimisation
                 </a>
               </li>
             </ul>
@@ -141,7 +150,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
             <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
               <li>
                 <a
-                  href="#why-wpcarepoint"
+                  href="/#why-wpcarepoint"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#why-wpcarepoint');
@@ -153,7 +162,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#our-process"
+                  href="/#our-process"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#our-process');
@@ -165,7 +174,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#quick-fix"
+                  href="/#quick-fix"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#quick-fix');
@@ -177,7 +186,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#portfolio-preview"
+                  href="/#portfolio-preview"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#portfolio-preview');
@@ -189,7 +198,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#testimonials"
+                  href="/#testimonials"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#testimonials');
@@ -210,7 +219,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
             <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
               <li>
                 <a
-                  href="#faq"
+                  href="/#faq"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#faq');
@@ -222,7 +231,7 @@ export function SiteFooter({ onNavigateHome }: SiteFooterProps) {
               </li>
               <li>
                 <a
-                  href="#contact"
+                  href="/#contact"
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchor('#contact');

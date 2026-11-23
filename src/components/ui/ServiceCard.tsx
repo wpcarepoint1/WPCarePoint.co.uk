@@ -62,7 +62,7 @@ export function ServiceCard({
 
         {track.serviceSlug && onExploreService ? (
           <a
-            href={`/services/${track.serviceSlug}`}
+            href={`/services/${track.serviceSlug}/`}
             onClick={(e) => {
               e.preventDefault();
               onExploreService(track.serviceSlug!);

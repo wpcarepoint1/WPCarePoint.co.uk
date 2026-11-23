@@ -646,14 +646,31 @@ async function startServer() {
     app.get('*', (req, res) => {
       res.setHeader('Content-Language', 'en-GB');
 
-      const serviceMatch = req.path.match(/^\/services\/([a-z0-9-]+)\/?$/i);
-      const serviceFile = serviceMatch
-        ? path.join(distPath, 'services', `${serviceMatch[1].toLowerCase()}.html`)
-        : null;
-      const targetFile =
-        serviceFile && fs.existsSync(serviceFile)
-          ? serviceFile
-          : path.join(distPath, 'index.html');
+      const cleanPath = req.path.toLowerCase();
+      let targetFile = path.join(distPath, 'index.html');
+
+      if (/^\/wordpress-speed-optimisation\/?$/i.test(cleanPath)) {
+        const speedFile = path.join(distPath, 'wordpress-speed-optimisation', 'index.html');
+        if (fs.existsSync(speedFile)) {
+          targetFile = speedFile;
+        }
+      } else {
+        const serviceMatch = cleanPath.match(/^\/services\/([a-z0-9-]+)\/?$/i);
+        if (serviceMatch) {
+          const folderIndex = path.join(
+            distPath,
+            'services',
+            serviceMatch[1],
+            'index.html'
+          );
+          const flatFile = path.join(distPath, 'services', `${serviceMatch[1]}.html`);
+          if (fs.existsSync(folderIndex)) {
+            targetFile = folderIndex;
+          } else if (fs.existsSync(flatFile)) {
+            targetFile = flatFile;
+          }
+        }
+      }
 
       if (!fs.existsSync(targetFile)) {
         res.status(404).send('Not found');

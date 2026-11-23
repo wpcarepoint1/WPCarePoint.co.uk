@@ -6,11 +6,15 @@ import { Button } from '../ui/Button';
 interface SiteHeaderProps {
   onNavigateHome: (hash?: string) => void;
   onNavigateService?: (slug: string) => void;
+  onNavigatePath?: (path: string) => void;
+  hasLocalContact?: boolean;
 }
 
 export function SiteHeader({
   onNavigateHome,
   onNavigateService,
+  onNavigatePath,
+  hasLocalContact = false,
 }: SiteHeaderProps) {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -43,6 +47,33 @@ export function SiteHeader({
     setServicesOpen(false);
     setMobileOpen(false);
     onNavigateHome(hash);
+  };
+
+  const handleContactAction = () => {
+    setServicesOpen(false);
+    setMobileOpen(false);
+    if (hasLocalContact) {
+      const contactEl = document.getElementById('contact');
+      if (contactEl) {
+        contactEl.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+    onNavigateHome('#contact');
+  };
+
+  const handleDropdownItemClick = (svc: (typeof NAV_SERVICE_DROPDOWN)[number]) => {
+    setServicesOpen(false);
+    setMobileOpen(false);
+    if (svc.routePath && onNavigatePath) {
+      onNavigatePath(svc.routePath);
+      return;
+    }
+    if (svc.serviceSlug && onNavigateService && !svc.href.startsWith('#')) {
+      onNavigateService(svc.serviceSlug);
+      return;
+    }
+    onNavigateHome(svc.href);
   };
 
   return (
@@ -96,25 +127,24 @@ export function SiteHeader({
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute left-0 top-full mt-2 w-80 rounded-2xl bg-white text-[#2e2e2e] border border-[#dde6eb] shadow-xl p-2 z-50">
+                    <div className="absolute left-0 top-full mt-2 w-84 rounded-2xl bg-white text-[#2e2e2e] border border-[#dde6eb] shadow-xl p-2 z-50">
                       <div className="px-3 py-2 border-b border-[#e9eff2] mb-1">
                         <button
                           type="button"
                           onClick={() => handleAnchorClick('#services-overview')}
                           className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c] hover:text-[#003b4f] cursor-pointer"
                         >
-                          All 5 Core Services →
+                          All Core Services Overview →
                         </button>
                       </div>
                       <ul className="space-y-0.5">
                         {NAV_SERVICE_DROPDOWN.map((svc) => (
                           <li key={svc.label}>
                             <a
-                              href={svc.href}
+                              href={svc.routePath || svc.href}
                               onClick={(e) => {
                                 e.preventDefault();
-                                setServicesOpen(false);
-                                onNavigateHome(svc.href);
+                                handleDropdownItemClick(svc);
                               }}
                               className="block rounded-xl px-3 py-2.5 hover:bg-[#f7f9fa] transition-colors group"
                             >
@@ -128,18 +158,29 @@ export function SiteHeader({
                           </li>
                         ))}
                       </ul>
-                      {onNavigateService && (
-                        <div className="mt-1 pt-2 px-3 pb-1 border-t border-[#e9eff2]">
+                      {onNavigatePath && (
+                        <div className="mt-1 pt-2 px-3 pb-1 border-t border-[#e9eff2] flex items-center justify-between gap-2">
                           <a
-                            href="/services/website-development"
+                            href="/services/website-development/"
                             onClick={(e) => {
                               e.preventDefault();
                               setServicesOpen(false);
-                              onNavigateService('website-development');
+                              onNavigatePath('/services/website-development/');
                             }}
                             className="text-xs font-semibold text-[#00749c] hover:underline"
                           >
-                            View Dedicated Service Specifications →
+                            Web Development →
+                          </a>
+                          <a
+                            href="/wordpress-speed-optimisation/"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setServicesOpen(false);
+                              onNavigatePath('/wordpress-speed-optimisation/');
+                            }}
+                            className="text-xs font-semibold text-[#00749c] hover:underline"
+                          >
+                            WP Speed Page →
                           </a>
                         </div>
                       )}
@@ -152,7 +193,7 @@ export function SiteHeader({
             return (
               <a
                 key={item.label}
-                href={item.href}
+                href={`/${item.href}`}
                 onClick={(e) => {
                   e.preventDefault();
                   handleAnchorClick(item.href);
@@ -172,7 +213,7 @@ export function SiteHeader({
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
-                handleAnchorClick('#contact');
+                handleContactAction();
               }}
               variant="onDark"
               size="sm"
@@ -207,10 +248,10 @@ export function SiteHeader({
             {NAV_SERVICE_DROPDOWN.map((svc) => (
               <a
                 key={svc.label}
-                href={svc.href}
+                href={svc.routePath || svc.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  handleAnchorClick(svc.href);
+                  handleDropdownItemClick(svc);
                 }}
                 className="flex min-h-[44px] items-center text-sm font-medium text-white/90 hover:text-[#00b2d4] border-b border-white/10"
               >
@@ -222,7 +263,7 @@ export function SiteHeader({
               {NAV_ITEMS.filter((item) => !item.hasDropdown).map((item) => (
                 <a
                   key={item.label}
-                  href={item.href}
+                  href={`/${item.href}`}
                   onClick={(e) => {
                     e.preventDefault();
                     handleAnchorClick(item.href);
@@ -240,7 +281,7 @@ export function SiteHeader({
               href="#contact"
               onClick={(e) => {
                 e.preventDefault();
-                handleAnchorClick('#contact');
+                handleContactAction();
               }}
               variant="onDark"
               size="md"
