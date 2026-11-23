@@ -625,28 +625,14 @@ async function startServer() {
     });
   });
 
-  const resolveBrowserHtmlLang = (acceptLanguage?: string): 'cy' | 'en-GB' => {
-    if (!acceptLanguage) return 'en-GB';
-    const langs = acceptLanguage
-      .split(',')
-      .map((part) => part.split(';')[0]?.trim().toLowerCase() || '');
-    for (const code of langs) {
-      if (code === 'cy' || code.startsWith('cy-')) return 'cy';
-      if (code === 'en' || code.startsWith('en-')) return 'en-GB';
-    }
-    return 'en-GB';
-  };
-
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
       server: { middlewareMode: true },
       appType: 'spa',
     });
-    app.use((req, res, next) => {
-      const lang = resolveBrowserHtmlLang(req.headers['accept-language']);
-      res.setHeader('Content-Language', lang);
-      res.setHeader('Vary', 'Accept-Language');
+    app.use((_req, res, next) => {
+      res.setHeader('Content-Language', 'en-GB');
       next();
     });
     app.use(vite.middlewares);
@@ -658,9 +644,7 @@ async function startServer() {
       })
     );
     app.get('*', (req, res) => {
-      const lang = resolveBrowserHtmlLang(req.headers['accept-language']);
-      res.setHeader('Content-Language', lang);
-      res.setHeader('Vary', 'Accept-Language');
+      res.setHeader('Content-Language', 'en-GB');
 
       const serviceMatch = req.path.match(/^\/services\/([a-z0-9-]+)\/?$/i);
       const serviceFile = serviceMatch
@@ -677,14 +661,7 @@ async function startServer() {
       }
 
       const rawHtml = fs.readFileSync(targetFile, 'utf-8');
-      const localizedHtml = rawHtml
-        .replace(/<html\s+lang="[^"]*"/i, `<html lang="${lang}"`)
-        .replace(
-          /<meta\s+http-equiv="Content-Language"\s+content="[^"]*"\s*\/?>/i,
-          `<meta http-equiv="Content-Language" content="${lang}" />`
-        );
-
-      res.type('html').send(localizedHtml);
+      res.type('html').send(rawHtml);
     });
   }
 

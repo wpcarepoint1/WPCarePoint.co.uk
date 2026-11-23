@@ -98,12 +98,12 @@ export interface ComplianceStandard {
 }
 
 export const HERO_STUDIO_IMAGE =
-  '/src/assets/images/hero_agency_studio_1795213974094.jpg';
+  '/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg';
 export const SERVICE_ENGINEERING_IMAGE =
-  '/src/assets/images/service_speed_engineering_1795213974447.jpg';
+  '/src/assets/images/service_web_architecture_1795464512894.jpg';
 
 export const UK_OFFICE_ADDRESS =
-  'Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW';
+  'Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom';
 
 export const UK_REGIONS_SERVED = [
   'Surrey & London',

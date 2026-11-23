@@ -194,7 +194,7 @@ export function ServiceLandingPage({
             <span aria-hidden="true">/</span>
             <button
               type="button"
-              onClick={() => onNavigateHome('#services')}
+              onClick={() => onNavigateHome('#services-overview')}
               className="hover:text-[var(--text-heading)] hover:underline cursor-pointer"
             >
               {t.servicePage.servicesBreadcrumb}
@@ -247,7 +247,7 @@ export function ServiceLandingPage({
 
               <button
                 type="button"
-                onClick={() => onNavigateHome('#services')}
+                onClick={() => onNavigateHome('#services-overview')}
                 className="inline-flex items-center gap-1.5 text-sm font-medium text-[var(--text-body)] hover:text-[var(--text-heading)] hover:underline underline-offset-4 whitespace-nowrap shrink-0 cursor-pointer"
               >
                 <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -380,8 +380,8 @@ export function ServiceLandingPage({
 
             {/* Brand Standard & Commercial Assurance Card */}
             <FadeInUpOnScroll distance={20} delay={0.1}>
-              <aside className="rounded-2xl border border-slate-800 bg-[var(--bg-obsidian)] bg-obsidian-grid text-white p-6 sm:p-7 space-y-5">
-                <div className="flex items-center gap-2 text-sky-400">
+              <aside className="rounded-2xl border border-white/15 bg-[#003b4f] bg-deep-teal-grid text-white p-6 sm:p-7 space-y-5">
+                <div className="flex items-center gap-2 text-[#00b2d4]">
                   <ShieldCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span className="text-xs font-mono font-semibold">
                     {t.servicePage.brandPromiseEyebrow}
@@ -390,13 +390,13 @@ export function ServiceLandingPage({
                 <h3 className="text-lg font-bold text-white leading-snug">
                   {t.servicePage.brandPromiseHeadline}
                 </h3>
-                <dl className="space-y-3.5 pt-2 border-t border-slate-800">
+                <dl className="space-y-3.5 pt-2 border-t border-white/15">
                   {t.servicePage.brandPromisePoints.map((pt) => (
                     <div key={pt.label}>
                       <dt className="text-sm font-semibold text-white">
                         {pt.label}
                       </dt>
-                      <dd className="text-[13px] text-slate-300 mt-0.5 leading-relaxed">
+                      <dd className="text-[13px] text-white/80 mt-0.5 leading-relaxed">
                         {pt.detail}
                       </dd>
                     </div>
@@ -405,7 +405,7 @@ export function ServiceLandingPage({
                 <button
                   type="button"
                   onClick={() => scrollToSection('contact')}
-                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-medium text-white bg-sky-600 hover:bg-sky-500 rounded-xl transition-colors cursor-pointer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 text-xs font-semibold text-white bg-[#00749c] hover:bg-[#00b2d4] hover:text-[#003b4f] rounded-xl transition-colors cursor-pointer"
                 >
                   <span>{t.servicePage.brandPromiseCta}</span>
                   <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
@@ -448,14 +448,14 @@ export function ServiceLandingPage({
         </div>
       </section>
 
-      {/* 3-Step Delivery Roadmap: High-Contrast Obsidian Band */}
+      {/* 3-Step Delivery Roadmap */}
       <section
         id="service-delivery"
-        className="py-24 bg-[var(--bg-obsidian)] bg-obsidian-grid text-white border-t border-slate-800"
+        className="py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-t border-white/10"
       >
         <div className="max-w-7xl mx-auto px-6">
           <FadeInUpOnScroll distance={20} className="max-w-2xl mb-12">
-            <p className="text-xs font-medium text-sky-400">
+            <p className="text-xs font-medium text-[#00b2d4]">
               {t.servicePage.deliveryEyebrow}
             </p>
             <h2 className="text-3xl font-bold tracking-tight text-white mt-2">
@@ -471,14 +471,14 @@ export function ServiceLandingPage({
                 distance={24}
                 className="flex"
               >
-                <div className="w-full h-full rounded-2xl border border-slate-800 bg-[var(--bg-obsidian-card)] p-7 hover:border-slate-700 transition-colors">
-                  <p className="text-sm font-mono font-semibold text-sky-400 tabular-nums">
+                <div className="w-full h-full rounded-2xl border border-white/15 bg-white/5 p-7 hover:border-[#00b2d4]/60 transition-colors">
+                  <p className="text-sm font-mono font-semibold text-[#00b2d4] tabular-nums">
                     {step.step}
                   </p>
                   <h3 className="text-lg font-bold text-white mt-2.5">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-slate-300 mt-2.5 leading-relaxed">
+                  <p className="text-sm text-white/80 mt-2.5 leading-relaxed">
                     {step.detail}
                   </p>
                 </div>
@@ -558,7 +558,7 @@ export function ServiceLandingPage({
             </h2>
             <button
               type="button"
-              onClick={() => onNavigateHome('#services')}
+              onClick={() => onNavigateHome('#services-overview')}
               className="text-sm font-medium text-[var(--text-accent)] hover:underline self-start sm:self-auto cursor-pointer"
             >
               {t.servicePage.viewAllServices}
@@ -605,8 +605,8 @@ export function ServiceLandingPage({
         </div>
       </section>
 
-      {/* Pre-selected Proposal Form */}
-      <ContactSection preselectedPlan={service.name} t={t} />
+      {/* Pre-selected Email CTA */}
+      <ContactSection preselectedPlan={service.name} />
     </div>
   );
 }

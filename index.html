@@ -3,61 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Content-Language" content="en-GB, cy" />
-    <meta name="theme-color" content="#f8fafc" />
-    <title>WPCarePoint – UK Web Engineering, Brand, SEO, GEO &amp; AI</title>
-    <script>
-      (function () {
-        try {
-          var saved = localStorage.getItem('wpcarepoint-theme');
-          var prefersDark =
-            window.matchMedia &&
-            window.matchMedia('(prefers-color-scheme: dark)').matches;
-          var isDark = saved === 'dark' || (!saved && prefersDark);
-          if (isDark) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.setAttribute('data-theme', 'dark');
-          } else {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.setAttribute('data-theme', 'light');
-          }
-
-          var savedLang = localStorage.getItem('wpcarepoint-lang');
-          var detectedLang = 'en-GB';
-          if (savedLang === 'cy') {
-            detectedLang = 'cy';
-          } else if (savedLang === 'en') {
-            detectedLang = 'en-GB';
-          } else if (typeof navigator !== 'undefined') {
-            var langs =
-              Array.isArray(navigator.languages) && navigator.languages.length
-                ? navigator.languages
-                : [navigator.language];
-            for (var i = 0; i < langs.length; i++) {
-              var code = (langs[i] || '').toLowerCase().trim();
-              if (code === 'cy' || code.indexOf('cy-') === 0) {
-                detectedLang = 'cy';
-                break;
-              }
-              if (code === 'en' || code.indexOf('en-') === 0) {
-                detectedLang = 'en-GB';
-                break;
-              }
-            }
-          }
-          document.documentElement.lang = detectedLang;
-          var contentLangMeta = document.querySelector(
-            'meta[http-equiv="Content-Language"]'
-          );
-          if (contentLangMeta) {
-            contentLangMeta.setAttribute('content', detectedLang);
-          }
-        } catch (e) {}
-      })();
-    </script>
+    <meta http-equiv="Content-Language" content="en-GB" />
+    <meta name="theme-color" content="#003b4f" />
+    <title>WPCarePoint – Web Development, eCommerce &amp; AI Solutions Agency</title>
     <meta
       name="description"
-      content="British web &amp; WooCommerce engineering, brand architecture, SEO, GEO &amp; AI Search Optimisation (ChatGPT, Gemini, Claude), and compliant AI automation."
+      content="Building, improving and supporting digital businesses. UK WordPress and custom web development, WooCommerce, AI automation, Website Care Plans, SEO and AI Search Optimisation."
     />
     <meta
       name="robots"
@@ -67,55 +18,47 @@
     <meta name="geo.placename" content="Nutfield, Surrey, United Kingdom" />
     <link rel="canonical" href="https://wpcarepoint.co.uk/" />
     <link rel="alternate" hreflang="en-gb" href="https://wpcarepoint.co.uk/" />
-    <link rel="alternate" hreflang="cy" href="https://wpcarepoint.co.uk/" />
     <link rel="alternate" hreflang="x-default" href="https://wpcarepoint.co.uk/" />
-    <link
-      rel="alternate"
-      type="text/plain"
-      href="https://wpcarepoint.co.uk/llms.txt"
-      title="WPCarePoint LLM &amp; AI Search Index"
-    />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_GB" />
-    <meta property="og:locale:alternate" content="cy_GB" />
     <meta property="og:site_name" content="WPCarePoint" />
     <meta property="og:url" content="https://wpcarepoint.co.uk/" />
     <meta
       property="og:title"
-      content="WPCarePoint – UK Web Engineering, Brand, SEO, GEO &amp; AI"
+      content="WPCarePoint – Web Development, eCommerce &amp; AI Solutions Agency"
     />
     <meta
       property="og:description"
-      content="Bespoke UK website &amp; WooCommerce builds, brand systems, SEO, GEO, AI Search Optimisation (ChatGPT, Gemini, Claude), and compliant AI automation."
+      content="Building, improving and supporting digital businesses across the UK with website development, eCommerce, AI automation, ongoing care plans, and SEO."
     />
     <meta
       property="og:image"
-      content="https://wpcarepoint.co.uk/src/assets/images/hero_agency_studio_1795213974094.jpg"
+      content="https://wpcarepoint.co.uk/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg"
     />
     <meta
       property="og:image:alt"
-      content="WPCarePoint Surrey and London digital engineering, brand architecture, and AI consultancy studio"
+      content="WPCarePoint studio workspace for web development, eCommerce and AI solutions"
     />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta
       name="twitter:title"
-      content="WPCarePoint – UK Web Engineering, Brand, SEO, GEO &amp; AI"
+      content="WPCarePoint – Web Development, eCommerce &amp; AI Solutions Agency"
     />
     <meta
       name="twitter:description"
-      content="British web engineering, brand architecture, SEO, GEO, AI Search Optimisation, and UK GDPR–safe AI automation."
+      content="Building, improving and supporting digital businesses across the United Kingdom."
     />
     <meta
       name="twitter:image"
-      content="https://wpcarepoint.co.uk/src/assets/images/hero_agency_studio_1795213974094.jpg"
+      content="https://wpcarepoint.co.uk/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg"
     />
 
     <link
       rel="preload"
       as="image"
-      href="/src/assets/images/hero_agency_studio_1795213974094.jpg"
+      href="/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg"
       fetchpriority="high"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -134,24 +77,9 @@
             "@id": "https://wpcarepoint.co.uk/#website",
             "name": "WPCarePoint",
             "url": "https://wpcarepoint.co.uk/",
-            "inLanguage": ["en-GB", "cy"],
+            "inLanguage": "en-GB",
             "publisher": {
               "@id": "https://wpcarepoint.co.uk/#organisation"
-            }
-          },
-          {
-            "@type": "WebPage",
-            "@id": "https://wpcarepoint.co.uk/#webpage",
-            "url": "https://wpcarepoint.co.uk/",
-            "name": "WPCarePoint – UK Web Engineering, Brand, SEO, GEO & AI",
-            "isPartOf": { "@id": "https://wpcarepoint.co.uk/#website" },
-            "about": { "@id": "https://wpcarepoint.co.uk/#organisation" },
-            "datePublished": "2024-01-15",
-            "dateModified": "2026-11-21",
-            "inLanguage": "en-GB",
-            "speakable": {
-              "@type": "SpeakableSpecification",
-              "cssSelector": ["h1", "main p"]
             }
           },
           {
@@ -159,8 +87,8 @@
             "@id": "https://wpcarepoint.co.uk/#organisation",
             "name": "WPCarePoint",
             "url": "https://wpcarepoint.co.uk/",
-            "email": "wpcarepoint@gmail.com",
-            "image": "https://wpcarepoint.co.uk/src/assets/images/hero_agency_studio_1795213974094.jpg",
+            "email": "contact@wpcarepoint.co.uk",
+            "image": "https://wpcarepoint.co.uk/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg",
             "address": {
               "@type": "PostalAddress",
               "streetAddress": "Robert Denholm House, Bletchingley Road",
@@ -171,147 +99,13 @@
             },
             "contactPoint": {
               "@type": "ContactPoint",
-              "contactType": "executive consultation",
-              "email": "wpcarepoint@gmail.com",
+              "contactType": "enquiries",
+              "email": "contact@wpcarepoint.co.uk",
               "areaServed": "GB",
-              "availableLanguage": ["en-GB", "cy"]
+              "availableLanguage": "en-GB"
             },
-            "description": "British digital consultancy specialising in Website & E-commerce Development, Custom Web Integrations, AI-Powered Web Platforms, Brand Identity, SEO, GEO, AI Search Optimisation (ChatGPT, Gemini, Claude), Digital Growth, and UK GDPR–safe AI Business Process Automation.",
-            "priceRange": "££",
-            "knowsAbout": [
-              "TypeScript 5",
-              "React 19",
-              "Next.js",
-              "Python 3.12",
-              "PHP 8.4",
-              "WordPress Engineering",
-              "WooCommerce HPOS",
-              "Tailwind CSS",
-              "PostgreSQL",
-              "Cloudflare Workers",
-              "AWS London (eu-west-2)",
-              "Technical SEO",
-              "Generative Engine Optimisation (GEO)",
-              "AI Search Optimisation",
-              "UK GDPR & PECR Compliance",
-              "WCAG 2.2 Level AA Accessibility",
-              "AI Business Process Automation"
-            ],
-            "areaServed": [
-              { "@type": "Country", "name": "United Kingdom" },
-              { "@type": "City", "name": "London" },
-              { "@type": "City", "name": "Manchester" },
-              { "@type": "City", "name": "Birmingham" },
-              { "@type": "City", "name": "Edinburgh" },
-              { "@type": "City", "name": "Bristol" },
-              { "@type": "City", "name": "Leeds" },
-              { "@type": "City", "name": "Cardiff" }
-            ],
-            "foundingDate": "2019",
-            "openingHoursSpecification": [
-              {
-                "@type": "OpeningHoursSpecification",
-                "dayOfWeek": [
-                  "Monday",
-                  "Tuesday",
-                  "Wednesday",
-                  "Thursday",
-                  "Friday"
-                ],
-                "opens": "08:30",
-                "closes": "18:00"
-              }
-            ],
-            "hasOfferCatalog": {
-              "@type": "OfferCatalog",
-              "name": "UK Digital, Web & AI Capabilities",
-              "itemListElement": [
-                { "@type": "Offer", "name": "Website Development", "url": "https://wpcarepoint.co.uk/services/website-development" },
-                { "@type": "Offer", "name": "E-commerce Website Development", "url": "https://wpcarepoint.co.uk/services/ecommerce-website-development" },
-                { "@type": "Offer", "name": "Custom Web Solutions and Integrations", "url": "https://wpcarepoint.co.uk/services/custom-web-solutions-integrations" },
-                { "@type": "Offer", "name": "AI-Powered Website Development", "url": "https://wpcarepoint.co.uk/services/ai-powered-website-development" },
-                { "@type": "Offer", "name": "Branding and Brand Identity", "url": "https://wpcarepoint.co.uk/services/branding-brand-identity" },
-                { "@type": "Offer", "name": "Search Engine Optimisation (SEO)", "url": "https://wpcarepoint.co.uk/services/search-engine-optimisation" },
-                { "@type": "Offer", "name": "Generative Engine Optimisation (GEO)", "url": "https://wpcarepoint.co.uk/services/generative-engine-optimisation" },
-                { "@type": "Offer", "name": "AI Search Optimisation for ChatGPT, Gemini and Claude", "url": "https://wpcarepoint.co.uk/services/ai-search-optimisation" },
-                { "@type": "Offer", "name": "Digital Marketing and Online Growth", "url": "https://wpcarepoint.co.uk/services/digital-marketing-online-growth" },
-                { "@type": "Offer", "name": "AI Automation and Business Process Automation", "url": "https://wpcarepoint.co.uk/services/ai-automation-business-process-automation" },
-                {
-                  "@type": "Offer",
-                  "name": "Essential Care",
-                  "price": "59",
-                  "priceCurrency": "GBP"
-                },
-                {
-                  "@type": "Offer",
-                  "name": "Growth & Speed",
-                  "price": "119",
-                  "priceCurrency": "GBP"
-                },
-                {
-                  "@type": "Offer",
-                  "name": "Scale & WooCommerce",
-                  "price": "229",
-                  "priceCurrency": "GBP"
-                }
-              ]
-            }
-          },
-          {
-            "@type": "BreadcrumbList",
-            "itemListElement": [
-              {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "WPCarePoint UK",
-                "item": "https://wpcarepoint.co.uk/"
-              }
-            ]
-          },
-          {
-            "@type": "FAQPage",
-            "mainEntity": [
-              {
-                "@type": "Question",
-                "name": "Do you handle both custom web builds and AI / GEO growth under one team?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. We design and engineer bespoke websites, e-commerce stores, and custom API integrations alongside SEO, Generative Engine Optimisation (GEO), AI Search Optimisation for ChatGPT, Gemini and Claude, and business process automation."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Do you support UK hosting providers and Nominet .co.uk domains?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. We manage DNS, SSL, and deployments across UK and European hosts including 20i, Krystal, SiteGround UK, Namecheap, Vercel, and Cloudflare, alongside Nominet .co.uk and .uk domain configurations."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Are your websites, AI integrations, and backups UK GDPR compliant?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. We configure UK GDPR and PECR-aligned consent, encrypted UK/EEA backup storage, and privacy-safe AI workflows so customer and order data remain protected."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Are care plans billed in GBP and do you require long-term contracts?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "All care plans are billed transparently in GBP (£) on rolling monthly terms with zero lock-in contracts, or an optional annual plan with 17% savings. Custom builds, branding, and AI automation projects are quoted upfront with fixed milestones."
-                }
-              },
-              {
-                "@type": "Question",
-                "name": "Can you rebuild a lost .co.uk website without losing Google UK rankings?",
-                "acceptedAnswer": {
-                  "@type": "Answer",
-                  "text": "Yes. We audit indexed pages from Search Console and historical archives, preserve matching URL slugs, deploy server-level 301 redirects, and configure UK Schema.org markup and llms.txt."
-                }
-              }
-            ]
+            "description": "Web Development, eCommerce & AI Solutions Agency. Building, improving and supporting digital businesses across the United Kingdom.",
+            "areaServed": { "@type": "Country", "name": "United Kingdom" }
           }
         ]
       }

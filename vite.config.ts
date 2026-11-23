@@ -30,7 +30,7 @@ function buildHomePrerenderBody(): string {
 
   const carePlansHtml = CARE_PLANS.map(
     (p) =>
-      `<li><strong>${escapeHtml(p.name)}</strong> (£${p.monthlyPriceGbp}/mo): ${escapeHtml(p.summary)}</li>`
+      `<li><strong>${escapeHtml(p.name)}</strong> (Enquire for Pricing): ${escapeHtml(p.summary)}</li>`
   ).join('\n          ');
 
   const faqHtml = UK_FAQS.map(
@@ -41,24 +41,24 @@ function buildHomePrerenderBody(): string {
   return `<main>
         <header><a href="/">WPCarePoint</a></header>
         <section>
-          <h1>Authoritative digital architecture, bespoke engineering, and AI search leadership.</h1>
-          <p>WPCarePoint partners with ambitious British organisations to architect high-performance web platforms, bespoke WooCommerce ecosystems, distinctive brand identities, and compliant AI automation—engineered to lead across Google UK and generative search.</p>
-          <p>United Kingdom Studio: ${escapeHtml(UK_OFFICE_ADDRESS)} · Serving ${escapeHtml(UK_REGIONS_SERVED.join(', '))} · Email: wpcarepoint@gmail.com</p>
+          <h1>Building, improving and supporting digital businesses.</h1>
+          <p>WPCarePoint is a UK Web Development, eCommerce &amp; AI Solutions Agency delivering bespoke websites, WooCommerce stores, AI workflow automation, structured website care, and SEO &amp; AI search optimisation.</p>
+          <p>United Kingdom: ${escapeHtml(UK_OFFICE_ADDRESS)} · Serving ${escapeHtml(UK_REGIONS_SERVED.join(', '))} · Email: contact@wpcarepoint.co.uk</p>
         </section>
         <section>
-          <h2>Specialist UK Practice Areas</h2>
+          <h2>Core Services</h2>
           <ul>
           ${serviceListHtml}
           </ul>
         </section>
         <section>
-          <h2>UK Managed Care Retainers</h2>
+          <h2>Website Care &amp; Technical Support</h2>
           <ul>
           ${carePlansHtml}
           </ul>
         </section>
         <section>
-          <h2>UK Governance &amp; Frequently Asked Questions</h2>
+          <h2>Frequently Asked Questions</h2>
           ${faqHtml}
         </section>
       </main>`;
@@ -81,7 +81,7 @@ function buildServicePrerenderHtml(
         url: canonicalUrl,
         name: pageTitle,
         datePublished: '2024-01-15',
-        dateModified: '2026-11-21',
+        dateModified: '2026-11-23',
         inLanguage: 'en-GB',
         speakable: {
           '@type': 'SpeakableSpecification',
@@ -98,7 +98,7 @@ function buildServicePrerenderHtml(
           '@type': 'ProfessionalService',
           name: 'WPCarePoint',
           url: 'https://wpcarepoint.co.uk/',
-          email: 'wpcarepoint@gmail.com',
+          email: 'contact@wpcarepoint.co.uk',
           address: {
             '@type': 'PostalAddress',
             streetAddress: 'Robert Denholm House, Bletchingley Road',
@@ -184,10 +184,6 @@ function buildServicePrerenderHtml(
     .replace(
       /<link\s+rel="alternate"\s+hreflang="en-gb"\s+href="[^"]*"\s*\/?>/,
       `<link rel="alternate" hreflang="en-gb" href="${canonicalUrl}" />`
-    )
-    .replace(
-      /<link\s+rel="alternate"\s+hreflang="cy"\s+href="[^"]*"\s*\/?>/,
-      `<link rel="alternate" hreflang="cy" href="${canonicalUrl}" />`
     )
     .replace(
       /<link\s+rel="alternate"\s+hreflang="x-default"\s+href="[^"]*"\s*\/?>/,
