@@ -654,6 +654,11 @@ async function startServer() {
         if (fs.existsSync(speedFile)) {
           targetFile = speedFile;
         }
+      } else if (/^\/contact\/?$/i.test(cleanPath)) {
+        const contactFile = path.join(distPath, 'contact', 'index.html');
+        if (fs.existsSync(contactFile)) {
+          targetFile = contactFile;
+        }
       } else {
         const serviceMatch = cleanPath.match(/^\/services\/([a-z0-9-]+)\/?$/i);
         if (serviceMatch) {

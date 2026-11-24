@@ -4,6 +4,7 @@ import { CtaSection } from '../ui/CtaSection';
 import { ServicePageHero } from './ServicePageHero';
 import {
   ServiceCapabilitiesSection,
+  ServiceCarePlansOverviewSection,
   ServiceFaqAndRelatedSection,
   ServiceIntroSection,
   ServiceJumpNav,
@@ -160,6 +161,10 @@ export function DedicatedServicePage({
       <ServiceIntroSection intro={page.introSection} />
 
       <ServiceCapabilitiesSection capabilities={page.capabilitiesSection} />
+
+      {page.carePlansSection && (
+        <ServiceCarePlansOverviewSection carePlans={page.carePlansSection} />
+      )}
 
       <ServiceTechnicalGridSection technical={page.technicalSection} />
 

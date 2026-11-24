@@ -1,5 +1,8 @@
-import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
-import type { DedicatedServicePageConfig } from '../../data/dedicatedServicePagesData';
+import { ArrowRight, Check, ShieldCheck, Wrench } from 'lucide-react';
+import {
+  type DedicatedServicePageConfig,
+} from '../../data/dedicatedServicePagesData';
+import { BRAND_INFO } from '../../data/homepageData';
 import { FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { FaqAccordion } from '../ui/FaqAccordion';
@@ -161,6 +164,126 @@ export function ServiceCapabilitiesSection({
             </FadeInUpOnScroll>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+export function ServiceCarePlansOverviewSection({
+  carePlans,
+}: {
+  carePlans: NonNullable<DedicatedServicePageConfig['carePlansSection']>;
+}) {
+  return (
+    <section
+      id={carePlans.id}
+      className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <SectionHeading
+          eyebrow={carePlans.eyebrow}
+          title={carePlans.title}
+          description={carePlans.description}
+        />
+
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {carePlans.plans.map((tier, idx) => (
+            <FadeInUpOnScroll key={tier.id} delay={idx * 0.04} className="flex">
+              <article
+                className={`w-full rounded-2xl border p-6 sm:p-7 flex flex-col justify-between transition-colors ${
+                  tier.highlighted
+                    ? 'bg-[#f7f9fa] border-[#00749c]'
+                    : 'bg-white border-[#dde6eb] hover:border-[#b9ccd6]'
+                }`}
+              >
+                <div>
+                  <div className="flex items-center justify-between gap-2">
+                    <h3 className="text-xl font-bold text-[#003b4f]">{tier.name}</h3>
+                    {tier.highlighted && (
+                      <span className="text-xs font-mono font-semibold text-[#00749c]">
+                        Recommended
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-[#6c757d] mt-1">{tier.audience}</p>
+
+                  <p className="mt-4 pb-4 border-b border-[#e9eff2] text-lg font-mono font-bold text-[#00749c]">
+                    {tier.pricingLabel}
+                  </p>
+
+                  <p className="mt-4 text-sm text-[#2e2e2e] leading-relaxed">
+                    {tier.summary}
+                  </p>
+
+                  <ul className="mt-5 space-y-2.5">
+                    {tier.highlights.map((bullet) => (
+                      <li
+                        key={bullet}
+                        className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
+                      >
+                        <Check
+                          className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-[#e9eff2]">
+                  <Button
+                    href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+                      `Website Care Enquiry — ${tier.name}`
+                    )}`}
+                    variant={tier.highlighted ? 'primary' : 'secondary'}
+                    size="md"
+                    className="w-full"
+                  >
+                    <span>{tier.pricingLabel}</span>
+                    <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </Button>
+                </div>
+              </article>
+            </FadeInUpOnScroll>
+          ))}
+        </div>
+
+        <aside
+          id="one-off-fixes"
+          className="scroll-mt-24 mt-8 rounded-2xl border border-[#b9ccd6] bg-[#f7f9fa] p-6 sm:p-7 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"
+        >
+          <div className="flex items-start gap-4 max-w-2xl">
+            <div className="h-11 w-11 rounded-xl bg-[#00749c]/10 text-[#00749c] flex items-center justify-center shrink-0">
+              <Wrench className="h-5 w-5" aria-hidden="true" />
+            </div>
+            <div>
+              <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                {carePlans.quickFixEyebrow}
+              </p>
+              <h3 className="text-lg sm:text-xl font-bold text-[#003b4f] mt-1">
+                {carePlans.quickFixTitle}
+              </h3>
+              <p className="text-sm text-[#2e2e2e] mt-1.5 leading-relaxed">
+                {carePlans.quickFixDescription}
+              </p>
+            </div>
+          </div>
+
+          <div className="shrink-0">
+            <Button
+              href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+                carePlans.quickFixSubject
+              )}`}
+              variant="primary"
+              size="md"
+              className="w-full sm:w-auto"
+            >
+              <span>{carePlans.quickFixButtonLabel}</span>
+              <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </Button>
+          </div>
+        </aside>
       </div>
     </section>
   );

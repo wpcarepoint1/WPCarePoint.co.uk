@@ -11,6 +11,7 @@ import { EASE_OUT_EXPO, ScrollProgressBar } from './components/MotionPrimitives'
 import { HeroSection } from './components/sections/HeroSection';
 import { ServicesSections } from './components/sections/ServicesSections';
 import { TrustAndProcessSections } from './components/sections/TrustAndProcessSections';
+import { ContactPageView } from './components/contact/ContactPageView';
 import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
 import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { CtaSection } from './components/ui/CtaSection';
@@ -41,16 +42,19 @@ export default function App() {
     return () => window.removeEventListener('popstate', handlePopState);
   }, []);
 
+  const isContactPage =
+    currentPath === '/contact' || currentPath === '/contact/';
+
   const activeDedicatedPage = useMemo(
     () => DEDICATED_SERVICE_PAGES_BY_PATH[currentPath],
     [currentPath]
   );
 
   const activeFallbackService = useMemo(() => {
-    if (activeDedicatedPage) return undefined;
+    if (isContactPage || activeDedicatedPage) return undefined;
     const slug = getSlugFromPath(currentPath);
     return slug ? getServiceBySlug(slug) : undefined;
-  }, [activeDedicatedPage, currentPath]);
+  }, [isContactPage, activeDedicatedPage, currentPath]);
 
   const navigateToPath = useCallback((rawPath: string) => {
     const normalized = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
@@ -65,6 +69,31 @@ export default function App() {
     (slug: string) => {
       if (slug === 'website-development') {
         navigateToPath('/services/website-development/');
+        return;
+      }
+      if (
+        slug === 'ecommerce-website-development' ||
+        slug === 'ecommerce-development'
+      ) {
+        navigateToPath('/services/ecommerce-development/');
+        return;
+      }
+      if (
+        slug === 'ai-automation-business-process-automation' ||
+        slug === 'ai-business-automation'
+      ) {
+        navigateToPath('/services/ai-business-automation/');
+        return;
+      }
+      if (slug === 'website-care-support') {
+        navigateToPath('/services/website-care-support/');
+        return;
+      }
+      if (
+        slug === 'search-engine-optimisation' ||
+        slug === 'ai-search-optimisation'
+      ) {
+        navigateToPath('/services/ai-search-optimisation/');
         return;
       }
       navigateToPath(`/services/${slug}`);
@@ -113,12 +142,27 @@ export default function App() {
           onNavigateHome={navigateHome}
           onNavigateService={navigateToService}
           onNavigatePath={navigateToPath}
-          hasLocalContact={Boolean(activeDedicatedPage || currentPath === '/')}
+          hasLocalContact={Boolean(
+            activeDedicatedPage || isContactPage || currentPath === '/'
+          )}
         />
 
         <main id="main-content" className="flex-1">
           <AnimatePresence mode="wait">
-            {activeDedicatedPage ? (
+            {isContactPage ? (
+              <motion.div
+                key="contact-page"
+                initial={{ opacity: 0.94, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <ContactPageView
+                  onNavigateHome={navigateHome}
+                  onNavigatePath={navigateToPath}
+                />
+              </motion.div>
+            ) : activeDedicatedPage ? (
               <motion.div
                 key={`dedicated-${activeDedicatedPage.id}`}
                 initial={{ opacity: 0.94, y: 6 }}

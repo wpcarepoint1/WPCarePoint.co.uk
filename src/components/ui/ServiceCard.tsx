@@ -4,6 +4,7 @@ import type { CoreServiceTrack } from '../../data/homepageData';
 interface ServiceCardProps {
   track: CoreServiceTrack;
   onExploreService?: (slug: string) => void;
+  onNavigatePath?: (path: string) => void;
   onJumpToAnchor?: (anchorId: string) => void;
   variant?: 'default' | 'featured';
 }
@@ -11,6 +12,7 @@ interface ServiceCardProps {
 export function ServiceCard({
   track,
   onExploreService,
+  onNavigatePath,
   onJumpToAnchor,
   variant = 'default',
 }: ServiceCardProps) {
@@ -60,7 +62,22 @@ export function ServiceCard({
       <div className="mt-5 pt-3 border-t border-[#e9eff2] flex flex-wrap items-center justify-between gap-3">
         <span className="text-xs font-mono text-[#6c757d]">{track.standards}</span>
 
-        {track.serviceSlug && onExploreService ? (
+        {track.routePath && onNavigatePath ? (
+          <a
+            href={track.routePath}
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigatePath(track.routePath!);
+            }}
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group"
+          >
+            <span>Explore Details</span>
+            <ArrowRight
+              className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+              aria-hidden="true"
+            />
+          </a>
+        ) : track.serviceSlug && onExploreService ? (
           <a
             href={`/services/${track.serviceSlug}/`}
             onClick={(e) => {

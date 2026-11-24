@@ -1,4 +1,4 @@
-import type { FaqEntry } from './homepageData';
+import type { CarePlanTier, FaqEntry } from './homepageData';
 
 export interface ServiceHeroSpec {
   label: string;
@@ -47,8 +47,27 @@ export interface RelatedLinkItem {
   href: string;
 }
 
+export interface DedicatedServiceCareOverview {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  plans: CarePlanTier[];
+  quickFixEyebrow: string;
+  quickFixTitle: string;
+  quickFixDescription: string;
+  quickFixButtonLabel: string;
+  quickFixSubject: string;
+}
+
 export interface DedicatedServicePageConfig {
-  id: 'website-development' | 'wordpress-speed-optimisation';
+  id:
+    | 'website-development'
+    | 'wordpress-speed-optimisation'
+    | 'ecommerce-development'
+    | 'ai-business-automation'
+    | 'website-care-support'
+    | 'ai-search-optimisation';
   routePath: string;
   canonicalUrl: string;
   metaTitle: string;
@@ -84,6 +103,7 @@ export interface DedicatedServicePageConfig {
     description: string;
     items: ServiceCapabilityCard[];
   };
+  carePlansSection?: DedicatedServiceCareOverview;
   technicalSection: {
     id: string;
     eyebrow: string;
@@ -144,7 +164,8 @@ export const WEBSITE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
     secondaryCtaLabel: 'Explore What We Build',
     secondaryCtaTargetId: 'service-intro',
     imageUrl: '/src/assets/images/service_web_design_studio_1795466283235.jpg',
-    imageAlt: 'WPCarePoint digital architecture studio showing wireframe schematics and design specification',
+    imageAlt:
+      'WPCarePoint digital architecture studio showing wireframe schematics and design specification',
     imageCaption: 'Tailored UK business web platforms · Clean WordPress & TypeScript architecture',
     standards: [
       { label: 'Core Platforms', value: 'WordPress · React · Next.js' },
@@ -444,6 +465,15 @@ export const WEBSITE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
     title: 'Explore complementary WPCarePoint services',
     items: [
       {
+        eyebrow: 'Online Retail',
+        title: 'eCommerce & WooCommerce Development',
+        description:
+          'GBP (£) pricing, UK VAT tax logic, Stripe UK SCA checkouts, and Royal Mail / DPD delivery configurations engineered for mobile speed.',
+        ctaLabel: 'Explore eCommerce Builds',
+        targetType: 'route',
+        href: '/services/ecommerce-development/',
+      },
+      {
         eyebrow: 'Performance Engineering',
         title: 'WordPress Speed Optimisation',
         description:
@@ -454,21 +484,12 @@ export const WEBSITE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
       },
       {
         eyebrow: 'Ongoing Protection',
-        title: 'Website Care & Quick Fix Support',
+        title: 'Website Care & Technical Support',
         description:
           'Staging-tested updates, encrypted off-site backups, and standalone WordPress Quick Fix remediation without long-term lock-in.',
-        ctaLabel: 'View Care Pathways',
-        targetType: 'homeAnchor',
-        href: '#website-care',
-      },
-      {
-        eyebrow: 'Online Retail',
-        title: 'eCommerce & WooCommerce Builds',
-        description:
-          'GBP (£) pricing, UK VAT tax logic, Stripe UK SCA checkouts, and Royal Mail / DPD delivery configurations engineered for mobile speed.',
-        ctaLabel: 'View eCommerce Track',
-        targetType: 'homeAnchor',
-        href: '#ecommerce-development',
+        ctaLabel: 'Explore Website Care',
+        targetType: 'route',
+        href: '/services/website-care-support/',
       },
     ],
   },
@@ -500,7 +521,8 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
     secondaryCtaLabel: 'Why Speed Matters',
     secondaryCtaTargetId: 'why-speed-matters',
     imageUrl: '/src/assets/images/wordpress_speed_engineering_1795466283304.jpg',
-    imageAlt: 'Minimalist architectural engineering components representing streamlined WordPress caching and load speed optimisation',
+    imageAlt:
+      'Minimalist architectural engineering components representing streamlined WordPress caching and load speed optimisation',
     imageCaption: 'Staging-tested speed engineering · Safe for business sites & WooCommerce',
     standards: [
       { label: 'Core Web Vitals', value: 'LCP · INP · CLS Focus' },
@@ -549,7 +571,7 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
   capabilitiesSection: {
     id: 'common-issues',
     eyebrow: 'Common WordPress Performance Issues',
-    title: 'Six frequent culprits that slow down established UK WordPress websites.',
+    title: 'Four frequent culprits that slow down established UK WordPress websites.',
     description:
       'Over months of updates and marketing additions, clean sites accumulate quiet overhead. Here is where performance typically degrades first.',
     items: [
@@ -673,7 +695,8 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
           'Honest advice across hosts such as 20i, Krystal, SiteGround UK, or Cloudflare without forced upsells',
         ],
         calloutLabel: 'Right-Sized Advice',
-        calloutText: 'If hosting hardware is the real bottleneck, we tell you plainly rather than billing for endless tweaks.',
+        calloutText:
+          'If hosting hardware is the real bottleneck, we tell you plainly rather than billing for endless tweaks.',
       },
     ],
   },
@@ -811,21 +834,21 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
       },
       {
         eyebrow: 'Monthly Stewardship',
-        title: 'Essential, Advanced & Elite Care Plans',
+        title: 'Website Care & Technical Support',
         description:
           'Ongoing staging-tested updates, encrypted off-site backups, and recurring Core Web Vitals oversight tailored around your platform.',
-        ctaLabel: 'Explore Care Plans',
-        targetType: 'homeAnchor',
-        href: '#website-care',
+        ctaLabel: 'Explore Website Care',
+        targetType: 'route',
+        href: '/services/website-care-support/',
       },
       {
         eyebrow: 'Search Visibility',
         title: 'SEO & AI Search Optimisation',
         description:
           'Pair technical crawl hygiene and Schema.org structured data with faster Core Web Vitals across Google UK and modern AI search tools.',
-        ctaLabel: 'View SEO & AI Search',
-        targetType: 'homeAnchor',
-        href: '#seo-ai-search',
+        ctaLabel: 'Explore SEO & AI Search',
+        targetType: 'route',
+        href: '/services/ai-search-optimisation/',
       },
     ],
   },
@@ -839,9 +862,1506 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
   },
 };
 
+export const ECOMMERCE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
+  id: 'ecommerce-development',
+  routePath: '/services/ecommerce-development/',
+  canonicalUrl: 'https://wpcarepoint.co.uk/services/ecommerce-development/',
+  metaTitle: 'eCommerce & WooCommerce Development UK | Online Store Engineering – WPCarePoint',
+  metaDescription:
+    'Dependable WooCommerce and custom eCommerce development for UK businesses. GBP pricing, UK VAT logic, Stripe 3D Secure checkouts, catalogue engineering, and clean store maintenance.',
+  serviceSchemaName: 'eCommerce & WooCommerce Development',
+  breadcrumbLabel: 'eCommerce & WooCommerce Development',
+  hero: {
+    eyebrow: '02. eCommerce & WooCommerce Development · United Kingdom',
+    headline: 'Online retail storefronts built for mobile checkouts, UK VAT clarity, and clean scale.',
+    description:
+      'WPCarePoint builds dependable WooCommerce platforms and custom eCommerce storefronts engineered around British currency rules, fast mobile browsing, secure Strong Customer Authentication (SCA) checkouts, and maintainable stock workflows.',
+    primaryCtaLabel: 'Request Store Scope',
+    secondaryCtaLabel: 'Explore eCommerce Architecture',
+    secondaryCtaTargetId: 'service-intro',
+    imageUrl: '/src/assets/images/service_ecommerce_studio_1795468677049.jpg',
+    imageAlt:
+      'Clean UK eCommerce storefront wireframe on tablet paired with coastal teal parcel geometry on limestone',
+    imageCaption: 'WooCommerce HPOS & bespoke retail builds · Engineered for UK commerce operations',
+    standards: [
+      { label: 'Core Stack', value: 'WooCommerce HPOS · Next.js' },
+      { label: 'UK Tax & Currency', value: 'GBP (£) & UK VAT Ready' },
+      { label: 'Payment Discipline', value: 'Stripe SCA · Apple / Google Pay' },
+      { label: 'Performance Focus', value: 'Fast Mobile Catalogue & Cart' },
+    ],
+  },
+  jumpLinks: [
+    { label: 'Introduction', targetId: 'service-intro' },
+    { label: 'Store Platforms', targetId: 'ecommerce-platforms' },
+    { label: 'Checkout & Integrations', targetId: 'ecommerce-pillars' },
+    { label: 'Process', targetId: 'delivery-process' },
+    { label: 'FAQ', targetId: 'service-faq' },
+    { label: 'Enquire', targetId: 'contact' },
+  ],
+  introSection: {
+    id: 'service-intro',
+    eyebrow: 'Introduction to eCommerce Development',
+    title: 'Online stores engineered for real shoppers, clean stock management, and reliable fulfilment.',
+    paragraphs: [
+      'Running a profitable UK online shop demands far more than applying a generic retail template. Sluggish category filters, confusing delivery calculations, heavy checkout scripts, and conflicting WooCommerce plugins quickly eat into conversion and create hours of manual order fixes.',
+      'We build WooCommerce stores using clean custom theme code and High-Performance Order Storage (HPOS) architecture—alongside custom headless or bespoke JavaScript storefronts where specific retail workflows require something beyond standard WordPress.',
+      'From structuring product variations and UK VAT rules to scoping optional integrations such as Stripe, Xero, HubSpot, or UK courier shipping workflows, every store is tailored cleanly around your commercial operations.',
+    ],
+    asideEyebrow: 'Built for UK Retail Operations',
+    asideTitle: 'Practical fundamentals in every store build',
+    asidePoints: [
+      {
+        title: 'Clean Catalogue & Order Data',
+        detail:
+          'Thoughtful SKU hierarchies, category navigation, and WooCommerce HPOS indexing keep back-office order searching snappy as sales grow.',
+      },
+      {
+        title: 'Frictionless Mobile Purchasing',
+        detail:
+          'Streamlined basket drawers, express wallet readiness, and uncluttered address fields tuned specifically for UK phone screens.',
+      },
+      {
+        title: 'Scoped Integrations Without Bloat',
+        detail:
+          'Third-party links such as accounting, CRM, or shipping tools are scoped explicitly per brief rather than stacking unused add-on extensions.',
+      },
+    ],
+  },
+  capabilitiesSection: {
+    id: 'ecommerce-platforms',
+    eyebrow: 'Storefront Capabilities & Catalogue Structure',
+    title: 'Flexible eCommerce engineering across WooCommerce and bespoke retail platforms.',
+    description:
+      'Whether upgrading an established WooCommerce shop or scoping custom online store logic, we design every layer around operational clarity.',
+    items: [
+      {
+        index: '01.',
+        title: 'WooCommerce Store Development',
+        subtitle: 'HPOS · Custom Block Themes · B2C & B2B',
+        summary:
+          'Lightweight WooCommerce builds free from sluggish commercial page builders—retaining WordPress dashboard familiarity while keeping cart and checkout scripts lean.',
+        points: [
+          'WooCommerce High-Performance Order Storage (HPOS) readiness',
+          'Clean custom product, archive, and basket templates',
+          'Strict cache exclusion rules protecting dynamic baskets and accounts',
+        ],
+      },
+      {
+        index: '02.',
+        title: 'Custom Online Store Functionality',
+        subtitle: 'React / Next.js · Trade Pricing · Bespoke Rules',
+        summary:
+          'Custom store builds and tailored retail modules when standard off-the-shelf shop settings cannot support trade tiers, configurable products, or bespoke quoting.',
+        points: [
+          'Trade-account pricing tiers, minimum order rules, and VAT-exempt workflows',
+          'Product configurators, bundled kits, and sample-order options',
+          'Custom headless React / Next.js storefronts backed by clean commerce APIs',
+        ],
+      },
+      {
+        index: '03.',
+        title: 'Product, Category & Catalogue Management',
+        subtitle: 'Taxonomy · Faceted Filtering · CSV / API Sync',
+        summary:
+          'Structured store navigation helping UK customers filter sizes, materials, compatibility, or attributes rapidly without generating duplicate SEO URL clutter.',
+        points: [
+          'Logical category/attribute architecture and canonical filter handling',
+          'Clean variable-product data structures with Product & Offer Schema.org',
+          'Reliable import pipelines for large or multi-supplier SKUs',
+        ],
+      },
+      {
+        index: '04.',
+        title: 'Responsive Shopping Experience',
+        subtitle: 'Mobile UX · Core Web Vitals · WCAG 2.2 AA',
+        summary:
+          'Every product card, image gallery, variant selector, and basket control is verified across desktop, tablet, and narrow UK mobile devices down to 320px.',
+        points: [
+          'Fast WebP product photography with reserved image proportions (zero CLS)',
+          'Keyboard-navigable variant selectors and generous mobile tap targets',
+          'Clear delivery expectations, subtotal clarity, and accessible error prompts',
+        ],
+      },
+    ],
+  },
+  technicalSection: {
+    id: 'ecommerce-pillars',
+    eyebrow: 'Checkout, Fulfilment & Store Automation',
+    title: 'Four core commercial pillars engineered for reliability at checkout.',
+    description:
+      'Every payment gateway, tax rule, courier setting, and optional business sync is verified end-to-end on staging before going live.',
+    pillars: [
+      {
+        id: 'checkout-payments',
+        index: '01.',
+        eyebrow: 'Checkout & Payment Integrations',
+        title: 'GBP (£) checkouts engineered around UK buyer trust and SCA security',
+        summary:
+          'We design clean, distraction-reduced checkout sequences built for UK postcodes, VAT invoices, and reliable payment processing.',
+        bullets: [
+          'Stripe payment integration supporting Strong Customer Authentication (3D Secure)',
+          'Express wallet support such as Apple Pay and Google Pay where enabled cleanly',
+          'UK VAT inclusive/exclusive display logic and crisp automated order confirmation emails',
+          'Tested webhook handling preventing duplicate orders or lost confirmation states',
+        ],
+        calloutLabel: 'Checkout Hygiene',
+        calloutText: 'Every payment step is test-driven in sandbox mode before live keys are connected.',
+      },
+      {
+        id: 'shipping-orders',
+        index: '02.',
+        eyebrow: 'Shipping, Delivery & Order Management',
+        title: 'Accurate UK postage zones, carrier rules, and clean order workflows',
+        summary:
+          'Unexpected shipping rules drive basket abandonment. We configure clear postcode zoning, weight/band shipping logic, and practical back-office order statuses.',
+        bullets: [
+          'Flat-rate, weight-tiered, spend-threshold free delivery, and local collection options',
+          'UK mainland, Highlands & Islands, and Northern Ireland zone rules where required',
+          'Scoped dispatch integrations with providers such as Royal Mail or DPD when required',
+          'Clean order notes, packing workflow clarity, and automated customer dispatch updates',
+        ],
+        calloutLabel: 'Delivery Clarity',
+        calloutText: 'Courier rules and regional exclusions are mapped upfront with your fulfilment team.',
+      },
+      {
+        id: 'store-integrations',
+        index: '03.',
+        eyebrow: 'eCommerce Integrations & Automation',
+        title: 'Scoped connectivity with accounting, CRM, and operational systems',
+        summary:
+          'Where operationally beneficial, we scope targeted integrations linking online orders cleanly with finance and CRM systems—without over-complicating smaller stores.',
+        bullets: [
+          'Optional Xero accounting reconciliation scoped accurately around UK VAT coding',
+          'Optional HubSpot CRM contact and order lifecycle syncs where customer follow-up helps',
+          'Server-side webhook validation ensuring private API keys stay off frontend templates',
+          'Clear error notifications rather than silent sync failures during busy sales periods',
+        ],
+        calloutLabel: 'Scoped Per Project',
+        calloutText:
+          'Integrations such as Xero, HubSpot, or courier APIs are scoped specifically to your store needs—never forced as unnecessary add-ons.',
+      },
+      {
+        id: 'store-stewardship',
+        index: '04.',
+        eyebrow: 'Performance, Security & Migration Care',
+        title: 'Keeping transactional stores fast, safe, and protected during upgrades',
+        summary:
+          'An active store cannot afford broken plugins or database lockups. We structure clean maintenance safeguards and careful URL preservation during store rebuilds.',
+        bullets: [
+          'Staging-first WooCommerce and gateway regression testing before live plugin updates',
+          '301 URL preservation protecting existing product and category rankings during migrations',
+          'Compressed catalogue media and lean frontend scripts preserving fast page loads',
+          'Optional transition to WPCarePoint Elite Care or dedicated WordPress Speed tuning',
+        ],
+        calloutLabel: 'Live Store Protection',
+        calloutText: 'Orders and customer records remain isolated cleanly with zero blind live edits.',
+      },
+    ],
+  },
+  processSection: {
+    id: 'delivery-process',
+    eyebrow: 'eCommerce Development Process',
+    title: 'Four structured stages from commercial scoping to test-verified store launch.',
+    description:
+      'Every product catalogue, tax rule, shipping band, and sandbox payment flow is tested on staging prior to public release.',
+    steps: [
+      {
+        step: '01.',
+        title: 'Commercial & Catalogue Discovery',
+        summary:
+          'We review SKU count, product variations, UK VAT rules, postage bands, and any required accounting or CRM integrations before drafting technical scope.',
+        deliverable: 'Written store architecture & integration scope',
+      },
+      {
+        step: '02.',
+        title: 'UX Storefront & Checkout Design',
+        summary:
+          'Category navigation, product pages, filters, and streamlined mobile basket/checkout steps are structured around clarity and effortless conversion.',
+        deliverable: 'Storefront UI & checkout flow blueprint',
+      },
+      {
+        step: '03.',
+        title: 'Staging Build & Sandbox Gateway Testing',
+        summary:
+          'We engineer the storefront on staging, migrate or structure catalogues, configure shipping zones, and run sandbox Stripe 3D Secure transaction checks.',
+        deliverable: 'Interactive staging shop with sandbox tests',
+      },
+      {
+        step: '04.',
+        title: 'Security QA, Launch & Team Handover',
+        summary:
+          'We verify SSL, 301 redirects, transactional emails, and Core Web Vitals before coordinated launch, editor training, and ongoing care handover.',
+        deliverable: 'Live UK online store & operations guide',
+      },
+    ],
+  },
+  whyChooseSection: {
+    id: 'why-wpcarepoint-ecommerce',
+    eyebrow: 'Why Choose WPCarePoint for eCommerce',
+    title: 'Engineering precision designed specifically around UK retail realities.',
+    description:
+      'We treat checkout speed, tax accuracy, and maintainability as core business infrastructure rather than afterthoughts.',
+    items: [
+      {
+        index: '01.',
+        title: 'Built Without Heavy Builder Bloat',
+        summary:
+          'Replacing bulky retail page-builder stacks with lean custom WooCommerce code keeps mobile category browsing and basket updates crisp.',
+        standard: 'Clean Storefront Code',
+      },
+      {
+        index: '02.',
+        title: 'UK Commercial Literacy',
+        summary:
+          'GBP currency handling, UK VAT rules, British postcode addressing, and SCA card authentication are engineered properly from day one.',
+        standard: 'UK VAT · GBP (£) · 3D Secure',
+      },
+      {
+        index: '03.',
+        title: 'Honest Integration Scoping',
+        summary:
+          'Only the accounting, CRM, or shipping connections your operation genuinely uses are integrated—saving ongoing plugin licensing and complexity.',
+        standard: 'Tailored Per Project Scope',
+      },
+      {
+        index: '04.',
+        title: 'Full Store & Customer Data Ownership',
+        summary:
+          'No SaaS platform lock-in or revenue-share penalties: your store codebase, database, and domain remain 100% under your business ownership.',
+        standard: '100% Business Ownership',
+      },
+    ],
+  },
+  faqSection: {
+    id: 'service-faq',
+    eyebrow: 'eCommerce Development FAQ',
+    title: 'Clear answers for UK retailers planning a WooCommerce or custom store.',
+    description:
+      'Practical detail on platform fit, payments, integrations, speed, and ongoing maintenance.',
+    faqs: [
+      {
+        id: 'ec-faq-1',
+        question: 'Should we choose WooCommerce or a custom eCommerce build?',
+        answer:
+          'WooCommerce is an ideal fit when you want deep WordPress editorial flexibility alongside full ownership of your store, GBP/VAT logic, and catalogue data without per-transaction platform fees. A custom React / Next.js or bespoke storefront makes sense when you have highly specialised configurators, headless systems, or non-standard trade ordering workflows.',
+      },
+      {
+        id: 'ec-faq-2',
+        question: 'Are integrations like Xero, HubSpot, Stripe, or courier APIs included in every build?',
+        answer:
+          'No—each store is scoped around what your team genuinely needs. Core GBP checkout and Stripe integration are common foundations, while accounting links (such as Xero), CRM syncs (such as HubSpot), or specific shipping integrations (such as Royal Mail or DPD workflows) are scoped cleanly based on your operational brief.',
+      },
+      {
+        id: 'ec-faq-3',
+        question: 'Can you migrate our products, customers, and URLs from an older store without losing SEO?',
+        answer:
+          'Yes. We map existing product and category slugs, preserve ranking URLs wherever possible, configure clean single-hop 301 redirects for any changed routes, and migrate structured product data safely on staging before DNS cut-over.',
+      },
+      {
+        id: 'ec-faq-4',
+        question: 'How do you keep WooCommerce sites fast as our catalogue and order history grow?',
+        answer:
+          'We avoid heavy visual page builders, use lean custom templates, configure WooCommerce High-Performance Order Storage (HPOS), compress catalogue photography to WebP, and separate static browse caching cleanly from dynamic basket/checkout endpoints.',
+      },
+      {
+        id: 'ec-faq-5',
+        question: 'How is an eCommerce website priced and scoped?',
+        answer:
+          'Store complexity depends on SKU structure, bespoke shipping/tax rules, trade accounts, data migration, and external integrations. Send your requirements or current store URL to contact@wpcarepoint.co.uk and we will prepare a clear written proposal.',
+      },
+      {
+        id: 'ec-faq-6',
+        question: 'Do you support stores after launch with updates and checkout testing?',
+        answer:
+          'Yes. Our Website Care & Technical Support service (especially our Elite Care scope) includes staging-tested plugin updates, high-frequency backups, and checkout/payment regression checks before changes touch your live store.',
+      },
+    ],
+  },
+  relatedSection: {
+    eyebrow: 'Related eCommerce Capabilities',
+    title: 'Support performance, stability, and search visibility for your store',
+    items: [
+      {
+        eyebrow: 'Store Performance',
+        title: 'WordPress Speed Optimisation',
+        description:
+          'Diagnostic Core Web Vitals tuning, cart-safe caching rules, and WooCommerce database hygiene for faster mobile checkouts.',
+        ctaLabel: 'Explore Speed Optimisation',
+        targetType: 'route',
+        href: '/wordpress-speed-optimisation/',
+      },
+      {
+        eyebrow: 'Store Protection',
+        title: 'Website Care & Technical Support',
+        description:
+          'Staging-tested updates, database snapshots, and regression testing designed to keep transactional checkouts dependable.',
+        ctaLabel: 'Explore Website Care',
+        targetType: 'route',
+        href: '/services/website-care-support/',
+      },
+      {
+        eyebrow: 'Workflow Efficiency',
+        title: 'AI & Business Automation',
+        description:
+          'Connect enquiries, order milestones, CRM updates, and operational notifications cleanly with human oversight.',
+        ctaLabel: 'Explore Business Automation',
+        targetType: 'route',
+        href: '/services/ai-business-automation/',
+      },
+    ],
+  },
+  ctaSection: {
+    eyebrow: 'Discuss Your Online Store',
+    headline: 'Planning a new WooCommerce store or upgrading an underperforming shop?',
+    description:
+      'Email your current store URL (if applicable), catalogue overview, shipping model, and target integrations to contact@wpcarepoint.co.uk for clear written scoping.',
+    mailtoSubject: 'eCommerce & WooCommerce Store Scope Enquiry',
+    primaryButtonLabel: 'Send eCommerce Enquiry',
+  },
+};
+
+export const AI_AUTOMATION_PAGE_DATA: DedicatedServicePageConfig = {
+  id: 'ai-business-automation',
+  routePath: '/services/ai-business-automation/',
+  canonicalUrl: 'https://wpcarepoint.co.uk/services/ai-business-automation/',
+  metaTitle: 'AI & Business Process Automation UK | API Workflows & CRM Integration – WPCarePoint',
+  metaDescription:
+    'Practical AI integration and business process automation for UK organisations. CRM enquiry routing, custom API integrations, repetitive task reduction, and human-in-the-loop governance.',
+  serviceSchemaName: 'AI & Business Process Automation',
+  breadcrumbLabel: 'AI & Business Automation',
+  hero: {
+    eyebrow: '03. AI & Business Process Automation · United Kingdom',
+    headline: 'Practical automation connecting your website, CRM, and operations—with human oversight built in.',
+    description:
+      'WPCarePoint helps British businesses eliminate manual copy-pasting and repetitive admin through dependable API integrations and carefully scoped AI workflows—designed around data privacy, clear permissions, and human sign-off.',
+    primaryCtaLabel: 'Request Automation Consultation',
+    secondaryCtaLabel: 'How We Approach Automation',
+    secondaryCtaTargetId: 'service-intro',
+    imageUrl: '/src/assets/images/service_ai_workflow_1795541283281.jpg',
+    imageAlt:
+      'Modular frosted glass nodes and brushed coastal teal metallic routing blocks representing structured workflow engineering',
+    imageCaption: 'Structured API pipelines · Scoped AI assistance with mandatory human checkpoints',
+    standards: [
+      { label: 'Core Focus', value: 'APIs · CRM · Task Automation' },
+      { label: 'Governance Model', value: 'Human Approval Checkpoints' },
+      { label: 'Data Boundaries', value: 'UK GDPR Data Minimisation' },
+      { label: 'Deployment Style', value: 'Auditable & Reversible Flows' },
+    ],
+  },
+  jumpLinks: [
+    { label: 'Practical Approach', targetId: 'service-intro' },
+    { label: 'Workflow Scope', targetId: 'automation-capabilities' },
+    { label: 'Governance & Privacy', targetId: 'automation-governance' },
+    { label: 'Process', targetId: 'delivery-process' },
+    { label: 'FAQ', targetId: 'service-faq' },
+    { label: 'Enquire', targetId: 'contact' },
+  ],
+  introSection: {
+    id: 'service-intro',
+    eyebrow: 'Introduction to Practical Business Automation',
+    title: 'Useful operational automation starts with clear business processes—not AI hype.',
+    paragraphs: [
+      'Most growing organisations lose hours each week to predictable bottlenecks: transferring website leads manually into spreadsheets or CRMs, formatting recurring reports, answering repeat triage questions, or synchronising billing records between disconnected software platforms.',
+      'Before introducing any AI component, we map what can be solved deterministically through clean APIs, structured webhooks, and validated business rules. Where language intelligence genuinely adds value—such as categorising messy inbound briefs, summarising long service threads, or retrieving grounded answers from approved internal documentation—we design tight, verifiable workflows.',
+      'Crucially, we never advise letting autonomous AI publish unchecked changes to live customer records, accounting entries, or public websites. Every critical output sits behind human review, permission boundaries, and clear activity logs.',
+    ],
+    asideEyebrow: 'Responsible Automation Principles',
+    asideTitle: 'Why structured governance beats unchecked autonomy',
+    asidePoints: [
+      {
+        title: 'Deterministic Rules First, AI Where Helpful',
+        detail:
+          'Standard data syncs and validation run via deterministic code; AI models are applied selectively for triage, summarisation, and draft preparation.',
+      },
+      {
+        title: 'Human Approval Before External Action',
+        detail:
+          'Customer replies, quotes, invoices, or live website edits are drafted for team review rather than auto-sent blindly.',
+      },
+      {
+        title: 'Clear Failure Handling & Logs',
+        detail:
+          'Every API sync records timestamps, statuses, and readable alerts so your team spots and recovers from third-party outages quickly.',
+      },
+    ],
+  },
+  capabilitiesSection: {
+    id: 'automation-capabilities',
+    eyebrow: 'Automation & Integration Capabilities',
+    title: 'Practical workflow improvements delivering measurable daily time savings.',
+    description:
+      'Every automation is scoped around your existing tools, security requirements, and real operational bottlenecks.',
+    items: [
+      {
+        index: '01.',
+        title: 'AI-Powered Business Workflows',
+        subtitle: 'Enquiry Triage · Draft Preparation · Grounded Search',
+        summary:
+          'Targeted AI workflows that read incoming documents, classify service requests, draft structured summaries, and surface verified reference details for your staff.',
+        points: [
+          'Structured brief categorisation tagging urgency, service line, and missing info',
+          'Drafting consistent internal summaries and response outlines for human review',
+          'Internal knowledge lookup grounded strictly in verified company documentation',
+        ],
+      },
+      {
+        index: '02.',
+        title: 'CRM & Lead Management Automation',
+        subtitle: 'HubSpot · Structured Webhooks · Follow-Up Hygiene',
+        summary:
+          'Connecting website touchpoints cleanly into CRM records so prospects are logged accurately without duplicate entries or forgotten tasks.',
+        points: [
+          'Automated lead creation and field validation into systems such as HubSpot',
+          'Deduplication checks preventing messy contact records across channels',
+          'Internal notification routing alerting the right specialist cleanly',
+        ],
+      },
+      {
+        index: '03.',
+        title: 'API & Third-Party System Integrations',
+        subtitle: 'REST · GraphQL · Accounting & Store Syncs',
+        summary:
+          'Bespoke middleware bridging WordPress, WooCommerce, Next.js apps, finance software, and internal back-office systems reliably.',
+        points: [
+          'Scoped billing or invoice triggers linking stores/portals to tools like Xero',
+          'Idempotent webhook receivers eliminating duplicate processing on retries',
+          'Server-side secret isolation keeping API tokens invisible to browsers',
+        ],
+      },
+      {
+        index: '04.',
+        title: 'Repetitive Task & Process Improvement',
+        subtitle: 'Reporting · Onboarding Checklists · Content Prep',
+        summary:
+          'Removing routine manual admin across project onboarding, recurring operational reports, and multi-step checklist handoffs.',
+        points: [
+          'Automating standard project kick-off folders, tasks, and written templates',
+          'Scheduled summary digests pulling metrics cleanly into readable updates',
+          'Streamlining messy spreadsheet handoffs into reliable validated workflows',
+        ],
+      },
+    ],
+  },
+  technicalSection: {
+    id: 'automation-governance',
+    eyebrow: 'Human Oversight, Privacy & Technical Safeguards',
+    title: 'Four essential guardrails embedded into every automation workflow.',
+    description:
+      'Trustworthy business automation depends on strict boundaries around permissions, personal data, and auditability.',
+    pillars: [
+      {
+        id: 'human-in-the-loop',
+        index: '01.',
+        eyebrow: 'Human Approval & Responsible AI Use',
+        title: 'Clear approval gates keep staff in command of every important outcome',
+        summary:
+          'Automation should assist team decision-making rather than bypass accountability. We build explicit human-in-the-loop checkpoints wherever actions affect clients, finances, or live websites.',
+        bullets: [
+          'Draft-and-review workflows instead of unmonitored automated client emails',
+          'Staging previews and explicit confirmation prior to production website or DB updates',
+          'Transparent source citations so reviewers verify facts before acting on AI summaries',
+          'Easy manual override and pause controls if an underlying business rule changes',
+        ],
+        calloutLabel: 'Operational Control',
+        calloutText: 'No important customer, financial, or live publishing decision runs without human sign-off.',
+      },
+      {
+        id: 'privacy-security',
+        index: '02.',
+        eyebrow: 'Data Privacy & Security Considerations',
+        title: 'UK GDPR discipline, data minimisation, and strict credential boundaries',
+        summary:
+          'Sending raw client databases blindly to external tools creates avoidable compliance risks. We structure workflows around UK GDPR minimisation and least-privilege access.',
+        bullets: [
+          'Data minimisation: only fields strictly needed for the task leave your primary system',
+          'Zero hardcoded API keys and scoped least-privilege permissions per integration',
+          'Respecting provider zero-retention/no-training configurations where AI APIs are used',
+          'Keeping marketing consent, operational logs, and sensitive records strictly separated',
+        ],
+        calloutLabel: 'Privacy Alignment',
+        calloutText: 'Designed around UK GDPR / PECR principles with documented data flow boundaries.',
+      },
+      {
+        id: 'api-resilience',
+        index: '03.',
+        eyebrow: 'Reliable Engineering & Error Recovery',
+        title: 'Defensive API engineering built for real-world network conditions',
+        summary:
+          'Third-party APIs rate-limit, time out, or reject malformed payloads. We engineer clean input validation, retries, and readable error alerts from day one.',
+        bullets: [
+          'Strict payload schema validation before passing inputs to downstream APIs',
+          'Controlled backoff retries and dead-letter logs instead of silent dropped tasks',
+          'Clear alert routing so technical admins see exactly which step failed and why',
+          'Staging/sandbox testing harnesses using synthetic test data prior to launch',
+        ],
+        calloutLabel: 'Zero Silent Drops',
+        calloutText: 'Predictable error paths ensure enquiries or orders are never lost quietly.',
+      },
+      {
+        id: 'process-redesign',
+        index: '04.',
+        eyebrow: 'Business Process Improvement Before Code',
+        title: 'Simplifying steps before automating ensures durable ROI',
+        summary:
+          'Automating a confusing manual process simply creates confusion faster. We work with your team to tidy ownership, naming rules, and edge cases first.',
+        bullets: [
+          'Process audit isolating redundant approval loops and duplicate data entry',
+          'Clear definition of triggers, exceptions, and owner responsibilities',
+          'Documentation showing non-technical staff how the workflow operates',
+          'Clean modular architecture allowing future tool swaps without starting over',
+        ],
+        calloutLabel: 'Long-Term Fit',
+        calloutText: 'Clean workflow specs your team can inspect, maintain, and extend safely.',
+      },
+    ],
+  },
+  processSection: {
+    id: 'delivery-process',
+    eyebrow: 'Implementation Process',
+    title: 'Four controlled phases from workflow mapping to audited production handover.',
+    description:
+      'Every integration and automation is scoped cleanly, built in an isolated test environment, and verified with realistic edge cases.',
+    steps: [
+      {
+        step: '01.',
+        title: 'Process Mapping & Tool Audit',
+        summary:
+          'We examine the repetitive task, existing APIs or webhooks, data privacy boundaries, and exact points where human approval is required.',
+        deliverable: 'Written workflow & risk specification',
+      },
+      {
+        step: '02.',
+        title: 'Architecture & Permission Design',
+        summary:
+          'Data fields, validation schemas, scoped API credentials, retry safeguards, and reviewer approval steps are mapped cleanly before build.',
+        deliverable: 'API blueprint & privacy checklist',
+      },
+      {
+        step: '03.',
+        title: 'Staging Build & Synthetic Testing',
+        summary:
+          'We engineer the connectors and test normal, malformed, timeout, and duplicate inputs safely inside a sandbox environment.',
+        deliverable: 'Verified test run & audit log view',
+      },
+      {
+        step: '04.',
+        title: 'Controlled Rollout & Team Guide',
+        summary:
+          'Approved workflows go live with monitoring alerts, clear override switches, and plain-English team documentation.',
+        deliverable: 'Active workflow & operations handbook',
+      },
+    ],
+  },
+  whyChooseSection: {
+    id: 'why-wpcarepoint-automation',
+    eyebrow: 'Why Choose WPCarePoint for Automation',
+    title: 'Grounded software engineering rather than fragile no-code spaghetti.',
+    description:
+      'We build workflows your operations team can genuinely rely on, explain, and control.',
+    items: [
+      {
+        index: '01.',
+        title: 'Honest Scope Without Exaggeration',
+        summary:
+          'We distinguish clearly between reliable API automation and bounded AI drafting—never promising magical fully autonomous operations.',
+        standard: 'Realistic Technical Fit',
+      },
+      {
+        index: '02.',
+        title: 'Web, eCommerce & API Continuity',
+        summary:
+          'Because we engineer WordPress, WooCommerce, and Next.js sites directly, automation connects cleanly with your frontend codebase.',
+        standard: 'End-to-End Integration',
+      },
+      {
+        index: '03.',
+        title: 'Security & Privacy by Design',
+        summary:
+          'Minimal data exposure, encrypted server credentials, and mandatory human approval gates protect your reputation and client trust.',
+        standard: 'UK GDPR & Human Control',
+      },
+      {
+        index: '04.',
+        title: 'Clear Documentation & Handover',
+        summary:
+          'You receive clear technical documentation showing triggers, endpoints, and failure steps—never an undocumented black box.',
+        standard: 'Full Client Visibility',
+      },
+    ],
+  },
+  faqSection: {
+    id: 'service-faq',
+    eyebrow: 'AI & Automation FAQ',
+    title: 'Straightforward questions on practical business automation and safeguards.',
+    description:
+      'Clarity on human oversight, data privacy, custom APIs, and realistic ROI.',
+    faqs: [
+      {
+        id: 'ai-faq-1',
+        question: 'Does WPCarePoint set up completely autonomous AI agents that act without oversight?',
+        answer:
+          'No. For commercial safety, reputation protection, and data accuracy, we design workflows around bounded automation and human-in-the-loop approval checkpoints. AI can classify requests, summarise data, or prepare drafts, while important customer communications, billing actions, and live website edits remain under human control.',
+      },
+      {
+        id: 'ai-faq-2',
+        question: 'Do every single business workflow and automation require AI?',
+        answer:
+          'Not at all. Many of the highest-value improvements—such as syncing website enquiries cleanly to HubSpot, triggering verified Xero records, or deduplicating spreadsheets—work faster, cheaper, and more reliably using clean API code and validation rules without an LLM involved.',
+      },
+      {
+        id: 'ai-faq-3',
+        question: 'How do you protect business and client data privacy when using AI tools?',
+        answer:
+          'We apply UK GDPR data minimisation principles: filtering out unnecessary personal identifiers before external calls, isolating credentials server-side, selecting enterprise API modes where inputs are not used to train public models, and agreeing clear data boundaries in writing upfront.',
+      },
+      {
+        id: 'ai-faq-4',
+        question: 'Which systems can you integrate with our website?',
+        answer:
+          'We build clean REST, GraphQL, and webhook connections across WordPress, WooCommerce, React / Next.js applications, HubSpot CRM, Xero accounting, Stripe payments, and verified internal business APIs scoped to your exact tools.',
+      },
+      {
+        id: 'ai-faq-5',
+        question: 'What happens if a third-party service temporarily goes offline?',
+        answer:
+          'Every integration is built defensively with schema validation, controlled retries, idempotency protection against duplicate actions, and readable error notifications so your team sees and recovers from interruptions cleanly.',
+      },
+      {
+        id: 'ai-faq-6',
+        question: 'How do we scope an automation or API integration project?',
+        answer:
+          'Email a summary of the manual process, the software tools involved, and what output your team wants to simplify to contact@wpcarepoint.co.uk. We will review feasibility and respond in writing with clear next steps.',
+      },
+    ],
+  },
+  relatedSection: {
+    eyebrow: 'Connected WPCarePoint Services',
+    title: 'Pair workflow automation with custom builds and search readiness',
+    items: [
+      {
+        eyebrow: 'Custom Platforms',
+        title: 'Website Design & Development',
+        description:
+          'Bespoke WordPress and React / Next.js platforms built cleanly to host custom customer portals and API workflows.',
+        ctaLabel: 'Explore Web Development',
+        targetType: 'route',
+        href: '/services/website-development/',
+      },
+      {
+        eyebrow: 'Store Automation',
+        title: 'eCommerce & WooCommerce Development',
+        description:
+          'Clean UK WooCommerce architectures with scoped payment, accounting, and order lifecycle workflows.',
+        ctaLabel: 'Explore eCommerce Builds',
+        targetType: 'route',
+        href: '/services/ecommerce-development/',
+      },
+      {
+        eyebrow: 'Search & AI Visibility',
+        title: 'SEO & AI Search Optimisation',
+        description:
+          'Technical SEO, Schema.org entities, and GEO / AIO structure helping AI tools interpret your brand accurately.',
+        ctaLabel: 'Explore SEO & AI Search',
+        targetType: 'route',
+        href: '/services/ai-search-optimisation/',
+      },
+    ],
+  },
+  ctaSection: {
+    eyebrow: 'Discuss Your Automation Workflow',
+    headline: 'Ready to replace repetitive manual admin with reliable workflows?',
+    description:
+      'Email the business process you want to streamline and the software tools involved to contact@wpcarepoint.co.uk. We assess technical feasibility and data safeguards directly in writing.',
+    mailtoSubject: 'AI & Business Process Automation Consultation',
+    primaryButtonLabel: 'Request Automation Consultation',
+  },
+};
+
+export const WEBSITE_CARE_SUPPORT_PAGE_DATA: DedicatedServicePageConfig = {
+  id: 'website-care-support',
+  routePath: '/services/website-care-support/',
+  canonicalUrl: 'https://wpcarepoint.co.uk/services/website-care-support/',
+  metaTitle: 'Website Care & WordPress Technical Support UK | Maintenance & Fixes – WPCarePoint',
+  metaDescription:
+    'Dependable UK website maintenance, staging-tested WordPress updates, encrypted off-site backups, security hardening, and one-off WordPress Quick Fixes. Enquire for tailored pricing.',
+  serviceSchemaName: 'Website Care & Technical Support',
+  breadcrumbLabel: 'Website Care & Technical Support',
+  hero: {
+    eyebrow: '04. Website Care & Technical Support · United Kingdom',
+    headline: 'Proactive website stewardship keeping your WordPress site updated, backed up, and protected.',
+    description:
+      'Businesses rely on their website working cleanly every morning. WPCarePoint handles staging-tested updates, encrypted off-site backups, security hardening, and direct email technical troubleshooting—alongside one-off WordPress fixes when needed.',
+    primaryCtaLabel: 'Enquire About Website Care',
+    secondaryCtaLabel: 'View Care Tiers',
+    secondaryCtaTargetId: 'care-plan-tiers',
+    imageUrl: '/src/assets/images/service_website_care_1795468678272.jpg',
+    imageAlt:
+      'Brushed steel and deep coastal teal protective vault block on pale travertine representing website backup and security stewardship',
+    imageCaption: 'Staging-first updates · Encrypted UK/EEA backups · Direct engineering support',
+    standards: [
+      { label: 'Update Workflow', value: 'Tested on Staging First' },
+      { label: 'Backup Discipline', value: 'Encrypted Off-Site Copies' },
+      { label: 'Care Plan Pricing', value: 'Scoped Honestly in Writing' },
+      { label: 'Quick Fix Option', value: 'One-Off Repairs Available' },
+    ],
+  },
+  jumpLinks: [
+    { label: 'Why Care Matters', targetId: 'service-intro' },
+    { label: 'Care Scope', targetId: 'care-capabilities' },
+    { label: 'Plan Tiers & Quick Fix', targetId: 'care-plan-tiers' },
+    { label: 'Technical Safeguards', targetId: 'care-safeguards' },
+    { label: 'FAQ', targetId: 'service-faq' },
+    { label: 'Enquire', targetId: 'contact' },
+  ],
+  introSection: {
+    id: 'service-intro',
+    eyebrow: 'Why Ongoing Website Maintenance Matters',
+    title: 'Preventing quiet WordPress decay costs far less than recovering a broken live website.',
+    paragraphs: [
+      'A healthy WordPress or WooCommerce site runs on dozens of moving pieces—WordPress core, PHP server versions, SSL certificates, theme code, and third-party plugins. Left unmaintained, outdated components become common targets for automated malware injection or break silently after automatic host updates.',
+      'Equally, clicking "Update All" directly on a live production website without backups or staging checks often breaks contact forms, layouts, or checkout scripts during peak trading hours.',
+      'WPCarePoint provides calm, structured stewardship: taking verified encrypted off-site backups, running updates on staging copies first, monitoring uptime, and stepping in with written technical diagnosis whenever issues surface.',
+    ],
+    asideEyebrow: 'Honest Stewardship Standard',
+    asideTitle: 'Clear terms without invented SLAs or locked contracts',
+    asidePoints: [
+      {
+        title: 'No Arbitrary Response Promises',
+        detail:
+          'We never publish fabricated "24/7" or "<30 minute" marketing claims. Actual support hours and scope boundaries are agreed transparently in writing.',
+      },
+      {
+        title: 'Tailored Scoping Over Blanket Pricing',
+        detail:
+          'A simple brochure website and a multi-gateway WooCommerce store carry very different backup and regression needs—every tier is scoped fairly.',
+      },
+      {
+        title: 'Emergency Help Subject to Availability',
+        detail:
+          'Urgent error diagnosis or malware cleanup requests are assessed promptly by email at contact@wpcarepoint.co.uk based on verified engineering capacity.',
+      },
+    ],
+  },
+  capabilitiesSection: {
+    id: 'care-capabilities',
+    eyebrow: 'Maintenance, Security & Support Capabilities',
+    title: 'Comprehensive technical care built to protect uptime, data integrity, and peace of mind.',
+    description:
+      'Every core layer—from routine plugin patching and encrypted restore points to bug investigation—is handled systematically.',
+    items: [
+      {
+        index: '01.',
+        title: 'WordPress Maintenance & Staging Updates',
+        subtitle: 'Core · Themes · Vetted Plugins',
+        summary:
+          'Managed updates verified in an isolated staging environment before deployment so visual layouts, menus, and forms never break silently in production.',
+        points: [
+          'WordPress core, theme, and plugin update cycles validated on staging',
+          'Functional inspection of key pages, forms, and checkout routes post-update',
+          'PHP version compatibility tracking alongside your UK hosting environment',
+        ],
+      },
+      {
+        index: '02.',
+        title: 'Website Security & Hardening',
+        subtitle: 'Access Hygiene · Firewall · Cleanup Readiness',
+        summary:
+          'Practical security layers reducing common WordPress attack vectors across login endpoints, file permissions, and vulnerable extensions.',
+        points: [
+          'Hardened wp-admin access controls, user role audits, and XML-RPC review',
+          'Malware, injected spam file, and integrity scanning hygiene',
+          'Cloudflare edge security alignment and SSL certificate verification',
+        ],
+      },
+      {
+        index: '03.',
+        title: 'Encrypted Off-Site Backups & Recovery',
+        subtitle: 'Independent Storage · Tested Restores',
+        summary:
+          'Your backup should never live solely on the same hosting account as your live site. We maintain independent encrypted restore points for files and databases.',
+        points: [
+          'Scheduled off-site encrypted backups separated from primary host storage',
+          'Higher-frequency database snapshots available for WooCommerce stores',
+          'Documented restoration workflow ready if hosting or code failures occur',
+        ],
+      },
+      {
+        index: '04.',
+        title: 'Monitoring, Bug Fixes & Troubleshooting',
+        subtitle: 'Uptime Checks · Error Diagnosis · Emergency Scope',
+        summary:
+          'Ongoing availability checks paired with direct engineering debugging when plugin conflicts, fatal PHP errors, or unexpected site faults occur.',
+        points: [
+          'Continuous uptime checks and broken certificate alerting',
+          'Troubleshooting white-screen errors, layout regressions, and form issues',
+          'Priority incident and WordPress emergency support subject to verified capacity',
+        ],
+      },
+    ],
+  },
+  carePlansSection: {
+    id: 'care-plan-tiers',
+    eyebrow: 'Essential, Advanced & Elite Care Overview',
+    title: 'Three structured stewardship tiers—scoped fairly around your platform.',
+    description:
+      'All ongoing plans are billed cleanly with transparent written scopes. Request tailored pricing for your website rather than paying arbitrary one-size-fits-all rates.',
+    plans: [
+      {
+        id: 'essential',
+        name: 'Essential Care',
+        audience: 'For brochure websites & small UK businesses',
+        pricingLabel: 'Enquire for Pricing',
+        summary:
+          'Core security hygiene, scheduled off-site backups, and tested staging updates to keep business websites dependable.',
+        highlights: [
+          'Off-site encrypted backups with structured restore points',
+          'Core, theme, and plugin updates tested before deployment',
+          'Continuous availability checks and security hardening',
+          'Direct email technical support from WPCarePoint',
+        ],
+      },
+      {
+        id: 'advanced',
+        name: 'Advanced Care',
+        audience: 'For growing service companies & lead-gen sites',
+        pricingLabel: 'Enquire for Pricing',
+        highlighted: true,
+        summary:
+          'Proactive speed oversight, priority incident remediation, and recurring engineering time for continuous site improvements.',
+        highlights: [
+          'More frequent encrypted off-site backups and staging checks',
+          'WordPress performance tuning and Core Web Vitals review',
+          'Priority malware investigation and clean site remediation',
+          'Dedicated monthly engineering hours for content or UI updates',
+        ],
+      },
+      {
+        id: 'elite',
+        name: 'Elite Care',
+        audience: 'For WooCommerce stores & business-critical platforms',
+        pricingLabel: 'Enquire for Pricing',
+        summary:
+          'Comprehensive technical governance, transactional checkout checks, and tailored roadmap support for revenue-critical sites.',
+        highlights: [
+          'High-frequency database snapshots for active eCommerce orders',
+          'Checkout, payment gateway, and critical-path regression checks',
+          'Structured monthly engineering allocation for feature delivery',
+          'Bespoke retainer scope agreed around operational requirements',
+        ],
+      },
+    ],
+    quickFixEyebrow: 'One-Off WordPress Fixes',
+    quickFixTitle: 'Need a standalone fix without an ongoing Care Plan?',
+    quickFixDescription:
+      'Whether dealing with a critical plugin conflict, broken layout, SSL certificate warning, database connection error, or post-migration fault, you can commission a single scoped WordPress Quick Fix directly by email.',
+    quickFixButtonLabel: 'Enquire About a Quick Fix',
+    quickFixSubject: 'One-Off WordPress Quick Fix Enquiry',
+  },
+  technicalSection: {
+    id: 'care-safeguards',
+    eyebrow: 'Operational & Support Safeguards',
+    title: 'How we protect live business websites during routine maintenance and urgent repairs.',
+    description:
+      'Clarity on staging workflow, emergency assistance boundaries, and handover independence.',
+    pillars: [
+      {
+        id: 'care-staging',
+        index: '01.',
+        eyebrow: 'Staging-First Update Discipline',
+        title: 'Testing plugin and theme updates away from public visitors',
+        summary:
+          'Blind updates inside the live WordPress dashboard remain the most common cause of sudden website breakage. Our care workflow enforces isolation first.',
+        bullets: [
+          'Full backup taken immediately prior to staging update cycles',
+          'Visual inspection of homepage, header navigation, and mobile menus',
+          'Contact page, search, and WooCommerce basket verification on test copy',
+          'Controlled production rollout with quick-rollback readiness',
+        ],
+        calloutLabel: 'Update Safety',
+        calloutText: 'Zero blind "Update All" clicks on live business websites.',
+      },
+      {
+        id: 'care-emergency',
+        index: '02.',
+        eyebrow: 'Emergency & Urgent Support Scope',
+        title: 'Realistic triage when a site goes down or suffers suspected malware',
+        summary:
+          'When a critical error or security event hits, fast accurate triage matters more than empty marketing slogans. We assess urgent email requests directly against verified engineering availability.',
+        bullets: [
+          'Email contact@wpcarepoint.co.uk with website URL, error code, and host details',
+          'Immediate snapshot preservation before touching corrupted files or databases',
+          'Root-cause isolation across error logs, plugins, DNS, or hosting configuration',
+          'Clean remediation and post-incident hardening recommendations in writing',
+        ],
+        calloutLabel: 'Availability Clarity',
+        calloutText:
+          'Emergency support is provided subject to verified engineering availability and written scope confirmation.',
+      },
+      {
+        id: 'care-monitoring',
+        index: '03.',
+        eyebrow: 'Monitoring, Backups & Host Coordination',
+        title: 'Independent off-site resilience paired with clear UK hosting visibility',
+        summary:
+          'If your web host has a hardware fault or billing hiccup, an external backup copy protects your business continuity.',
+        bullets: [
+          'Automated uptime alerts notifying engineering on extended outages',
+          'Off-site encrypted archive copies retained outside single-host failure zones',
+          'Coordinating calmly with UK hosts (20i, Krystal, SiteGround UK, Cloudflare) if server-side issues arise',
+          'Periodic checks verifying expired domains or DNS mismatches do not slip unnoticed',
+        ],
+        calloutLabel: 'Data Residency',
+        calloutText: 'Backups and restoration procedures are agreed clearly in your onboarding scope.',
+      },
+      {
+        id: 'care-quickfix',
+        index: '04.',
+        eyebrow: 'One-Off Fixes & Transparent Exit',
+        title: 'No captive contracts—commission standalone repairs or step away cleanly',
+        summary:
+          'Good stewardship earns trust through reliability, not restrictive cancellation hurdles. Both one-off fixes and monthly plans respect full ownership.',
+        bullets: [
+          'Standalone WordPress Quick Fixes scoped in writing before repair work begins',
+          'Zero proprietary plugins holding site layouts hostage if you cancel',
+          'Written summary after technical interventions documenting what changed and why',
+          'Direct pathway to combine Care Plans with WordPress Speed or SEO improvements',
+        ],
+        calloutLabel: 'Zero Lock-In',
+        calloutText: 'Your hosting, backups, and codebase stay fully accessible to your business.',
+      },
+    ],
+  },
+  processSection: {
+    id: 'delivery-process',
+    eyebrow: 'Care Onboarding & Maintenance Cycle',
+    title: 'Four methodical steps from technical onboarding audit to steady monthly care.',
+    description:
+      'Whether joining a Care Plan or commissioning a one-off WordPress fix, everything starts with a verified baseline.',
+    steps: [
+      {
+        step: '01.',
+        title: 'Baseline Audit & Access Check',
+        summary:
+          'We verify WordPress, plugin, PHP, SSL, and hosting health while establishing encrypted off-site backups before touching any code.',
+        deliverable: 'Written site health & risk summary',
+      },
+      {
+        step: '02.',
+        title: 'Clean Staging & Security Setup',
+        summary:
+          'We establish isolated staging workflow rules, clean stale plugins/users, and verify monitoring and backup restoration paths.',
+        deliverable: 'Active backup & staging pipeline',
+      },
+      {
+        step: '03.',
+        title: 'Managed Updates & Regression QA',
+        summary:
+          'Scheduled core, theme, and plugin updates run on staging first, checked across mobile/desktop layouts, forms, and checkouts.',
+        deliverable: 'Tested live maintenance updates',
+      },
+      {
+        step: '04.',
+        title: 'Ongoing Support & Troubleshooting',
+        summary:
+          'Direct email technical support handles troubleshooting, minor engineering updates (on eligible scopes), and speed/security hygiene.',
+        deliverable: 'Written update notes & direct support',
+      },
+    ],
+  },
+  whyChooseSection: {
+    id: 'why-wpcarepoint-care',
+    eyebrow: 'Why Trust WPCarePoint With Maintenance',
+    title: 'Direct senior engineering support without bloated support queues.',
+    description:
+      'When something breaks, you communicate directly with engineers who build and debug WordPress code every day.',
+    items: [
+      {
+        index: '01.',
+        title: 'No Unverified SLA Marketing Gimmicks',
+        summary:
+          'We confirm honest support coverage, hours, and terms clearly in writing rather than overpromising unrealistic 24/7 response guarantees.',
+        standard: 'Transparent Written Terms',
+      },
+      {
+        index: '02.',
+        title: 'Real Engineering Debugging',
+        summary:
+          'Rather than merely re-installing plugins, we inspect PHP logs, database autoloads, theme hooks, and edge caching rules cleanly.',
+        standard: 'Code-Level Troubleshooting',
+      },
+      {
+        index: '03.',
+        title: 'Fair Scope-Led Pricing',
+        summary:
+          'Brochure websites, lead-gen hubs, and busy WooCommerce stores receive right-sized stewardship without overpaying for unused extras.',
+        standard: 'Enquire for Accurate Scoping',
+      },
+      {
+        index: '04.',
+        title: 'Unified Speed & Security Oversight',
+        summary:
+          'Maintenance pairs cleanly with Core Web Vitals speed engineering and technical SEO protection so your site stays fast as well as safe.',
+        standard: 'Care · Speed · Stability',
+      },
+    ],
+  },
+  faqSection: {
+    id: 'service-faq',
+    eyebrow: 'Website Care & Support FAQ',
+    title: 'Clear answers about Care Plans, Quick Fixes, backups, and pricing.',
+    description:
+      'Transparent expectations on how WPCarePoint maintains UK WordPress and WooCommerce sites.',
+    faqs: [
+      {
+        id: 'wc-faq-1',
+        question: 'Why do Essential, Advanced, and Elite Care show "Enquire for Pricing"?',
+        answer:
+          'Website care requirements vary significantly between a compact 5-page WordPress site, a custom multi-API platform, and an active WooCommerce store needing checkout regression testing and frequent database backups. Scoping in writing ensures transparent pricing without hidden extras.',
+      },
+      {
+        id: 'wc-faq-2',
+        question: 'Do you guarantee 24/7 phone support or a fixed 30-minute SLA?',
+        answer:
+          'No. We do not publish unverified 24/7 support claims, call-centre phone lines, or fixed minute-by-minute SLA promises. All technical communication runs by email at contact@wpcarepoint.co.uk with clear written scope agreements tailored to your site tier.',
+      },
+      {
+        id: 'wc-faq-3',
+        question: 'Can we book a one-off WordPress fix without joining a monthly Care Plan?',
+        answer:
+          'Yes. If you have an urgent error, broken plugin update, SSL issue, or layout bug, email your website URL and symptoms to contact@wpcarepoint.co.uk for standalone Quick Fix scoping with zero ongoing tie-in.',
+      },
+      {
+        id: 'wc-faq-4',
+        question: 'Are updates tested on staging before touching our live website?',
+        answer:
+          'Yes. Prior to updating production WordPress core, themes, or plugins, we secure an off-site backup and validate updates cleanly so menus, forms, and WooCommerce checkouts remain intact.',
+      },
+      {
+        id: 'wc-faq-5',
+        question: 'Can you help if our WordPress website has already been compromised or hacked?',
+        answer:
+          'Yes, subject to verified engineering assessment and capacity. Email your domain and symptoms to contact@wpcarepoint.co.uk—we preserve forensic snapshots, audit injected files/spam URLs, clean the codebase, harden access, and advise on Google indexing recovery.',
+      },
+      {
+        id: 'wc-faq-6',
+        question: 'What happens if we already host with 20i, Krystal, SiteGround UK, or Cloudflare?',
+        answer:
+          'We work comfortably alongside all major UK hosting providers and Cloudflare DNS setups. You keep full account ownership while we manage backups, staging checks, and security hygiene.',
+      },
+    ],
+  },
+  relatedSection: {
+    eyebrow: 'Related Care & Engineering Services',
+    title: 'Pair ongoing stewardship with performance and architecture improvements',
+    items: [
+      {
+        eyebrow: 'Performance Engineering',
+        title: 'WordPress Speed Optimisation',
+        description:
+          'Standalone bottleneck audits, WebP media conversion, database cleanup, and Core Web Vitals tuning on staging.',
+        ctaLabel: 'Explore Speed Optimisation',
+        targetType: 'route',
+        href: '/wordpress-speed-optimisation/',
+      },
+      {
+        eyebrow: 'Clean Builds & Rebuilds',
+        title: 'Website Design & Development',
+        description:
+          'Replace brittle legacy page-builder templates with clean custom WordPress blocks or modern React / Next.js architecture.',
+        ctaLabel: 'Explore Web Development',
+        targetType: 'route',
+        href: '/services/website-development/',
+      },
+      {
+        eyebrow: 'Direct Correspondence',
+        title: 'Contact WPCarePoint',
+        description:
+          'Email our team directly with your website URL for Care Plan scoping, Quick Fixes, or emergency assessment.',
+        ctaLabel: 'Visit Contact Page',
+        targetType: 'route',
+        href: '/contact/',
+      },
+    ],
+  },
+  ctaSection: {
+    eyebrow: 'Enquire About Website Care or Quick Fixes',
+    headline: 'Keep your WordPress or WooCommerce site updated, backed up, and dependable.',
+    description:
+      'Email your website URL, hosting setup, and whether you are looking for Essential/Advanced/Elite Care or a one-off fix to contact@wpcarepoint.co.uk.',
+    mailtoSubject: 'Website Care & Technical Support Enquiry',
+    primaryButtonLabel: 'Enquire by Email',
+  },
+};
+
+export const AI_SEARCH_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
+  id: 'ai-search-optimisation',
+  routePath: '/services/ai-search-optimisation/',
+  canonicalUrl: 'https://wpcarepoint.co.uk/services/ai-search-optimisation/',
+  metaTitle: 'SEO & AI Search Optimisation UK | Technical SEO, AIO & GEO – WPCarePoint',
+  metaDescription:
+    'Honest Technical SEO, Schema.org structured data, Search Experience Optimisation (SXO), AI Optimisation (AIO), and Generative Engine Optimisation (GEO) for UK organisations.',
+  serviceSchemaName: 'SEO & AI Search Optimisation',
+  breadcrumbLabel: 'SEO & AI Search Optimisation',
+  hero: {
+    eyebrow: '05. SEO & AI Search Optimisation · United Kingdom',
+    headline: 'Search visibility engineered for Google UK crawlers, real visitors, and modern AI assistants.',
+    description:
+      'Search habits are evolving beyond blue links alone. WPCarePoint combines sound Technical SEO, structured Schema.org data, Search Experience Optimisation (SXO), and practical AIO / GEO structuring—grounded in factual clarity without ranking guarantees.',
+    primaryCtaLabel: 'Request Search Audit Scope',
+    secondaryCtaLabel: 'SEO, AIO, GEO & SXO Explained',
+    secondaryCtaTargetId: 'service-intro',
+    imageUrl: '/src/assets/images/service_ai_search_1795541283476.jpg',
+    imageAlt:
+      'Optical glass prism over layered archival index sheets casting crisp coastal teal geometry on limestone',
+    imageCaption: 'Technical SEO · Schema.org entity clarity · AIO & GEO readiness',
+    standards: [
+      { label: 'Core Foundations', value: 'Technical SEO & Crawlability' },
+      { label: 'Modern Discovery', value: 'AIO · GEO · Schema.org' },
+      { label: 'User Alignment', value: 'SXO & Search Intent Clarity' },
+      { label: 'Ethics Policy', value: 'Zero Ranking Guarantees' },
+    ],
+  },
+  jumpLinks: [
+    { label: 'Modern Search', targetId: 'service-intro' },
+    { label: 'Core Disciplines', targetId: 'search-disciplines' },
+    { label: 'AIO, GEO & Performance', targetId: 'aio-geo-pillars' },
+    { label: 'Process', targetId: 'delivery-process' },
+    { label: 'FAQ', targetId: 'service-faq' },
+    { label: 'Enquire', targetId: 'contact' },
+  ],
+  introSection: {
+    id: 'service-intro',
+    eyebrow: 'Introduction to Modern Search Visibility',
+    title: 'Clear architecture helps both classic search engines and generative AI models trust what your business does.',
+    paragraphs: [
+      'Traditional search engine crawlers and modern generative AI assistants (such as ChatGPT, Gemini, Perplexity, and Claude) rely on overlapping fundamentals: accessible HTML without script blockers, verifiable entity facts, clean internal linking, unambiguous canonical URLs, and helpful content aligned to genuine searcher intent.',
+      'Many agencies rebrand basic copywriting as "AI SEO" or promise overnight citations and number-one Google positions. Neither search rankings nor AI model answers can be guaranteed—both shift continuously based on authority, competition, query phrasing, and model retrieval.',
+      'Our approach focuses squarely on engineering what you can control: clean crawlability, accurate Schema.org structured data, natural British English content depth, responsive Core Web Vitals, and zero spam or duplicate-URL noise.',
+    ],
+    asideEyebrow: 'Terminology Explained Plainly',
+    asideTitle: 'How Technical SEO, SXO, AIO, and GEO work together',
+    asidePoints: [
+      {
+        title: 'Technical & On-Page SEO',
+        detail:
+          'Making sure Googlebot can crawl, render, canonicalise, and index important UK commercial pages efficiently without dead 404 loops or duplicate tags.',
+      },
+      {
+        title: 'SXO (Search Experience Optimisation)',
+        detail:
+          'Matching the landing page layout, reading clarity, mobile speed, and conversion paths to what a searcher genuinely came to evaluate.',
+      },
+      {
+        title: 'AIO & GEO (AI & Generative Search)',
+        detail:
+          'Structuring unambiguous brand, service, location, and FAQ entities using Schema.org and plain-English factual answers easy for AI retrieval systems to parse accurately.',
+      },
+    ],
+  },
+  capabilitiesSection: {
+    id: 'search-disciplines',
+    eyebrow: 'Core SEO & Structured Data Foundations',
+    title: 'Four technical search disciplines establishing clean authority across Google UK.',
+    description:
+      'Strong AI visibility is impossible on top of broken indexing or thin duplicate templates—we secure core search foundations first.',
+    items: [
+      {
+        index: '01.',
+        title: 'Technical SEO & Crawl Governance',
+        subtitle: 'Architecture · Canonicals · 301 & 410 Hygiene',
+        summary:
+          'Diagnosing and fixing crawl waste, redirect chains, broken canonical tags, conflicting hreflang signals, and leftover spam URLs hurting site trust.',
+        points: [
+          'Single-hop 301 redirect rules protecting historical equity during rebuilds',
+          'Clean XML sitemaps containing solely canonical, indexable HTTP 200 URLs',
+          'Proper HTTP 410 removal strategy for permanently retired or compromised URLs',
+        ],
+      },
+      {
+        index: '02.',
+        title: 'On-Page SEO & Content Structure',
+        subtitle: 'Semantic HTML · Heading Hierarchy · UK Copy',
+        summary:
+          'Structuring page titles, meta descriptions, single H1 anchors, logical H2/H3 sections, and descriptive internal anchor text without awkward keyword stuffing.',
+        points: [
+          'Clear topic alignment per page preventing service URLs competing against each other',
+          'Readable British English (en-GB) service prose answering real buyer questions',
+          'Clean internal linking connecting overview hubs to dedicated service pages',
+        ],
+      },
+      {
+        index: '03.',
+        title: 'Website Indexing & Crawlability',
+        subtitle: 'Rendering · Robots · Search Console Evidence',
+        summary:
+          'Ensuring critical commercial copy is present in initial server/prerendered HTML rather than locked inside client-side scripts crawlers delay or miss.',
+        points: [
+          'Inspection of Search Console indexing anomalies, soft-404s, and canonical drift',
+          'Verification of robots.txt directives and meta-robots tag accuracy',
+          'Clean pagination and archive rules preventing low-value tag bloat',
+        ],
+      },
+      {
+        index: '04.',
+        title: 'Structured Data & Schema.org',
+        subtitle: 'JSON-LD Graphs · Strict Visible Parity',
+        summary:
+          'Implementing validated JSON-LD graphs (Organization, LocalBusiness / ProfessionalService, Service, BreadcrumbList, FAQPage) matching visible page content 1:1.',
+        points: [
+          'Accurate UK business location, contact channel, and service-area entities',
+          'FAQPage JSON-LD synced directly to genuine, non-promotional visible FAQs',
+          'Zero spammy or misleading fake review/rating markup violating Google policies',
+        ],
+      },
+    ],
+  },
+  technicalSection: {
+    id: 'aio-geo-pillars',
+    eyebrow: 'SXO, AIO, GEO, Content Intent & Core Web Vitals',
+    title: 'Bridging human reading quality, structured AI comprehension, and fast mobile delivery.',
+    description:
+      'Every technical and editorial refinement supports discoverability without compromising credibility or page speed.',
+    pillars: [
+      {
+        id: 'sxo-intent',
+        index: '01.',
+        eyebrow: 'Search Experience Optimisation (SXO) & Intent',
+        title: 'Turning search impressions into clear, confident enquiries',
+        summary:
+          'Ranking means very little if a visitor lands on a vague wall of filler copy or hits slow mobile friction. SXO aligns page structure directly with buyer intent.',
+        bullets: [
+          'Immediate above-the-fold clarity confirming service scope and UK location focus',
+          'Scannable subsections, bullet specifications, and transparent process steps',
+          'Distraction-free navigation and credible email enquiry pathways',
+          'Tailoring copy depth to search intent—technical answers over repetitive filler',
+        ],
+        calloutLabel: 'Human First',
+        calloutText: 'Pages written for actual UK decision-makers perform better over the long run.',
+      },
+      {
+        id: 'aio-structure',
+        index: '02.',
+        eyebrow: 'AI Optimisation (AIO)',
+        title: 'Helping AI crawlers extract unambiguous facts about your business',
+        summary:
+          'Modern AI search tools parse entities, capabilities, geographic coverage, and explicit boundaries. Ambiguous marketing fluff leads models to skip or misrepresent services.',
+        bullets: [
+          'Concise plain-language factual statements mapping services, regions, and constraints',
+          'Clean HTML semantics (article, section, dl/dt/dd, nav) aiding automated extraction',
+          'Consistent naming of company details (WPCarePoint, Nutfield RH1 4HW, contact@wpcarepoint.co.uk)',
+          'Reviewing AI crawler access and clean non-spam site architecture',
+        ],
+        calloutLabel: 'Factual Precision',
+        calloutText: 'Clear documentation ensures assistants summarise your verified capabilities accurately.',
+      },
+      {
+        id: 'geo-readiness',
+        index: '03.',
+        eyebrow: 'Generative Engine Optimisation (GEO)',
+        title: 'Structuring authoritative answers for generative search summaries',
+        summary:
+          'GEO focuses on making complex service explanations self-contained, balanced, and trustworthy so synthesis engines find coherent substance rather than vague slogans.',
+        bullets: [
+          'Dedicated Q&A sections addressing nuance, edge cases, and honest trade-offs',
+          'Clear comparisons (e.g. WordPress vs React/Next.js or WooCommerce vs bespoke builds)',
+          'Consistent cross-page entity reinforcement between homepage and dedicated services',
+          'Zero fabricated statistics—only grounded facts and defensible engineering reasoning',
+        ],
+        calloutLabel: 'Realistic Standard',
+        calloutText:
+          'We never promise guaranteed AI citations or featured placements—we build authentic technical eligibility.',
+      },
+      {
+        id: 'cwv-performance',
+        index: '04.',
+        eyebrow: 'Performance & Core Web Vitals',
+        title: 'Supporting search crawl efficiency and user experience through speed',
+        summary:
+          'Google uses Core Web Vitals (LCP, INP, CLS) as real page-experience signals, while bloated pages slow down crawl budgets on larger websites.',
+        bullets: [
+          'Evaluating Largest Contentful Paint, layout stability, and mobile responsiveness',
+          'Eliminating render-blocking theme assets and oversized uncompressed imagery',
+          'Clean server caching and CDN headers reducing Time to First Byte across UK nodes',
+          'Direct integration with dedicated WordPress Speed Optimisation where needed',
+        ],
+        calloutLabel: 'Connected Engineering',
+        calloutText: 'Technical SEO and WordPress Speed improvements reinforce one another cleanly.',
+      },
+    ],
+  },
+  processSection: {
+    id: 'delivery-process',
+    eyebrow: 'SEO & AI Search Improvement Process',
+    title: 'Four methodical stages rooted in Search Console evidence rather than automated PDF scores.',
+    description:
+      'Every change is prioritised around technical impact, indexing safety, and realistic commercial value.',
+    steps: [
+      {
+        step: '01.',
+        title: 'Technical, Indexing & Content Audit',
+        summary:
+          'We inspect crawl behaviour, existing Search Console coverage, canonical consistency, Schema.org markup, page speed, and service overlap.',
+        deliverable: 'Written technical SEO & AIO/GEO audit',
+      },
+      {
+        step: '02.',
+        title: 'URL Mapping & Structure Refinement',
+        summary:
+          'Target page architecture, heading hierarchy, internal link pathways, and single-hop 301/410 migration plans are documented safely before edits.',
+        deliverable: 'Prioritised implementation roadmap',
+      },
+      {
+        step: '03.',
+        title: 'On-Page, Schema & Speed Implementation',
+        summary:
+          'Clean metadata, structured JSON-LD graphs, British English copy refinements, and Core Web Vitals improvements are tested cleanly on staging.',
+        deliverable: 'Staging verification & schema checks',
+      },
+      {
+        step: '04.',
+        title: 'Controlled Release & Indexing Review',
+        summary:
+          'Live XML sitemaps, canonical headers, and post-launch crawl behaviour are checked cleanly to confirm clean search engine discovery.',
+        deliverable: 'Verified live release & baseline notes',
+      },
+    ],
+  },
+  whyChooseSection: {
+    id: 'why-wpcarepoint-seo',
+    eyebrow: 'Why Choose WPCarePoint for Search',
+    title: 'Engineers fixing real structural problems rather than sending automated audit PDFs.',
+    description:
+      'Because we understand themes, servers, routing, and Schema code directly, fixes actually get implemented cleanly.',
+    items: [
+      {
+        index: '01.',
+        title: 'Honesty Over Empty Ranking Promises',
+        summary:
+          'We explain openly why no trustworthy consultancy guarantees #1 Google spots, traffic surges, or guaranteed AI assistant citations.',
+        standard: 'Transparent Ethics',
+      },
+      {
+        index: '02.',
+        title: 'Built Directly Into Code & Markup',
+        summary:
+          'Instead of dropping a heavy plugin with generic settings, we engineer clean semantic HTML, JSON-LD, and edge redirects properly.',
+        standard: 'Developer-Grade SEO',
+      },
+      {
+        index: '03.',
+        title: 'Migration & Recovery Experience',
+        summary:
+          'Careful .co.uk redirect governance and spam-URL cleanup protect hard-earned domain authority during site rebuilds or post-incident recoveries.',
+        standard: '301 / 410 Governance',
+      },
+      {
+        index: '04.',
+        title: 'Unified Speed, Content & SXO',
+        summary:
+          'Technical crawlability, Core Web Vitals performance, and human conversion clarity work together seamlessly under one team.',
+        standard: 'SEO · SXO · AIO · GEO',
+      },
+    ],
+  },
+  faqSection: {
+    id: 'service-faq',
+    eyebrow: 'SEO & AI Search FAQ',
+    title: 'Plain-English answers on SEO, AIO, GEO, SXO, and realistic outcomes.',
+    description:
+      'Clear expectations before commissioning search optimisation work.',
+    faqs: [
+      {
+        id: 'seo-faq-1',
+        question: 'Can you guarantee top Google rankings, AI citations, or exact traffic growth?',
+        answer:
+          'No. Google algorithms, SERP layouts, and AI model outputs (ChatGPT, Gemini, Claude) are outside any agency’s control, and market competition shifts continuously. Anyone promising guaranteed rankings or guaranteed AI citations is misleading you. We commit to sound technical architecture, verified Schema markup, clean crawlability, and clear content aligned with user intent.',
+      },
+      {
+        id: 'seo-faq-2',
+        question: 'What is the difference between Technical SEO, AIO, GEO, and SXO?',
+        answer:
+          'Technical SEO ensures search engines can crawl, render, and index pages cleanly without errors. SXO (Search Experience Optimisation) improves how helpful and intuitive the page feels once a user clicks through. AIO (AI Optimisation) and GEO (Generative Engine Optimisation) extend strong SEO foundations by making entity facts, service boundaries, Schema.org data, and balanced Q&As straightforward for AI systems to parse accurately.',
+      },
+      {
+        id: 'seo-faq-3',
+        question: 'Why did WPCarePoint combine GEO and AIO onto one service page?',
+        answer:
+          'In practice, optimising factual service structure, entity Schema, and clear Q&A content serves both AI search discovery (AIO) and generative answer synthesis (GEO) together. Keeping one unified AI Search Optimisation page alongside broader Technical SEO eliminates duplicate keyword cannibalisation and keeps navigation concise.',
+      },
+      {
+        id: 'seo-faq-4',
+        question: 'Can you clean up old hacked URLs or protect rankings during a WordPress rebuild?',
+        answer:
+          'Yes. We map historical Search Console and backlink URLs carefully, implementing single-hop 301 redirects solely where genuine relevant pages exist and returning clean HTTP 410 Gone statuses for confirmed legacy spam paths rather than blindly redirecting everything to the homepage.',
+      },
+      {
+        id: 'seo-faq-5',
+        question: 'How does WordPress speed affect SEO and AI search visibility?',
+        answer:
+          'Fast, clean pages support Core Web Vitals page-experience signals, lower mobile bounce rates (strengthening SXO), and make HTML crawling more efficient for both search spiders and AI fetchers.',
+      },
+      {
+        id: 'seo-faq-6',
+        question: 'How do we request a Technical SEO or AI Search review?',
+        answer:
+          'Email your website URL, target UK services or markets, and any known indexing or migration concerns to contact@wpcarepoint.co.uk. We review your setup directly and respond in writing with clear next steps.',
+      },
+    ],
+  },
+  relatedSection: {
+    eyebrow: 'Connected Visibility & Speed Services',
+    title: 'Reinforce search foundations with fast infrastructure and clean builds',
+    items: [
+      {
+        eyebrow: 'Core Web Vitals',
+        title: 'WordPress Speed Optimisation',
+        description:
+          'Eliminate render-blocking bloat, oversized imagery, and server TTFB bottlenecks supporting search performance.',
+        ctaLabel: 'Explore Speed Optimisation',
+        targetType: 'route',
+        href: '/wordpress-speed-optimisation/',
+      },
+      {
+        eyebrow: 'Semantic Architecture',
+        title: 'Website Design & Development',
+        description:
+          'Clean custom WordPress block builds and React / Next.js platforms engineered from day one with crawl hygiene.',
+        ctaLabel: 'Explore Web Development',
+        targetType: 'route',
+        href: '/services/website-development/',
+      },
+      {
+        eyebrow: 'Direct Review',
+        title: 'Contact WPCarePoint',
+        description:
+          'Send your domain and indexing questions directly by email for clear, jargon-free engineering guidance.',
+        ctaLabel: 'Visit Contact Page',
+        targetType: 'route',
+        href: '/contact/',
+      },
+    ],
+  },
+  ctaSection: {
+    eyebrow: 'Request Search & AI Visibility Review',
+    headline: 'Ensure search engines and AI systems read your business accurately.',
+    description:
+      'Send your website URL, core commercial priorities, and any migration or indexing questions to contact@wpcarepoint.co.uk for direct written feedback.',
+    mailtoSubject: 'SEO & AI Search Optimisation Enquiry',
+    primaryButtonLabel: 'Send Search Enquiry',
+  },
+};
+
 export const DEDICATED_SERVICE_PAGES_BY_PATH: Record<string, DedicatedServicePageConfig> = {
   '/services/website-development': WEBSITE_DEVELOPMENT_PAGE_DATA,
   '/services/website-development/': WEBSITE_DEVELOPMENT_PAGE_DATA,
   '/wordpress-speed-optimisation': WP_SPEED_OPTIMISATION_PAGE_DATA,
   '/wordpress-speed-optimisation/': WP_SPEED_OPTIMISATION_PAGE_DATA,
+  '/services/ecommerce-development': ECOMMERCE_DEVELOPMENT_PAGE_DATA,
+  '/services/ecommerce-development/': ECOMMERCE_DEVELOPMENT_PAGE_DATA,
+  '/services/ai-business-automation': AI_AUTOMATION_PAGE_DATA,
+  '/services/ai-business-automation/': AI_AUTOMATION_PAGE_DATA,
+  '/services/website-care-support': WEBSITE_CARE_SUPPORT_PAGE_DATA,
+  '/services/website-care-support/': WEBSITE_CARE_SUPPORT_PAGE_DATA,
+  '/services/ai-search-optimisation': AI_SEARCH_OPTIMISATION_PAGE_DATA,
+  '/services/ai-search-optimisation/': AI_SEARCH_OPTIMISATION_PAGE_DATA,
 };

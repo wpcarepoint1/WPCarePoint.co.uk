@@ -87,6 +87,7 @@ export function ServicesSections({
                 track={webTrack}
                 variant="featured"
                 onExploreService={onExploreService}
+                onNavigatePath={onNavigatePath}
               />
             </div>
 
@@ -95,6 +96,7 @@ export function ServicesSections({
                 track={ecommerceTrack}
                 variant="featured"
                 onExploreService={onExploreService}
+                onNavigatePath={onNavigatePath}
               />
             </div>
 
@@ -102,6 +104,7 @@ export function ServicesSections({
               <ServiceCard
                 track={aiAutomationTrack}
                 onExploreService={onExploreService}
+                onNavigatePath={onNavigatePath}
               />
             </div>
 
@@ -167,6 +170,21 @@ export function ServicesSections({
             eyebrow="04. Website Care & Technical Support"
             title="Structured stewardship to keep business websites secure, backed up, and stable."
             description="All care tiers are scoped accurately around your site architecture—no guesswork tiers or inflated promises."
+            actions={
+              onNavigatePath ? (
+                <Button
+                  href="/services/website-care-support/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigatePath('/services/website-care-support/');
+                  }}
+                  variant="secondary"
+                  size="md"
+                >
+                  Explore Care &amp; Support Details
+                </Button>
+              ) : undefined
+            }
           />
 
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
@@ -291,6 +309,7 @@ export function ServicesSections({
                 track={seoAiSearchTrack}
                 variant="featured"
                 onExploreService={onExploreService}
+                onNavigatePath={onNavigatePath}
               />
             </div>
 

@@ -14,6 +14,7 @@ export interface CoreServiceTrack {
   description: string;
   deliverables: string[];
   standards: string;
+  routePath?: string;
   serviceSlug?: string;
   anchorId: string;
 }
@@ -90,7 +91,7 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
   {
     label: 'Website Design & Development',
     description: 'Bespoke WordPress block builds, React & Next.js web applications.',
-    href: '#website-development',
+    href: '/services/website-development/',
     routePath: '/services/website-development/',
     serviceSlug: 'website-development',
   },
@@ -103,25 +104,30 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
   {
     label: 'eCommerce Development',
     description: 'WooCommerce & custom retail checkouts for UK currency, VAT & shipping.',
-    href: '#ecommerce-development',
-    serviceSlug: 'ecommerce-website-development',
+    href: '/services/ecommerce-development/',
+    routePath: '/services/ecommerce-development/',
+    serviceSlug: 'ecommerce-development',
   },
   {
     label: 'AI & Business Automation',
     description: 'UK GDPR–aligned CRM workflows, enquiry triage & API integrations.',
-    href: '#ai-automation',
-    serviceSlug: 'ai-automation-business-process-automation',
+    href: '/services/ai-business-automation/',
+    routePath: '/services/ai-business-automation/',
+    serviceSlug: 'ai-business-automation',
   },
   {
     label: 'Website Care & Technical Support',
     description: 'Structured backups, staging updates & WordPress Quick Fix support.',
-    href: '#website-care',
+    href: '/services/website-care-support/',
+    routePath: '/services/website-care-support/',
+    serviceSlug: 'website-care-support',
   },
   {
     label: 'SEO & AI Search Optimisation',
-    description: 'Technical SEO, WordPress speed & AI search visibility (GEO / AIO).',
-    href: '#seo-ai-search',
-    serviceSlug: 'search-engine-optimisation',
+    description: 'Technical SEO, Schema.org, SXO & AI search visibility (AIO / GEO).',
+    href: '/services/ai-search-optimisation/',
+    routePath: '/services/ai-search-optimisation/',
+    serviceSlug: 'ai-search-optimisation',
   },
 ];
 
@@ -147,6 +153,7 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
       'Clean semantic structure with server-level 301 migration protection',
     ],
     standards: 'WordPress Gutenberg · Next.js & TypeScript · Responsive UI',
+    routePath: '/services/website-development/',
     serviceSlug: 'website-development',
     anchorId: 'website-development',
   },
@@ -164,7 +171,8 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
       'Product Schema markup and clean category URL architecture',
     ],
     standards: 'WooCommerce · Stripe UK SCA · Royal Mail & DPD',
-    serviceSlug: 'ecommerce-website-development',
+    routePath: '/services/ecommerce-development/',
+    serviceSlug: 'ecommerce-development',
     anchorId: 'ecommerce-development',
   },
   {
@@ -181,7 +189,8 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
       'Human-in-the-loop approval checkpoints and audit-ready workflows',
     ],
     standards: 'API Integration · UK GDPR Boundaries · Human Approval',
-    serviceSlug: 'ai-automation-business-process-automation',
+    routePath: '/services/ai-business-automation/',
+    serviceSlug: 'ai-business-automation',
     anchorId: 'ai-automation',
   },
   {
@@ -198,6 +207,8 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
       'One-off WordPress Quick Fix pathway for urgent standalone repairs',
     ],
     standards: 'Staging Validation · Off-Site Backups · Email-First Support',
+    routePath: '/services/website-care-support/',
+    serviceSlug: 'website-care-support',
     anchorId: 'website-care',
   },
   {
@@ -214,7 +225,8 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
       'Clean redirection governance preserving historical .co.uk search authority',
     ],
     standards: 'Technical SEO · Core Web Vitals · AI Search Readiness',
-    serviceSlug: 'search-engine-optimisation',
+    routePath: '/services/ai-search-optimisation/',
+    serviceSlug: 'ai-search-optimisation',
     anchorId: 'seo-ai-search',
   },
 ];

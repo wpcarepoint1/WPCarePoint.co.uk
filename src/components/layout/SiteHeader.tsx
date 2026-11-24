@@ -52,6 +52,10 @@ export function SiteHeader({
   const handleContactAction = () => {
     setServicesOpen(false);
     setMobileOpen(false);
+    if (onNavigatePath) {
+      onNavigatePath('/contact/');
+      return;
+    }
     if (hasLocalContact) {
       const contactEl = document.getElementById('contact');
       if (contactEl) {
@@ -158,32 +162,6 @@ export function SiteHeader({
                           </li>
                         ))}
                       </ul>
-                      {onNavigatePath && (
-                        <div className="mt-1 pt-2 px-3 pb-1 border-t border-[#e9eff2] flex items-center justify-between gap-2">
-                          <a
-                            href="/services/website-development/"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setServicesOpen(false);
-                              onNavigatePath('/services/website-development/');
-                            }}
-                            className="text-xs font-semibold text-[#00749c] hover:underline"
-                          >
-                            Web Development →
-                          </a>
-                          <a
-                            href="/wordpress-speed-optimisation/"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setServicesOpen(false);
-                              onNavigatePath('/wordpress-speed-optimisation/');
-                            }}
-                            className="text-xs font-semibold text-[#00749c] hover:underline"
-                          >
-                            WP Speed Page →
-                          </a>
-                        </div>
-                      )}
                     </div>
                   )}
                 </div>
@@ -210,7 +188,7 @@ export function SiteHeader({
         <div className="flex items-center gap-3 shrink-0">
           <div className="hidden lg:block">
             <Button
-              href="#contact"
+              href="/contact/"
               onClick={(e) => {
                 e.preventDefault();
                 handleContactAction();
@@ -278,7 +256,7 @@ export function SiteHeader({
 
           <div className="pt-2">
             <Button
-              href="#contact"
+              href="/contact/"
               onClick={(e) => {
                 e.preventDefault();
                 handleContactAction();

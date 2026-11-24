@@ -105,10 +105,10 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               </li>
               <li>
                 <a
-                  href="/#ecommerce-development"
+                  href="/services/ecommerce-development/"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAnchor('#ecommerce-development');
+                    handleRoute('/services/ecommerce-development/', '#ecommerce-development');
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
@@ -117,10 +117,10 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               </li>
               <li>
                 <a
-                  href="/#ai-automation"
+                  href="/services/ai-business-automation/"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAnchor('#ai-automation');
+                    handleRoute('/services/ai-business-automation/', '#ai-automation');
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
@@ -129,14 +129,26 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               </li>
               <li>
                 <a
-                  href="/#website-care"
+                  href="/services/website-care-support/"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAnchor('#website-care');
+                    handleRoute('/services/website-care-support/', '#website-care');
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
                   Website Care &amp; Support
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/services/ai-search-optimisation/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRoute('/services/ai-search-optimisation/', '#seo-ai-search');
+                  }}
+                  className={FOOTER_LINK_CLASS}
+                >
+                  SEO &amp; AI Search Optimisation
                 </a>
               </li>
             </ul>
@@ -231,14 +243,14 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               </li>
               <li>
                 <a
-                  href="/#contact"
+                  href="/contact/"
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAnchor('#contact');
+                    handleRoute('/contact/', '#contact');
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
-                  Contact by Email
+                  Contact WPCarePoint
                 </a>
               </li>
               <li className="text-xs text-white/70 pt-2">UK GDPR &amp; PECR Ready</li>
