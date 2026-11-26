@@ -35,7 +35,7 @@ export function ServicePageHero({
               e.preventDefault();
               onNavigateHome();
             }}
-            className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors"
+            className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
           >
             Home
           </a>
@@ -50,7 +50,7 @@ export function ServicePageHero({
                 onNavigateHome('#services-overview');
               }
             }}
-            className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors"
+            className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
           >
             Services
           </a>
@@ -127,7 +127,7 @@ export function ServicePageHero({
                     onNavigateHome('#services-overview');
                   }
                 }}
-                className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#00749c] transition-colors"
+                className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#00749c] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
               >
                 <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
                 <span>Back to all WPCarePoint services</span>

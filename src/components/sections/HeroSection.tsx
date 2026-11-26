@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Layers } from 'lucide-react';
 import { BRAND_INFO, HERO_COMMITMENTS } from '../../data/homepageData';
 import { EASE_OUT_EXPO } from '../MotionPrimitives';
@@ -10,6 +10,7 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ onJumpToSection }: HeroSectionProps) {
+  const prefersReduced = useReducedMotion();
   const [imgFailed, setImgFailed] = useState(false);
 
   return (
@@ -17,9 +18,9 @@ export function HeroSection({ onJumpToSection }: HeroSectionProps) {
       <div className="max-w-7xl mx-auto px-6 py-12 sm:py-16 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
+            initial={prefersReduced ? false : { opacity: 0.94, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, ease: EASE_OUT_EXPO }}
+            transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: EASE_OUT_EXPO }}
             className="lg:col-span-6"
           >
             <p className="text-xs font-mono font-semibold tracking-wide uppercase text-[#00749c]">
@@ -75,9 +76,13 @@ export function HeroSection({ onJumpToSection }: HeroSectionProps) {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.99 }}
+            initial={prefersReduced ? false : { opacity: 0.94, scale: 0.99 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.45, delay: 0.05, ease: EASE_OUT_EXPO }}
+            transition={{
+              duration: prefersReduced ? 0.01 : 0.45,
+              delay: prefersReduced ? 0 : 0.05,
+              ease: EASE_OUT_EXPO,
+            }}
             className="lg:col-span-6"
           >
             <div className="relative aspect-[16/10] rounded-2xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6] shadow-xs">

@@ -24,7 +24,8 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
               alt={item.imageAlt}
               width={1200}
               height={750}
-              decoding="sync"
+              loading="lazy"
+              decoding="async"
               onError={() => setImgFailed(true)}
               className="w-full h-full object-cover"
             />

@@ -15,26 +15,33 @@ import { AboutPageView } from './components/about/AboutPageView';
 import { ContactPageView } from './components/contact/ContactPageView';
 import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
 import { ServicesHubView } from './components/services-hub/ServicesHubView';
-import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { CtaSection } from './components/ui/CtaSection';
 import { DEDICATED_SERVICE_PAGES_BY_PATH } from './data/dedicatedServicePagesData';
-import { getServiceBySlug } from './data/servicePagesData';
-import { TRANSLATIONS } from './data/translations';
+import { applyHomeSeo } from './utils/routeSeo';
+
+const LEGACY_SERVICE_ALIASES: Record<string, string> = {
+  '/services/ecommerce-website-development': '/services/ecommerce-development/',
+  '/services/ecommerce-website-development/': '/services/ecommerce-development/',
+  '/services/ai-automation-business-process-automation': '/services/ai-business-automation/',
+  '/services/ai-automation-business-process-automation/': '/services/ai-business-automation/',
+  '/services/generative-engine-optimisation': '/services/ai-search-optimisation/',
+  '/services/generative-engine-optimisation/': '/services/ai-search-optimisation/',
+};
 
 function normalizePathname(pathname: string): string {
   const cleaned = pathname.trim().toLowerCase();
-  return cleaned === '' ? '/' : cleaned;
-}
-
-function getSlugFromPath(pathname: string): string | null {
-  const match = pathname.match(/^\/services\/([a-z0-9-]+)\/?$/i);
-  return match ? match[1].toLowerCase() : null;
+  const base = cleaned === '' ? '/' : cleaned;
+  return LEGACY_SERVICE_ALIASES[base] || base;
 }
 
 export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(() =>
-    normalizePathname(window.location.pathname)
-  );
+  const [currentPath, setCurrentPath] = useState<string>(() => {
+    const normalized = normalizePathname(window.location.pathname);
+    if (normalized !== window.location.pathname.toLowerCase() && window.location.pathname !== '/') {
+      window.history.replaceState({}, '', `${normalized}${window.location.hash}`);
+    }
+    return normalized;
+  });
 
   const pendingHashRef = useRef<string | null>(null);
 
@@ -74,39 +81,51 @@ export default function App() {
     [currentPath]
   );
 
-  const activeFallbackService = useMemo(() => {
-    if (isContactPage || isServicesHub || isAboutPage || activeDedicatedPage) {
-      return undefined;
-    }
-    const slug = getSlugFromPath(currentPath);
-    return slug ? getServiceBySlug(slug) : undefined;
-  }, [isContactPage, isServicesHub, isAboutPage, activeDedicatedPage, currentPath]);
+  const isHomeRoute =
+    !isContactPage && !isServicesHub && !isAboutPage && !activeDedicatedPage;
 
-  const navigateToPath = useCallback((rawPath: string) => {
-    const withLeadingSlash = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
-    const [pathOnly, hashPart] = withLeadingSlash.split('#');
-    const normalizedNext = normalizePathname(pathOnly || '/');
-    const cleanTarget = `${pathOnly || '/'}${hashPart ? `#${hashPart}` : ''}`;
-
-    if (window.location.pathname + window.location.hash !== cleanTarget) {
-      window.history.pushState({}, '', cleanTarget);
-    }
-
-    if (normalizedNext === currentPath) {
-      if (hashPart) {
-        document.getElementById(hashPart)?.scrollIntoView({ behavior: 'smooth' });
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+  useEffect(() => {
+    if (isHomeRoute) {
+      applyHomeSeo();
+      const activeHash = window.location.hash.replace(/^#/, '');
+      if (activeHash) {
+        window.requestAnimationFrame(() => {
+          window.requestAnimationFrame(() => {
+            document.getElementById(activeHash)?.scrollIntoView({ behavior: 'smooth' });
+          });
+        });
       }
-      return;
     }
+  }, [isHomeRoute]);
 
-    pendingHashRef.current = hashPart || null;
-    setCurrentPath(normalizedNext);
-    if (!hashPart) {
-      window.scrollTo({ top: 0, behavior: 'instant' });
-    }
-  }, [currentPath]);
+  const navigateToPath = useCallback(
+    (rawPath: string) => {
+      const withLeadingSlash = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+      const [pathOnly, hashPart] = withLeadingSlash.split('#');
+      const normalizedNext = normalizePathname(pathOnly || '/');
+      const cleanTarget = `${normalizedNext}${hashPart ? `#${hashPart}` : ''}`;
+
+      if (window.location.pathname + window.location.hash !== cleanTarget) {
+        window.history.pushState({}, '', cleanTarget);
+      }
+
+      if (normalizedNext === currentPath) {
+        if (hashPart) {
+          document.getElementById(hashPart)?.scrollIntoView({ behavior: 'smooth' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        return;
+      }
+
+      pendingHashRef.current = hashPart || null;
+      setCurrentPath(normalizedNext);
+      if (!hashPart) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    },
+    [currentPath]
+  );
 
   const navigateToService = useCallback(
     (slug: string) => {
@@ -132,7 +151,10 @@ export default function App() {
         navigateToPath('/services/website-care-support/');
         return;
       }
-      if (slug === 'ai-search-optimisation') {
+      if (
+        slug === 'ai-search-optimisation' ||
+        slug === 'generative-engine-optimisation'
+      ) {
         navigateToPath('/services/ai-search-optimisation/');
         return;
       }
@@ -149,7 +171,7 @@ export default function App() {
         navigateToPath(`/services/${slug}/`);
         return;
       }
-      navigateToPath(`/services/${slug}`);
+      navigateToPath('/services/');
     },
     [navigateToPath]
   );
@@ -188,16 +210,11 @@ export default function App() {
 
         {/* Section 1: Header & Navigation */}
         <SiteHeader
+          currentPath={currentPath}
           onNavigateHome={navigateHome}
           onNavigateService={navigateToService}
           onNavigatePath={navigateToPath}
-          hasLocalContact={Boolean(
-            activeDedicatedPage ||
-              isContactPage ||
-              isServicesHub ||
-              isAboutPage ||
-              currentPath === '/'
-          )}
+          hasLocalContact={true}
         />
 
         <main id="main-content" className="flex-1">
@@ -253,21 +270,6 @@ export default function App() {
                   page={activeDedicatedPage}
                   onNavigateHome={navigateHome}
                   onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : activeFallbackService ? (
-              <motion.div
-                key={`service-${activeFallbackService.slug}`}
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <ServiceLandingPage
-                  service={activeFallbackService}
-                  onNavigateHome={navigateHome}
-                  onNavigateService={navigateToService}
-                  t={TRANSLATIONS.en}
                 />
               </motion.div>
             ) : (

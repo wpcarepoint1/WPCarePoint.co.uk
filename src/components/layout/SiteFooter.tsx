@@ -7,7 +7,7 @@ interface SiteFooterProps {
 }
 
 const FOOTER_LINK_CLASS =
-  'inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center hover:text-[#00b2d4] transition-colors';
+  'inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center hover:text-[#00b2d4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md';
 
 export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) {
   const handleAnchor = (hash: string) => {
@@ -63,7 +63,7 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               <p>
                 <a
                   href={`mailto:${BRAND_INFO.email}`}
-                  className="inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center gap-2 text-[#00b2d4] hover:text-white font-medium transition-colors"
+                  className="inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center gap-2 text-[#00b2d4] hover:text-white font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
                 >
                   <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                   <span>{BRAND_INFO.email}</span>

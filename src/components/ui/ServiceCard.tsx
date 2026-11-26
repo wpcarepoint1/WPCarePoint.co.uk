@@ -69,7 +69,7 @@ export function ServiceCard({
               e.preventDefault();
               onNavigatePath(track.routePath!);
             }}
-            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group"
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
           >
             <span>Explore Details</span>
             <ArrowRight
@@ -84,7 +84,7 @@ export function ServiceCard({
               e.preventDefault();
               onExploreService(track.serviceSlug!);
             }}
-            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group"
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
           >
             <span>Explore Details</span>
             <ArrowRight
@@ -99,7 +99,7 @@ export function ServiceCard({
               e.preventDefault();
               onJumpToAnchor(track.anchorId);
             }}
-            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group"
+            className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] whitespace-nowrap shrink-0 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
           >
             <span>View Plans</span>
             <ArrowRight

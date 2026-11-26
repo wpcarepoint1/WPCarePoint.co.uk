@@ -4,13 +4,22 @@ import { BRAND_INFO, NAV_ITEMS, NAV_SERVICE_DROPDOWN } from '../../data/homepage
 import { Button } from '../ui/Button';
 
 interface SiteHeaderProps {
+  currentPath?: string;
   onNavigateHome: (hash?: string) => void;
   onNavigateService?: (slug: string) => void;
   onNavigatePath?: (path: string) => void;
   hasLocalContact?: boolean;
 }
 
+function isSameRoute(currentPath: string, targetPath?: string): boolean {
+  if (!targetPath) return false;
+  const normA = currentPath.replace(/\/+$/, '') || '/';
+  const normB = targetPath.replace(/\/+$/, '') || '/';
+  return normA === normB;
+}
+
 export function SiteHeader({
+  currentPath = '/',
   onNavigateHome,
   onNavigateService,
   onNavigatePath,
@@ -20,6 +29,13 @@ export function SiteHeader({
   const [mobileOpen, setMobileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const openedViaHoverRef = useRef<boolean>(false);
+
+  const isServiceSectionActive =
+    isSameRoute(currentPath, '/services/') ||
+    currentPath.startsWith('/services/') ||
+    isSameRoute(currentPath, '/wordpress-speed-optimisation/');
+  const isAboutActive = isSameRoute(currentPath, '/about/');
+  const isContactActive = isSameRoute(currentPath, '/contact/');
 
   useEffect(() => {
     const handleOutside = (event: MouseEvent) => {
@@ -103,6 +119,7 @@ export function SiteHeader({
         {/* Zone 1: Brand Wordmark */}
         <a
           href="/"
+          aria-current={isSameRoute(currentPath, '/') ? 'page' : undefined}
           onClick={(e) => {
             e.preventDefault();
             openedViaHoverRef.current = false;
@@ -151,11 +168,18 @@ export function SiteHeader({
                 >
                   <a
                     href={item.routePath || '/services/'}
+                    aria-current={
+                      isSameRoute(currentPath, '/services/') ? 'page' : undefined
+                    }
                     onClick={(e) => {
                       e.preventDefault();
                       handleRouteClick(item.routePath || '/services/', '#services-overview');
                     }}
-                    className="text-sm font-medium text-white/90 hover:text-[#00b2d4] transition-colors whitespace-nowrap shrink-0 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                    className={`text-sm font-medium transition-colors whitespace-nowrap shrink-0 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md ${
+                      isServiceSectionActive
+                        ? 'text-[#00b2d4] underline decoration-[#00b2d4] decoration-2 underline-offset-8'
+                        : 'text-white/90 hover:text-[#00b2d4]'
+                    }`}
                   >
                     {item.label}
                   </a>
@@ -190,35 +214,52 @@ export function SiteHeader({
                         <div className="px-3 py-2 border-b border-[#e9eff2] mb-1">
                           <a
                             href="/services/"
+                            aria-current={
+                              isSameRoute(currentPath, '/services/') ? 'page' : undefined
+                            }
                             onClick={(e) => {
                               e.preventDefault();
                               handleRouteClick('/services/', '#services-overview');
                             }}
-                            className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c] hover:text-[#003b4f] inline-flex items-center gap-1"
+                            className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c] hover:text-[#003b4f] inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                           >
                             All Services Hub Overview →
                           </a>
                         </div>
                         <ul className="space-y-0.5">
-                          {NAV_SERVICE_DROPDOWN.map((svc) => (
-                            <li key={svc.label}>
-                              <a
-                                href={svc.routePath || svc.href}
-                                onClick={(e) => {
-                                  e.preventDefault();
-                                  handleDropdownItemClick(svc);
-                                }}
-                                className="block rounded-xl px-3 py-2.5 hover:bg-[#f7f9fa] transition-colors group"
-                              >
-                                <p className="text-sm font-semibold text-[#003b4f] group-hover:text-[#00749c]">
-                                  {svc.label}
-                                </p>
-                                <p className="text-xs text-[#6c757d] mt-0.5 leading-snug">
-                                  {svc.description}
-                                </p>
-                              </a>
-                            </li>
-                          ))}
+                          {NAV_SERVICE_DROPDOWN.map((svc) => {
+                            const activeSvc = isSameRoute(currentPath, svc.routePath);
+                            return (
+                              <li key={svc.label}>
+                                <a
+                                  href={svc.routePath || svc.href}
+                                  aria-current={activeSvc ? 'page' : undefined}
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    handleDropdownItemClick(svc);
+                                  }}
+                                  className={`block rounded-xl px-3 py-2.5 transition-colors group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] ${
+                                    activeSvc
+                                      ? 'bg-[#f2f7f9] border-l-2 border-[#00749c]'
+                                      : 'hover:bg-[#f7f9fa]'
+                                  }`}
+                                >
+                                  <p
+                                    className={`text-sm font-semibold ${
+                                      activeSvc
+                                        ? 'text-[#00749c]'
+                                        : 'text-[#003b4f] group-hover:text-[#00749c]'
+                                    }`}
+                                  >
+                                    {svc.label}
+                                  </p>
+                                  <p className="text-xs text-[#6c757d] mt-0.5 leading-snug">
+                                    {svc.description}
+                                  </p>
+                                </a>
+                              </li>
+                            );
+                          })}
                         </ul>
                       </div>
                     </div>
@@ -228,15 +269,22 @@ export function SiteHeader({
             }
 
             if (item.routePath) {
+              const activeRoute =
+                item.routePath === '/about/' ? isAboutActive : isSameRoute(currentPath, item.routePath);
               return (
                 <a
                   key={item.label}
                   href={item.routePath}
+                  aria-current={activeRoute ? 'page' : undefined}
                   onClick={(e) => {
                     e.preventDefault();
                     handleRouteClick(item.routePath!);
                   }}
-                  className="text-sm font-medium text-white/90 hover:text-[#00b2d4] transition-colors whitespace-nowrap shrink-0 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                  className={`text-sm font-medium transition-colors whitespace-nowrap shrink-0 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md ${
+                    activeRoute
+                      ? 'text-[#00b2d4] underline decoration-[#00b2d4] decoration-2 underline-offset-8'
+                      : 'text-white/90 hover:text-[#00b2d4]'
+                  }`}
                 >
                   {item.label}
                 </a>
@@ -264,12 +312,14 @@ export function SiteHeader({
           <div className="hidden lg:block">
             <Button
               href="/contact/"
+              aria-current={isContactActive ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleContactAction();
               }}
               variant="onDark"
               size="sm"
+              className={isContactActive ? 'ring-2 ring-[#00b2d4]/80' : ''}
             >
               Get in Touch
             </Button>
@@ -280,7 +330,7 @@ export function SiteHeader({
             aria-expanded={mobileOpen}
             aria-label={mobileOpen ? 'Close navigation menu' : 'Open navigation menu'}
             onClick={() => setMobileOpen((prev) => !prev)}
-            className="lg:hidden min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-xl border border-white/20 text-white hover:border-[#00b2d4] hover:text-[#00b2d4] transition-colors cursor-pointer"
+            className="lg:hidden min-h-[44px] min-w-[44px] inline-flex items-center justify-center rounded-xl border border-white/20 text-white hover:border-[#00b2d4] hover:text-[#00b2d4] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4]"
           >
             {mobileOpen ? (
               <X className="h-5 w-5" aria-hidden="true" />
@@ -300,52 +350,69 @@ export function SiteHeader({
             </p>
             <a
               href="/services/"
+              aria-current={isSameRoute(currentPath, '/services/') ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleRouteClick('/services/', '#services-overview');
               }}
-              className="flex min-h-[44px] items-center text-sm font-semibold text-[#00b2d4] hover:text-white border-b border-white/10"
+              className="flex min-h-[44px] items-center text-sm font-semibold text-[#00b2d4] hover:text-white border-b border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
             >
               Services Hub Overview
             </a>
-            {NAV_SERVICE_DROPDOWN.map((svc) => (
-              <a
-                key={svc.label}
-                href={svc.routePath || svc.href}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleDropdownItemClick(svc);
-                }}
-                className="flex min-h-[44px] items-center text-sm font-medium text-white/90 hover:text-[#00b2d4] border-b border-white/10"
-              >
-                {svc.label}
-              </a>
-            ))}
-
-            <div className="pt-3 space-y-1">
-              {NAV_ITEMS.filter((item) => !item.hasDropdown).map((item) => (
+            {NAV_SERVICE_DROPDOWN.map((svc) => {
+              const activeSvc = isSameRoute(currentPath, svc.routePath);
+              return (
                 <a
-                  key={item.label}
-                  href={item.routePath || `/${item.href}`}
+                  key={svc.label}
+                  href={svc.routePath || svc.href}
+                  aria-current={activeSvc ? 'page' : undefined}
                   onClick={(e) => {
                     e.preventDefault();
-                    if (item.routePath) {
-                      handleRouteClick(item.routePath);
-                    } else {
-                      handleAnchorClick(item.href);
-                    }
+                    handleDropdownItemClick(svc);
                   }}
-                  className="flex min-h-[44px] items-center text-sm font-semibold text-white hover:text-[#00b2d4]"
+                  className={`flex min-h-[44px] items-center text-sm font-medium border-b border-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md ${
+                    activeSvc
+                      ? 'text-[#00b2d4] font-semibold'
+                      : 'text-white/90 hover:text-[#00b2d4]'
+                  }`}
                 >
-                  {item.label}
+                  {svc.label}
                 </a>
-              ))}
+              );
+            })}
+
+            <div className="pt-3 space-y-1">
+              {NAV_ITEMS.filter((item) => !item.hasDropdown).map((item) => {
+                const activeRoute =
+                  item.routePath && isSameRoute(currentPath, item.routePath);
+                return (
+                  <a
+                    key={item.label}
+                    href={item.routePath || `/${item.href}`}
+                    aria-current={activeRoute ? 'page' : undefined}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (item.routePath) {
+                        handleRouteClick(item.routePath);
+                      } else {
+                        handleAnchorClick(item.href);
+                      }
+                    }}
+                    className={`flex min-h-[44px] items-center text-sm font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md ${
+                      activeRoute ? 'text-[#00b2d4]' : 'text-white hover:text-[#00b2d4]'
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                );
+              })}
             </div>
           </nav>
 
           <div className="pt-2">
             <Button
               href="/contact/"
+              aria-current={isContactActive ? 'page' : undefined}
               onClick={(e) => {
                 e.preventDefault();
                 handleContactAction();

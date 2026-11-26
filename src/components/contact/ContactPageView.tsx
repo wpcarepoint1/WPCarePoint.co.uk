@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { CONTACT_PAGE_DATA } from '../../data/contactPageData';
 import { BRAND_INFO } from '../../data/homepageData';
+import { applyRouteSeo } from '../../utils/routeSeo';
 import { EASE_OUT_EXPO, FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { FaqAccordion } from '../ui/FaqAccordion';
@@ -30,127 +31,80 @@ export function ContactPageView({
   const prefersReduced = useReducedMotion();
   const [imgFailed, setImgFailed] = useState(false);
   const [emailCopied, setEmailCopied] = useState<'idle' | 'copied' | 'manual'>('idle');
-  const [templateCopied, setTemplateCopied] = useState(false);
+  const [templateCopied, setTemplateCopied] = useState<'idle' | 'copied' | 'manual'>('idle');
   const emailRef = useRef<HTMLAnchorElement>(null);
+  const templateRef = useRef<HTMLPreElement>(null);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-
-    const prevTitle = document.title;
-    document.title = CONTACT_PAGE_DATA.metaTitle;
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute('content') || '';
-    metaDesc?.setAttribute('content', CONTACT_PAGE_DATA.metaDescription);
-
-    const canonical = document.querySelector('link[rel="canonical"]');
-    const prevCanonical = canonical?.getAttribute('href') || '';
-    canonical?.setAttribute('href', CONTACT_PAGE_DATA.canonicalUrl);
-
-    const hreflangEn = document.querySelector('link[rel="alternate"][hreflang="en-gb"]');
-    const prevHreflangEn = hreflangEn?.getAttribute('href') || '';
-    hreflangEn?.setAttribute('href', CONTACT_PAGE_DATA.canonicalUrl);
-
-    const hreflangDef = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
-    const prevHreflangDef = hreflangDef?.getAttribute('href') || '';
-    hreflangDef?.setAttribute('href', CONTACT_PAGE_DATA.canonicalUrl);
-
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const prevOgTitle = ogTitle?.getAttribute('content') || '';
-    ogTitle?.setAttribute('content', CONTACT_PAGE_DATA.metaTitle);
-
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    const prevOgDesc = ogDesc?.getAttribute('content') || '';
-    ogDesc?.setAttribute('content', CONTACT_PAGE_DATA.metaDescription);
-
-    const ogUrl = document.querySelector('meta[property="og:url"]');
-    const prevOgUrl = ogUrl?.getAttribute('content') || '';
-    ogUrl?.setAttribute('content', CONTACT_PAGE_DATA.canonicalUrl);
-
-    const twTitle = document.querySelector('meta[name="twitter:title"]');
-    const prevTwTitle = twTitle?.getAttribute('content') || '';
-    twTitle?.setAttribute('content', CONTACT_PAGE_DATA.metaTitle);
-
-    const twDesc = document.querySelector('meta[name="twitter:description"]');
-    const prevTwDesc = twDesc?.getAttribute('content') || '';
-    twDesc?.setAttribute('content', CONTACT_PAGE_DATA.metaDescription);
-
-    const scriptId = 'contact-page-jsonld';
-    let jsonLdScript = document.getElementById(scriptId) as HTMLScriptElement | null;
-    if (!jsonLdScript) {
-      jsonLdScript = document.createElement('script');
-      jsonLdScript.id = scriptId;
-      jsonLdScript.type = 'application/ld+json';
-      document.head.appendChild(jsonLdScript);
+    const activeHash = window.location.hash.replace(/^#/, '');
+    if (activeHash && activeHash !== 'contact') {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          document.getElementById(activeHash)?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    jsonLdScript.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'ContactPage',
-          name: CONTACT_PAGE_DATA.metaTitle,
-          url: CONTACT_PAGE_DATA.canonicalUrl,
-          description: CONTACT_PAGE_DATA.metaDescription,
-          mainEntity: {
-            '@type': 'Organization',
-            name: BRAND_INFO.name,
-            url: 'https://wpcarepoint.co.uk/',
-            email: BRAND_INFO.email,
-            address: {
-              '@type': 'PostalAddress',
-              streetAddress: 'Robert Denholm House, Bletchingley Road',
-              addressLocality: 'Nutfield',
-              addressRegion: 'Surrey',
-              postalCode: 'RH1 4HW',
-              addressCountry: 'GB',
+    applyRouteSeo({
+      title: CONTACT_PAGE_DATA.metaTitle,
+      description: CONTACT_PAGE_DATA.metaDescription,
+      canonicalUrl: CONTACT_PAGE_DATA.canonicalUrl,
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'ContactPage',
+            name: CONTACT_PAGE_DATA.metaTitle,
+            url: CONTACT_PAGE_DATA.canonicalUrl,
+            description: CONTACT_PAGE_DATA.metaDescription,
+            mainEntity: {
+              '@type': 'Organization',
+              name: BRAND_INFO.name,
+              url: 'https://wpcarepoint.co.uk/',
+              email: BRAND_INFO.email,
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Robert Denholm House, Bletchingley Road',
+                addressLocality: 'Nutfield',
+                addressRegion: 'Surrey',
+                postalCode: 'RH1 4HW',
+                addressCountry: 'GB',
+              },
             },
           },
-        },
-        {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              name: 'Home',
-              item: 'https://wpcarepoint.co.uk/',
-            },
-            {
-              '@type': 'ListItem',
-              position: 2,
-              name: 'Contact',
-              item: CONTACT_PAGE_DATA.canonicalUrl,
-            },
-          ],
-        },
-        {
-          '@type': 'FAQPage',
-          mainEntity: CONTACT_PAGE_DATA.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer,
-            },
-          })),
-        },
-      ],
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://wpcarepoint.co.uk/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Contact',
+                item: CONTACT_PAGE_DATA.canonicalUrl,
+              },
+            ],
+          },
+          {
+            '@type': 'FAQPage',
+            mainEntity: CONTACT_PAGE_DATA.faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+              },
+            })),
+          },
+        ],
+      },
     });
-
-    return () => {
-      document.title = prevTitle;
-      if (metaDesc && prevDesc) metaDesc.setAttribute('content', prevDesc);
-      if (canonical && prevCanonical) canonical.setAttribute('href', prevCanonical);
-      if (hreflangEn && prevHreflangEn) hreflangEn.setAttribute('href', prevHreflangEn);
-      if (hreflangDef && prevHreflangDef) hreflangDef.setAttribute('href', prevHreflangDef);
-      if (ogTitle && prevOgTitle) ogTitle.setAttribute('content', prevOgTitle);
-      if (ogDesc && prevOgDesc) ogDesc.setAttribute('content', prevOgDesc);
-      if (ogUrl && prevOgUrl) ogUrl.setAttribute('content', prevOgUrl);
-      if (twTitle && prevTwTitle) twTitle.setAttribute('content', prevTwTitle);
-      if (twDesc && prevTwDesc) twDesc.setAttribute('content', prevTwDesc);
-      jsonLdScript?.remove();
-    };
   }, []);
 
   const copyText = async (text: string): Promise<boolean> => {
@@ -167,9 +121,11 @@ export function ContactPageView({
       ta.value = text;
       ta.setAttribute('readonly', '');
       ta.style.position = 'fixed';
+      ta.style.top = '0';
+      ta.style.left = '0';
       ta.style.opacity = '0';
       document.body.appendChild(ta);
-      ta.focus();
+      ta.focus({ preventScroll: true });
       ta.select();
       const ok = document.execCommand('copy');
       document.body.removeChild(ta);
@@ -200,9 +156,19 @@ export function ContactPageView({
   const handleCopyTemplate = async () => {
     const ok = await copyText(CONTACT_PAGE_DATA.emailBriefTemplate);
     if (ok) {
-      setTemplateCopied(true);
-      setTimeout(() => setTemplateCopied(false), 2800);
+      setTemplateCopied('copied');
+      setTimeout(() => setTemplateCopied('idle'), 2800);
+      return;
     }
+    if (templateRef.current && window.getSelection) {
+      const sel = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(templateRef.current);
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+    }
+    setTemplateCopied('manual');
+    setTimeout(() => setTemplateCopied('idle'), 4000);
   };
 
   return (
@@ -220,7 +186,7 @@ export function ContactPageView({
                 e.preventDefault();
                 onNavigateHome();
               }}
-              className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors"
+              className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
             >
               Home
             </a>
@@ -305,7 +271,7 @@ export function ContactPageView({
                     e.preventDefault();
                     onNavigateHome();
                   }}
-                  className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#00749c] transition-colors"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#00749c] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                 >
                   <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
                   <span>Return to WPCarePoint homepage</span>
@@ -394,7 +360,7 @@ export function ContactPageView({
                   <a
                     ref={emailRef}
                     href={`mailto:${BRAND_INFO.email}`}
-                    className="mt-1 inline-flex min-h-[44px] items-center gap-2 text-lg font-bold text-[#00749c] hover:text-[#003b4f] transition-colors break-all"
+                    className="mt-1 inline-flex min-h-[44px] items-center gap-2 text-lg font-bold text-[#00749c] hover:text-[#003b4f] transition-colors break-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                   >
                     <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                     <span>{BRAND_INFO.email}</span>
@@ -449,12 +415,17 @@ export function ContactPageView({
                   type="button"
                   onClick={handleCopyTemplate}
                   aria-live="polite"
-                  className="inline-flex items-center gap-1.5 min-h-[44px] px-3 rounded-lg border border-[#dde6eb] hover:border-[#00749c] text-xs font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] px-3 rounded-lg border border-[#dde6eb] hover:border-[#00749c] text-xs font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
                 >
-                  {templateCopied ? (
+                  {templateCopied === 'copied' ? (
                     <>
                       <Check className="h-3.5 w-3.5 text-[#00749c]" aria-hidden="true" />
                       <span>Outline Copied</span>
+                    </>
+                  ) : templateCopied === 'manual' ? (
+                    <>
+                      <Copy className="h-3.5 w-3.5 text-[#00749c]" aria-hidden="true" />
+                      <span>Outline Selected — Press Ctrl+C</span>
                     </>
                   ) : (
                     <>
@@ -464,7 +435,10 @@ export function ContactPageView({
                   )}
                 </button>
               </div>
-              <pre className="rounded-xl bg-[#f7f9fa] border border-[#e9eff2] p-4 text-xs font-mono text-[#2e2e2e] whitespace-pre-wrap leading-relaxed overflow-x-auto">
+              <pre
+                ref={templateRef}
+                className="rounded-xl bg-[#f7f9fa] border border-[#e9eff2] p-4 text-xs font-mono text-[#2e2e2e] whitespace-pre-wrap leading-relaxed overflow-x-auto"
+              >
                 {CONTACT_PAGE_DATA.emailBriefTemplate}
               </pre>
             </div>
@@ -616,7 +590,7 @@ export function ContactPageView({
                   e.preventDefault();
                   onNavigatePath(item.href);
                 }}
-                className="group w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] hover:-translate-y-0.5 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between"
+                className="group w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] hover:-translate-y-0.5 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
               >
                 <div>
                   <p className="text-xs font-mono font-semibold text-[#00749c] uppercase tracking-wider">

@@ -1389,7 +1389,7 @@ export const BRANDING_IDENTITY_PAGE_DATA: DedicatedServicePageConfig = {
   },
   suitabilitySection: {
     id: 'brand-suitability',
-    eyebrow: 'Who Benefit Most From Web Identity Work',
+    eyebrow: 'Who Benefits Most From Web Identity Work',
     title: 'Ideal for UK firms establishing credibility or tidying fragmented sites.',
     description:
       'Whether refreshing a dated site or unifying a growing WooCommerce store, clear visual systems save time on every future page.',

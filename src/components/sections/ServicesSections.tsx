@@ -64,7 +64,7 @@ export function ServicesSections({
                   e.preventDefault();
                   onJumpToSection(`#${track.anchorId}`);
                 }}
-                className="group min-h-[60px] rounded-xl border border-[#dde6eb] bg-white px-4 py-3.5 hover:border-[#00749c] hover:bg-[#f2f7f9] transition-colors flex flex-col justify-between gap-2"
+                className="group min-h-[60px] rounded-xl border border-[#dde6eb] bg-white px-4 py-3.5 hover:border-[#00749c] hover:bg-[#f2f7f9] transition-colors flex flex-col justify-between gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
               >
                 <div className="flex items-center justify-between text-xs font-mono text-[#00749c]">
                   <span>{track.index}</span>
@@ -121,7 +121,8 @@ export function ServicesSections({
                       alt={BRAND_INFO.architectureImageAlt}
                       width={1200}
                       height={896}
-                      decoding="sync"
+                      loading="lazy"
+                      decoding="async"
                       onError={() => setArchFailed(true)}
                       className="w-full h-full object-cover"
                     />
@@ -365,7 +366,7 @@ export function ServicesSections({
                         onJumpToSection('#contact');
                       }
                     }}
-                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap group"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                   >
                     <span>Explore Speed Optimisation</span>
                     <ArrowRight
@@ -379,7 +380,7 @@ export function ServicesSections({
                       e.preventDefault();
                       onJumpToSection('#contact');
                     }}
-                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#6c757d] hover:text-[#003b4f] transition-colors whitespace-nowrap"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#6c757d] hover:text-[#003b4f] transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                   >
                     <span>Book Speed Audit</span>
                   </a>

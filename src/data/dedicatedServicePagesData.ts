@@ -1559,7 +1559,7 @@ export const AI_AUTOMATION_PAGE_DATA: DedicatedServicePageConfig = {
       },
       {
         id: 'ai-faq-2',
-        question: 'Do every single business workflow and automation require AI?',
+        question: 'Does every business workflow and automation step require AI?',
         answer:
           'Not at all. Many of the highest-value improvements—such as syncing website enquiries cleanly to HubSpot, triggering verified Xero records, or deduplicating spreadsheets—work faster, cheaper, and more reliably using clean API code and validation rules without an LLM involved.',
       },

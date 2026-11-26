@@ -47,7 +47,7 @@ export function ServiceJumpNav({
                 e.preventDefault();
                 onJumpToSection(item.targetId);
               }}
-              className={`inline-flex items-center min-h-[44px] sm:min-h-[36px] text-xs font-semibold transition-colors whitespace-nowrap ${
+              className={`inline-flex items-center min-h-[44px] sm:min-h-[36px] text-xs font-semibold transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md px-1 ${
                 item.targetId === 'contact'
                   ? 'text-[#00749c] hover:text-[#003b4f]'
                   : 'text-[#2e2e2e] hover:text-[#00749c]'
@@ -200,7 +200,7 @@ export function ServiceSuitabilitySection({
                           e.preventDefault();
                           onNavigatePath(alt.routePath);
                         }}
-                        className="group block rounded-xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors p-4"
+                        className="group block rounded-xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors p-4 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
                       >
                         <div className="flex items-center justify-between gap-3">
                           <span className="text-sm font-bold text-[#003b4f] group-hover:text-[#00749c] transition-colors">
@@ -830,7 +830,7 @@ export function ServiceFaqAndRelatedSection({
                     onNavigateHome(item.href);
                   }
                 }}
-                className="group w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] hover:-translate-y-0.5 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between"
+                className="group w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] hover:-translate-y-0.5 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
               >
                 <div>
                   <p className="text-xs font-mono font-semibold text-[#00749c] uppercase tracking-wider">

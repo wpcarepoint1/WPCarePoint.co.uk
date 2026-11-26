@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { SERVICES_HUB_DATA } from '../../data/servicesHubData';
 import { BRAND_INFO } from '../../data/homepageData';
+import { applyRouteSeo } from '../../utils/routeSeo';
 import { EASE_OUT_EXPO, FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { CtaSection } from '../ui/CtaSection';
@@ -49,135 +50,87 @@ export function ServicesHubView({
   const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-
-    const prevTitle = document.title;
-    document.title = SERVICES_HUB_DATA.metaTitle;
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute('content') || '';
-    metaDesc?.setAttribute('content', SERVICES_HUB_DATA.metaDescription);
-
-    const canonical = document.querySelector('link[rel="canonical"]');
-    const prevCanonical = canonical?.getAttribute('href') || '';
-    canonical?.setAttribute('href', SERVICES_HUB_DATA.canonicalUrl);
-
-    const hreflangEn = document.querySelector('link[rel="alternate"][hreflang="en-gb"]');
-    const prevHreflangEn = hreflangEn?.getAttribute('href') || '';
-    hreflangEn?.setAttribute('href', SERVICES_HUB_DATA.canonicalUrl);
-
-    const hreflangDef = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
-    const prevHreflangDef = hreflangDef?.getAttribute('href') || '';
-    hreflangDef?.setAttribute('href', SERVICES_HUB_DATA.canonicalUrl);
-
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const prevOgTitle = ogTitle?.getAttribute('content') || '';
-    ogTitle?.setAttribute('content', SERVICES_HUB_DATA.metaTitle);
-
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    const prevOgDesc = ogDesc?.getAttribute('content') || '';
-    ogDesc?.setAttribute('content', SERVICES_HUB_DATA.metaDescription);
-
-    const ogUrl = document.querySelector('meta[property="og:url"]');
-    const prevOgUrl = ogUrl?.getAttribute('content') || '';
-    ogUrl?.setAttribute('content', SERVICES_HUB_DATA.canonicalUrl);
-
-    const twTitle = document.querySelector('meta[name="twitter:title"]');
-    const prevTwTitle = twTitle?.getAttribute('content') || '';
-    twTitle?.setAttribute('content', SERVICES_HUB_DATA.metaTitle);
-
-    const twDesc = document.querySelector('meta[name="twitter:description"]');
-    const prevTwDesc = twDesc?.getAttribute('content') || '';
-    twDesc?.setAttribute('content', SERVICES_HUB_DATA.metaDescription);
-
-    const scriptId = 'services-hub-jsonld';
-    let jsonLdScript = document.getElementById(scriptId) as HTMLScriptElement | null;
-    if (!jsonLdScript) {
-      jsonLdScript = document.createElement('script');
-      jsonLdScript.id = scriptId;
-      jsonLdScript.type = 'application/ld+json';
-      document.head.appendChild(jsonLdScript);
+    const activeHash = window.location.hash.replace(/^#/, '');
+    if (activeHash) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          document.getElementById(activeHash)?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    jsonLdScript.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'CollectionPage',
-          name: SERVICES_HUB_DATA.metaTitle,
-          url: SERVICES_HUB_DATA.canonicalUrl,
-          description: SERVICES_HUB_DATA.metaDescription,
-          inLanguage: 'en-GB',
-          isPartOf: {
-            '@type': 'WebSite',
-            name: BRAND_INFO.name,
-            url: 'https://wpcarepoint.co.uk/',
-          },
-          mainEntity: {
-            '@type': 'ItemList',
-            itemListElement: [
-              ...SERVICES_HUB_DATA.coreTracksSection.tracks.map((track) => ({
-                name: track.title,
-                url: `https://wpcarepoint.co.uk${track.routePath}`,
-              })),
-              ...SERVICES_HUB_DATA.supportingExpertiseSection.items
-                .filter((item) => Boolean(item.href) && !item.href?.includes('#'))
-                .map((item) => ({
-                  name: item.title,
-                  url: `https://wpcarepoint.co.uk${item.href}`,
+    applyRouteSeo({
+      title: SERVICES_HUB_DATA.metaTitle,
+      description: SERVICES_HUB_DATA.metaDescription,
+      canonicalUrl: SERVICES_HUB_DATA.canonicalUrl,
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'CollectionPage',
+            name: SERVICES_HUB_DATA.metaTitle,
+            url: SERVICES_HUB_DATA.canonicalUrl,
+            description: SERVICES_HUB_DATA.metaDescription,
+            inLanguage: 'en-GB',
+            isPartOf: {
+              '@type': 'WebSite',
+              name: BRAND_INFO.name,
+              url: 'https://wpcarepoint.co.uk/',
+            },
+            mainEntity: {
+              '@type': 'ItemList',
+              itemListElement: [
+                ...SERVICES_HUB_DATA.coreTracksSection.tracks.map((track) => ({
+                  name: track.title,
+                  url: `https://wpcarepoint.co.uk${track.routePath}`,
                 })),
-            ].map((entry, idx) => ({
-              '@type': 'ListItem',
-              position: idx + 1,
-              name: entry.name,
-              url: entry.url,
+                ...SERVICES_HUB_DATA.supportingExpertiseSection.items
+                  .filter((item) => Boolean(item.href) && !item.href?.includes('#'))
+                  .map((item) => ({
+                    name: item.title,
+                    url: `https://wpcarepoint.co.uk${item.href}`,
+                  })),
+              ].map((entry, idx) => ({
+                '@type': 'ListItem',
+                position: idx + 1,
+                name: entry.name,
+                url: entry.url,
+              })),
+            },
+          },
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://wpcarepoint.co.uk/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'Services',
+                item: SERVICES_HUB_DATA.canonicalUrl,
+              },
+            ],
+          },
+          {
+            '@type': 'FAQPage',
+            mainEntity: SERVICES_HUB_DATA.faqs.map((faq) => ({
+              '@type': 'Question',
+              name: faq.question,
+              acceptedAnswer: {
+                '@type': 'Answer',
+                text: faq.answer,
+              },
             })),
           },
-        },
-        {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              name: 'Home',
-              item: 'https://wpcarepoint.co.uk/',
-            },
-            {
-              '@type': 'ListItem',
-              position: 2,
-              name: 'Services',
-              item: SERVICES_HUB_DATA.canonicalUrl,
-            },
-          ],
-        },
-        {
-          '@type': 'FAQPage',
-          mainEntity: SERVICES_HUB_DATA.faqs.map((faq) => ({
-            '@type': 'Question',
-            name: faq.question,
-            acceptedAnswer: {
-              '@type': 'Answer',
-              text: faq.answer,
-            },
-          })),
-        },
-      ],
+        ],
+      },
     });
-
-    return () => {
-      document.title = prevTitle;
-      if (metaDesc && prevDesc) metaDesc.setAttribute('content', prevDesc);
-      if (canonical && prevCanonical) canonical.setAttribute('href', prevCanonical);
-      if (hreflangEn && prevHreflangEn) hreflangEn.setAttribute('href', prevHreflangEn);
-      if (hreflangDef && prevHreflangDef) hreflangDef.setAttribute('href', prevHreflangDef);
-      if (ogTitle && prevOgTitle) ogTitle.setAttribute('content', prevOgTitle);
-      if (ogDesc && prevOgDesc) ogDesc.setAttribute('content', prevOgDesc);
-      if (ogUrl && prevOgUrl) ogUrl.setAttribute('content', prevOgUrl);
-      if (twTitle && prevTwTitle) twTitle.setAttribute('content', prevTwTitle);
-      if (twDesc && prevTwDesc) twDesc.setAttribute('content', prevTwDesc);
-      jsonLdScript?.remove();
-    };
   }, []);
 
   const jumpToSection = (id: string) => {
@@ -199,7 +152,7 @@ export function ServicesHubView({
                 e.preventDefault();
                 onNavigateHome();
               }}
-              className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors"
+              className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
             >
               Home
             </a>
@@ -427,7 +380,7 @@ export function ServicesHubView({
                             onNavigatePath(track.routePath);
                           }
                         }}
-                        className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap shrink-0"
+                        className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                       >
                         <span>Explore {track.title.split(' ')[0]} Service</span>
                         <ArrowRight
@@ -506,7 +459,7 @@ export function ServicesHubView({
                             e.preventDefault();
                             onNavigatePath(item.href!);
                           }}
-                          className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap"
+                          className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
                         >
                           <span>{item.ctaLabel}</span>
                           <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

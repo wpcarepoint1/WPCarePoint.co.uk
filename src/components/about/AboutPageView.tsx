@@ -3,6 +3,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Check, Layers } from 'lucide-react';
 import { ABOUT_PAGE_DATA } from '../../data/aboutPageData';
 import { BRAND_INFO } from '../../data/homepageData';
+import { applyRouteSeo } from '../../utils/routeSeo';
 import { EASE_OUT_EXPO, FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { CtaSection } from '../ui/CtaSection';
@@ -21,113 +22,65 @@ export function AboutPageView({
   const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
-
-    const prevTitle = document.title;
-    document.title = ABOUT_PAGE_DATA.metaTitle;
-
-    const metaDesc = document.querySelector('meta[name="description"]');
-    const prevDesc = metaDesc?.getAttribute('content') || '';
-    metaDesc?.setAttribute('content', ABOUT_PAGE_DATA.metaDescription);
-
-    const canonical = document.querySelector('link[rel="canonical"]');
-    const prevCanonical = canonical?.getAttribute('href') || '';
-    canonical?.setAttribute('href', ABOUT_PAGE_DATA.canonicalUrl);
-
-    const hreflangEn = document.querySelector('link[rel="alternate"][hreflang="en-gb"]');
-    const prevHreflangEn = hreflangEn?.getAttribute('href') || '';
-    hreflangEn?.setAttribute('href', ABOUT_PAGE_DATA.canonicalUrl);
-
-    const hreflangDef = document.querySelector('link[rel="alternate"][hreflang="x-default"]');
-    const prevHreflangDef = hreflangDef?.getAttribute('href') || '';
-    hreflangDef?.setAttribute('href', ABOUT_PAGE_DATA.canonicalUrl);
-
-    const ogTitle = document.querySelector('meta[property="og:title"]');
-    const prevOgTitle = ogTitle?.getAttribute('content') || '';
-    ogTitle?.setAttribute('content', ABOUT_PAGE_DATA.metaTitle);
-
-    const ogDesc = document.querySelector('meta[property="og:description"]');
-    const prevOgDesc = ogDesc?.getAttribute('content') || '';
-    ogDesc?.setAttribute('content', ABOUT_PAGE_DATA.metaDescription);
-
-    const ogUrl = document.querySelector('meta[property="og:url"]');
-    const prevOgUrl = ogUrl?.getAttribute('content') || '';
-    ogUrl?.setAttribute('content', ABOUT_PAGE_DATA.canonicalUrl);
-
-    const twTitle = document.querySelector('meta[name="twitter:title"]');
-    const prevTwTitle = twTitle?.getAttribute('content') || '';
-    twTitle?.setAttribute('content', ABOUT_PAGE_DATA.metaTitle);
-
-    const twDesc = document.querySelector('meta[name="twitter:description"]');
-    const prevTwDesc = twDesc?.getAttribute('content') || '';
-    twDesc?.setAttribute('content', ABOUT_PAGE_DATA.metaDescription);
-
-    const scriptId = 'about-page-jsonld';
-    let jsonLdScript = document.getElementById(scriptId) as HTMLScriptElement | null;
-    if (!jsonLdScript) {
-      jsonLdScript = document.createElement('script');
-      jsonLdScript.id = scriptId;
-      jsonLdScript.type = 'application/ld+json';
-      document.head.appendChild(jsonLdScript);
+    const activeHash = window.location.hash.replace(/^#/, '');
+    if (activeHash) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          document.getElementById(activeHash)?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
 
-    jsonLdScript.textContent = JSON.stringify({
-      '@context': 'https://schema.org',
-      '@graph': [
-        {
-          '@type': 'AboutPage',
-          name: ABOUT_PAGE_DATA.metaTitle,
-          url: ABOUT_PAGE_DATA.canonicalUrl,
-          description: ABOUT_PAGE_DATA.metaDescription,
-          inLanguage: 'en-GB',
-          mainEntity: {
-            '@type': 'Organization',
-            name: BRAND_INFO.name,
-            url: 'https://wpcarepoint.co.uk/',
-            email: BRAND_INFO.email,
-            address: {
-              '@type': 'PostalAddress',
-              streetAddress: 'Robert Denholm House, Bletchingley Road',
-              addressLocality: 'Nutfield',
-              addressRegion: 'Surrey',
-              postalCode: 'RH1 4HW',
-              addressCountry: 'GB',
+    applyRouteSeo({
+      title: ABOUT_PAGE_DATA.metaTitle,
+      description: ABOUT_PAGE_DATA.metaDescription,
+      canonicalUrl: ABOUT_PAGE_DATA.canonicalUrl,
+      jsonLd: {
+        '@context': 'https://schema.org',
+        '@graph': [
+          {
+            '@type': 'AboutPage',
+            name: ABOUT_PAGE_DATA.metaTitle,
+            url: ABOUT_PAGE_DATA.canonicalUrl,
+            description: ABOUT_PAGE_DATA.metaDescription,
+            inLanguage: 'en-GB',
+            mainEntity: {
+              '@type': 'Organization',
+              name: BRAND_INFO.name,
+              url: 'https://wpcarepoint.co.uk/',
+              email: BRAND_INFO.email,
+              address: {
+                '@type': 'PostalAddress',
+                streetAddress: 'Robert Denholm House, Bletchingley Road',
+                addressLocality: 'Nutfield',
+                addressRegion: 'Surrey',
+                postalCode: 'RH1 4HW',
+                addressCountry: 'GB',
+              },
             },
           },
-        },
-        {
-          '@type': 'BreadcrumbList',
-          itemListElement: [
-            {
-              '@type': 'ListItem',
-              position: 1,
-              name: 'Home',
-              item: 'https://wpcarepoint.co.uk/',
-            },
-            {
-              '@type': 'ListItem',
-              position: 2,
-              name: 'About',
-              item: ABOUT_PAGE_DATA.canonicalUrl,
-            },
-          ],
-        },
-      ],
+          {
+            '@type': 'BreadcrumbList',
+            itemListElement: [
+              {
+                '@type': 'ListItem',
+                position: 1,
+                name: 'Home',
+                item: 'https://wpcarepoint.co.uk/',
+              },
+              {
+                '@type': 'ListItem',
+                position: 2,
+                name: 'About',
+                item: ABOUT_PAGE_DATA.canonicalUrl,
+              },
+            ],
+          },
+        ],
+      },
     });
-
-    return () => {
-      document.title = prevTitle;
-      if (metaDesc && prevDesc) metaDesc.setAttribute('content', prevDesc);
-      if (canonical && prevCanonical) canonical.setAttribute('href', prevCanonical);
-      if (hreflangEn && prevHreflangEn) hreflangEn.setAttribute('href', prevHreflangEn);
-      if (hreflangDef && prevHreflangDef) hreflangDef.setAttribute('href', prevHreflangDef);
-      if (ogTitle && prevOgTitle) ogTitle.setAttribute('content', prevOgTitle);
-      if (ogDesc && prevOgDesc) ogDesc.setAttribute('content', prevOgDesc);
-      if (ogUrl && prevOgUrl) ogUrl.setAttribute('content', prevOgUrl);
-      if (twTitle && prevTwTitle) twTitle.setAttribute('content', prevTwTitle);
-      if (twDesc && prevTwDesc) twDesc.setAttribute('content', prevTwDesc);
-      jsonLdScript?.remove();
-    };
   }, []);
 
   return (
@@ -145,7 +98,7 @@ export function AboutPageView({
                 e.preventDefault();
                 onNavigateHome();
               }}
-              className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors"
+              className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
             >
               Home
             </a>
@@ -356,7 +309,7 @@ export function AboutPageView({
                     e.preventDefault();
                     onNavigatePath(track.routePath || '/services/');
                   }}
-                  className="group w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between"
+                  className="group w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
                 >
                   <div>
                     <div className="flex items-center gap-2 text-xs font-mono">
