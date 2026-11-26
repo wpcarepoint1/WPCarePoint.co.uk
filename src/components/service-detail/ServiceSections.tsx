@@ -1,12 +1,26 @@
-import { ArrowRight, Check, ShieldCheck, Wrench } from 'lucide-react';
+import { AlertCircle, ArrowRight, Check, Compass, ShieldCheck, Wrench } from 'lucide-react';
 import {
   type DedicatedServicePageConfig,
+  type ServiceProblemsSectionConfig,
+  type ServiceSuitabilitySectionConfig,
 } from '../../data/dedicatedServicePagesData';
 import { BRAND_INFO } from '../../data/homepageData';
 import { FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { FaqAccordion } from '../ui/FaqAccordion';
 import { SectionHeading } from '../ui/SectionHeading';
+
+export type SectionSurface = 'white' | 'slate';
+
+function getSectionSurfaceClasses(surface: SectionSurface): string {
+  return surface === 'white'
+    ? 'bg-white border-b border-[#dde6eb]'
+    : 'bg-[#f7f9fa] border-b border-[#dde6eb]';
+}
+
+function getCardSurfaceClasses(surface: SectionSurface): string {
+  return surface === 'white' ? 'bg-[#f7f9fa]' : 'bg-white';
+}
 
 export function ServiceJumpNav({
   links,
@@ -50,13 +64,15 @@ export function ServiceJumpNav({
 
 export function ServiceIntroSection({
   intro,
+  surface = 'white',
 }: {
   intro: DedicatedServicePageConfig['introSection'];
+  surface?: SectionSurface;
 }) {
   return (
     <section
       id={intro.id}
-      className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+      className={`scroll-mt-20 py-16 lg:py-20 ${getSectionSurfaceClasses(surface)}`}
     >
       <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
         <Reveal className="lg:col-span-7 space-y-5">
@@ -79,7 +95,11 @@ export function ServiceIntroSection({
         </Reveal>
 
         <FadeInUpOnScroll delay={0.08} className="lg:col-span-5">
-          <aside className="rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-6 sm:p-8 space-y-5">
+          <aside
+            className={`rounded-2xl border border-[#dde6eb] ${getCardSurfaceClasses(
+              surface
+            )} p-6 sm:p-8 space-y-5`}
+          >
             <div className="flex items-center gap-2 text-[#00749c]">
               <ShieldCheck className="h-4 w-4 shrink-0" aria-hidden="true" />
               <span className="text-xs font-mono font-semibold uppercase tracking-wider">
@@ -108,15 +128,269 @@ export function ServiceIntroSection({
   );
 }
 
+export function ServiceSuitabilitySection({
+  suitability,
+  onNavigatePath,
+  surface = 'slate',
+}: {
+  suitability: ServiceSuitabilitySectionConfig;
+  onNavigatePath: (path: string) => void;
+  surface?: SectionSurface;
+}) {
+  const cardBg = getCardSurfaceClasses(surface);
+
+  return (
+    <section
+      id={suitability.id}
+      className={`scroll-mt-20 py-16 lg:py-20 ${getSectionSurfaceClasses(surface)}`}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <SectionHeading
+          eyebrow={suitability.eyebrow}
+          title={suitability.title}
+          description={suitability.description}
+        />
+
+        <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <FadeInUpOnScroll delay={0.03} className="lg:col-span-7 flex">
+            <div
+              className={`w-full rounded-2xl border border-[#dde6eb] ${cardBg} p-6 sm:p-8 flex flex-col justify-between`}
+            >
+              <div>
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                  <Check className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>{suitability.goodFitTitle}</span>
+                </div>
+
+                <dl className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-5 pt-5 border-t border-[#dde6eb]">
+                  {suitability.goodFit.map((item) => (
+                    <div
+                      key={item.title}
+                      className="rounded-xl border border-[#e9eff2] bg-white/70 p-4 space-y-1.5"
+                    >
+                      <dt className="text-sm font-bold text-[#003b4f] leading-snug">
+                        {item.title}
+                      </dt>
+                      <dd className="text-xs sm:text-sm text-[#2e2e2e] leading-relaxed">
+                        {item.detail}
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            </div>
+          </FadeInUpOnScroll>
+
+          <FadeInUpOnScroll delay={0.08} className="lg:col-span-5 flex">
+            <aside
+              className={`w-full rounded-2xl border border-[#b9ccd6] ${cardBg} p-6 sm:p-8 flex flex-col justify-between`}
+            >
+              <div>
+                <div className="flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                  <Compass className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>{suitability.considerOtherTitle}</span>
+                </div>
+
+                <ul className="mt-5 pt-4 border-t border-[#dde6eb] space-y-3">
+                  {suitability.considerOther.map((alt) => (
+                    <li key={alt.label}>
+                      <a
+                        href={alt.routePath}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          onNavigatePath(alt.routePath);
+                        }}
+                        className="group block rounded-xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors p-4"
+                      >
+                        <div className="flex items-center justify-between gap-3">
+                          <span className="text-sm font-bold text-[#003b4f] group-hover:text-[#00749c] transition-colors">
+                            {alt.label}
+                          </span>
+                          <ArrowRight
+                            className="h-4 w-4 text-[#00749c] shrink-0 transition-transform duration-150 group-hover:translate-x-0.5"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        <p className="text-xs text-[#2e2e2e] mt-1.5 leading-relaxed">
+                          {alt.note}
+                        </p>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </aside>
+          </FadeInUpOnScroll>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export function ServiceProblemsSection({
+  problems,
+  surface = 'white',
+}: {
+  problems: ServiceProblemsSectionConfig;
+  surface?: SectionSurface;
+}) {
+  const cardBg = getCardSurfaceClasses(surface);
+
+  return (
+    <section
+      id={problems.id}
+      className={`scroll-mt-20 py-16 lg:py-20 ${getSectionSurfaceClasses(surface)}`}
+    >
+      <div className="max-w-7xl mx-auto px-6">
+        <SectionHeading
+          eyebrow={problems.eyebrow}
+          title={problems.title}
+          description={problems.description}
+        />
+
+        {problems.layout === 'comparison-rows' ? (
+          <div className="mt-10 space-y-4">
+            {problems.items.map((item, idx) => (
+              <FadeInUpOnScroll key={item.index} delay={idx * 0.04}>
+                <article
+                  className={`rounded-2xl border border-[#dde6eb] ${cardBg} hover:border-[#00749c] transition-colors p-6 sm:p-7 grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-8 items-start`}
+                >
+                  <div className="lg:col-span-4 space-y-1.5">
+                    <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#00749c] tabular-nums">
+                      <span>{item.index}</span>
+                      <span aria-hidden="true" className="text-[#6c757d]">
+                        ·
+                      </span>
+                      <span className="uppercase tracking-wider text-[#6c757d]">
+                        Challenge
+                      </span>
+                    </div>
+                    <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
+                      {item.problem}
+                    </h3>
+                  </div>
+
+                  <div className="lg:col-span-4 space-y-1">
+                    <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#6c757d]">
+                      Practical Impact
+                    </p>
+                    <p className="text-sm text-[#2e2e2e] leading-relaxed">{item.impact}</p>
+                  </div>
+
+                  <div className="lg:col-span-4 lg:pl-6 lg:border-l border-t lg:border-t-0 pt-4 lg:pt-0 border-[#dde6eb] space-y-1.5">
+                    <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                      How We Address It
+                    </p>
+                    <p className="text-sm font-medium text-[#003b4f] leading-relaxed">
+                      {item.solution}
+                    </p>
+                    {item.boundaryNote && (
+                      <p className="text-xs font-mono text-[#6c757d] pt-1">
+                        {item.boundaryNote}
+                      </p>
+                    )}
+                  </div>
+                </article>
+              </FadeInUpOnScroll>
+            ))}
+          </div>
+        ) : problems.layout === 'guardrail-cards' ? (
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {problems.items.map((item, idx) => (
+              <FadeInUpOnScroll key={item.index} delay={idx * 0.04} className="flex">
+                <article
+                  className={`w-full rounded-2xl border border-[#dde6eb] ${cardBg} hover:border-[#00749c] transition-colors overflow-hidden flex flex-col justify-between`}
+                >
+                  <div className="px-6 sm:px-7 py-4 bg-[#003b4f]/[0.04] border-b border-[#dde6eb] flex items-center justify-between gap-3">
+                    <div className="flex items-center gap-2 text-xs font-mono font-semibold text-[#00749c] tabular-nums">
+                      <AlertCircle className="h-4 w-4 shrink-0" aria-hidden="true" />
+                      <span>
+                        {item.index} Safeguard &amp; Risk Control
+                      </span>
+                    </div>
+                    {item.boundaryNote && (
+                      <span className="text-xs font-mono text-[#6c757d]">
+                        {item.boundaryNote}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between space-y-5">
+                    <div>
+                      <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
+                        {item.problem}
+                      </h3>
+                      <p className="text-sm text-[#2e2e2e] mt-2 leading-relaxed">
+                        {item.impact}
+                      </p>
+                    </div>
+
+                    <div className="pt-4 border-t border-[#dde6eb]">
+                      <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                        Engineering Control
+                      </p>
+                      <p className="text-sm font-medium text-[#003b4f] mt-1.5 leading-relaxed">
+                        {item.solution}
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </FadeInUpOnScroll>
+            ))}
+          </div>
+        ) : (
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {problems.items.map((item, idx) => (
+              <FadeInUpOnScroll key={item.index} delay={idx * 0.04} className="flex">
+                <article
+                  className={`w-full rounded-2xl border border-[#dde6eb] ${cardBg} hover:border-[#00749c] transition-colors p-6 sm:p-7 flex flex-col justify-between`}
+                >
+                  <div>
+                    <p className="text-xs font-mono font-semibold text-[#00749c] tabular-nums">
+                      {item.index} Common Friction
+                    </p>
+                    <h3 className="text-lg font-bold text-[#003b4f] mt-2 leading-snug">
+                      {item.problem}
+                    </h3>
+                    <p className="text-sm text-[#2e2e2e] mt-2 leading-relaxed">
+                      {item.impact}
+                    </p>
+                  </div>
+
+                  <div className="mt-5 pt-4 border-t border-[#dde6eb]">
+                    <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                      Practical Fix
+                    </p>
+                    <p className="text-sm font-medium text-[#003b4f] mt-1 leading-relaxed">
+                      {item.solution}
+                    </p>
+                  </div>
+                </article>
+              </FadeInUpOnScroll>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
 export function ServiceCapabilitiesSection({
   capabilities,
+  layout = 'grid-2x2',
+  surface = 'slate',
 }: {
   capabilities: DedicatedServicePageConfig['capabilitiesSection'];
+  layout?: 'grid-2x2' | 'bento-featured';
+  surface?: SectionSurface;
 }) {
+  const cardBg = getCardSurfaceClasses(surface);
+  const useBento = layout === 'bento-featured' && capabilities.items.length === 4;
+
   return (
     <section
       id={capabilities.id}
-      className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+      className={`scroll-mt-20 py-16 lg:py-20 ${getSectionSurfaceClasses(surface)}`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeading
@@ -125,44 +399,77 @@ export function ServiceCapabilitiesSection({
           description={capabilities.description}
         />
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-          {capabilities.items.map((item, idx) => (
-            <FadeInUpOnScroll key={item.title} delay={idx * 0.04} className="flex">
-              <article className="w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors duration-200 p-6 sm:p-7 flex flex-col justify-between">
-                <div>
-                  <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-                    <span className="font-mono font-semibold text-[#00749c] tabular-nums">
-                      {item.index}
-                    </span>
-                    <span className="font-mono text-[#6c757d]">{item.subtitle}</span>
+        <div
+          className={`mt-10 grid gap-6 items-stretch ${
+            useBento
+              ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-6'
+              : 'grid-cols-1 md:grid-cols-2'
+          }`}
+        >
+          {capabilities.items.map((item, idx) => {
+            const isHeroFeature = useBento && idx === 0;
+            const bentoSpan = !useBento
+              ? ''
+              : idx === 0
+              ? 'md:col-span-2 lg:col-span-6'
+              : idx === 3
+              ? 'md:col-span-2 lg:col-span-2'
+              : 'md:col-span-1 lg:col-span-2';
+
+            return (
+              <FadeInUpOnScroll
+                key={item.title}
+                delay={idx * 0.04}
+                className={`flex ${bentoSpan}`}
+              >
+                <article
+                  className={`w-full rounded-2xl border border-[#dde6eb] ${cardBg} hover:border-[#00749c] transition-colors duration-200 p-6 sm:p-7 ${
+                    isHeroFeature
+                      ? 'grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-start'
+                      : 'flex flex-col justify-between'
+                  }`}
+                >
+                  <div className={isHeroFeature ? 'lg:col-span-6' : ''}>
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
+                      <span className="font-mono font-semibold text-[#00749c] tabular-nums">
+                        {item.index}
+                      </span>
+                      <span className="font-mono text-[#6c757d]">{item.subtitle}</span>
+                    </div>
+
+                    <h3 className="text-xl font-bold text-[#003b4f] mt-2.5 leading-snug">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-sm sm:text-[15px] text-[#2e2e2e] mt-2.5 leading-relaxed">
+                      {item.summary}
+                    </p>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#003b4f] mt-2.5 leading-snug">
-                    {item.title}
-                  </h3>
-
-                  <p className="text-sm sm:text-[15px] text-[#2e2e2e] mt-2.5 leading-relaxed">
-                    {item.summary}
-                  </p>
-                </div>
-
-                <ul className="mt-5 pt-5 border-t border-[#e9eff2] space-y-2.5">
-                  {item.points.map((point) => (
-                    <li
-                      key={point}
-                      className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
-                    >
-                      <Check
-                        className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
-                        aria-hidden="true"
-                      />
-                      <span>{point}</span>
-                    </li>
-                  ))}
-                </ul>
-              </article>
-            </FadeInUpOnScroll>
-          ))}
+                  <ul
+                    className={
+                      isHeroFeature
+                        ? 'lg:col-span-6 lg:pt-0 lg:border-t-0 lg:pl-8 lg:border-l border-t pt-5 border-[#e9eff2] space-y-3'
+                        : 'mt-5 pt-5 border-t border-[#e9eff2] space-y-2.5'
+                    }
+                  >
+                    {item.points.map((point) => (
+                      <li
+                        key={point}
+                        className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
+                      >
+                        <Check
+                          className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
+                          aria-hidden="true"
+                        />
+                        <span>{point}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              </FadeInUpOnScroll>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -171,13 +478,15 @@ export function ServiceCapabilitiesSection({
 
 export function ServiceCarePlansOverviewSection({
   carePlans,
+  surface = 'white',
 }: {
   carePlans: NonNullable<DedicatedServicePageConfig['carePlansSection']>;
+  surface?: SectionSurface;
 }) {
   return (
     <section
       id={carePlans.id}
-      className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+      className={`scroll-mt-20 py-16 lg:py-20 ${getSectionSurfaceClasses(surface)}`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeading
@@ -291,13 +600,17 @@ export function ServiceCarePlansOverviewSection({
 
 export function ServiceTechnicalGridSection({
   technical,
+  surface = 'white',
 }: {
   technical: DedicatedServicePageConfig['technicalSection'];
+  surface?: SectionSurface;
 }) {
+  const cardBg = getCardSurfaceClasses(surface);
+
   return (
     <section
       id={technical.id}
-      className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+      className={`scroll-mt-20 py-16 lg:py-20 ${getSectionSurfaceClasses(surface)}`}
     >
       <div className="max-w-7xl mx-auto px-6">
         <SectionHeading
@@ -311,7 +624,7 @@ export function ServiceTechnicalGridSection({
             <FadeInUpOnScroll key={pillar.id} delay={idx * 0.04} className="flex">
               <article
                 id={pillar.id}
-                className="scroll-mt-24 w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:border-[#00749c] transition-colors duration-200 p-6 sm:p-7 flex flex-col justify-between"
+                className={`scroll-mt-24 w-full rounded-2xl border border-[#dde6eb] ${cardBg} hover:border-[#00749c] transition-colors duration-200 p-6 sm:p-7 flex flex-col justify-between`}
               >
                 <div>
                   <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
@@ -491,15 +804,15 @@ export function ServiceFaqAndRelatedSection({
             title={relatedSection.title}
             actions={
               <Button
-                href="/#services-overview"
+                href="/services/"
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavigateHome('#services-overview');
+                  onNavigatePath('/services/');
                 }}
                 variant="secondary"
                 size="sm"
               >
-                All Homepage Services
+                All Services Hub
               </Button>
             }
           />

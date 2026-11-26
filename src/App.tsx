@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, MotionConfig, motion } from 'motion/react';
 import { SiteFooter } from './components/layout/SiteFooter';
 import { SiteHeader } from './components/layout/SiteHeader';
@@ -36,8 +36,26 @@ export default function App() {
     normalizePathname(window.location.pathname)
   );
 
+  const pendingHashRef = useRef<string | null>(null);
+
+  const flushPendingHashScroll = useCallback(() => {
+    const hashId = pendingHashRef.current;
+    if (!hashId) {
+      return;
+    }
+    pendingHashRef.current = null;
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        document.getElementById(hashId)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  }, []);
+
   useEffect(() => {
     const handlePopState = () => {
+      pendingHashRef.current = window.location.hash
+        ? window.location.hash.replace(/^#/, '')
+        : null;
       setCurrentPath(normalizePathname(window.location.pathname));
     };
     window.addEventListener('popstate', handlePopState);
@@ -65,13 +83,30 @@ export default function App() {
   }, [isContactPage, isServicesHub, isAboutPage, activeDedicatedPage, currentPath]);
 
   const navigateToPath = useCallback((rawPath: string) => {
-    const normalized = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
-    if (window.location.pathname !== normalized) {
-      window.history.pushState({}, '', normalized);
+    const withLeadingSlash = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
+    const [pathOnly, hashPart] = withLeadingSlash.split('#');
+    const normalizedNext = normalizePathname(pathOnly || '/');
+    const cleanTarget = `${pathOnly || '/'}${hashPart ? `#${hashPart}` : ''}`;
+
+    if (window.location.pathname + window.location.hash !== cleanTarget) {
+      window.history.pushState({}, '', cleanTarget);
     }
-    setCurrentPath(normalizePathname(normalized));
-    window.scrollTo({ top: 0, behavior: 'instant' });
-  }, []);
+
+    if (normalizedNext === currentPath) {
+      if (hashPart) {
+        document.getElementById(hashPart)?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
+    pendingHashRef.current = hashPart || null;
+    setCurrentPath(normalizedNext);
+    if (!hashPart) {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
+  }, [currentPath]);
 
   const navigateToService = useCallback(
     (slug: string) => {
@@ -97,11 +132,21 @@ export default function App() {
         navigateToPath('/services/website-care-support/');
         return;
       }
-      if (
-        slug === 'search-engine-optimisation' ||
-        slug === 'ai-search-optimisation'
-      ) {
+      if (slug === 'ai-search-optimisation') {
         navigateToPath('/services/ai-search-optimisation/');
+        return;
+      }
+      if (slug === 'search-engine-optimisation') {
+        navigateToPath('/services/search-engine-optimisation/');
+        return;
+      }
+      if (
+        slug === 'custom-web-solutions-integrations' ||
+        slug === 'ai-powered-website-development' ||
+        slug === 'branding-brand-identity' ||
+        slug === 'digital-marketing-online-growth'
+      ) {
+        navigateToPath(`/services/${slug}/`);
         return;
       }
       navigateToPath(`/services/${slug}`);
@@ -113,14 +158,10 @@ export default function App() {
     const targetUrl = hash ? `/${hash}` : '/';
     if (window.location.pathname !== '/') {
       window.history.pushState({}, '', targetUrl);
+      pendingHashRef.current = hash ? hash.replace('#', '') : null;
       setCurrentPath('/');
-      if (hash) {
-        const id = hash.replace('#', '');
-        setTimeout(() => {
-          document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-        }, 90);
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (!hash) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
       }
       return;
     }
@@ -160,7 +201,7 @@ export default function App() {
         />
 
         <main id="main-content" className="flex-1">
-          <AnimatePresence mode="wait">
+          <AnimatePresence mode="wait" onExitComplete={flushPendingHashScroll}>
             {isContactPage ? (
               <motion.div
                 key="contact-page"

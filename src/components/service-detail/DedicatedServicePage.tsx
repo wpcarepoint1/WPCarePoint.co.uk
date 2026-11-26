@@ -1,14 +1,20 @@
 import { useEffect } from 'react';
-import type { DedicatedServicePageConfig } from '../../data/dedicatedServicePagesData';
+import type {
+  DedicatedServicePageConfig,
+  DedicatedServiceSectionKey,
+} from '../../data/dedicatedServicePagesData';
 import { CtaSection } from '../ui/CtaSection';
 import { ServicePageHero } from './ServicePageHero';
 import {
+  type SectionSurface,
   ServiceCapabilitiesSection,
   ServiceCarePlansOverviewSection,
   ServiceFaqAndRelatedSection,
   ServiceIntroSection,
   ServiceJumpNav,
+  ServiceProblemsSection,
   ServiceProcessAndTrustSection,
+  ServiceSuitabilitySection,
   ServiceTechnicalGridSection,
 } from './ServiceSections';
 
@@ -18,6 +24,17 @@ interface DedicatedServicePageProps {
   onNavigatePath: (path: string) => void;
 }
 
+const DEFAULT_SECTION_ORDER: DedicatedServiceSectionKey[] = [
+  'intro',
+  'suitability',
+  'problems',
+  'capabilities',
+  'carePlans',
+  'technical',
+  'process',
+  'whyChoose',
+];
+
 export function DedicatedServicePage({
   page,
   onNavigateHome,
@@ -25,7 +42,16 @@ export function DedicatedServicePage({
 }: DedicatedServicePageProps) {
   // Sync page metadata, canonical links, and verified Service/Breadcrumb/FAQ JSON-LD
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    const activeHash = window.location.hash.replace(/^#/, '');
+    if (activeHash) {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          document.getElementById(activeHash)?.scrollIntoView({ behavior: 'smooth' });
+        });
+      });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'instant' });
+    }
 
     const prevTitle = document.title;
     document.title = page.metaTitle;
@@ -104,7 +130,7 @@ export function DedicatedServicePage({
               '@type': 'ListItem',
               position: 2,
               name: 'Services',
-              item: 'https://wpcarepoint.co.uk/#services-overview',
+              item: 'https://wpcarepoint.co.uk/services/',
             },
             {
               '@type': 'ListItem',
@@ -148,6 +174,25 @@ export function DedicatedServicePage({
     document.getElementById(cleanId)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const order = page.sectionOrder || DEFAULT_SECTION_ORDER;
+  const preProcessKeys = order.filter(
+    (k): k is Exclude<DedicatedServiceSectionKey, 'process' | 'whyChoose'> =>
+      k !== 'process' && k !== 'whyChoose'
+  );
+
+  // Alternate white / slate surfaces across visible light bands before the dark Process section
+  const activeLightKeys = preProcessKeys.filter((k) => {
+    if (k === 'suitability') return Boolean(page.suitabilitySection);
+    if (k === 'problems') return Boolean(page.problemsSection);
+    if (k === 'carePlans') return Boolean(page.carePlansSection);
+    return true;
+  });
+
+  const surfaceByKey: Partial<Record<DedicatedServiceSectionKey, SectionSurface>> = {};
+  activeLightKeys.forEach((key, idx) => {
+    surfaceByKey[key] = idx % 2 === 0 ? 'white' : 'slate';
+  });
+
   return (
     <article>
       <ServicePageHero
@@ -159,15 +204,63 @@ export function DedicatedServicePage({
 
       <ServiceJumpNav links={page.jumpLinks} onJumpToSection={jumpToSection} />
 
-      <ServiceIntroSection intro={page.introSection} />
-
-      <ServiceCapabilitiesSection capabilities={page.capabilitiesSection} />
-
-      {page.carePlansSection && (
-        <ServiceCarePlansOverviewSection carePlans={page.carePlansSection} />
-      )}
-
-      <ServiceTechnicalGridSection technical={page.technicalSection} />
+      {activeLightKeys.map((key) => {
+        const surface = surfaceByKey[key] || 'white';
+        switch (key) {
+          case 'intro':
+            return (
+              <ServiceIntroSection
+                key="intro"
+                intro={page.introSection}
+                surface={surface}
+              />
+            );
+          case 'suitability':
+            return page.suitabilitySection ? (
+              <ServiceSuitabilitySection
+                key="suitability"
+                suitability={page.suitabilitySection}
+                onNavigatePath={onNavigatePath}
+                surface={surface}
+              />
+            ) : null;
+          case 'problems':
+            return page.problemsSection ? (
+              <ServiceProblemsSection
+                key="problems"
+                problems={page.problemsSection}
+                surface={surface}
+              />
+            ) : null;
+          case 'capabilities':
+            return (
+              <ServiceCapabilitiesSection
+                key="capabilities"
+                capabilities={page.capabilitiesSection}
+                layout={page.capabilitiesLayout}
+                surface={surface}
+              />
+            );
+          case 'carePlans':
+            return page.carePlansSection ? (
+              <ServiceCarePlansOverviewSection
+                key="carePlans"
+                carePlans={page.carePlansSection}
+                surface={surface}
+              />
+            ) : null;
+          case 'technical':
+            return (
+              <ServiceTechnicalGridSection
+                key="technical"
+                technical={page.technicalSection}
+                surface={surface}
+              />
+            );
+          default:
+            return null;
+        }
+      })}
 
       <ServiceProcessAndTrustSection
         process={page.processSection}
@@ -188,6 +281,9 @@ export function DedicatedServicePage({
         description={page.ctaSection.description}
         mailtoSubject={page.ctaSection.mailtoSubject}
         primaryButtonLabel={page.ctaSection.primaryButtonLabel}
+        contactRouteHref="/contact/"
+        contactRouteLabel="Visit Contact Page"
+        onNavigatePath={onNavigatePath}
       />
     </article>
   );

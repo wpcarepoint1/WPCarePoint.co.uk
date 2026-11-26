@@ -1,4 +1,14 @@
 import type { CarePlanTier, FaqEntry } from './homepageData';
+import {
+  AI_POWERED_WEBSITE_DEV_PAGE_DATA,
+  BRANDING_IDENTITY_PAGE_DATA,
+  CUSTOM_WEB_SOLUTIONS_PAGE_DATA,
+  DIGITAL_MARKETING_GROWTH_PAGE_DATA,
+  SEARCH_ENGINE_OPTIMISATION_PAGE_DATA,
+  SUPPORTING_SERVICE_PAGES,
+} from './supportingServicePagesData';
+
+export { SUPPORTING_SERVICE_PAGES };
 
 export interface ServiceHeroSpec {
   label: string;
@@ -60,6 +70,42 @@ export interface DedicatedServiceCareOverview {
   quickFixSubject: string;
 }
 
+export interface ServiceSuitabilitySectionConfig {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  goodFitTitle: string;
+  goodFit: Array<{ title: string; detail: string }>;
+  considerOtherTitle: string;
+  considerOther: Array<{ label: string; routePath: string; note: string }>;
+}
+
+export interface ServiceProblemsSectionConfig {
+  id: string;
+  eyebrow: string;
+  title: string;
+  description: string;
+  layout: 'comparison-rows' | 'challenge-grid' | 'guardrail-cards';
+  items: Array<{
+    index: string;
+    problem: string;
+    impact: string;
+    solution: string;
+    boundaryNote?: string;
+  }>;
+}
+
+export type DedicatedServiceSectionKey =
+  | 'intro'
+  | 'suitability'
+  | 'problems'
+  | 'capabilities'
+  | 'carePlans'
+  | 'technical'
+  | 'process'
+  | 'whyChoose';
+
 export interface DedicatedServicePageConfig {
   id:
     | 'website-development'
@@ -67,7 +113,12 @@ export interface DedicatedServicePageConfig {
     | 'ecommerce-development'
     | 'ai-business-automation'
     | 'website-care-support'
-    | 'ai-search-optimisation';
+    | 'ai-search-optimisation'
+    | 'search-engine-optimisation'
+    | 'custom-web-solutions-integrations'
+    | 'ai-powered-website-development'
+    | 'branding-brand-identity'
+    | 'digital-marketing-online-growth';
   routePath: string;
   canonicalUrl: string;
   metaTitle: string;
@@ -87,6 +138,8 @@ export interface DedicatedServicePageConfig {
     standards: ServiceHeroSpec[];
   };
   jumpLinks: Array<{ label: string; targetId: string }>;
+  sectionOrder?: DedicatedServiceSectionKey[];
+  capabilitiesLayout?: 'grid-2x2' | 'bento-featured';
   introSection: {
     id: string;
     eyebrow: string;
@@ -96,6 +149,8 @@ export interface DedicatedServicePageConfig {
     asideTitle: string;
     asidePoints: Array<{ title: string; detail: string }>;
   };
+  suitabilitySection?: ServiceSuitabilitySectionConfig;
+  problemsSection?: ServiceProblemsSectionConfig;
   capabilitiesSection: {
     id: string;
     eyebrow: string;
@@ -1536,25 +1591,25 @@ export const AI_AUTOMATION_PAGE_DATA: DedicatedServicePageConfig = {
   },
   relatedSection: {
     eyebrow: 'Connected WPCarePoint Services',
-    title: 'Pair workflow automation with custom builds and search readiness',
+    title: 'Pair workflow automation with custom integrations and scoped AI web features',
     items: [
       {
-        eyebrow: 'Custom Platforms',
-        title: 'Website Design & Development',
+        eyebrow: 'Systems Connectivity',
+        title: 'Custom Web Solutions & Integrations',
         description:
-          'Bespoke WordPress and React / Next.js platforms built cleanly to host custom customer portals and API workflows.',
-        ctaLabel: 'Explore Web Development',
+          'Bespoke REST/webhook connectors, WordPress modules, and tailored React functionality engineered cleanly.',
+        ctaLabel: 'Explore Custom Solutions',
         targetType: 'route',
-        href: '/services/website-development/',
+        href: '/services/custom-web-solutions-integrations/',
       },
       {
-        eyebrow: 'Store Automation',
-        title: 'eCommerce & WooCommerce Development',
+        eyebrow: 'Scoped Web AI',
+        title: 'AI-Powered Website Development',
         description:
-          'Clean UK WooCommerce architectures with scoped payment, accounting, and order lifecycle workflows.',
-        ctaLabel: 'Explore eCommerce Builds',
+          'Grounded knowledge search and guided enquiry helpers with strict human guardrails and fallback routes.',
+        ctaLabel: 'Explore AI Web Features',
         targetType: 'route',
-        href: '/services/ecommerce-development/',
+        href: '/services/ai-powered-website-development/',
       },
       {
         eyebrow: 'Search & AI Visibility',
@@ -2310,8 +2365,17 @@ export const AI_SEARCH_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
   },
   relatedSection: {
     eyebrow: 'Connected Visibility & Speed Services',
-    title: 'Reinforce search foundations with fast infrastructure and clean builds',
+    title: 'Reinforce AI search readiness with technical SEO, speed, and growth alignment',
     items: [
+      {
+        eyebrow: 'Foundational Search',
+        title: 'Search Engine Optimisation (SEO)',
+        description:
+          'Dedicated technical crawl governance, on-page structure, SXO clarity, and single-hop 301 redirect hygiene.',
+        ctaLabel: 'Explore SEO Service',
+        targetType: 'route',
+        href: '/services/search-engine-optimisation/',
+      },
       {
         eyebrow: 'Core Web Vitals',
         title: 'WordPress Speed Optimisation',
@@ -2322,22 +2386,13 @@ export const AI_SEARCH_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
         href: '/wordpress-speed-optimisation/',
       },
       {
-        eyebrow: 'Semantic Architecture',
-        title: 'Website Design & Development',
+        eyebrow: 'Online Conversion',
+        title: 'Digital Marketing & Online Growth',
         description:
-          'Clean custom WordPress block builds and React / Next.js platforms engineered from day one with crawl hygiene.',
-        ctaLabel: 'Explore Web Development',
+          'Align organic search visibility with conversion-focused service landing pages and clear user enquiry paths.',
+        ctaLabel: 'Explore Online Growth',
         targetType: 'route',
-        href: '/services/website-development/',
-      },
-      {
-        eyebrow: 'Direct Review',
-        title: 'Contact WPCarePoint',
-        description:
-          'Send your domain and indexing questions directly by email for clear, jargon-free engineering guidance.',
-        ctaLabel: 'Visit Contact Page',
-        targetType: 'route',
-        href: '/contact/',
+        href: '/services/digital-marketing-online-growth/',
       },
     ],
   },
@@ -2364,4 +2419,15 @@ export const DEDICATED_SERVICE_PAGES_BY_PATH: Record<string, DedicatedServicePag
   '/services/website-care-support/': WEBSITE_CARE_SUPPORT_PAGE_DATA,
   '/services/ai-search-optimisation': AI_SEARCH_OPTIMISATION_PAGE_DATA,
   '/services/ai-search-optimisation/': AI_SEARCH_OPTIMISATION_PAGE_DATA,
+  '/services/search-engine-optimisation': SEARCH_ENGINE_OPTIMISATION_PAGE_DATA,
+  '/services/search-engine-optimisation/': SEARCH_ENGINE_OPTIMISATION_PAGE_DATA,
+  '/services/custom-web-solutions-integrations': CUSTOM_WEB_SOLUTIONS_PAGE_DATA,
+  '/services/custom-web-solutions-integrations/': CUSTOM_WEB_SOLUTIONS_PAGE_DATA,
+  '/services/ai-powered-website-development': AI_POWERED_WEBSITE_DEV_PAGE_DATA,
+  '/services/ai-powered-website-development/': AI_POWERED_WEBSITE_DEV_PAGE_DATA,
+  '/services/branding-brand-identity': BRANDING_IDENTITY_PAGE_DATA,
+  '/services/branding-brand-identity/': BRANDING_IDENTITY_PAGE_DATA,
+  '/services/digital-marketing-online-growth': DIGITAL_MARKETING_GROWTH_PAGE_DATA,
+  '/services/digital-marketing-online-growth/': DIGITAL_MARKETING_GROWTH_PAGE_DATA,
 };
+

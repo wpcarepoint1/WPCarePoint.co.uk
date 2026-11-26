@@ -63,14 +63,14 @@ export const SERVICES_HUB_DATA = {
   },
   supportingExpertiseSection: {
     id: 'supporting-expertise',
-    eyebrow: 'Supporting Technical Expertise',
-    title: 'Focused engineering improvements where your existing site needs targeted help.',
+    eyebrow: 'Supporting & Specialist Services',
+    title: 'Focused capabilities supporting search visibility, integrations, branding, and growth.',
     description:
-      'Alongside full platform builds and ongoing care plans, we deliver dedicated diagnostic and technical remediation work across verified capability areas.',
+      'Alongside our five core tracks, explore dedicated specialist service pages detailing how WPCarePoint solves specific technical, visibility, and presentation challenges.',
     items: [
       {
         index: '01.',
-        category: 'Core Web Vitals · Dedicated Route',
+        category: 'Performance Engineering · Dedicated Track',
         title: 'WordPress Speed Optimisation',
         summary:
           'Diagnostic resolution for slow TTFB, render-blocking scripts, heavy image payloads, autoload bloat, and UK hosting bottlenecks without score guarantees.',
@@ -79,49 +79,57 @@ export const SERVICES_HUB_DATA = {
       },
       {
         index: '02.',
-        category: 'Frontend Engineering',
-        title: 'Core Web Vitals Improvements',
+        category: 'Organic Search Foundations',
+        title: 'Search Engine Optimisation (SEO)',
         summary:
-          'Structured remediation for Largest Contentful Paint (LCP), Interaction to Next Paint (INP), and Cumulative Layout Shift (CLS) on WordPress and React sites.',
+          'Technical crawl governance, clean heading semantics, single-hop 301 redirect hygiene, Schema.org markup, and SXO clarity.',
+        href: '/services/search-engine-optimisation/',
+        ctaLabel: 'Explore SEO Service',
       },
       {
         index: '03.',
-        category: 'Custom Architecture',
-        title: 'Custom Website Solutions',
+        category: 'Bespoke Systems Connectivity',
+        title: 'Custom Web Solutions & Integrations',
         summary:
-          'Tailored React, Next.js, TypeScript, and custom Gutenberg block development when off-the-shelf templates fail to match operational requirements.',
+          'Tailored website modules, React interfaces, and validated server-side REST or webhook integrations connecting your CRM and tools.',
+        href: '/services/custom-web-solutions-integrations/',
+        ctaLabel: 'Explore Custom Solutions',
       },
       {
         index: '04.',
-        category: 'Systems Connectivity',
-        title: 'Website Integrations',
+        category: 'Scoped Website Intelligence',
+        title: 'AI-Powered Website Development',
         summary:
-          'Clean API connections linking website enquiries and online orders with HubSpot, Xero, Stripe, Royal Mail, DPD, and internal workflows.',
+          'Bounded AI website features such as grounded content search and guided enquiry helpers built with human guardrails.',
+        href: '/services/ai-powered-website-development/',
+        ctaLabel: 'Explore AI Web Development',
       },
       {
         index: '05.',
-        category: 'Rapid Remediation',
-        title: 'WordPress Bug Fixes',
+        category: 'Digital Visual Systems',
+        title: 'Branding & Brand Identity',
         summary:
-          'Isolated troubleshooting for plugin conflicts, critical PHP errors, broken mobile layouts, SSL issues, and checkout regressions via Quick Fix scoping.',
-        href: '/services/website-care-support/#one-off-fixes',
-        ctaLabel: 'View Quick Fix Pathway',
+          'Accessible WCAG 2.2 AA colour systems, crisp web typography scales, and cohesive component presentation tailored for UK buyers.',
+        href: '/services/branding-brand-identity/',
+        ctaLabel: 'Explore Brand Identity',
       },
       {
         index: '06.',
-        category: 'Safe Evolution',
-        title: 'Website Redesign',
+        category: 'Conversion & Visibility Alignment',
+        title: 'Digital Marketing & Online Growth',
         summary:
-          'Structured modernisation of dated business sites in isolated staging environments with careful 301 preservation for existing .co.uk search history.',
+          'Conversion-focused landing architecture, organic visibility alignment, and PECR-safe measurement grounded without fake lead promises.',
+        href: '/services/digital-marketing-online-growth/',
+        ctaLabel: 'Explore Online Growth',
       },
       {
         index: '07.',
-        category: 'Search Foundations',
-        title: 'Technical SEO',
+        category: 'Rapid Remediation',
+        title: 'WordPress Bug Fixes & Recovery',
         summary:
-          'Clean HTML heading hierarchy, crawl hygiene, canonical alignment, Schema.org JSON-LD graphs, and AI Search structuring across pages.',
-        href: '/services/ai-search-optimisation/',
-        ctaLabel: 'Explore SEO & AI Search',
+          'Isolated troubleshooting for plugin conflicts, fatal PHP errors, broken mobile layouts, SSL issues, and checkout faults via Quick Fix scoping.',
+        href: '/services/website-care-support/#one-off-fixes',
+        ctaLabel: 'View Quick Fix Pathway',
       },
     ] as SupportingExpertiseItem[],
   },

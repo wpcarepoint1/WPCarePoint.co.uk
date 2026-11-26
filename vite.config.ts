@@ -21,6 +21,13 @@ import {
   type DedicatedServicePageConfig,
 } from './src/data/dedicatedServicePagesData';
 import {
+  AI_POWERED_WEBSITE_DEV_PAGE_DATA,
+  BRANDING_IDENTITY_PAGE_DATA,
+  CUSTOM_WEB_SOLUTIONS_PAGE_DATA,
+  DIGITAL_MARKETING_GROWTH_PAGE_DATA,
+  SEARCH_ENGINE_OPTIMISATION_PAGE_DATA,
+} from './src/data/supportingServicePagesData';
+import {
   SERVICE_LANDING_PAGES,
   type ServiceLandingDetail,
 } from './src/data/servicePagesData';
@@ -118,7 +125,7 @@ function buildDedicatedServicePrerenderHtml(
             '@type': 'ListItem',
             position: 2,
             name: 'Services',
-            item: 'https://wpcarepoint.co.uk/#services-overview',
+            item: 'https://wpcarepoint.co.uk/services/',
           },
           {
             '@type': 'ListItem',
@@ -142,8 +149,23 @@ function buildDedicatedServicePrerenderHtml(
     ],
   });
 
+  const suitabilityHtml = page.suitabilitySection
+    ? `<section><h2>${escapeHtml(page.suitabilitySection.title)}</h2><ul>${page.suitabilitySection.goodFit
+        .map((g) => `<li><strong>${escapeHtml(g.title)}</strong>: ${escapeHtml(g.detail)}</li>`)
+        .join('')}</ul></section>`
+    : '';
+
+  const problemsHtml = page.problemsSection
+    ? `<section><h2>${escapeHtml(page.problemsSection.title)}</h2><ul>${page.problemsSection.items
+        .map(
+          (p) =>
+            `<li><strong>${escapeHtml(p.problem)}</strong>: ${escapeHtml(p.impact)} — ${escapeHtml(p.solution)}</li>`
+        )
+        .join('')}</ul></section>`
+    : '';
+
   const prerenderBody = `<main>
-        <nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/#services-overview">Services</a> / <span>${escapeHtml(page.breadcrumbLabel)}</span></nav>
+        <nav aria-label="Breadcrumb"><a href="/">Home</a> / <a href="/services/">Services</a> / <span>${escapeHtml(page.breadcrumbLabel)}</span></nav>
         <article>
           <p>${escapeHtml(page.hero.eyebrow)}</p>
           <h1>${escapeHtml(page.hero.headline)}</h1>
@@ -152,6 +174,8 @@ function buildDedicatedServicePrerenderHtml(
             <h2>${escapeHtml(page.introSection.title)}</h2>
             ${page.introSection.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
           </section>
+          ${suitabilityHtml}
+          ${problemsHtml}
           <section>
             <h2>${escapeHtml(page.capabilitiesSection.title)}</h2>
             <ul>${page.capabilitiesSection.items.map((item) => `<li><strong>${escapeHtml(item.title)}</strong>: ${escapeHtml(item.summary)}</li>`).join('')}</ul>
@@ -350,14 +374,23 @@ function buildServicesHubPrerenderHtml(templateHtml: string): string {
         inLanguage: 'en-GB',
         mainEntity: {
           '@type': 'ItemList',
-          itemListElement: SERVICES_HUB_DATA.coreTracksSection.tracks.map(
-            (track, idx) => ({
-              '@type': 'ListItem',
-              position: idx + 1,
+          itemListElement: [
+            ...SERVICES_HUB_DATA.coreTracksSection.tracks.map((track) => ({
               name: track.title,
               url: `https://wpcarepoint.co.uk${track.routePath}`,
-            })
-          ),
+            })),
+            ...SERVICES_HUB_DATA.supportingExpertiseSection.items
+              .filter((item) => Boolean(item.href) && !item.href?.includes('#'))
+              .map((item) => ({
+                name: item.title,
+                url: `https://wpcarepoint.co.uk${item.href}`,
+              })),
+          ].map((entry, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: entry.name,
+            url: entry.url,
+          })),
         },
       },
       {
@@ -780,7 +813,7 @@ export default defineConfig(() => {
             );
           }
 
-          // 3. Emit dedicated HTTP-200 static HTML for all 6 Task 2.2 service pages
+          // 3. Emit dedicated HTTP-200 static HTML for all 6 core + 5 supporting service pages
           const dedicatedServiceSlugs: Array<{
             slug: string;
             config: DedicatedServicePageConfig;
@@ -790,6 +823,20 @@ export default defineConfig(() => {
             {slug: 'ai-business-automation', config: AI_AUTOMATION_PAGE_DATA},
             {slug: 'website-care-support', config: WEBSITE_CARE_SUPPORT_PAGE_DATA},
             {slug: 'ai-search-optimisation', config: AI_SEARCH_OPTIMISATION_PAGE_DATA},
+            {slug: 'search-engine-optimisation', config: SEARCH_ENGINE_OPTIMISATION_PAGE_DATA},
+            {
+              slug: 'custom-web-solutions-integrations',
+              config: CUSTOM_WEB_SOLUTIONS_PAGE_DATA,
+            },
+            {
+              slug: 'ai-powered-website-development',
+              config: AI_POWERED_WEBSITE_DEV_PAGE_DATA,
+            },
+            {slug: 'branding-brand-identity', config: BRANDING_IDENTITY_PAGE_DATA},
+            {
+              slug: 'digital-marketing-online-growth',
+              config: DIGITAL_MARKETING_GROWTH_PAGE_DATA,
+            },
           ];
 
           for (const entry of dedicatedServiceSlugs) {
