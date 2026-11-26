@@ -654,6 +654,16 @@ async function startServer() {
         if (fs.existsSync(speedFile)) {
           targetFile = speedFile;
         }
+      } else if (/^\/services\/?$/i.test(cleanPath)) {
+        const servicesHubFile = path.join(distPath, 'services', 'index.html');
+        if (fs.existsSync(servicesHubFile)) {
+          targetFile = servicesHubFile;
+        }
+      } else if (/^\/about\/?$/i.test(cleanPath)) {
+        const aboutFile = path.join(distPath, 'about', 'index.html');
+        if (fs.existsSync(aboutFile)) {
+          targetFile = aboutFile;
+        }
       } else if (/^\/contact\/?$/i.test(cleanPath)) {
         const contactFile = path.join(distPath, 'contact', 'index.html');
         if (fs.existsSync(contactFile)) {

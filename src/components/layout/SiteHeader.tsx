@@ -19,6 +19,7 @@ export function SiteHeader({
   const [servicesOpen, setServicesOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const openedViaHoverRef = useRef<boolean>(false);
 
   useEffect(() => {
     const handleOutside = (event: MouseEvent) => {
@@ -26,11 +27,13 @@ export function SiteHeader({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
+        openedViaHoverRef.current = false;
         setServicesOpen(false);
       }
     };
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
+        openedViaHoverRef.current = false;
         setServicesOpen(false);
         setMobileOpen(false);
       }
@@ -44,12 +47,25 @@ export function SiteHeader({
   }, []);
 
   const handleAnchorClick = (hash: string) => {
+    openedViaHoverRef.current = false;
     setServicesOpen(false);
     setMobileOpen(false);
     onNavigateHome(hash);
   };
 
+  const handleRouteClick = (path: string, fallbackHash = '') => {
+    openedViaHoverRef.current = false;
+    setServicesOpen(false);
+    setMobileOpen(false);
+    if (onNavigatePath) {
+      onNavigatePath(path);
+      return;
+    }
+    onNavigateHome(fallbackHash);
+  };
+
   const handleContactAction = () => {
+    openedViaHoverRef.current = false;
     setServicesOpen(false);
     setMobileOpen(false);
     if (onNavigatePath) {
@@ -67,6 +83,7 @@ export function SiteHeader({
   };
 
   const handleDropdownItemClick = (svc: (typeof NAV_SERVICE_DROPDOWN)[number]) => {
+    openedViaHoverRef.current = false;
     setServicesOpen(false);
     setMobileOpen(false);
     if (svc.routePath && onNavigatePath) {
@@ -88,6 +105,7 @@ export function SiteHeader({
           href="/"
           onClick={(e) => {
             e.preventDefault();
+            openedViaHoverRef.current = false;
             setServicesOpen(false);
             setMobileOpen(false);
             onNavigateHome();
@@ -113,15 +131,51 @@ export function SiteHeader({
           {NAV_ITEMS.map((item) => {
             if (item.hasDropdown) {
               return (
-                <div key={item.label} ref={dropdownRef} className="relative">
+                <div
+                  key={item.label}
+                  ref={dropdownRef}
+                  className="relative flex items-center gap-1"
+                  onMouseEnter={() => {
+                    setServicesOpen((prev) => {
+                      if (!prev) {
+                        openedViaHoverRef.current = true;
+                        return true;
+                      }
+                      return prev;
+                    });
+                  }}
+                  onMouseLeave={() => {
+                    openedViaHoverRef.current = false;
+                    setServicesOpen(false);
+                  }}
+                >
+                  <a
+                    href={item.routePath || '/services/'}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleRouteClick(item.routePath || '/services/', '#services-overview');
+                    }}
+                    className="text-sm font-medium text-white/90 hover:text-[#00b2d4] transition-colors whitespace-nowrap shrink-0 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                  >
+                    {item.label}
+                  </a>
                   <button
                     type="button"
                     aria-expanded={servicesOpen}
                     aria-haspopup="true"
-                    onClick={() => setServicesOpen((prev) => !prev)}
-                    className="inline-flex items-center gap-1.5 text-sm font-medium text-white/90 hover:text-[#00b2d4] transition-colors whitespace-nowrap shrink-0 py-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                    aria-label="Toggle Services menu"
+                    onClick={() => {
+                      setServicesOpen((prev) => {
+                        if (prev && openedViaHoverRef.current) {
+                          openedViaHoverRef.current = false;
+                          return true;
+                        }
+                        openedViaHoverRef.current = false;
+                        return !prev;
+                      });
+                    }}
+                    className="inline-flex items-center justify-center p-1 text-white/80 hover:text-[#00b2d4] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
                   >
-                    <span>{item.label}</span>
                     <ChevronDown
                       className={`h-4 w-4 transition-transform duration-150 ${
                         servicesOpen ? 'rotate-180' : ''
@@ -131,40 +185,61 @@ export function SiteHeader({
                   </button>
 
                   {servicesOpen && (
-                    <div className="absolute left-0 top-full mt-2 w-84 rounded-2xl bg-white text-[#2e2e2e] border border-[#dde6eb] shadow-xl p-2 z-50">
-                      <div className="px-3 py-2 border-b border-[#e9eff2] mb-1">
-                        <button
-                          type="button"
-                          onClick={() => handleAnchorClick('#services-overview')}
-                          className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c] hover:text-[#003b4f] cursor-pointer"
-                        >
-                          All Core Services Overview →
-                        </button>
+                    <div className="absolute left-0 top-full pt-2 w-84 z-50">
+                      <div className="rounded-2xl bg-white text-[#2e2e2e] border border-[#dde6eb] shadow-xl p-2">
+                        <div className="px-3 py-2 border-b border-[#e9eff2] mb-1">
+                          <a
+                            href="/services/"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              handleRouteClick('/services/', '#services-overview');
+                            }}
+                            className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c] hover:text-[#003b4f] inline-flex items-center gap-1"
+                          >
+                            All Services Hub Overview →
+                          </a>
+                        </div>
+                        <ul className="space-y-0.5">
+                          {NAV_SERVICE_DROPDOWN.map((svc) => (
+                            <li key={svc.label}>
+                              <a
+                                href={svc.routePath || svc.href}
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  handleDropdownItemClick(svc);
+                                }}
+                                className="block rounded-xl px-3 py-2.5 hover:bg-[#f7f9fa] transition-colors group"
+                              >
+                                <p className="text-sm font-semibold text-[#003b4f] group-hover:text-[#00749c]">
+                                  {svc.label}
+                                </p>
+                                <p className="text-xs text-[#6c757d] mt-0.5 leading-snug">
+                                  {svc.description}
+                                </p>
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
                       </div>
-                      <ul className="space-y-0.5">
-                        {NAV_SERVICE_DROPDOWN.map((svc) => (
-                          <li key={svc.label}>
-                            <a
-                              href={svc.routePath || svc.href}
-                              onClick={(e) => {
-                                e.preventDefault();
-                                handleDropdownItemClick(svc);
-                              }}
-                              className="block rounded-xl px-3 py-2.5 hover:bg-[#f7f9fa] transition-colors group"
-                            >
-                              <p className="text-sm font-semibold text-[#003b4f] group-hover:text-[#00749c]">
-                                {svc.label}
-                              </p>
-                              <p className="text-xs text-[#6c757d] mt-0.5 leading-snug">
-                                {svc.description}
-                              </p>
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
                     </div>
                   )}
                 </div>
+              );
+            }
+
+            if (item.routePath) {
+              return (
+                <a
+                  key={item.label}
+                  href={item.routePath}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRouteClick(item.routePath!);
+                  }}
+                  className="text-sm font-medium text-white/90 hover:text-[#00b2d4] transition-colors whitespace-nowrap shrink-0 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                >
+                  {item.label}
+                </a>
               );
             }
 
@@ -223,6 +298,16 @@ export function SiteHeader({
             <p className="text-xs font-mono uppercase tracking-wider text-[#00b2d4] pb-1">
               Services
             </p>
+            <a
+              href="/services/"
+              onClick={(e) => {
+                e.preventDefault();
+                handleRouteClick('/services/', '#services-overview');
+              }}
+              className="flex min-h-[44px] items-center text-sm font-semibold text-[#00b2d4] hover:text-white border-b border-white/10"
+            >
+              Services Hub Overview
+            </a>
             {NAV_SERVICE_DROPDOWN.map((svc) => (
               <a
                 key={svc.label}
@@ -241,10 +326,14 @@ export function SiteHeader({
               {NAV_ITEMS.filter((item) => !item.hasDropdown).map((item) => (
                 <a
                   key={item.label}
-                  href={`/${item.href}`}
+                  href={item.routePath || `/${item.href}`}
                   onClick={(e) => {
                     e.preventDefault();
-                    handleAnchorClick(item.href);
+                    if (item.routePath) {
+                      handleRouteClick(item.routePath);
+                    } else {
+                      handleAnchorClick(item.href);
+                    }
                   }}
                   className="flex min-h-[44px] items-center text-sm font-semibold text-white hover:text-[#00b2d4]"
                 >

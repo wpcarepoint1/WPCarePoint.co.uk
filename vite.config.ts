@@ -9,6 +9,7 @@ import {
   UK_OFFICE_ADDRESS,
   UK_REGIONS_SERVED,
 } from './src/data/agencyData';
+import {ABOUT_PAGE_DATA} from './src/data/aboutPageData';
 import {CONTACT_PAGE_DATA} from './src/data/contactPageData';
 import {
   AI_AUTOMATION_PAGE_DATA,
@@ -23,6 +24,7 @@ import {
   SERVICE_LANDING_PAGES,
   type ServiceLandingDetail,
 } from './src/data/servicePagesData';
+import {SERVICES_HUB_DATA} from './src/data/servicesHubData';
 
 function escapeHtml(str: string): string {
   return str
@@ -336,6 +338,267 @@ function buildContactPrerenderHtml(templateHtml: string): string {
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }
 
+function buildServicesHubPrerenderHtml(templateHtml: string): string {
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: SERVICES_HUB_DATA.metaTitle,
+        url: SERVICES_HUB_DATA.canonicalUrl,
+        description: SERVICES_HUB_DATA.metaDescription,
+        inLanguage: 'en-GB',
+        mainEntity: {
+          '@type': 'ItemList',
+          itemListElement: SERVICES_HUB_DATA.coreTracksSection.tracks.map(
+            (track, idx) => ({
+              '@type': 'ListItem',
+              position: idx + 1,
+              name: track.title,
+              url: `https://wpcarepoint.co.uk${track.routePath}`,
+            })
+          ),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://wpcarepoint.co.uk/',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Services',
+            item: SERVICES_HUB_DATA.canonicalUrl,
+          },
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        mainEntity: SERVICES_HUB_DATA.faqs.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: faq.answer,
+          },
+        })),
+      },
+    ],
+  });
+
+  const prerenderBody = `<main>
+        <nav aria-label="Breadcrumb"><a href="/">Home</a> / <span>Services</span></nav>
+        <article>
+          <p>${escapeHtml(SERVICES_HUB_DATA.eyebrow)}</p>
+          <h1>${escapeHtml(SERVICES_HUB_DATA.headline)}</h1>
+          <p>${escapeHtml(SERVICES_HUB_DATA.description)}</p>
+          <section>
+            <h2>Five Core Service Categories</h2>
+            <ul>${SERVICES_HUB_DATA.coreTracksSection.tracks
+              .map(
+                (t) =>
+                  `<li><a href="${escapeHtml(t.routePath || '/services/')}">${escapeHtml(t.title)}</a>: ${escapeHtml(t.description)}</li>`
+              )
+              .join('')}</ul>
+          </section>
+          <section>
+            <h2>Supporting Technical Expertise</h2>
+            <ul>${SERVICES_HUB_DATA.supportingExpertiseSection.items
+              .map(
+                (item) =>
+                  `<li>${item.href ? `<a href="${escapeHtml(item.href)}">${escapeHtml(item.title)}</a>` : `<strong>${escapeHtml(item.title)}</strong>`}: ${escapeHtml(item.summary)}</li>`
+              )
+              .join('')}</ul>
+          </section>
+          <section>
+            <h2>Services FAQ</h2>
+            ${SERVICES_HUB_DATA.faqs
+              .map(
+                (f) =>
+                  `<div><h3>${escapeHtml(f.question)}</h3><p>${escapeHtml(f.answer)}</p></div>`
+              )
+              .join('')}
+          </section>
+        </article>
+      </main>`;
+
+  return templateHtml
+    .replace(
+      /<title>[\s\S]*?<\/title>/,
+      `<title>${escapeHtml(SERVICES_HUB_DATA.metaTitle)}</title>`
+    )
+    .replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="description" content="${escapeHtml(SERVICES_HUB_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="canonical" href="${SERVICES_HUB_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="en-gb"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-gb" href="${SERVICES_HUB_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="x-default"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="x-default" href="${SERVICES_HUB_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:url" content="${SERVICES_HUB_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:title" content="${escapeHtml(SERVICES_HUB_DATA.metaTitle)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:description" content="${escapeHtml(SERVICES_HUB_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:title" content="${escapeHtml(SERVICES_HUB_DATA.metaTitle)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:description" content="${escapeHtml(SERVICES_HUB_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
+      `<script type="application/ld+json">${jsonLd}</script>`
+    )
+    .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
+}
+
+function buildAboutPrerenderHtml(templateHtml: string): string {
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'AboutPage',
+        name: ABOUT_PAGE_DATA.metaTitle,
+        url: ABOUT_PAGE_DATA.canonicalUrl,
+        description: ABOUT_PAGE_DATA.metaDescription,
+        inLanguage: 'en-GB',
+        mainEntity: {
+          '@type': 'Organization',
+          name: 'WPCarePoint',
+          url: 'https://wpcarepoint.co.uk/',
+          email: 'contact@wpcarepoint.co.uk',
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: 'Robert Denholm House, Bletchingley Road',
+            addressLocality: 'Nutfield',
+            addressRegion: 'Surrey',
+            postalCode: 'RH1 4HW',
+            addressCountry: 'GB',
+          },
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://wpcarepoint.co.uk/',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'About',
+            item: ABOUT_PAGE_DATA.canonicalUrl,
+          },
+        ],
+      },
+    ],
+  });
+
+  const prerenderBody = `<main>
+        <nav aria-label="Breadcrumb"><a href="/">Home</a> / <span>About</span></nav>
+        <article>
+          <p>${escapeHtml(ABOUT_PAGE_DATA.eyebrow)}</p>
+          <h1>${escapeHtml(ABOUT_PAGE_DATA.headline)}</h1>
+          <p>${escapeHtml(ABOUT_PAGE_DATA.description)}</p>
+          <section>
+            <h2>${escapeHtml(ABOUT_PAGE_DATA.storySection.title)}</h2>
+            ${ABOUT_PAGE_DATA.storySection.paragraphs.map((p) => `<p>${escapeHtml(p)}</p>`).join('')}
+          </section>
+          <section>
+            <h2>${escapeHtml(ABOUT_PAGE_DATA.whatWeDoSection.title)}</h2>
+            <ul>${ABOUT_PAGE_DATA.whatWeDoSection.tracks
+              .map(
+                (t) =>
+                  `<li><a href="${escapeHtml(t.routePath || '/services/')}">${escapeHtml(t.title)}</a>: ${escapeHtml(t.description)}</li>`
+              )
+              .join('')}</ul>
+          </section>
+          <section>
+            <h2>${escapeHtml(ABOUT_PAGE_DATA.valuesSection.title)}</h2>
+            <ul>${ABOUT_PAGE_DATA.valuesSection.items
+              .map(
+                (v) =>
+                  `<li><strong>${escapeHtml(v.title)}</strong>: ${escapeHtml(v.summary)}</li>`
+              )
+              .join('')}</ul>
+          </section>
+        </article>
+      </main>`;
+
+  return templateHtml
+    .replace(
+      /<title>[\s\S]*?<\/title>/,
+      `<title>${escapeHtml(ABOUT_PAGE_DATA.metaTitle)}</title>`
+    )
+    .replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="description" content="${escapeHtml(ABOUT_PAGE_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="canonical" href="${ABOUT_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="en-gb"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-gb" href="${ABOUT_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="x-default"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="x-default" href="${ABOUT_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:url" content="${ABOUT_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:title" content="${escapeHtml(ABOUT_PAGE_DATA.metaTitle)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:description" content="${escapeHtml(ABOUT_PAGE_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:title" content="${escapeHtml(ABOUT_PAGE_DATA.metaTitle)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:description" content="${escapeHtml(ABOUT_PAGE_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<script type="application\/ld\+json">[\s\S]*?<\/script>/,
+      `<script type="application/ld+json">${jsonLd}</script>`
+    )
+    .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
+}
+
 function buildServicePrerenderHtml(
   templateHtml: string,
   svc: ServiceLandingDetail
@@ -549,12 +812,22 @@ export default defineConfig(() => {
           fs.writeFileSync(path.join(speedDir, 'index.html'), speedHtml, 'utf-8');
           fs.writeFileSync(path.join(distDir, 'wordpress-speed-optimisation.html'), speedHtml, 'utf-8');
 
-          // 4. Emit dedicated HTTP-200 static HTML for /contact/
+          // 4. Emit dedicated HTTP-200 static HTML for /contact/, /services/ Hub, and /about/
           const contactDir = path.join(distDir, 'contact');
           fs.mkdirSync(contactDir, {recursive: true});
           const contactHtml = buildContactPrerenderHtml(rawTemplate);
           fs.writeFileSync(path.join(contactDir, 'index.html'), contactHtml, 'utf-8');
           fs.writeFileSync(path.join(distDir, 'contact.html'), contactHtml, 'utf-8');
+
+          const servicesHubHtml = buildServicesHubPrerenderHtml(rawTemplate);
+          fs.writeFileSync(path.join(servicesOutDir, 'index.html'), servicesHubHtml, 'utf-8');
+          fs.writeFileSync(path.join(distDir, 'services.html'), servicesHubHtml, 'utf-8');
+
+          const aboutDir = path.join(distDir, 'about');
+          fs.mkdirSync(aboutDir, {recursive: true});
+          const aboutHtml = buildAboutPrerenderHtml(rawTemplate);
+          fs.writeFileSync(path.join(aboutDir, 'index.html'), aboutHtml, 'utf-8');
+          fs.writeFileSync(path.join(distDir, 'about.html'), aboutHtml, 'utf-8');
         },
       },
     ],

@@ -81,6 +81,18 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
             <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
               <li>
                 <a
+                  href="/services/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRoute('/services/', '#services-overview');
+                  }}
+                  className={FOOTER_LINK_CLASS}
+                >
+                  All Services Hub
+                </a>
+              </li>
+              <li>
+                <a
                   href="/services/website-development/"
                   onClick={(e) => {
                     e.preventDefault();
@@ -160,6 +172,18 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               Agency &amp; Care
             </p>
             <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
+              <li>
+                <a
+                  href="/about/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRoute('/about/', '#why-wpcarepoint');
+                  }}
+                  className={FOOTER_LINK_CLASS}
+                >
+                  About WPCarePoint
+                </a>
+              </li>
               <li>
                 <a
                   href="/#why-wpcarepoint"

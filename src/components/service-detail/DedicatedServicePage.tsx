@@ -153,6 +153,7 @@ export function DedicatedServicePage({
       <ServicePageHero
         page={page}
         onNavigateHome={onNavigateHome}
+        onNavigatePath={onNavigatePath}
         onJumpToSection={jumpToSection}
       />
 

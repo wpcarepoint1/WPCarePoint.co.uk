@@ -11,8 +11,10 @@ import { EASE_OUT_EXPO, ScrollProgressBar } from './components/MotionPrimitives'
 import { HeroSection } from './components/sections/HeroSection';
 import { ServicesSections } from './components/sections/ServicesSections';
 import { TrustAndProcessSections } from './components/sections/TrustAndProcessSections';
+import { AboutPageView } from './components/about/AboutPageView';
 import { ContactPageView } from './components/contact/ContactPageView';
 import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
+import { ServicesHubView } from './components/services-hub/ServicesHubView';
 import { ServiceLandingPage } from './components/ServiceLandingPage';
 import { CtaSection } from './components/ui/CtaSection';
 import { DEDICATED_SERVICE_PAGES_BY_PATH } from './data/dedicatedServicePagesData';
@@ -44,6 +46,10 @@ export default function App() {
 
   const isContactPage =
     currentPath === '/contact' || currentPath === '/contact/';
+  const isServicesHub =
+    currentPath === '/services' || currentPath === '/services/';
+  const isAboutPage =
+    currentPath === '/about' || currentPath === '/about/';
 
   const activeDedicatedPage = useMemo(
     () => DEDICATED_SERVICE_PAGES_BY_PATH[currentPath],
@@ -51,10 +57,12 @@ export default function App() {
   );
 
   const activeFallbackService = useMemo(() => {
-    if (isContactPage || activeDedicatedPage) return undefined;
+    if (isContactPage || isServicesHub || isAboutPage || activeDedicatedPage) {
+      return undefined;
+    }
     const slug = getSlugFromPath(currentPath);
     return slug ? getServiceBySlug(slug) : undefined;
-  }, [isContactPage, activeDedicatedPage, currentPath]);
+  }, [isContactPage, isServicesHub, isAboutPage, activeDedicatedPage, currentPath]);
 
   const navigateToPath = useCallback((rawPath: string) => {
     const normalized = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
@@ -143,7 +151,11 @@ export default function App() {
           onNavigateService={navigateToService}
           onNavigatePath={navigateToPath}
           hasLocalContact={Boolean(
-            activeDedicatedPage || isContactPage || currentPath === '/'
+            activeDedicatedPage ||
+              isContactPage ||
+              isServicesHub ||
+              isAboutPage ||
+              currentPath === '/'
           )}
         />
 
@@ -158,6 +170,32 @@ export default function App() {
                 transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
               >
                 <ContactPageView
+                  onNavigateHome={navigateHome}
+                  onNavigatePath={navigateToPath}
+                />
+              </motion.div>
+            ) : isServicesHub ? (
+              <motion.div
+                key="services-hub-page"
+                initial={{ opacity: 0.94, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <ServicesHubView
+                  onNavigateHome={navigateHome}
+                  onNavigatePath={navigateToPath}
+                />
+              </motion.div>
+            ) : isAboutPage ? (
+              <motion.div
+                key="about-page"
+                initial={{ opacity: 0.94, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <AboutPageView
                   onNavigateHome={navigateHome}
                   onNavigatePath={navigateToPath}
                 />

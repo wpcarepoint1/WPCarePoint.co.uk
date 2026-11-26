@@ -78,12 +78,13 @@ export const BRAND_INFO = {
 export const NAV_ITEMS: Array<{
   label: string;
   href: string;
+  routePath?: string;
   hasDropdown?: boolean;
 }> = [
-  { label: 'Services', href: '#services-overview', hasDropdown: true },
+  { label: 'Services', href: '/services/', routePath: '/services/', hasDropdown: true },
   { label: 'Care Plans', href: '#website-care' },
   { label: 'Process', href: '#our-process' },
-  { label: 'Portfolio', href: '#portfolio-preview' },
+  { label: 'About', href: '/about/', routePath: '/about/' },
   { label: 'FAQ', href: '#faq' },
 ];
 

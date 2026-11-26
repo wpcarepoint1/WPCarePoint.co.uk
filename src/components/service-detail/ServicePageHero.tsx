@@ -8,12 +8,14 @@ import { Button } from '../ui/Button';
 interface ServicePageHeroProps {
   page: DedicatedServicePageConfig;
   onNavigateHome: (hash?: string) => void;
+  onNavigatePath?: (path: string) => void;
   onJumpToSection: (targetId: string) => void;
 }
 
 export function ServicePageHero({
   page,
   onNavigateHome,
+  onNavigatePath,
   onJumpToSection,
 }: ServicePageHeroProps) {
   const prefersReduced = useReducedMotion();
@@ -39,10 +41,14 @@ export function ServicePageHero({
           </a>
           <span aria-hidden="true">/</span>
           <a
-            href="/#services-overview"
+            href="/services/"
             onClick={(e) => {
               e.preventDefault();
-              onNavigateHome('#services-overview');
+              if (onNavigatePath) {
+                onNavigatePath('/services/');
+              } else {
+                onNavigateHome('#services-overview');
+              }
             }}
             className="inline-flex items-center min-h-[44px] text-[#6c757d] hover:text-[#00749c] hover:underline transition-colors"
           >
@@ -112,10 +118,14 @@ export function ServicePageHero({
 
             <div className="mt-6">
               <a
-                href="/#services-overview"
+                href="/services/"
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavigateHome('#services-overview');
+                  if (onNavigatePath) {
+                    onNavigatePath('/services/');
+                  } else {
+                    onNavigateHome('#services-overview');
+                  }
                 }}
                 className="inline-flex items-center gap-1.5 min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#00749c] transition-colors"
               >

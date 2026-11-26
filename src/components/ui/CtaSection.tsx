@@ -10,6 +10,9 @@ interface CtaSectionProps {
   description?: string;
   mailtoSubject?: string;
   primaryButtonLabel?: string;
+  contactRouteHref?: string;
+  contactRouteLabel?: string;
+  onNavigatePath?: (path: string) => void;
 }
 
 export function CtaSection({
@@ -19,6 +22,9 @@ export function CtaSection({
   description = 'Share your website URL, commercial priorities, or WordPress support issue with our team. All enquiries are handled directly via email—no automated sales queues or call centres.',
   mailtoSubject = 'WPCarePoint Project & Support Enquiry',
   primaryButtonLabel = 'Send Email Enquiry',
+  contactRouteHref,
+  contactRouteLabel,
+  onNavigatePath,
 }: CtaSectionProps) {
   const [copyState, setCopyState] = useState<'idle' | 'copied' | 'manual'>('idle');
   const emailLinkRef = useRef<HTMLAnchorElement>(null);
@@ -90,16 +96,35 @@ export function CtaSection({
             </p>
 
             <div className="pt-4 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+              {contactRouteHref && contactRouteLabel && (
+                <Button
+                  href={contactRouteHref}
+                  onClick={(e) => {
+                    if (onNavigatePath) {
+                      e.preventDefault();
+                      onNavigatePath(contactRouteHref);
+                    }
+                  }}
+                  variant="onDark"
+                  size="lg"
+                >
+                  <span>{contactRouteLabel}</span>
+                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </Button>
+              )}
+
               <Button
                 href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
                   mailtoSubject
                 )}`}
-                variant="onDark"
+                variant={contactRouteHref ? 'ghostOnDark' : 'onDark'}
                 size="lg"
               >
                 <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{primaryButtonLabel}</span>
-                <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                {!contactRouteHref && (
+                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                )}
               </Button>
 
               <Button
