@@ -33,7 +33,7 @@ export const SERVICES_HUB_DATA = {
   headline: 'Building, improving and supporting digital businesses.',
   description:
     'WPCarePoint partners with British organisations across five integrated service tracks—combining WordPress engineering, React & Next.js builds, reliable WooCommerce stores, practical automation, and structured technical care.',
-  heroImageUrl: '/src/assets/images/services_hub_overview_1795678349831.jpg',
+  heroImageUrl: '/src/assets/images/services_hub_overview_1795678349831.webp',
   heroImageAlt:
     'Five connected coastal teal and frosted glass architectural modules representing WPCarePoint core service disciplines',
   heroImageCaption:

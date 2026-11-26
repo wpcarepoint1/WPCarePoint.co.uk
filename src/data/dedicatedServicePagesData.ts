@@ -218,7 +218,7 @@ export const WEBSITE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Request Website Scope',
     secondaryCtaLabel: 'Explore What We Build',
     secondaryCtaTargetId: 'service-intro',
-    imageUrl: '/src/assets/images/service_web_design_studio_1795466283235.jpg',
+    imageUrl: '/src/assets/images/service_web_design_studio_1795466283235.webp',
     imageAlt:
       'WPCarePoint digital architecture studio showing wireframe schematics and design specification',
     imageCaption: 'Tailored UK business web platforms · Clean WordPress & TypeScript architecture',
@@ -575,7 +575,7 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Request Speed Audit',
     secondaryCtaLabel: 'Why Speed Matters',
     secondaryCtaTargetId: 'why-speed-matters',
-    imageUrl: '/src/assets/images/wordpress_speed_engineering_1795466283304.jpg',
+    imageUrl: '/src/assets/images/wordpress_speed_engineering_1795466283304.webp',
     imageAlt:
       'Minimalist architectural engineering components representing streamlined WordPress caching and load speed optimisation',
     imageCaption: 'Staging-tested speed engineering · Safe for business sites & WooCommerce',
@@ -934,7 +934,7 @@ export const ECOMMERCE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Request Store Scope',
     secondaryCtaLabel: 'Explore eCommerce Architecture',
     secondaryCtaTargetId: 'service-intro',
-    imageUrl: '/src/assets/images/service_ecommerce_studio_1795468677049.jpg',
+    imageUrl: '/src/assets/images/service_ecommerce_studio_1795468677049.webp',
     imageAlt:
       'Clean UK eCommerce storefront wireframe on tablet paired with coastal teal parcel geometry on limestone',
     imageCaption: 'WooCommerce HPOS & bespoke retail builds · Engineered for UK commerce operations',
@@ -1292,7 +1292,7 @@ export const AI_AUTOMATION_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Request Automation Consultation',
     secondaryCtaLabel: 'How We Approach Automation',
     secondaryCtaTargetId: 'service-intro',
-    imageUrl: '/src/assets/images/service_ai_workflow_1795541283281.jpg',
+    imageUrl: '/src/assets/images/service_ai_workflow_1795541283281.webp',
     imageAlt:
       'Modular frosted glass nodes and brushed coastal teal metallic routing blocks representing structured workflow engineering',
     imageCaption: 'Structured API pipelines · Scoped AI assistance with mandatory human checkpoints',
@@ -1649,7 +1649,7 @@ export const WEBSITE_CARE_SUPPORT_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Enquire About Website Care',
     secondaryCtaLabel: 'View Care Tiers',
     secondaryCtaTargetId: 'care-plan-tiers',
-    imageUrl: '/src/assets/images/service_website_care_1795468678272.jpg',
+    imageUrl: '/src/assets/images/service_website_care_1795468678272.webp',
     imageAlt:
       'Brushed steel and deep coastal teal protective vault block on pale travertine representing website backup and security stewardship',
     imageCaption: 'Staging-first updates · Encrypted UK/EEA backups · Direct engineering support',
@@ -2065,7 +2065,7 @@ export const AI_SEARCH_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Request Search Audit Scope',
     secondaryCtaLabel: 'SEO, AIO, GEO & SXO Explained',
     secondaryCtaTargetId: 'service-intro',
-    imageUrl: '/src/assets/images/service_ai_search_1795541283476.jpg',
+    imageUrl: '/src/assets/images/service_ai_search_1795541283476.webp',
     imageAlt:
       'Optical glass prism over layered archival index sheets casting crisp coastal teal geometry on limestone',
     imageCaption: 'Technical SEO · Schema.org entity clarity · AIO & GEO readiness',

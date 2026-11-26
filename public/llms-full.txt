@@ -1,111 +1,99 @@
-# WPCarePoint UK — Complete Technical & Commercial Reference (/llms-full.txt)
+# WPCarePoint — Agency & Service Reference (/llms-full.txt)
 
 Canonical Website: https://wpcarepoint.co.uk/
 Summary Index: https://wpcarepoint.co.uk/llms.txt
 XML Sitemap: https://wpcarepoint.co.uk/sitemap.xml
-Location: Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, Surrey, United Kingdom
-Contact Email: wpcarepoint@gmail.com
-Founded: 2019
-Languages Supported: English (UK — en-GB), Welsh / Cymraeg (cy)
-Coverage: Surrey, London, Manchester, Birmingham, Edinburgh, Bristol, Leeds, Cardiff, and United Kingdom wide
+Location: Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom
+Official Email: contact@wpcarepoint.co.uk
+Contact Channel: Email enquiries only
+Language: English (United Kingdom — en-GB)
+Coverage: Surrey, London, Manchester, Birmingham, Edinburgh, Bristol, Leeds, and organisations across the United Kingdom
 
 ---
 
-## Executive Overview
-WPCarePoint is a British digital consultancy and engineering practice partnering with UK organisations since 2019 (900+ programmes delivered, 4.9/5 client rating). We engineer bespoke websites, WooCommerce retail platforms, brand identity systems, technical SEO, Generative Engine Optimisation (GEO), AI Search Optimisation for ChatGPT, Gemini and Claude, and UK GDPR–compliant AI business process automation.
+## Brand Positioning
+WPCarePoint is a UK Web Development, eCommerce & AI Solutions Agency.
+Tagline: Building, improving and supporting digital businesses.
 
-All engagements follow four non-negotiable standards:
-1. UK/EEA Data Sovereignty (UK GDPR & ICO PECR compliance; zero model training on client enquiry data).
-2. WCAG 2.2 Level AA Accessibility & GDS-aligned semantic HTML.
-3. OWASP Top-10 Hardening & strictly server-side API secrets.
-4. Sub-1.2s Mobile Largest Contentful Paint (LCP) performance budgets and 100% client IP ownership.
+We focus on practical WordPress engineering and WooCommerce storefronts alongside modern React, Next.js, and TypeScript builds, bounded business workflow automation, structured website care, and technical SEO and AI search readiness.
 
----
-
-## Specialist Practice Specifications
-
-### 1. Website Development
-- URL: https://wpcarepoint.co.uk/services/website-development
-- Indicative Investment: From £1,450 | Delivery Schedule: 2 – 4 weeks
-- Standard: UK GDPR · WCAG AA · < 1.2s LCP
-- Stack: TypeScript, React / Next.js, PHP 8.4, WordPress Gutenberg, Tailwind CSS, Cloudflare CDN
-- Scope: Bespoke block architecture (zero visual-builder bloat), mobile-first layouts across UK 4G/5G networks, UK GDPR/PECR compliance, Schema.org JSON-LD, server-level 301 redirect preservation, and automated daily encrypted UK/EEA cloud backups.
-- Key Fact: Clients retain 100% ownership of domain, source repository, and cloud hosting.
-
-### 2. E-commerce Website Development
-- URL: https://wpcarepoint.co.uk/services/ecommerce-website-development
-- Indicative Investment: From £2,400 | Delivery Schedule: 3 – 6 weeks
-- Standard: GBP & UK VAT · PCI-DSS · < 1.2s LCP
-- Stack: WooCommerce HPOS, PHP 8.4, TypeScript, MySQL 8, Stripe / Apple Pay, Royal Mail / DPD API
-- Scope: Streamlined UK mobile checkout with postcode lookup and Apple Pay/Google Pay/Stripe/Klarna; standard and zero-rated UK VAT rules; Royal Mail, DPD, and DHL dispatch APIs; Product JSON-LD markup; WooCommerce HPOS database tuning; Xero and QuickBooks UK synchronisation.
-
-### 3. Custom Web Solutions and Integrations
-- URL: https://wpcarepoint.co.uk/services/custom-web-solutions-integrations
-- Indicative Investment: From £1,800 | Delivery Schedule: 2 – 6 weeks
-- Standard: REST / GraphQL · UK GDPR · TypeScript / PHP
-- Stack: TypeScript 5, Node.js / FastAPI, PostgreSQL, PHP 8.4, Xero & HubSpot API, GitHub Actions CI
-- Scope: Resilient API middleware with retry queues, role-based client portals, bespoke quote calculators, two-way HubSpot/Pipedrive/Salesforce/Xero sync, and OWASP security hardening.
-
-### 4. AI-Powered Website Development
-- URL: https://wpcarepoint.co.uk/services/ai-powered-website-development
-- Indicative Investment: From £1,950 | Delivery Schedule: 2 – 5 weeks
-- Standard: Grounded Data · UK GDPR Safe · Server-Side Keys
-- Stack: TypeScript, Python FastAPI, Gemini / OpenAI API, React 19, PostgreSQL pgvector, Server-Side Proxy
-- Scope: Grounded semantic knowledge search, interactive buyer qualification diagnostics, server-side API architecture (zero browser-exposed keys), UK GDPR data minimisation, and asynchronous progressive UX protecting Core Web Vitals.
-
-### 5. Branding and Brand Identity
-- URL: https://wpcarepoint.co.uk/services/branding-brand-identity
-- Indicative Investment: From £950 | Delivery Schedule: 2 – 3 weeks
-- Standard: Vector Assets · WCAG Contrast · Brand Guidelines
-- Stack: Figma Design System, SVG Vector Suite, Tailwind Tokens, WCAG AA Contrast, OpenGraph Cards
-- Scope: Primary and secondary vector logos (SVG, EPS, PDF, PNG), licensed typography and WCAG AA–verified colour systems, digital brand guidelines, OpenGraph & tender templates, and tokenised CSS/Tailwind integration.
-
-### 6. Search Engine Optimisation (SEO)
-- URL: https://wpcarepoint.co.uk/services/search-engine-optimisation
-- Indicative Investment: From £650 / mo | Delivery Schedule: Ongoing · 30-day audit sprint
-- Standard: Google UK · Core Web Vitals · Schema.org
-- Stack: Schema.org JSON-LD, Google Search Console, Core Web Vitals, Server 301 Rules, XML Sitemaps, hreflang en-GB
-- Scope: Technical crawl & index audits, UK regional/jurisdiction architecture (en-GB hreflang, LocalBusiness JSON-LD), commercial intent page mapping, hands-on LCP/INP/CLS engineering fixes, and .co.uk 301 migration recovery.
-
-### 7. Generative Engine Optimisation (GEO)
-- URL: https://wpcarepoint.co.uk/services/generative-engine-optimisation
-- Indicative Investment: From £750 / mo | Delivery Schedule: 2 – 4 week initial sprint
-- Standard: Entity Graph · JSON-LD · Citation-Ready Copy
-- Stack: Entity JSON-LD, Semantic HTML5, Pre-Rendered SSR, FAQPage Schema, OfferCatalog, Citation Benchmarking
-- Scope: Nested ProfessionalService, OfferCatalog, Service, and FAQPage JSON-LD; answer-first factual copy; pre-rendered HTML accessible without JS execution; verifiable proof-to-claim adjacency; and monthly generative share-of-citation benchmarking.
-
-### 8. AI Search Optimisation for ChatGPT, Gemini and Claude
-- URL: https://wpcarepoint.co.uk/services/ai-search-optimisation
-- Indicative Investment: From £750 | Delivery Schedule: 2 – 3 weeks setup
-- Standard: /llms.txt · OAI-SearchBot · ClaudeBot · Gemini
-- Stack: /llms.txt Standard, robots.txt AI Rules, OAI-SearchBot, ClaudeBot & Gemini, Canonical Routing, Prompt QA
-- Scope: Curated /llms.txt and /llms-full.txt deployment, granular robots.txt governance for OAI-SearchBot, ChatGPT-User, ClaudeBot, PerplexityBot, and Google-Extended, cross-web entity consistency (Companies House, LinkedIn, website), dedicated canonical service pages, and commercial prompt citation QA.
-
-### 9. Digital Marketing and Online Growth
-- URL: https://wpcarepoint.co.uk/services/digital-marketing-online-growth
-- Indicative Investment: From £700 / mo | Delivery Schedule: Monthly growth sprints
-- Standard: UK GDPR Tracking · GA4 · Conversion Focus
-- Stack: React Landing Funnels, GA4 Consent Mode, UK PECR Compliance, CRM Attribution, A/B Speed Tests
-- Scope: Dedicated conversion landing architecture, CRO audits, PECR-compliant consent-mode/server-side GA4 attribution, structured lead nurture flows, and executive ROI reporting on rolling monthly terms.
-
-### 10. AI Automation and Business Process Automation
-- URL: https://wpcarepoint.co.uk/services/ai-automation-business-process-automation
-- Indicative Investment: From £1,250 | Delivery Schedule: 1 – 3 weeks
-- Standard: UK GDPR Safe · Human-in-Loop · Full Audit Logs
-- Stack: Node.js / TypeScript, Python FastAPI, n8n & Make, Signed Webhooks, HubSpot & Xero API, Zero-Retention LLM
-- Scope: Automated enquiry triage & routing, two-way CRM/Microsoft 365/Google Workspace/Slack/Teams/HubSpot/Xero synchronisation, automated scoping & proposal drafting, human approval gates, and zero-retention API governance.
+All engagements follow four core principles:
+1. Full client ownership of domains, code repositories, hosting accounts, and content.
+2. Clean semantic architecture and responsive layouts engineered around WCAG 2.2 Level AA accessibility clarity.
+3. Responsible technology use aligned with UK GDPR and PECR boundaries and human approval checkpoints.
+4. Direct, written engineering scoping without sales queues or multi-layer handoffs.
 
 ---
 
-## Verified UK Case Studies
-- **Atelier Lumière UK (Retail & WooCommerce, London)**: +138% mobile checkout conversions in 4 months; 1.1s mobile LCP down from 4.8s; £0 lost orders during migration.
-- **The Cavendish Clinic (Private Healthcare, Harley Street, London)**: 98/100 Mobile PageSpeed & top AI search citations; recovered in 4 hours; automated CRM patient triage implemented.
+## Core Pages
+- **Home** (`https://wpcarepoint.co.uk/`): Agency overview, five core service tracks, Website Care Plans (Enquire for Pricing), Quick Fix pathway, working process, and FAQ.
+- **Services Hub** (`https://wpcarepoint.co.uk/services/`): Structured index of our five core service categories, supporting technical services, four-stage process, and engineering principles.
+- **About WPCarePoint** (`https://wpcarepoint.co.uk/about/`): Agency story, what we do, five-step approach, six values, core technologies, and delivery discipline.
+- **Contact WPCarePoint** (`https://wpcarepoint.co.uk/contact/`): Direct technical scoping by email at `contact@wpcarepoint.co.uk`, enquiry guidance across service tracks, and brief template.
 
 ---
 
-## Frequently Asked Questions (UK Governance & Operations)
-1. **Do you handle both custom web builds and AI / GEO growth under one team?** Yes—we architect websites, e-commerce platforms, APIs, SEO, GEO, AI Search Optimisation (ChatGPT, Gemini, Claude), and business process automation in-house.
-2. **Do you support UK hosting providers and Nominet .co.uk domains?** Yes—20i, Krystal, SiteGround UK, Namecheap, Vercel, AWS London, and Cloudflare alongside Nominet .co.uk and .uk domains.
-3. **Are your websites, AI integrations, and backups UK GDPR compliant?** Yes—UK GDPR & PECR consent architecture, encrypted UK/EEA backup residency, and zero-training commercial AI tiers.
-4. **Are care plans billed in GBP and do you require long-term contracts?** All Managed Care Retainers are invoiced transparently in GBP (£) on rolling monthly terms with zero lock-in, or optional annual billing with 17% savings.
-5. **Can you rebuild a lost .co.uk website without losing Google UK rankings?** Yes—we audit Google Search Console and archival snapshots, preserve matching URL slugs, deploy server-level 301 redirects, and configure Schema.org plus `/llms.txt`.
+## Five Core Service Categories
+
+### 1. Website Design & Development
+- URL: https://wpcarepoint.co.uk/services/website-development/
+- Focus: Custom WordPress block themes (Gutenberg) without heavy page-builder bloat, plus React, Next.js, and TypeScript frontend applications.
+- Standards: Mobile-first responsive UI, WCAG 2.2 AA accessibility clarity, clean semantic HTML, and controlled single-hop 301 migration hygiene.
+
+### 2. eCommerce Development
+- URL: https://wpcarepoint.co.uk/services/ecommerce-development/
+- Focus: WooCommerce (including High-Performance Order Storage — HPOS) and tailored online retail platforms built for UK merchants.
+- Standards: GBP (£) pricing, UK VAT tax rules, Stripe and Apple Pay with Strong Customer Authentication (3D Secure / SCA), Royal Mail and DPD shipping configuration, and clean product Schema markup.
+
+### 3. AI & Business Automation
+- URL: https://wpcarepoint.co.uk/services/ai-business-automation/
+- Focus: Practical automation linking website enquiries, CRM records, accounting tools, and internal operations.
+- Standards: Least-privilege server-side API integrations, human-in-the-loop approval checkpoints, UK GDPR data minimisation, and audit-friendly workflows.
+
+### 4. Website Care & Technical Support
+- URL: https://wpcarepoint.co.uk/services/website-care-support/
+- Focus: Structured website stewardship across three tiers (**Essential Care**, **Advanced Care**, and **Elite Care** — all **Enquire for Pricing**) plus a standalone **WordPress Quick Fix** pathway (`https://wpcarepoint.co.uk/services/website-care-support/#one-off-fixes`).
+- Standards: Off-site encrypted backups in UK/EEA infrastructure, staging-first updates before production deployment, uptime monitoring, security hardening, and direct email scoping with honest written terms rather than unverified SLA claims.
+
+### 5. SEO & AI Search Optimisation
+- URL: https://wpcarepoint.co.uk/services/ai-search-optimisation/
+- Focus: Technical SEO, search experience clarity (SXO), and consolidated AI Search Optimisation (GEO & AIO) so UK organisations are represented accurately in Google UK, ChatGPT, Gemini, and Claude.
+- Standards: Verified Schema.org JSON-LD entity graphs, clean crawl structure, factual copy aligned to visible page content, and crawler governance (`robots.txt` and `/llms.txt`).
+
+---
+
+## Supporting & Specialist Services
+
+### WordPress Speed Optimisation
+- URL: https://wpcarepoint.co.uk/wordpress-speed-optimisation/
+- Focus: Diagnostic performance engineering addressing Core Web Vitals, image compression and WebP/AVIF formats, caching, render-blocking scripts, WordPress database autoload bloat, and UK hosting bottlenecks without misleading score guarantees.
+
+### Search Engine Optimisation (SEO)
+- URL: https://wpcarepoint.co.uk/services/search-engine-optimisation/
+- Focus: Independent technical SEO foundations including crawl hierarchy, semantic markup, canonical discipline, 301 migration protection, and UK regional relevance.
+
+### Custom Web Solutions & Integrations
+- URL: https://wpcarepoint.co.uk/services/custom-web-solutions-integrations/
+- Focus: Bespoke website modules, interactive TypeScript/React interfaces, and reliable REST API or webhook connections linking forms, CRMs, and operations software.
+
+### AI-Powered Website Development
+- URL: https://wpcarepoint.co.uk/services/ai-powered-website-development/
+- Focus: Scoped interactive website intelligence, grounded knowledge retrieval, and guided user qualification tools designed with privacy boundaries and human oversight.
+
+### Branding & Brand Identity
+- URL: https://wpcarepoint.co.uk/services/branding-brand-identity/
+- Focus: Visual identity systems, WCAG 2.2 AA colour contrast tokens, clean typography scales, and practical digital design consistency.
+
+### Digital Marketing & Online Growth
+- URL: https://wpcarepoint.co.uk/services/digital-marketing-online-growth/
+- Focus: Conversion-focused landing page architecture, organic visibility alignment, and privacy-respecting measurement principles without fabricated traffic or lead guarantees.
+
+---
+
+## Working Process & Commercial Transparency
+1. **Discovery & Technical Audit**: Inspect business goals, existing website structure, hosting environment, speed bottlenecks, and integration needs in writing.
+2. **Design & Staging Architecture**: Build and review page hierarchy, visual components, WooCommerce configuration, or automation pipelines in an isolated staging environment.
+3. **QA, Speed & Launch Governance**: Test responsive layouts across mobile, tablet, and desktop breakpoints, verify accessibility contrast, SSL, canonical tags, and 301 redirects prior to controlled cut-over.
+4. **Ongoing Care & Search Growth**: Support live websites with structured Care Plans, speed tuning, and iterative SEO and AI Search improvements where agreed.
+
+All pricing, Care Plan tiers, and project quotes are scoped clearly in writing after technical review via `contact@wpcarepoint.co.uk`.

@@ -625,6 +625,34 @@ async function startServer() {
     });
   });
 
+  const APPROVED_CANONICAL_PATHS = new Set<string>([
+    '/',
+    '/services/',
+    '/about/',
+    '/contact/',
+    '/wordpress-speed-optimisation/',
+    '/services/website-development/',
+    '/services/ecommerce-development/',
+    '/services/ai-business-automation/',
+    '/services/website-care-support/',
+    '/services/ai-search-optimisation/',
+    '/services/search-engine-optimisation/',
+    '/services/custom-web-solutions-integrations/',
+    '/services/ai-powered-website-development/',
+    '/services/branding-brand-identity/',
+    '/services/digital-marketing-online-growth/',
+  ]);
+
+  const toTrailingSlashRoute = (pathname: string): string => {
+    const lower = pathname.trim().toLowerCase();
+    if (!lower || lower === '/') return '/';
+    return lower.endsWith('/') ? lower : `${lower}/`;
+  };
+
+  const isApprovedAppRoute = (pathname: string): boolean => {
+    return APPROVED_CANONICAL_PATHS.has(toTrailingSlashRoute(pathname));
+  };
+
   if (process.env.NODE_ENV !== 'production') {
     const { createServer: createViteServer } = await import('vite');
     const vite = await createViteServer({
@@ -634,6 +662,57 @@ async function startServer() {
     app.use((_req, res, next) => {
       res.setHeader('Content-Language', 'en-GB');
       next();
+    });
+    app.use(async (req, res, next) => {
+      if (req.method !== 'GET') {
+        next();
+        return;
+      }
+      const reqPath = req.path;
+      const isViteOrStatic =
+        reqPath.startsWith('/api/') ||
+        reqPath.startsWith('/src/') ||
+        reqPath.startsWith('/@') ||
+        reqPath.startsWith('/node_modules/') ||
+        /\.[a-z0-9]{1,8}$/i.test(reqPath);
+
+      if (isViteOrStatic || isApprovedAppRoute(reqPath)) {
+        next();
+        return;
+      }
+
+      const acceptsHtml = (req.headers.accept || '').includes('text/html');
+      if (!acceptsHtml) {
+        res.status(404).send('Not found');
+        return;
+      }
+
+      try {
+        const indexTemplate = fs.readFileSync(
+          path.resolve(__dirname, 'index.html'),
+          'utf-8'
+        );
+        const transformed = await vite.transformIndexHtml(
+          req.originalUrl,
+          indexTemplate
+        );
+        const notFoundHtml = transformed
+          .replace(
+            /<title>[\s\S]*?<\/title>/,
+            '<title>Page Not Found (404) | WPCarePoint</title>'
+          )
+          .replace(
+            /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/,
+            '<meta name="robots" content="noindex, nofollow" />'
+          );
+        res
+          .status(404)
+          .setHeader('X-Robots-Tag', 'noindex, nofollow')
+          .type('html')
+          .send(notFoundHtml);
+      } catch (err) {
+        next(err);
+      }
     });
     app.use(vite.middlewares);
   } else {
@@ -646,54 +725,29 @@ async function startServer() {
     app.get('*', (req, res) => {
       res.setHeader('Content-Language', 'en-GB');
 
-      const cleanPath = req.path.toLowerCase();
-      let targetFile = path.join(distPath, 'index.html');
-
-      if (/^\/wordpress-speed-optimisation\/?$/i.test(cleanPath)) {
-        const speedFile = path.join(distPath, 'wordpress-speed-optimisation', 'index.html');
-        if (fs.existsSync(speedFile)) {
-          targetFile = speedFile;
+      const canonicalRoute = toTrailingSlashRoute(req.path);
+      if (!APPROVED_CANONICAL_PATHS.has(canonicalRoute)) {
+        const notFoundFile = path.join(distPath, '404.html');
+        res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+        if (fs.existsSync(notFoundFile)) {
+          res.status(404).type('html').send(fs.readFileSync(notFoundFile, 'utf-8'));
+          return;
         }
-      } else if (/^\/services\/?$/i.test(cleanPath)) {
-        const servicesHubFile = path.join(distPath, 'services', 'index.html');
-        if (fs.existsSync(servicesHubFile)) {
-          targetFile = servicesHubFile;
-        }
-      } else if (/^\/about\/?$/i.test(cleanPath)) {
-        const aboutFile = path.join(distPath, 'about', 'index.html');
-        if (fs.existsSync(aboutFile)) {
-          targetFile = aboutFile;
-        }
-      } else if (/^\/contact\/?$/i.test(cleanPath)) {
-        const contactFile = path.join(distPath, 'contact', 'index.html');
-        if (fs.existsSync(contactFile)) {
-          targetFile = contactFile;
-        }
-      } else {
-        const serviceMatch = cleanPath.match(/^\/services\/([a-z0-9-]+)\/?$/i);
-        if (serviceMatch) {
-          const folderIndex = path.join(
-            distPath,
-            'services',
-            serviceMatch[1],
-            'index.html'
-          );
-          const flatFile = path.join(distPath, 'services', `${serviceMatch[1]}.html`);
-          if (fs.existsSync(folderIndex)) {
-            targetFile = folderIndex;
-          } else if (fs.existsSync(flatFile)) {
-            targetFile = flatFile;
-          }
-        }
+        res.status(404).send('Not found');
+        return;
       }
+
+      const targetFile =
+        canonicalRoute === '/'
+          ? path.join(distPath, 'index.html')
+          : path.join(distPath, canonicalRoute.replace(/^\/|\/$/g, ''), 'index.html');
 
       if (!fs.existsSync(targetFile)) {
         res.status(404).send('Not found');
         return;
       }
 
-      const rawHtml = fs.readFileSync(targetFile, 'utf-8');
-      res.type('html').send(rawHtml);
+      res.type('html').send(fs.readFileSync(targetFile, 'utf-8'));
     });
   }
 

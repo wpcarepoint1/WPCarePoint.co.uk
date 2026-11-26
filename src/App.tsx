@@ -16,32 +16,19 @@ import { ContactPageView } from './components/contact/ContactPageView';
 import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
 import { ServicesHubView } from './components/services-hub/ServicesHubView';
 import { CtaSection } from './components/ui/CtaSection';
+import { NotFoundPageView } from './components/ui/NotFoundPageView';
 import { DEDICATED_SERVICE_PAGES_BY_PATH } from './data/dedicatedServicePagesData';
-import { applyHomeSeo } from './utils/routeSeo';
-
-const LEGACY_SERVICE_ALIASES: Record<string, string> = {
-  '/services/ecommerce-website-development': '/services/ecommerce-development/',
-  '/services/ecommerce-website-development/': '/services/ecommerce-development/',
-  '/services/ai-automation-business-process-automation': '/services/ai-business-automation/',
-  '/services/ai-automation-business-process-automation/': '/services/ai-business-automation/',
-  '/services/generative-engine-optimisation': '/services/ai-search-optimisation/',
-  '/services/generative-engine-optimisation/': '/services/ai-search-optimisation/',
-};
+import { applyHomeSeo, applyNotFoundSeo } from './utils/routeSeo';
 
 function normalizePathname(pathname: string): string {
   const cleaned = pathname.trim().toLowerCase();
-  const base = cleaned === '' ? '/' : cleaned;
-  return LEGACY_SERVICE_ALIASES[base] || base;
+  return cleaned === '' ? '/' : cleaned;
 }
 
 export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(() => {
-    const normalized = normalizePathname(window.location.pathname);
-    if (normalized !== window.location.pathname.toLowerCase() && window.location.pathname !== '/') {
-      window.history.replaceState({}, '', `${normalized}${window.location.hash}`);
-    }
-    return normalized;
-  });
+  const [currentPath, setCurrentPath] = useState<string>(() =>
+    normalizePathname(window.location.pathname)
+  );
 
   const pendingHashRef = useRef<string | null>(null);
 
@@ -81,8 +68,13 @@ export default function App() {
     [currentPath]
   );
 
-  const isHomeRoute =
-    !isContactPage && !isServicesHub && !isAboutPage && !activeDedicatedPage;
+  const isHomeRoute = currentPath === '/' || currentPath === '';
+  const isNotFoundRoute =
+    !isHomeRoute &&
+    !isContactPage &&
+    !isServicesHub &&
+    !isAboutPage &&
+    !activeDedicatedPage;
 
   useEffect(() => {
     if (isHomeRoute) {
@@ -95,8 +87,10 @@ export default function App() {
           });
         });
       }
+    } else if (isNotFoundRoute) {
+      applyNotFoundSeo(currentPath);
     }
-  }, [isHomeRoute]);
+  }, [isHomeRoute, isNotFoundRoute, currentPath]);
 
   const navigateToPath = useCallback(
     (rawPath: string) => {
@@ -133,17 +127,11 @@ export default function App() {
         navigateToPath('/services/website-development/');
         return;
       }
-      if (
-        slug === 'ecommerce-website-development' ||
-        slug === 'ecommerce-development'
-      ) {
+      if (slug === 'ecommerce-development') {
         navigateToPath('/services/ecommerce-development/');
         return;
       }
-      if (
-        slug === 'ai-automation-business-process-automation' ||
-        slug === 'ai-business-automation'
-      ) {
+      if (slug === 'ai-business-automation') {
         navigateToPath('/services/ai-business-automation/');
         return;
       }
@@ -151,18 +139,12 @@ export default function App() {
         navigateToPath('/services/website-care-support/');
         return;
       }
-      if (
-        slug === 'ai-search-optimisation' ||
-        slug === 'generative-engine-optimisation'
-      ) {
+      if (slug === 'ai-search-optimisation') {
         navigateToPath('/services/ai-search-optimisation/');
         return;
       }
-      if (slug === 'search-engine-optimisation') {
-        navigateToPath('/services/search-engine-optimisation/');
-        return;
-      }
       if (
+        slug === 'search-engine-optimisation' ||
         slug === 'custom-web-solutions-integrations' ||
         slug === 'ai-powered-website-development' ||
         slug === 'branding-brand-identity' ||
@@ -268,6 +250,20 @@ export default function App() {
               >
                 <DedicatedServicePage
                   page={activeDedicatedPage}
+                  onNavigateHome={navigateHome}
+                  onNavigatePath={navigateToPath}
+                />
+              </motion.div>
+            ) : isNotFoundRoute ? (
+              <motion.div
+                key="not-found-page"
+                initial={{ opacity: 0.94, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <NotFoundPageView
+                  requestedPath={currentPath}
                   onNavigateHome={navigateHome}
                   onNavigatePath={navigateToPath}
                 />

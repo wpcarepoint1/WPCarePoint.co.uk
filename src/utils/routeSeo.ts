@@ -79,17 +79,24 @@ function getOrCreateJsonLdScript(): HTMLScriptElement {
   return created;
 }
 
+const DEFAULT_ROBOTS =
+  'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
+
+function setLinkHref(selector: string, href: string): void {
+  const el = document.querySelector(selector);
+  if (el) {
+    el.setAttribute('href', href);
+  }
+}
+
 export function applyRouteSeo(config: RouteSeoConfig): void {
   document.title = config.title;
 
+  document.querySelector('meta[name="robots"]')?.setAttribute('content', DEFAULT_ROBOTS);
   document.querySelector('meta[name="description"]')?.setAttribute('content', config.description);
-  document.querySelector('link[rel="canonical"]')?.setAttribute('href', config.canonicalUrl);
-  document
-    .querySelector('link[rel="alternate"][hreflang="en-gb"]')
-    ?.setAttribute('href', config.canonicalUrl);
-  document
-    .querySelector('link[rel="alternate"][hreflang="x-default"]')
-    ?.setAttribute('href', config.canonicalUrl);
+  setLinkHref('link[rel="canonical"]', config.canonicalUrl);
+  setLinkHref('link[rel="alternate"][hreflang="en-gb"]', config.canonicalUrl);
+  setLinkHref('link[rel="alternate"][hreflang="x-default"]', config.canonicalUrl);
 
   document.querySelector('meta[property="og:title"]')?.setAttribute('content', config.title);
   document
@@ -117,4 +124,41 @@ export function applyRouteSeo(config: RouteSeoConfig): void {
 
 export function applyHomeSeo(): void {
   applyRouteSeo(HOME_SEO_CONFIG);
+}
+
+export function applyNotFoundSeo(requestedPath: string): void {
+  const title = 'Page Not Found (404) | WPCarePoint';
+  const description =
+    'The requested page could not be found on WPCarePoint. Explore our UK web development, WooCommerce, Website Care, and SEO services.';
+  const cleanUrl = `https://wpcarepoint.co.uk${requestedPath.startsWith('/') ? requestedPath : `/${requestedPath}`}`;
+
+  document.title = title;
+  document.querySelector('meta[name="robots"]')?.setAttribute('content', 'noindex, nofollow');
+  document.querySelector('meta[name="description"]')?.setAttribute('content', description);
+  setLinkHref('link[rel="canonical"]', cleanUrl);
+  setLinkHref('link[rel="alternate"][hreflang="en-gb"]', cleanUrl);
+  setLinkHref('link[rel="alternate"][hreflang="x-default"]', cleanUrl);
+
+  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
+  document.querySelector('meta[property="og:url"]')?.setAttribute('content', cleanUrl);
+
+  document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
+  document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
+
+  const routeScript = getOrCreateJsonLdScript();
+  document
+    .querySelectorAll('script[type="application/ld+json"]')
+    .forEach((node) => {
+      if (node !== routeScript) {
+        node.remove();
+      }
+    });
+  routeScript.textContent = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: title,
+    description,
+    url: cleanUrl,
+  });
 }

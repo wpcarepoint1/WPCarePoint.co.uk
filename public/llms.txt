@@ -1,38 +1,39 @@
-# WPCarePoint (wpcarepoint.co.uk)
+# WPCarePoint (https://wpcarepoint.co.uk/)
 
-> British Digital Consultancy specialising in Web Engineering, WooCommerce, Brand Architecture, SEO, Generative Engine Optimisation (GEO), AI Search Optimisation (ChatGPT, Gemini, Claude), and UK GDPR–Compliant AI Business Process Automation. Serving organisations across Surrey, London, Manchester, Birmingham, Edinburgh, Bristol, Leeds, Cardiff, and the wider United Kingdom since 2019.
+> WPCarePoint is a UK Web Development, eCommerce & AI Solutions Agency. Building, improving and supporting digital businesses.
 
-For complete deliverables, GBP fee guidance, process steps, and FAQs in a single context file, see: [llms-full.txt](https://wpcarepoint.co.uk/llms-full.txt)
+For complete current service scope, engineering standards, process overview, and frequently asked questions, see: [llms-full.txt](https://wpcarepoint.co.uk/llms-full.txt)
 
-## Specialist UK Practice Pages
-- [Website Development](https://wpcarepoint.co.uk/services/website-development) — From £1,450 · Bespoke UK GDPR–compliant business websites under 1.2s LCP.
-- [E-commerce Website Development](https://wpcarepoint.co.uk/services/ecommerce-website-development) — From £2,400 · WooCommerce HPOS stores configured for GBP, UK VAT & Royal Mail/DPD.
-- [Custom Web Solutions and Integrations](https://wpcarepoint.co.uk/services/custom-web-solutions-integrations) — From £1,800 · Bespoke portals, booking tools, and Xero/HubSpot/Stripe API integrations.
-- [AI-Powered Website Development](https://wpcarepoint.co.uk/services/ai-powered-website-development) — From £1,950 · Grounded knowledge search, qualification calculators & server-side AI tools.
-- [Branding and Brand Identity](https://wpcarepoint.co.uk/services/branding-brand-identity) — From £950 · Vector brand marks, WCAG AA colour systems & digital brand guidelines.
-- [Search Engine Optimisation (SEO)](https://wpcarepoint.co.uk/services/search-engine-optimisation) — From £650/mo · Google UK technical SEO, Core Web Vitals & 301 migration protection.
-- [Generative Engine Optimisation (GEO)](https://wpcarepoint.co.uk/services/generative-engine-optimisation) — From £750/mo · Entity Schema.org markup & citation-ready architecture for generative search.
-- [AI Search Optimisation for ChatGPT, Gemini and Claude](https://wpcarepoint.co.uk/services/ai-search-optimisation) — From £750 · /llms.txt architecture, crawler governance & UK citation benchmarking.
-- [Digital Marketing and Online Growth](https://wpcarepoint.co.uk/services/digital-marketing-online-growth) — From £700/mo · Dedicated UK landing architecture, CRO & PECR-compliant GA4 attribution.
-- [AI Automation and Business Process Automation](https://wpcarepoint.co.uk/services/ai-automation-business-process-automation) — From £1,250 · Automated enquiry triage, CRM synchronisation & UK GDPR–safe workflows.
+## Primary Pages
+- [Home](https://wpcarepoint.co.uk/) — Overview of core web engineering, eCommerce, automation, website care, and search capabilities.
+- [Services Hub](https://wpcarepoint.co.uk/services/) — Complete directory of our five core service categories and supporting technical services.
+- [About WPCarePoint](https://wpcarepoint.co.uk/about/) — Engineering approach, core values, technology stack, and client-ownership commitment.
+- [Contact WPCarePoint](https://wpcarepoint.co.uk/contact/) — Direct technical scoping by email at contact@wpcarepoint.co.uk.
 
-## UK Managed Care Retainers (GBP)
-- **Essential Care**: £59/month (£49/month invoiced annually) — Daily UK/EEA backups, weekly staging governance, 5-min availability monitoring, 1 hr/month senior engineering.
-- **Growth & Speed**: £119/month (£99/month invoiced annually) — Twice-daily backups, weekly + visual QA governance, 1-min monitoring, 3 hrs/month engineering, unlimited priority malware remediation.
-- **Scale & WooCommerce**: £229/month (£189/month invoiced annually) — Hourly DB snapshots, 30-sec + checkout monitoring, 6 hrs/month engineering, under 30-min contractual incident SLA.
+## Five Core Service Categories
+- [Website Design & Development](https://wpcarepoint.co.uk/services/website-development/) — Bespoke WordPress block architecture and React, Next.js, and TypeScript web applications.
+- [eCommerce Development](https://wpcarepoint.co.uk/services/ecommerce-development/) — WooCommerce (HPOS) and custom online stores configured for GBP (£), UK VAT rules, Stripe SCA, and Royal Mail / DPD shipping.
+- [AI & Business Automation](https://wpcarepoint.co.uk/services/ai-business-automation/) — Practical workflow automation, enquiry triage, CRM and API integrations built with UK GDPR boundaries and human approval.
+- [Website Care & Technical Support](https://wpcarepoint.co.uk/services/website-care-support/) — Essential, Advanced, and Elite Care Plans (Enquire for Pricing) plus one-off WordPress Quick Fix remediation.
+- [SEO & AI Search Optimisation](https://wpcarepoint.co.uk/services/ai-search-optimisation/) — Technical SEO foundations, Schema.org JSON-LD graphs, and consolidated AI Search Optimisation (GEO & AIO) for Google, ChatGPT, Gemini, and Claude.
 
-## Engineering Stack & Languages
-- **Languages**: TypeScript 5, JavaScript (ES2026), Python 3.12 (FastAPI), PHP 8.4 (Strict WordPress), PostgreSQL, MySQL 8, Semantic HTML5
-- **Frontend & Accessibility**: React 19, Next.js, Vite, Tailwind CSS v4, Custom Gutenberg Block Themes, WCAG 2.2 Level AA
-- **Cloud, Edge & CI/CD**: Cloudflare Workers & CDN, GitHub Actions CI/CD, AWS London (`eu-west-2`), 20i, Krystal UK, isolated UK staging pipelines
-- **AI, Search & Automation**: Gemini / OpenAI / Claude server-side APIs (zero model training on client data), RAG retrieval, Schema.org Entity Graphs, `/llms.txt`, n8n & Make webhooks
-- **Commerce & Finance APIs**: WooCommerce HPOS, Stripe, Apple Pay, Klarna, Xero, QuickBooks UK, HubSpot, Royal Mail & DPD APIs
+## Supporting & Specialist Services
+- [WordPress Speed Optimisation](https://wpcarepoint.co.uk/wordpress-speed-optimisation/) — Diagnostic bottleneck resolution for Core Web Vitals, images, caching, scripts, databases, and UK hosting.
+- [Search Engine Optimisation (SEO)](https://wpcarepoint.co.uk/services/search-engine-optimisation/) — Technical crawl audits, semantic site architecture, 301 redirect hygiene, and UK search readiness.
+- [Custom Web Solutions & Integrations](https://wpcarepoint.co.uk/services/custom-web-solutions-integrations/) — Tailored web modules, client interfaces, and validated server-side REST and webhook integrations.
+- [AI-Powered Website Development](https://wpcarepoint.co.uk/services/ai-powered-website-development/) — Scoped interactive website intelligence, grounded search, and guided qualification helpers with human guardrails.
+- [Branding & Brand Identity](https://wpcarepoint.co.uk/services/branding-brand-identity/) — Cohesive visual systems, WCAG 2.2 AA contrast palettes, typography scales, and reusable web design tokens.
+- [Digital Marketing & Online Growth](https://wpcarepoint.co.uk/services/digital-marketing-online-growth/) — Conversion-focused landing architecture and privacy-respecting growth programmes.
 
-## UK Sectors, Governance & Contact
-- **Sectors**: Private Healthcare & Clinics, UK Retail & WooCommerce, B2B/Legal/Financial Advisory, SaaS/Property & Multi-Site SMEs
-- **Compliance**: UK GDPR & PECR data residency, WCAG 2.2 Level AA, OWASP Top-10 hardening, < 1.2s mobile Core Web Vitals
+## Care Plans & Commercial Approach
+- **Essential Care, Advanced Care & Elite Care**: Scoped transparently to match platform architecture and operational complexity (**Enquire for Pricing**).
+- **One-Off WordPress Quick Fix**: Standalone technical repair pathway without mandatory monthly retainer lock-in.
+- **Ownership**: Clients retain full ownership of domains, hosting accounts, code repositories, and content.
+
+## Contact & Regional Scope
 - **Website**: https://wpcarepoint.co.uk/
-- **Email**: wpcarepoint@gmail.com
-- **Address**: Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom
-- **Hours**: Monday–Friday, 08:30–18:00 GMT/BST (24/7 priority incident triage)
-- **Languages**: English (UK — `en-GB`), Welsh / Cymraeg (`cy`)
+- **Sitemap**: https://wpcarepoint.co.uk/sitemap.xml
+- **Official Email**: contact@wpcarepoint.co.uk
+- **Enquiry Channel**: Email enquiries only
+- **Location**: Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom
+- **Language**: English (United Kingdom — `en-GB`)

@@ -4,11 +4,10 @@ import fs from 'fs';
 import path from 'path';
 import {defineConfig} from 'vite';
 import {
-  CARE_PLANS,
-  UK_FAQS,
-  UK_OFFICE_ADDRESS,
-  UK_REGIONS_SERVED,
-} from './src/data/agencyData';
+  BRAND_INFO,
+  CARE_PLAN_TIERS,
+  HOMEPAGE_FAQS,
+} from './src/data/homepageData';
 import {ABOUT_PAGE_DATA} from './src/data/aboutPageData';
 import {CONTACT_PAGE_DATA} from './src/data/contactPageData';
 import {
@@ -52,12 +51,12 @@ function buildHomePrerenderBody(): string {
     )
     .join('\n          ');
 
-  const carePlansHtml = CARE_PLANS.map(
+  const carePlansHtml = CARE_PLAN_TIERS.map(
     (p) =>
-      `<li><strong>${escapeHtml(p.name)}</strong> (Enquire for Pricing): ${escapeHtml(p.summary)}</li>`
+      `<li><strong>${escapeHtml(p.name)}</strong> (${escapeHtml(p.pricingLabel)}): ${escapeHtml(p.summary)}</li>`
   ).join('\n          ');
 
-  const faqHtml = UK_FAQS.map(
+  const faqHtml = HOMEPAGE_FAQS.map(
     (f) =>
       `<div><h3>${escapeHtml(f.question)}</h3><p>${escapeHtml(f.answer)}</p></div>`
   ).join('\n          ');
@@ -65,9 +64,9 @@ function buildHomePrerenderBody(): string {
   return `<main>
         <header><a href="/">WPCarePoint</a> · <a href="/contact/">Contact</a></header>
         <section>
-          <h1>Building, improving and supporting digital businesses.</h1>
-          <p>WPCarePoint is a UK Web Development, eCommerce &amp; AI Solutions Agency delivering bespoke websites, WooCommerce stores, AI workflow automation, structured website care, and SEO &amp; AI search optimisation.</p>
-          <p>United Kingdom: ${escapeHtml(UK_OFFICE_ADDRESS)} · Serving ${escapeHtml(UK_REGIONS_SERVED.join(', '))} · Email: contact@wpcarepoint.co.uk</p>
+          <h1>${escapeHtml(BRAND_INFO.tagline)}</h1>
+          <p>WPCarePoint is a UK ${escapeHtml(BRAND_INFO.positioning)} delivering bespoke websites, WooCommerce stores, AI workflow automation, structured website care, and SEO &amp; AI search optimisation.</p>
+          <p>United Kingdom: ${escapeHtml(BRAND_INFO.address)} · Email: ${escapeHtml(BRAND_INFO.email)}</p>
         </section>
         <section>
           <h2>Core Services</h2>
@@ -314,7 +313,7 @@ function buildContactPrerenderHtml(templateHtml: string): string {
           <section>
             <h2>Official Contact Details</h2>
             <p>Email: <a href="mailto:contact@wpcarepoint.co.uk">contact@wpcarepoint.co.uk</a> (Email enquiries only)</p>
-            <address>${escapeHtml(UK_OFFICE_ADDRESS)}</address>
+            <address>${escapeHtml(BRAND_INFO.address)}</address>
           </section>
           <section>
             <h2>Enquiry Guidance by Service Track</h2>
@@ -647,6 +646,94 @@ function buildAboutPrerenderHtml(templateHtml: string): string {
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }
 
+function buildNotFoundPrerenderHtml(templateHtml: string): string {
+  const title = 'Page Not Found (404) | WPCarePoint';
+  const description =
+    'The requested page could not be found on WPCarePoint. Explore our UK web development, WooCommerce, Website Care, and SEO services.';
+  const prerenderBody = `<main>
+        <article>
+          <h1>The page you requested could not be found.</h1>
+          <p>This URL is not an active page on WPCarePoint. Return to our <a href="/">homepage</a>, browse <a href="/services/">all services</a>, or <a href="/contact/">contact us by email</a>.</p>
+        </article>
+      </main>`;
+
+  return templateHtml
+    .replace(/<title>[\s\S]*?<\/title>/, `<title>${escapeHtml(title)}</title>`)
+    .replace(
+      /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/,
+      '<meta name="robots" content="noindex, nofollow" />'
+    )
+    .replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="description" content="${escapeHtml(description)}" />`
+    )
+    .replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>\s*/g, '')
+    .replace(/<link\s+rel="alternate"\s+hreflang="[^"]*"\s+href="[^"]*"\s*\/?>\s*/g, '')
+    .replace(
+      /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:title" content="${escapeHtml(title)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:description" content="${escapeHtml(description)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:title" content="${escapeHtml(title)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:description" content="${escapeHtml(description)}" />`
+    )
+    .replace(
+      /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
+      `<script id="wpc-route-jsonld" type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"${escapeHtml(title)}"}</script>`
+    )
+    .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
+}
+
+function buildCanonicalSitemapXml(
+  serviceConfigs: DedicatedServicePageConfig[]
+): string {
+  const lastmod = '2026-11-26';
+  const urls: Array<{loc: string; changefreq: string; priority: string}> = [
+    {loc: 'https://wpcarepoint.co.uk/', changefreq: 'weekly', priority: '1.0'},
+    {loc: SERVICES_HUB_DATA.canonicalUrl, changefreq: 'weekly', priority: '0.9'},
+    {loc: ABOUT_PAGE_DATA.canonicalUrl, changefreq: 'monthly', priority: '0.8'},
+    {loc: CONTACT_PAGE_DATA.canonicalUrl, changefreq: 'monthly', priority: '0.8'},
+    ...serviceConfigs.map((cfg) => ({
+      loc: cfg.canonicalUrl,
+      changefreq: 'monthly',
+      priority:
+        cfg.routePath === '/wordpress-speed-optimisation/' ||
+        cfg.routePath === '/services/website-development/' ||
+        cfg.routePath === '/services/ecommerce-development/' ||
+        cfg.routePath === '/services/ai-business-automation/' ||
+        cfg.routePath === '/services/website-care-support/' ||
+        cfg.routePath === '/services/ai-search-optimisation/'
+          ? '0.9'
+          : '0.8',
+    })),
+  ];
+
+  const entries = urls
+    .map(
+      (u) => `  <url>
+    <loc>${escapeHtml(u.loc)}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${u.changefreq}</changefreq>
+    <priority>${u.priority}</priority>
+  </url>`
+    )
+    .join('\n');
+
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${entries}
+</urlset>
+`;
+}
+
 export default defineConfig(() => {
   return {
     plugins: [
@@ -672,11 +759,11 @@ export default defineConfig(() => {
           }
           const rawTemplate = fs.readFileSync(indexHtmlPath, 'utf-8');
 
-          // 1. Pre-render semantic HTML inside dist/index.html (with homepage-only hero preload)
+          // 1. Pre-render semantic HTML inside dist/index.html (with homepage-only WebP hero preload)
           const homeHtml = rawTemplate
             .replace(
               '</head>',
-              '    <link rel="preload" as="image" href="/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg" fetchpriority="high" />\n  </head>'
+              '    <link rel="preload" as="image" href="/src/assets/images/hero_wpcarepoint_studio_1795464512427.webp" fetchpriority="high" />\n  </head>'
             )
             .replace(
               '<div id="root"></div>',
@@ -684,7 +771,7 @@ export default defineConfig(() => {
             );
           fs.writeFileSync(indexHtmlPath, homeHtml, 'utf-8');
 
-          // 2. Emit dedicated HTTP-200 static HTML for all 10 /services/* pages (6 core + 5 supporting minus root speed path)
+          // 2. Emit dedicated HTTP-200 static HTML for all 10 /services/* pages
           const servicesOutDir = path.join(distDir, 'services');
           fs.mkdirSync(servicesOutDir, {recursive: true});
           const dedicatedServiceSlugs: Array<{
@@ -720,9 +807,9 @@ export default defineConfig(() => {
               entry.config
             );
             fs.writeFileSync(path.join(pageDir, 'index.html'), pageHtml, 'utf-8');
-            fs.writeFileSync(path.join(servicesOutDir, `${entry.slug}.html`), pageHtml, 'utf-8');
           }
 
+          // 3. Emit dedicated HTTP-200 static HTML for /wordpress-speed-optimisation/
           const speedDir = path.join(distDir, 'wordpress-speed-optimisation');
           fs.mkdirSync(speedDir, {recursive: true});
           const speedHtml = buildDedicatedServicePrerenderHtml(
@@ -730,24 +817,43 @@ export default defineConfig(() => {
             WP_SPEED_OPTIMISATION_PAGE_DATA
           );
           fs.writeFileSync(path.join(speedDir, 'index.html'), speedHtml, 'utf-8');
-          fs.writeFileSync(path.join(distDir, 'wordpress-speed-optimisation.html'), speedHtml, 'utf-8');
 
           // 4. Emit dedicated HTTP-200 static HTML for /contact/, /services/ Hub, and /about/
           const contactDir = path.join(distDir, 'contact');
           fs.mkdirSync(contactDir, {recursive: true});
-          const contactHtml = buildContactPrerenderHtml(rawTemplate);
-          fs.writeFileSync(path.join(contactDir, 'index.html'), contactHtml, 'utf-8');
-          fs.writeFileSync(path.join(distDir, 'contact.html'), contactHtml, 'utf-8');
+          fs.writeFileSync(
+            path.join(contactDir, 'index.html'),
+            buildContactPrerenderHtml(rawTemplate),
+            'utf-8'
+          );
 
-          const servicesHubHtml = buildServicesHubPrerenderHtml(rawTemplate);
-          fs.writeFileSync(path.join(servicesOutDir, 'index.html'), servicesHubHtml, 'utf-8');
-          fs.writeFileSync(path.join(distDir, 'services.html'), servicesHubHtml, 'utf-8');
+          fs.writeFileSync(
+            path.join(servicesOutDir, 'index.html'),
+            buildServicesHubPrerenderHtml(rawTemplate),
+            'utf-8'
+          );
 
           const aboutDir = path.join(distDir, 'about');
           fs.mkdirSync(aboutDir, {recursive: true});
-          const aboutHtml = buildAboutPrerenderHtml(rawTemplate);
-          fs.writeFileSync(path.join(aboutDir, 'index.html'), aboutHtml, 'utf-8');
-          fs.writeFileSync(path.join(distDir, 'about.html'), aboutHtml, 'utf-8');
+          fs.writeFileSync(
+            path.join(aboutDir, 'index.html'),
+            buildAboutPrerenderHtml(rawTemplate),
+            'utf-8'
+          );
+
+          // 5. Emit dedicated noindex 404.html (distinct from homepage index.html)
+          fs.writeFileSync(
+            path.join(distDir, '404.html'),
+            buildNotFoundPrerenderHtml(rawTemplate),
+            'utf-8'
+          );
+
+          // 6. Generate canonical 15-route sitemap.xml directly from approved route configs
+          const sitemapXml = buildCanonicalSitemapXml([
+            ...dedicatedServiceSlugs.map((s) => s.config),
+            WP_SPEED_OPTIMISATION_PAGE_DATA,
+          ]);
+          fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapXml, 'utf-8');
         },
       },
     ],

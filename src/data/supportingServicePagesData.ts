@@ -17,7 +17,7 @@ export const SEARCH_ENGINE_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = 
     primaryCtaLabel: 'Request SEO Review',
     secondaryCtaLabel: 'Who This Suits',
     secondaryCtaTargetId: 'seo-suitability',
-    imageUrl: '/src/assets/images/service_seo_architecture_1795679595425.jpg',
+    imageUrl: '/src/assets/images/service_seo_architecture_1795679595425.webp',
     imageAlt:
       'Clean architectural indexation and search structure blocks in WPCarePoint deep coastal teal and limestone palette',
     imageCaption: 'Technical SEO, SXO & semantic HTML discipline · UK Search Console led',
@@ -439,7 +439,7 @@ export const CUSTOM_WEB_SOLUTIONS_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Discuss Custom Scope',
     secondaryCtaLabel: 'See Integration Guardrails',
     secondaryCtaTargetId: 'integration-guardrails',
-    imageUrl: '/src/assets/images/service_custom_integrations_1795679595670.jpg',
+    imageUrl: '/src/assets/images/service_custom_integrations_1795679595670.webp',
     imageAlt:
       'Interlocking architectural API bridge and custom system geometry in deep coastal teal and stone',
     imageCaption: 'Tailored web functionality & signed API connectivity · Built with server-side safety',
@@ -855,7 +855,7 @@ export const AI_POWERED_WEBSITE_DEV_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Discuss AI Feature Scope',
     secondaryCtaLabel: 'View AI Boundaries',
     secondaryCtaTargetId: 'ai-web-guardrails',
-    imageUrl: '/src/assets/images/service_ai_web_systems_1795679596000.jpg',
+    imageUrl: '/src/assets/images/service_ai_web_systems_1795679596000.webp',
     imageAlt:
       'Architectural frosted glass AI node connected cleanly to structured website geometry in coastal teal',
     imageCaption: 'Grounded AI website capabilities · Scoped per brief with UK GDPR discipline',
@@ -1271,7 +1271,7 @@ export const BRANDING_IDENTITY_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Discuss Visual Direction',
     secondaryCtaLabel: 'Explore Visual Pillars',
     secondaryCtaTargetId: 'brand-capabilities',
-    imageUrl: '/src/assets/images/service_brand_identity_1795679596599.jpg',
+    imageUrl: '/src/assets/images/service_brand_identity_1795679596599.webp',
     imageAlt:
       'Curated architectural material swatches, typographic grids, and coastal teal identity palette on warm stone',
     imageCaption: 'Web-first visual consistency · WCAG 2.2 AA contrast & typographic craft',
@@ -1684,7 +1684,7 @@ export const DIGITAL_MARKETING_GROWTH_PAGE_DATA: DedicatedServicePageConfig = {
     primaryCtaLabel: 'Discuss Growth Support',
     secondaryCtaLabel: 'Challenges Addressed',
     secondaryCtaTargetId: 'growth-problems',
-    imageUrl: '/src/assets/images/service_digital_growth_1795679597182.jpg',
+    imageUrl: '/src/assets/images/service_digital_growth_1795679597182.webp',
     imageAlt:
       'Layered minimalist growth architecture contours in deep coastal teal and bright cyan on pale limestone',
     imageCaption: 'Structured online growth · Conversion clarity, SEO alignment & PECR hygiene',

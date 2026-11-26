@@ -24,7 +24,7 @@ export const CONTACT_PAGE_DATA = {
   headline: 'Direct technical correspondence by email—clear scoping without sales queues.',
   description:
     'Whether you are commissioning a bespoke WordPress or Next.js build, tuning WooCommerce speed, scoping business automation, or arranging Website Care, write to our engineering team directly.',
-  imageUrl: '/src/assets/images/contact_nutfield_studio_1795541284338.jpg',
+  imageUrl: '/src/assets/images/contact_nutfield_studio_1795541284338.webp',
   imageAlt:
     'WPCarePoint studio correspondence desk in natural daylight with coastal teal notebook and stationery cards',
   imageCaption: 'Nutfield, Surrey · Direct email correspondence across the United Kingdom',

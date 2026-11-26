@@ -67,11 +67,11 @@ export const BRAND_INFO = {
   email: 'contact@wpcarepoint.co.uk',
   address: 'Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom',
   channelNote: 'Email enquiries only. Direct engineering correspondence without call-centre queues.',
-  heroImageUrl: '/src/assets/images/hero_wpcarepoint_studio_1795464512427.jpg',
+  heroImageUrl: '/src/assets/images/hero_wpcarepoint_studio_1795464512427.webp',
   heroImageAlt: 'WPCarePoint UK studio workspace with architectural interface schematics in soft daylight',
-  architectureImageUrl: '/src/assets/images/service_web_architecture_1795464512894.jpg',
+  architectureImageUrl: '/src/assets/images/service_web_architecture_1795464512894.webp',
   architectureImageAlt: 'Modular web engineering architecture blocks in WPCarePoint deep coastal teal palette',
-  portfolioImageUrl: '/src/assets/images/portfolio_showcase_frame_1795464512602.jpg',
+  portfolioImageUrl: '/src/assets/images/portfolio_showcase_frame_1795464512602.webp',
   portfolioImageAlt: 'Minimalist UK web design layout blueprint and tablet presentation frame',
 } as const;
 

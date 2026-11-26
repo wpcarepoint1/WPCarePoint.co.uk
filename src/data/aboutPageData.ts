@@ -34,7 +34,7 @@ export const ABOUT_PAGE_DATA = {
   headline: 'Building, Improving and Supporting Digital Businesses.',
   description:
     'WPCarePoint is a Web Development, eCommerce & AI Solutions Agency working with UK organisations. WordPress engineering remains our core craft alongside bespoke web applications, workflow automation, ongoing site stewardship, and search readiness.',
-  heroImageUrl: '/src/assets/images/about_studio_craft_1795678351505.jpg',
+  heroImageUrl: '/src/assets/images/about_studio_craft_1795678351505.webp',
   heroImageAlt:
     'WPCarePoint engineering studio desk with open coastal teal architectural sketchbook, fountain pen, and precision compass',
   heroImageCaption:
