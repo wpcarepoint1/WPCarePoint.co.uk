@@ -1,10 +1,19 @@
-# Task 1.6 & Stage 3 Provisional URL Reconciliation and Legacy Redirect Decision Map (`WPCP-P2.11-V01`)
+# Task 1.6 & Stage 3 Provisional URL Reconciliation and Legacy Redirect Decision Map (`WPCP-P2.12-V01`)
 
 **Initial Reconciliation Date:** 2026-11-23  
-**Latest Audit Update (`WPCP-P2.11-V01`):** 2026-11-27  
-**Status:** `PROVISIONAL — OWNER PART B-2 / B-4 DIRECTIONS RECORDED (#56–#57); EXECUTION GATED BY EVIDENCE, HOSTINGER HPANEL & CLOUDFLARE COMPATIBILITY, AND STAGE 3 SIGN-OFF (VER-15 DEFERRED BY OWNER)`  
-**Stage 3 Deployment Status:** `NOT READY — ZERO REDIRECTS, HOST CONFIG EDITS OR /site-map/ ROUTE EXECUTED IN CODE, CLOUDFLARE OR HOSTING`  
-**Decisions Preserved:** Confirmed Owner Decisions `#1–#60` preserved verbatim (`Not Indexed Pages`: `SKIPPED BY OWNER`; `Links`: `No Data`).
+**Latest Audit Update (`WPCP-P2.12-V01`):** 2026-11-27  
+**Status:** `PROVISIONAL — /site-map/ IMPLEMENTED LOCALLY (16 ROUTES); TASK 2 LEGACY SECURITY URL AUDIT COMPLETE; PRODUCTION REDIRECTS REMAIN GATED BY STAGE 3 SIGN-OFF (VER-15 DEFERRED BY OWNER)`  
+**Stage 3 Deployment Status:** `NOT READY — ZERO REDIRECTS OR HOST CONFIG EDITS EXECUTED IN CLOUDFLARE OR HOSTING (/site-map/ BUILT LOCALLY ONLY)`  
+**Decisions Preserved:** Confirmed Owner Decisions `#1–#61` preserved verbatim (`Not Indexed Pages`: `SKIPPED BY OWNER`; `Links`: `No Data`).
+
+---
+
+## `WPCP-P2.12-V01` Execution & Legacy Security Audit Addendum (`2026-11-27`)
+
+*Preserves the `WPCP-P2.11-V01` addendum, Part E, and the `2026-11-23` 56-row matrix verbatim below while recording two verified `WPCP-P2.12-V01` updates:*
+
+- **`/site-map/` Implemented Locally (`HTTP 200`, `16`th Canonical Route):** Built `SiteMapPageView.tsx` + `siteMapPageData.ts`, added subtle footer link, updated `App.tsx`, `server.ts`, `vite.config.ts`, `/public/sitemap.xml`, `/public/llms*.txt`, `verify-build-artifacts.mjs`, and `qa-local-server.mjs` (`16` routes verified via `verify:build` and `112` Playwright checks). Restores a URL indexed as recently as `2026-10-20` in the `305`-URL GSC dataset without publishing legal, blog, portfolio, or legacy URLs.
+- **`/wordpress-security-emergency-support/` (`75` Imp) Read-Only Relevance Audit (`TASK_1_6_READINESS_REVIEW.md` `Part D10`):** Inspected `WEBSITE_CARE_SUPPORT_PAGE_DATA` (`/src/data/dedicatedServicePagesData.ts`, lines `1635–2049`), confirming explicit coverage for security hardening (`Capability 02`), malware/injected-spam cleanup & forensic hacked-site recovery (`FAQ wc-faq-5`), standalone non-retainer fixes (`#one-off-fixes`), and honest email emergency triage (`#care-emergency`). Because **zero raw legacy HTML copy** is saved in the local workspace, **Option A (`Single-Hop 301 -> /services/website-care-support/`) is recommended as safer than `Option B (410 Gone)`, strictly conditional on inspecting one `2026-02-15` Wayback HTML snapshot before Stage 3 Edge execution**. Zero `301` or `410` rules were implemented.
 
 ---
 
@@ -14,12 +23,12 @@
 
 - **Hosting Context Update (`#55`):** Current origin is **Namecheap Shared Hosting with cPanel**; planned future hosting is **Hostinger hPanel** (planned purchase next month). Hostinger redirect/Edge capability (`.htaccess` vs Cloudflare proxy/Rules/Worker) remains `UNVERIFIED`.
 - **`/wordpress-maintenance-support/` (`98` Imp):** Owner selected single-hop **`301 -> /services/website-care-support/`** (gated on host compatibility & Stage 3 approval).
-- **`/wordpress-security-emergency-support/` (`75` Imp):** Owner selected **`301 -> /services/website-care-support/` ONLY after confirming content relevance** (`VERIFY BEFORE EXECUTION`).
+- **`/wordpress-security-emergency-support/` (`75` Imp):** Owner selected **`301 -> /services/website-care-support/` ONLY after confirming content relevance** (`Part D10` completed read-only; Option A `301` recommended conditional on `2026-02-15` Wayback HTML snapshot check).
 - **`/wordpress-design-development/` (`0` Imp):** Owner selected single-hop **`301 -> /services/website-development/`**.
 - **`/woocommerce-development/` (`0` Imp):** Owner selected single-hop **`301 -> /services/ecommerce-development/`**.
 - **`/leadership/`:** Owner selected **`410 Gone`** *if no verified equivalent exists*.
-- **`/site-map/`:** Owner approved creating a **useful HTML sitemap page** (`HTTP 200`, not yet implemented locally in `src/`).
-- **Spam, Unknowns & Release 1 Scope (`#57`):** Core `15` routes for Release 1 (`Blog` and `Portfolio` remain Wave 2 outside the launch index); exact, verified spam URLs -> `410` (do **NOT** invent spam paths); unrelated unknown URLs -> `404`; **zero blanket homepage redirects**.
+- **`/site-map/`:** Owner approved creating a **useful HTML sitemap page** (`HTTP 200`; now implemented locally in `WPCP-P2.12-V01`, bringing active local routes to `16`).
+- **Spam, Unknowns & Release 1 Scope (`#57`):** Core `15` routes + approved `/site-map/` (`16` total) for Release 1 (`Blog` and `Portfolio` remain Wave 2 outside the launch index); exact, verified spam URLs -> `410` (do **NOT** invent spam paths); unrelated unknown URLs -> `404`; **zero blanket homepage redirects**.
 
 ---
 

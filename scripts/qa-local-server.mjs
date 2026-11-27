@@ -1,5 +1,6 @@
 import { spawn } from 'node:child_process';
 import { createRequire } from 'node:module';
+import net from 'node:net';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -10,14 +11,28 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const ROOT_DIR = path.resolve(__dirname, '..');
 
-const QA_PORT = 4173;
-const BASE_URL = `http://127.0.0.1:${QA_PORT}`;
+function getFreePort() {
+  return new Promise((resolve, reject) => {
+    const srv = net.createServer();
+    srv.unref();
+    srv.on('error', reject);
+    srv.listen(0, '127.0.0.1', () => {
+      const addr = srv.address();
+      const port = typeof addr === 'object' && addr ? addr.port : 4173;
+      srv.close(() => resolve(port));
+    });
+  });
+}
+
+let QA_PORT = Number(process.env.QA_PORT || 0);
+let BASE_URL = `http://127.0.0.1:${QA_PORT || 4173}`;
 
 const APPROVED_ROUTES = [
   '/',
   '/services/',
   '/about/',
   '/contact/',
+  '/site-map/',
   '/wordpress-speed-optimisation/',
   '/services/website-development/',
   '/services/ecommerce-development/',
@@ -114,7 +129,10 @@ async function runHttpChecks() {
   assert(sitemapRes.status === 200, `Expected 200 on /sitemap.xml, got ${sitemapRes.status}`);
   const sitemapText = await sitemapRes.text();
   const locCount = (sitemapText.match(/<loc>/g) || []).length;
-  assert(locCount === 15, `Expected 15 <loc> entries in /sitemap.xml, got ${locCount}`);
+  assert(
+    locCount === APPROVED_ROUTES.length,
+    `Expected ${APPROVED_ROUTES.length} <loc> entries in /sitemap.xml, got ${locCount}`
+  );
 
   for (const staticFile of ['/robots.txt', '/llms.txt', '/llms-full.txt']) {
     const r = await fetch(`${BASE_URL}${staticFile}`);
@@ -131,7 +149,7 @@ async function runPlaywrightChecks() {
   });
 
   try {
-    // 1. Matrix check: 15 routes x 7 viewports (105 pairs)
+    // 1. Matrix check: 16 routes x 7 viewports (112 pairs)
     for (const vp of VIEWPORTS) {
       const context = await browser.newContext({ viewport: vp });
       const page = await context.newPage();
@@ -260,6 +278,30 @@ async function runPlaywrightChecks() {
     const formCount = await page.locator('form').count();
     assert(formCount === 0, `Expected 0 <form> elements on /contact/, found ${formCount}`);
 
+    // Verify /site-map/ represents all 16 approved routes cleanly and excludes legal/blog links
+    await page.goto(`${BASE_URL}/site-map/`, { waitUntil: 'load' });
+    const siteMapHrefs = await page.evaluate(() =>
+      [...document.querySelectorAll('#main-content a[href^="/"]')]
+        .map((a) => a.getAttribute('href') || '')
+        .map((href) => {
+          const clean = href.split('#')[0].split('?')[0] || '/';
+          return clean === '/' ? '/' : clean.endsWith('/') ? clean : `${clean}/`;
+        })
+    );
+    const siteMapHrefSet = new Set(siteMapHrefs);
+    for (const approvedRoute of APPROVED_ROUTES) {
+      assert(
+        siteMapHrefSet.has(approvedRoute),
+        `/site-map/ is missing required canonical link to ${approvedRoute}`
+      );
+    }
+    for (const forbidden of ['/privacy-policy/', '/cookie-policy/', '/terms-and-conditions/', '/blog/']) {
+      assert(
+        !siteMapHrefSet.has(forbidden),
+        `/site-map/ must NOT link to excluded route ${forbidden}`
+      );
+    }
+
     // Mobile drawer regression check (390px)
     const mobileCtx = await browser.newContext({ viewport: { width: 390, height: 844 } });
     const mobilePage = await mobileCtx.newPage();
@@ -276,8 +318,15 @@ async function runPlaywrightChecks() {
 }
 
 async function main() {
-  const serverProc = spawn('npx', ['tsx', 'server.ts'], {
+  if (!QA_PORT) {
+    QA_PORT = await getFreePort();
+  }
+  BASE_URL = `http://127.0.0.1:${QA_PORT}`;
+
+  const tsxBin = path.join(ROOT_DIR, 'node_modules', '.bin', 'tsx');
+  const serverProc = spawn(tsxBin, ['server.ts'], {
     cwd: ROOT_DIR,
+    detached: true,
     env: {
       ...process.env,
       NODE_ENV: 'production',
@@ -302,7 +351,7 @@ async function main() {
     );
     await runPlaywrightChecks();
     console.log(
-      `✅ Playwright QA PASSED: ${APPROVED_ROUTES.length * VIEWPORTS.length} route-viewport checks (15 × 7), 404 DOM/round-trip, FAQ, Contact email-only, reduced-motion, and mobile nav.`
+      `✅ Playwright QA PASSED: ${APPROVED_ROUTES.length * VIEWPORTS.length} route-viewport checks (${APPROVED_ROUTES.length} × ${VIEWPORTS.length}), 404 DOM/round-trip, FAQ, Contact email-only, /site-map/ 16-route index, reduced-motion, and mobile nav.`
     );
   } catch (err) {
     console.error('❌ Local QA FAILED:', err instanceof Error ? err.message : err);
@@ -311,7 +360,13 @@ async function main() {
     }
     process.exitCode = 1;
   } finally {
-    serverProc.kill('SIGTERM');
+    if (serverProc.pid) {
+      try {
+        process.kill(-serverProc.pid, 'SIGTERM');
+      } catch {
+        serverProc.kill('SIGTERM');
+      }
+    }
   }
 }
 

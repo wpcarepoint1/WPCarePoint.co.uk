@@ -630,6 +630,7 @@ async function startServer() {
     '/services/',
     '/about/',
     '/contact/',
+    '/site-map/',
     '/wordpress-speed-optimisation/',
     '/services/website-development/',
     '/services/ecommerce-development/',

@@ -15,6 +15,7 @@ import { AboutPageView } from './components/about/AboutPageView';
 import { ContactPageView } from './components/contact/ContactPageView';
 import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
 import { ServicesHubView } from './components/services-hub/ServicesHubView';
+import { SiteMapPageView } from './components/site-map/SiteMapPageView';
 import { CtaSection } from './components/ui/CtaSection';
 import { NotFoundPageView } from './components/ui/NotFoundPageView';
 import { DEDICATED_SERVICE_PAGES_BY_PATH } from './data/dedicatedServicePagesData';
@@ -62,6 +63,8 @@ export default function App() {
     currentPath === '/services' || currentPath === '/services/';
   const isAboutPage =
     currentPath === '/about' || currentPath === '/about/';
+  const isSiteMapPage =
+    currentPath === '/site-map' || currentPath === '/site-map/';
 
   const activeDedicatedPage = useMemo(
     () => DEDICATED_SERVICE_PAGES_BY_PATH[currentPath],
@@ -74,6 +77,7 @@ export default function App() {
     !isContactPage &&
     !isServicesHub &&
     !isAboutPage &&
+    !isSiteMapPage &&
     !activeDedicatedPage;
 
   useEffect(() => {
@@ -236,6 +240,19 @@ export default function App() {
                 transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
               >
                 <AboutPageView
+                  onNavigateHome={navigateHome}
+                  onNavigatePath={navigateToPath}
+                />
+              </motion.div>
+            ) : isSiteMapPage ? (
+              <motion.div
+                key="site-map-page"
+                initial={{ opacity: 0.94, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0.94, y: -4 }}
+                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
+              >
+                <SiteMapPageView
                   onNavigateHome={navigateHome}
                   onNavigatePath={navigateToPath}
                 />

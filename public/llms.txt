@@ -9,6 +9,7 @@ For complete current service scope, engineering standards, process overview, and
 - [Services Hub](https://wpcarepoint.co.uk/services/) — Complete directory of our five core service categories and supporting technical services.
 - [About WPCarePoint](https://wpcarepoint.co.uk/about/) — Engineering approach, core values, technology stack, and client-ownership commitment.
 - [Contact WPCarePoint](https://wpcarepoint.co.uk/contact/) — Direct technical scoping by email at contact@wpcarepoint.co.uk.
+- [Site Map](https://wpcarepoint.co.uk/site-map/) — Complete HTML directory across all 16 active WPCarePoint public pages.
 
 ## Five Core Service Categories
 - [Website Design & Development](https://wpcarepoint.co.uk/services/website-development/) — Bespoke WordPress block architecture and React, Next.js, and TypeScript web applications.

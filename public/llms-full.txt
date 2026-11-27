@@ -30,6 +30,7 @@ All engagements follow four core principles:
 - **Services Hub** (`https://wpcarepoint.co.uk/services/`): Structured index of our five core service categories, supporting technical services, four-stage process, and engineering principles.
 - **About WPCarePoint** (`https://wpcarepoint.co.uk/about/`): Agency story, what we do, five-step approach, six values, core technologies, and delivery discipline.
 - **Contact WPCarePoint** (`https://wpcarepoint.co.uk/contact/`): Direct technical scoping by email at `contact@wpcarepoint.co.uk`, enquiry guidance across service tracks, and brief template.
+- **Site Map** (`https://wpcarepoint.co.uk/site-map/`): Structured HTML page directory covering all 16 active WPCarePoint URLs across main pages, core services, supporting services, and correspondence.
 
 ---
 

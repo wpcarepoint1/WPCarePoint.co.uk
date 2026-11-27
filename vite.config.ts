@@ -27,6 +27,7 @@ import {
   SEARCH_ENGINE_OPTIMISATION_PAGE_DATA,
 } from './src/data/supportingServicePagesData';
 import {SERVICES_HUB_DATA} from './src/data/servicesHubData';
+import {SITE_MAP_PAGE_DATA} from './src/data/siteMapPageData';
 
 function escapeHtml(str: string): string {
   return str
@@ -646,6 +647,126 @@ function buildAboutPrerenderHtml(templateHtml: string): string {
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }
 
+function buildSiteMapPrerenderHtml(templateHtml: string): string {
+  const allEntries = SITE_MAP_PAGE_DATA.categories.flatMap((cat) => cat.entries);
+  const jsonLd = JSON.stringify({
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'CollectionPage',
+        name: SITE_MAP_PAGE_DATA.metaTitle,
+        url: SITE_MAP_PAGE_DATA.canonicalUrl,
+        description: SITE_MAP_PAGE_DATA.metaDescription,
+        inLanguage: 'en-GB',
+        isPartOf: {
+          '@type': 'WebSite',
+          name: 'WPCarePoint',
+          url: 'https://wpcarepoint.co.uk/',
+        },
+        mainEntity: {
+          '@type': 'ItemList',
+          numberOfItems: allEntries.length,
+          itemListElement: allEntries.map((entry, idx) => ({
+            '@type': 'ListItem',
+            position: idx + 1,
+            name: entry.title,
+            url: entry.canonicalUrl,
+          })),
+        },
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: 'Home',
+            item: 'https://wpcarepoint.co.uk/',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: 'Site Map',
+            item: SITE_MAP_PAGE_DATA.canonicalUrl,
+          },
+        ],
+      },
+    ],
+  });
+
+  const categoriesHtml = SITE_MAP_PAGE_DATA.categories
+    .map(
+      (cat) => `<section>
+            <h2>${escapeHtml(cat.title)}</h2>
+            <p>${escapeHtml(cat.description)}</p>
+            <ul>${cat.entries
+              .map(
+                (entry) =>
+                  `<li><a href="${escapeHtml(entry.routePath)}">${escapeHtml(entry.title)}</a>: ${escapeHtml(entry.summary)}</li>`
+              )
+              .join('')}</ul>
+          </section>`
+    )
+    .join('\n          ');
+
+  const prerenderBody = `<main>
+        <nav aria-label="Breadcrumb"><a href="/">Home</a> / <span>Site Map</span></nav>
+        <article>
+          <p>${escapeHtml(SITE_MAP_PAGE_DATA.eyebrow)}</p>
+          <h1>${escapeHtml(SITE_MAP_PAGE_DATA.headline)}</h1>
+          <p>${escapeHtml(SITE_MAP_PAGE_DATA.description)}</p>
+          ${categoriesHtml}
+        </article>
+      </main>`;
+
+  return templateHtml
+    .replace(
+      /<title>[\s\S]*?<\/title>/,
+      `<title>${escapeHtml(SITE_MAP_PAGE_DATA.metaTitle)}</title>`
+    )
+    .replace(
+      /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="description" content="${escapeHtml(SITE_MAP_PAGE_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="canonical" href="${SITE_MAP_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="en-gb"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en-gb" href="${SITE_MAP_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<link\s+rel="alternate"\s+hreflang="x-default"\s+href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="x-default" href="${SITE_MAP_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:url" content="${SITE_MAP_PAGE_DATA.canonicalUrl}" />`
+    )
+    .replace(
+      /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:title" content="${escapeHtml(SITE_MAP_PAGE_DATA.metaTitle)}" />`
+    )
+    .replace(
+      /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta property="og:description" content="${escapeHtml(SITE_MAP_PAGE_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:title" content="${escapeHtml(SITE_MAP_PAGE_DATA.metaTitle)}" />`
+    )
+    .replace(
+      /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
+      `<meta name="twitter:description" content="${escapeHtml(SITE_MAP_PAGE_DATA.metaDescription)}" />`
+    )
+    .replace(
+      /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
+      `<script id="wpc-route-jsonld" type="application/ld+json">${jsonLd}</script>`
+    )
+    .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
+}
+
 function buildNotFoundPrerenderHtml(templateHtml: string): string {
   const title = 'Page Not Found (404) | WPCarePoint';
   const description =
@@ -696,12 +817,13 @@ function buildNotFoundPrerenderHtml(templateHtml: string): string {
 function buildCanonicalSitemapXml(
   serviceConfigs: DedicatedServicePageConfig[]
 ): string {
-  const lastmod = '2026-11-26';
+  const lastmod = '2026-11-27';
   const urls: Array<{loc: string; changefreq: string; priority: string}> = [
     {loc: 'https://wpcarepoint.co.uk/', changefreq: 'weekly', priority: '1.0'},
     {loc: SERVICES_HUB_DATA.canonicalUrl, changefreq: 'weekly', priority: '0.9'},
     {loc: ABOUT_PAGE_DATA.canonicalUrl, changefreq: 'monthly', priority: '0.8'},
     {loc: CONTACT_PAGE_DATA.canonicalUrl, changefreq: 'monthly', priority: '0.8'},
+    {loc: SITE_MAP_PAGE_DATA.canonicalUrl, changefreq: 'monthly', priority: '0.5'},
     ...serviceConfigs.map((cfg) => ({
       loc: cfg.canonicalUrl,
       changefreq: 'monthly',
@@ -842,6 +964,14 @@ export default defineConfig(() => {
             'utf-8'
           );
 
+          const siteMapDir = path.join(distDir, 'site-map');
+          fs.mkdirSync(siteMapDir, {recursive: true});
+          fs.writeFileSync(
+            path.join(siteMapDir, 'index.html'),
+            buildSiteMapPrerenderHtml(rawTemplate),
+            'utf-8'
+          );
+
           // 5. Emit dedicated noindex 404.html (distinct from homepage index.html)
           fs.writeFileSync(
             path.join(distDir, '404.html'),
@@ -849,7 +979,7 @@ export default defineConfig(() => {
             'utf-8'
           );
 
-          // 6. Generate canonical 15-route sitemap.xml directly from approved route configs
+          // 6. Generate canonical 16-route sitemap.xml directly from approved route configs
           const sitemapXml = buildCanonicalSitemapXml([
             ...dedicatedServiceSlugs.map((s) => s.config),
             WP_SPEED_OPTIMISATION_PAGE_DATA,

@@ -12,6 +12,7 @@ const APPROVED_ROUTES = [
   '/services/',
   '/about/',
   '/contact/',
+  '/site-map/',
   '/wordpress-speed-optimisation/',
   '/services/website-development/',
   '/services/ecommerce-development/',
@@ -98,7 +99,7 @@ if (!fs.existsSync(DIST_DIR)) {
     }
   }
 
-  // Verify all 15 canonical routes exist with matching canonical & non-empty #root
+  // Verify all 16 canonical routes exist with matching canonical & non-empty #root
   for (const route of APPROVED_ROUTES) {
     const relHtml =
       route === '/' ? 'index.html' : path.join(route.replace(/^\/|\/$/g, ''), 'index.html');
@@ -202,5 +203,5 @@ if (errors.length > 0) {
 }
 
 console.log(
-  `✅ Build artifact verification PASSED: ${APPROVED_ROUTES.length} routes, preserved noindex dist/404.html, 15-URL sitemap parity, zero staging/internal leaks, and safe deploy workflow.`
+  `✅ Build artifact verification PASSED: ${APPROVED_ROUTES.length} routes, preserved noindex dist/404.html, ${APPROVED_ROUTES.length}-URL sitemap parity, zero staging/internal leaks, and safe deploy workflow.`
 );

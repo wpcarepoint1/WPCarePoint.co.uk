@@ -277,6 +277,18 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                   Contact WPCarePoint
                 </a>
               </li>
+              <li>
+                <a
+                  href="/site-map/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleRoute('/site-map/', '#services-overview');
+                  }}
+                  className={FOOTER_LINK_CLASS}
+                >
+                  Site Map
+                </a>
+              </li>
               <li className="text-xs text-white/70 pt-2">UK GDPR &amp; PECR Ready</li>
               <li className="text-xs text-white/70">WCAG 2.2 AA Focus</li>
             </ul>
