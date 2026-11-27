@@ -1,8 +1,8 @@
 name: Deploy WPCarePoint to GitHub Pages
 
+# Host-target notice (VER-18): Final production hosting target remains PENDING OWNER INPUT.
+# Automatic push deployment is disabled while Stage 3 is NOT READY.
 on:
-  push:
-    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -25,10 +25,10 @@ jobs:
         with:
           node-version: 20
       - name: Install and build
-        run: npm install && npm run build
-      - name: Add GitHub Pages SPA fallback and .nojekyll
+        run: npm install && npm run lint && npm run build
+      - name: Preserve dedicated 404.html and .nojekyll
         run: |
-          cp dist/index.html dist/404.html
+          npm run verify:build
           touch dist/.nojekyll
       - name: Setup Pages
         uses: actions/configure-pages@v5

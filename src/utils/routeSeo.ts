@@ -82,11 +82,27 @@ function getOrCreateJsonLdScript(): HTMLScriptElement {
 const DEFAULT_ROBOTS =
   'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
-function setLinkHref(selector: string, href: string): void {
-  const el = document.querySelector(selector);
-  if (el) {
-    el.setAttribute('href', href);
+function setLinkHref(selector: string, rel: string, href: string, hreflang?: string): void {
+  let el = document.querySelector(selector) as HTMLLinkElement | null;
+  if (!el) {
+    el = document.createElement('link');
+    el.rel = rel;
+    if (hreflang) {
+      el.hreflang = hreflang;
+    }
+    document.head.appendChild(el);
   }
+  el.setAttribute('href', href);
+}
+
+function setMetaProperty(property: string, content: string): void {
+  let el = document.querySelector(`meta[property="${property}"]`) as HTMLMetaElement | null;
+  if (!el) {
+    el = document.createElement('meta');
+    el.setAttribute('property', property);
+    document.head.appendChild(el);
+  }
+  el.setAttribute('content', content);
 }
 
 export function applyRouteSeo(config: RouteSeoConfig): void {
@@ -94,15 +110,13 @@ export function applyRouteSeo(config: RouteSeoConfig): void {
 
   document.querySelector('meta[name="robots"]')?.setAttribute('content', DEFAULT_ROBOTS);
   document.querySelector('meta[name="description"]')?.setAttribute('content', config.description);
-  setLinkHref('link[rel="canonical"]', config.canonicalUrl);
-  setLinkHref('link[rel="alternate"][hreflang="en-gb"]', config.canonicalUrl);
-  setLinkHref('link[rel="alternate"][hreflang="x-default"]', config.canonicalUrl);
+  setLinkHref('link[rel="canonical"]', 'canonical', config.canonicalUrl);
+  setLinkHref('link[rel="alternate"][hreflang="en-gb"]', 'alternate', config.canonicalUrl, 'en-gb');
+  setLinkHref('link[rel="alternate"][hreflang="x-default"]', 'alternate', config.canonicalUrl, 'x-default');
 
-  document.querySelector('meta[property="og:title"]')?.setAttribute('content', config.title);
-  document
-    .querySelector('meta[property="og:description"]')
-    ?.setAttribute('content', config.description);
-  document.querySelector('meta[property="og:url"]')?.setAttribute('content', config.canonicalUrl);
+  setMetaProperty('og:title', config.title);
+  setMetaProperty('og:description', config.description);
+  setMetaProperty('og:url', config.canonicalUrl);
 
   document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', config.title);
   document
@@ -126,22 +140,20 @@ export function applyHomeSeo(): void {
   applyRouteSeo(HOME_SEO_CONFIG);
 }
 
-export function applyNotFoundSeo(requestedPath: string): void {
+export function applyNotFoundSeo(_requestedPath: string): void {
   const title = 'Page Not Found (404) | WPCarePoint';
   const description =
     'The requested page could not be found on WPCarePoint. Explore our UK web development, WooCommerce, Website Care, and SEO services.';
-  const cleanUrl = `https://wpcarepoint.co.uk${requestedPath.startsWith('/') ? requestedPath : `/${requestedPath}`}`;
 
   document.title = title;
   document.querySelector('meta[name="robots"]')?.setAttribute('content', 'noindex, nofollow');
   document.querySelector('meta[name="description"]')?.setAttribute('content', description);
-  setLinkHref('link[rel="canonical"]', cleanUrl);
-  setLinkHref('link[rel="alternate"][hreflang="en-gb"]', cleanUrl);
-  setLinkHref('link[rel="alternate"][hreflang="x-default"]', cleanUrl);
+  document.querySelector('link[rel="canonical"]')?.remove();
+  document.querySelectorAll('link[rel="alternate"][hreflang]').forEach((node) => node.remove());
+  document.querySelector('meta[property="og:url"]')?.remove();
 
-  document.querySelector('meta[property="og:title"]')?.setAttribute('content', title);
-  document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
-  document.querySelector('meta[property="og:url"]')?.setAttribute('content', cleanUrl);
+  setMetaProperty('og:title', title);
+  setMetaProperty('og:description', description);
 
   document.querySelector('meta[name="twitter:title"]')?.setAttribute('content', title);
   document.querySelector('meta[name="twitter:description"]')?.setAttribute('content', description);
@@ -159,6 +171,5 @@ export function applyNotFoundSeo(requestedPath: string): void {
     '@type': 'WebPage',
     name: title,
     description,
-    url: cleanUrl,
   });
 }

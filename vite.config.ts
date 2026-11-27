@@ -669,6 +669,7 @@ function buildNotFoundPrerenderHtml(templateHtml: string): string {
     )
     .replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>\s*/g, '')
     .replace(/<link\s+rel="alternate"\s+hreflang="[^"]*"\s+href="[^"]*"\s*\/?>\s*/g, '')
+    .replace(/<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>\s*/g, '')
     .replace(
       /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
       `<meta property="og:title" content="${escapeHtml(title)}" />`

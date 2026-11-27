@@ -17,7 +17,7 @@ import type {
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const PORT = 3000;
+const PORT = Number(process.env.PORT) || 3000;
 
 function normalizeDomain(raw: string): string | null {
   const cleaned = raw
@@ -696,6 +696,8 @@ async function startServer() {
           req.originalUrl,
           indexTemplate
         );
+        const notFoundDescription =
+          'The requested page could not be found on WPCarePoint. Explore our UK web development, WooCommerce, Website Care, and SEO services.';
         const notFoundHtml = transformed
           .replace(
             /<title>[\s\S]*?<\/title>/,
@@ -704,6 +706,36 @@ async function startServer() {
           .replace(
             /<meta\s+name="robots"\s+content="[^"]*"\s*\/?>/,
             '<meta name="robots" content="noindex, nofollow" />'
+          )
+          .replace(
+            /<meta\s+name="description"\s+content="[^"]*"\s*\/?>/,
+            `<meta name="description" content="${notFoundDescription}" />`
+          )
+          .replace(/<link\s+rel="canonical"\s+href="[^"]*"\s*\/?>\s*/g, '')
+          .replace(
+            /<link\s+rel="alternate"\s+hreflang="[^"]*"\s+href="[^"]*"\s*\/?>\s*/g,
+            ''
+          )
+          .replace(/<meta\s+property="og:url"\s+content="[^"]*"\s*\/?>\s*/g, '')
+          .replace(
+            /<meta\s+property="og:title"\s+content="[^"]*"\s*\/?>/,
+            '<meta property="og:title" content="Page Not Found (404) | WPCarePoint" />'
+          )
+          .replace(
+            /<meta\s+property="og:description"\s+content="[^"]*"\s*\/?>/,
+            `<meta property="og:description" content="${notFoundDescription}" />`
+          )
+          .replace(
+            /<meta\s+name="twitter:title"\s+content="[^"]*"\s*\/?>/,
+            '<meta name="twitter:title" content="Page Not Found (404) | WPCarePoint" />'
+          )
+          .replace(
+            /<meta\s+name="twitter:description"\s+content="[^"]*"\s*\/?>/,
+            `<meta name="twitter:description" content="${notFoundDescription}" />`
+          )
+          .replace(
+            /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
+            '<script id="wpc-route-jsonld" type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Page Not Found (404) | WPCarePoint"}</script>'
           );
         res
           .status(404)
