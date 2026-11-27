@@ -182,15 +182,15 @@ if (!fs.existsSync(DIST_DIR)) {
   }
 }
 
-// Verify deployment workflow does not overwrite dist/404.html or auto-deploy on push
+// Verify deployment workflow preserves dist/404.html and enforces build/lint gates
 const deployWorkflowPath = path.join(ROOT_DIR, '.github', 'workflows', 'deploy.yml');
 if (fs.existsSync(deployWorkflowPath)) {
   const workflow = fs.readFileSync(deployWorkflowPath, 'utf-8');
   if (/cp\s+dist\/index\.html\s+dist\/404\.html/i.test(workflow)) {
     fail('.github/workflows/deploy.yml still contains "cp dist/index.html dist/404.html" overwrite.');
   }
-  if (/^\s*push:\s*$/m.test(workflow)) {
-    fail('.github/workflows/deploy.yml still enables automatic push deployment without explicit approval.');
+  if (!/npm run verify:build/.test(workflow) || !/npm run lint/.test(workflow)) {
+    fail('.github/workflows/deploy.yml must run npm run lint and npm run verify:build before deploying.');
   }
 }
 

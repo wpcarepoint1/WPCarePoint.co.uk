@@ -1,8 +1,11 @@
 name: Deploy WPCarePoint to GitHub Pages
 
-# Host-target notice (VER-18): Final production hosting target remains PENDING OWNER INPUT.
-# Automatic push deployment is disabled while Stage 3 is NOT READY.
+# Host-target notice (VER-18): GitHub Pages auto-deploy on push to main enabled per owner override (#62).
+# Future Hostinger hPanel migration & legacy 301/410 rules remain tracked in PROJECT_STATUS.md.
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
