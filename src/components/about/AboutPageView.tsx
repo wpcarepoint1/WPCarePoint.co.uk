@@ -83,12 +83,12 @@ export function AboutPageView({
 
   return (
     <article>
-      {/* Section 1: About Hero */}
-      <section className="bg-white bg-architectural-grid border-b border-[#dde6eb]">
-        <div className="max-w-7xl mx-auto px-6 py-10 sm:py-14 lg:py-16">
+      {/* Section 1: Studio About Hero */}
+      <section className="bg-gradient-to-b from-[#f7f9fa] via-[#f7f9fa] to-white bg-architectural-grid border-b border-[#dde6eb]">
+        <div className="max-w-7xl mx-auto px-6 pt-8 pb-14 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
           <nav
             aria-label="Breadcrumb"
-            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-7 sm:mb-9"
+            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-6 sm:mb-8"
           >
             <a
               href="/"
@@ -108,25 +108,28 @@ export function AboutPageView({
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-6 wpc-route-enter">
-              <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
-                {ABOUT_PAGE_DATA.eyebrow}
-              </p>
+              <div className="inline-flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+                <p className="text-xs font-mono font-semibold tracking-[0.12em] uppercase text-[#00749c]">
+                  {ABOUT_PAGE_DATA.eyebrow}
+                </p>
+              </div>
 
               <h1
-                className="font-bold tracking-tight text-[#003b4f] mt-3 text-balance"
+                className="font-semibold tracking-[-0.03em] text-[#003b4f] mt-3.5 text-balance"
                 style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 3.25rem)',
-                  lineHeight: 1.09,
+                  fontSize: 'clamp(2.15rem, 4vw, 3.45rem)',
+                  lineHeight: 1.07,
                 }}
               >
                 {ABOUT_PAGE_DATA.headline}
               </h1>
 
-              <p className="text-base sm:text-lg text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-[18px] text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
                 {ABOUT_PAGE_DATA.description}
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <Button
                   href="/contact/"
                   onClick={(e) => {
@@ -135,13 +138,15 @@ export function AboutPageView({
                   }}
                   variant="primary"
                   size="lg"
-                  className="group"
+                  className="group pr-3 pl-6"
                 >
                   <span>Contact WPCarePoint</span>
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                  <span
                     aria-hidden="true"
-                  />
+                    className="h-8 w-8 rounded-full bg-white text-[#003b4f] inline-flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Button>
 
                 <Button
@@ -159,7 +164,7 @@ export function AboutPageView({
             </div>
 
             <div className="lg:col-span-6">
-              <figure className="group relative rounded-2xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6]">
+              <figure className="group relative rounded-3xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6] shadow-[0_18px_40px_-24px_rgba(0,59,79,0.2)]">
                 <div className="aspect-[16/10] overflow-hidden bg-[#eef3f6]">
                   {imgFailed ? (
                     <div className="w-full h-full flex flex-col items-center justify-center p-8 text-[#6c757d]">
@@ -179,22 +184,24 @@ export function AboutPageView({
                       fetchPriority="high"
                       referrerPolicy="no-referrer"
                       onError={() => setImgFailed(true)}
-                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     />
                   )}
                 </div>
-                <figcaption className="px-5 py-3.5 bg-white border-t border-[#e9eff2] text-xs font-medium text-[#6c757d]">
+                <figcaption className="px-6 py-4 bg-white border-t border-[#e9eff2] text-xs font-medium text-[#6c757d]">
                   {ABOUT_PAGE_DATA.heroImageCaption}
                 </figcaption>
               </figure>
             </div>
           </div>
 
-          <dl className="mt-10 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+          <dl className="mt-12 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {ABOUT_PAGE_DATA.standards.map((item) => (
               <div key={item.label}>
-                <dt className="text-xs font-mono text-[#6c757d]">{item.label}</dt>
-                <dd className="text-base sm:text-lg font-bold text-[#003b4f] mt-1">
+                <dt className="text-[11px] font-mono uppercase tracking-[0.1em] text-[#6c757d]">
+                  {item.label}
+                </dt>
+                <dd className="text-base sm:text-[17px] font-semibold text-[#003b4f] mt-1.5">
                   {item.value}
                 </dd>
               </div>
@@ -206,14 +213,17 @@ export function AboutPageView({
       {/* Section 2: Our Story */}
       <section
         id={ABOUT_PAGE_DATA.storySection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
           <Reveal className="lg:col-span-7 space-y-5">
-            <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
-              {ABOUT_PAGE_DATA.storySection.eyebrow}
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#003b4f] text-balance">
+            <div className="inline-flex items-center gap-3">
+              <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+              <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00749c]">
+                {ABOUT_PAGE_DATA.storySection.eyebrow}
+              </p>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-semibold tracking-[-0.025em] text-[#003b4f] leading-[1.15] text-balance">
               {ABOUT_PAGE_DATA.storySection.title}
             </h2>
             <div className="space-y-4">
@@ -226,7 +236,7 @@ export function AboutPageView({
           </Reveal>
 
           <Reveal delay={0.05} className="lg:col-span-5">
-            <aside className="rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 space-y-5">
+            <aside className="wpc-studio-card rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 space-y-5">
               <div>
                 <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
                   {ABOUT_PAGE_DATA.storySection.summaryCard.eyebrow}
@@ -258,7 +268,7 @@ export function AboutPageView({
       {/* Section 3: What We Do */}
       <section
         id={ABOUT_PAGE_DATA.whatWeDoSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-white border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
@@ -280,7 +290,7 @@ export function AboutPageView({
             }
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {ABOUT_PAGE_DATA.whatWeDoSection.tracks.map((track, idx) => (
               <FadeInUpOnScroll
                 key={track.id}
@@ -293,7 +303,7 @@ export function AboutPageView({
                     e.preventDefault();
                     onNavigatePath(track.routePath || '/services/');
                   }}
-                  className="group w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
+                  className="group wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
                 >
                   <div>
                     <div className="flex items-center gap-2 text-xs font-mono">
@@ -332,7 +342,7 @@ export function AboutPageView({
       {/* Section 4: Our Practical Approach (5 Steps) */}
       <section
         id={ABOUT_PAGE_DATA.approachSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
@@ -341,15 +351,15 @@ export function AboutPageView({
             description={ABOUT_PAGE_DATA.approachSection.description}
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-5 items-stretch">
             {ABOUT_PAGE_DATA.approachSection.steps.map((step, idx) => (
               <FadeInUpOnScroll key={step.step} delay={idx * 0.03} className="flex">
-                <article className="w-full rounded-2xl border border-[#dde6eb] bg-white p-6 flex flex-col justify-between">
+                <article className="wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] p-6 flex flex-col justify-between">
                   <div>
-                    <p className="text-xs font-mono font-bold text-[#00749c] tabular-nums">
+                    <p className="font-display text-lg font-semibold text-[#00749c]/70 tabular-nums">
                       {step.step}
                     </p>
-                    <h3 className="text-base font-bold text-[#003b4f] mt-2 leading-snug">
+                    <h3 className="text-base font-semibold text-[#003b4f] mt-2 leading-snug">
                       {step.title}
                     </h3>
                     <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">
@@ -366,7 +376,7 @@ export function AboutPageView({
       {/* Section 5: Our Values */}
       <section
         id={ABOUT_PAGE_DATA.valuesSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-white border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
@@ -375,15 +385,15 @@ export function AboutPageView({
             description={ABOUT_PAGE_DATA.valuesSection.description}
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {ABOUT_PAGE_DATA.valuesSection.items.map((val, idx) => (
               <FadeInUpOnScroll key={val.index} delay={idx * 0.03} className="flex">
-                <article className="w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-6 sm:p-7 flex flex-col justify-between">
+                <article className="wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] p-6 sm:p-7 flex flex-col justify-between">
                   <div>
                     <p className="text-xs font-mono font-bold text-[#00749c] tabular-nums">
                       {val.index}
                     </p>
-                    <h3 className="text-lg font-bold text-[#003b4f] mt-2 leading-snug">
+                    <h3 className="text-lg font-semibold text-[#003b4f] mt-2 leading-snug">
                       {val.title}
                     </h3>
                     <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">
@@ -403,7 +413,7 @@ export function AboutPageView({
       {/* Section 6: Technology & Expertise */}
       <section
         id={ABOUT_PAGE_DATA.techSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
@@ -412,14 +422,14 @@ export function AboutPageView({
             description={ABOUT_PAGE_DATA.techSection.description}
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {ABOUT_PAGE_DATA.techSection.items.map((tech, idx) => (
               <FadeInUpOnScroll
                 key={tech.name}
                 delay={idx * 0.03}
                 className={`flex ${idx === 6 ? 'md:col-span-2 lg:col-span-3' : ''}`}
               >
-                <article className="w-full rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-7 flex flex-col justify-between">
+                <article className="wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] p-6 sm:p-7 flex flex-col justify-between">
                   <div>
                     <div className="flex items-center gap-2 text-xs font-mono">
                       <span className="font-bold text-[#00749c] tabular-nums">
@@ -430,7 +440,7 @@ export function AboutPageView({
                       </span>
                       <span className="text-[#6c757d]">{tech.role}</span>
                     </div>
-                    <h3 className="text-lg font-bold text-[#003b4f] mt-2">
+                    <h3 className="text-lg font-semibold text-[#003b4f] mt-2">
                       {tech.name}
                     </h3>
                     <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">
@@ -444,39 +454,45 @@ export function AboutPageView({
         </div>
       </section>
 
-      {/* Section 7: Our Working Process */}
+      {/* Section 7: Our Working Process (Architectural Studio Cards) */}
       <section
         id={ABOUT_PAGE_DATA.processSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
+            align="center"
             eyebrow={ABOUT_PAGE_DATA.processSection.eyebrow}
             title={ABOUT_PAGE_DATA.processSection.title}
             description={ABOUT_PAGE_DATA.processSection.description}
             tone="dark"
           />
 
-          <ol className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ol className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
             {ABOUT_PAGE_DATA.processSection.steps.map((step) => (
               <li
                 key={step.step}
-                className="pt-5 border-t border-[#00b2d4]/50 flex flex-col justify-between space-y-4"
+                className="group rounded-2xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.07] hover:border-[#00b2d4]/60 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between min-h-[240px]"
               >
                 <div>
-                  <span className="text-xs font-mono font-bold text-[#00b2d4] tabular-nums">
-                    {step.step}
-                  </span>
-                  <h3 className="text-lg font-bold text-white mt-2 leading-snug">
+                  <p className="text-xs font-mono text-[#00b2d4]">
+                    {step.deliverable}
+                  </p>
+                  <h3 className="text-xl font-semibold text-white mt-3 leading-snug">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-white/80 mt-2 leading-relaxed">
+                  <p className="text-sm text-white/80 mt-3 leading-relaxed">
                     {step.summary}
                   </p>
                 </div>
-                <p className="text-xs font-mono text-[#00b2d4]">
-                  {step.deliverable}
-                </p>
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-end justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-white/60">
+                    Stage
+                  </span>
+                  <span className="font-display text-3xl font-semibold text-[#00b2d4]/50 group-hover:text-[#00b2d4] transition-colors tabular-nums leading-none">
+                    .{step.step.replace('.', '')}
+                  </span>
+                </div>
               </li>
             ))}
           </ol>
@@ -486,9 +502,9 @@ export function AboutPageView({
       {/* Section 8: Why Businesses Work With Us (Editorial Ledger) */}
       <section
         id={ABOUT_PAGE_DATA.whyWorkWithUsSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-white"
+        className="scroll-mt-24 py-18 lg:py-24 bg-white"
       >
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
             <SectionHeading
               eyebrow={ABOUT_PAGE_DATA.whyWorkWithUsSection.eyebrow}
@@ -496,7 +512,7 @@ export function AboutPageView({
               description={ABOUT_PAGE_DATA.whyWorkWithUsSection.description}
             />
 
-            <div className="rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-5 space-y-3">
+            <div className="wpc-studio-card rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-6 space-y-3">
               <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
                 Official Fiverr Portfolio &amp; Reviews
               </p>
@@ -531,15 +547,15 @@ export function AboutPageView({
             {ABOUT_PAGE_DATA.whyWorkWithUsSection.points.map((pt) => (
               <article
                 key={pt.index}
-                className="py-6 sm:py-7 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
+                className="group py-7 sm:py-8 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
               >
                 <div className="sm:col-span-2">
-                  <span className="text-sm font-mono font-bold text-[#00749c] tabular-nums">
+                  <span className="font-display text-2xl font-semibold text-[#00749c]/45 group-hover:text-[#00749c] transition-colors tabular-nums">
                     {pt.index}
                   </span>
                 </div>
                 <div className="sm:col-span-10 space-y-2">
-                  <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
+                  <h3 className="text-lg sm:text-xl font-semibold text-[#003b4f] leading-snug">
                     {pt.title}
                   </h3>
                   <p className="text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed">

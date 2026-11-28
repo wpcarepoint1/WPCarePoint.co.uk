@@ -102,7 +102,7 @@
     font-family: var(--font-display);
     font-optical-sizing: auto;
     text-wrap: balance;
-    letter-spacing: -0.025em;
+    letter-spacing: -0.028em;
   }
 
   p {
@@ -119,14 +119,25 @@
   background-image:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 56px 56px;
+  background-size: 64px 64px;
 }
 
 .bg-deep-teal-grid {
   background-image:
     linear-gradient(to right, var(--grid-line-deep) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line-deep) 1px, transparent 1px);
-  background-size: 56px 56px;
+  background-size: 64px 64px;
+}
+
+.wpc-studio-card {
+  transition:
+    border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wpc-studio-card:hover {
+  box-shadow: 0 14px 32px -18px rgba(0, 59, 79, 0.16);
 }
 
 /* Compositor-only progressive reveal & accordions (zero hidden opacity traps) */
@@ -141,8 +152,23 @@
   }
 }
 
+@keyframes wpc-panel-switch {
+  from {
+    opacity: 0.9;
+    transform: translate3d(0, 4px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
 .wpc-route-enter {
   animation: wpc-fade-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wpc-panel-enter {
+  animation: wpc-panel-switch 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .wpc-reveal {
@@ -180,7 +206,9 @@
   }
 
   .wpc-route-enter,
-  .wpc-reveal {
+  .wpc-panel-enter,
+  .wpc-reveal,
+  .wpc-studio-card {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;

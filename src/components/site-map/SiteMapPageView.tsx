@@ -94,12 +94,12 @@ export function SiteMapPageView({
 
   return (
     <article>
-      {/* Hero Band */}
-      <section className="bg-white bg-architectural-grid border-b border-[#dde6eb]">
-        <div className="max-w-7xl mx-auto px-6 py-10 sm:py-14 lg:py-16">
+      {/* Studio Hero Band */}
+      <section className="bg-gradient-to-b from-[#f7f9fa] via-[#f7f9fa] to-white bg-architectural-grid border-b border-[#dde6eb]">
+        <div className="max-w-7xl mx-auto px-6 pt-8 pb-14 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
           <nav
             aria-label="Breadcrumb"
-            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-7 sm:mb-9"
+            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-6 sm:mb-8"
           >
             <a
               href="/"
@@ -119,25 +119,28 @@ export function SiteMapPageView({
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
             <div className="lg:col-span-8 wpc-route-enter">
-              <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
-                {SITE_MAP_PAGE_DATA.eyebrow}
-              </p>
+              <div className="inline-flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+                <p className="text-xs font-mono font-semibold tracking-[0.12em] uppercase text-[#00749c]">
+                  {SITE_MAP_PAGE_DATA.eyebrow}
+                </p>
+              </div>
 
               <h1
-                className="font-bold tracking-tight text-[#003b4f] mt-3 text-balance"
+                className="font-semibold tracking-[-0.03em] text-[#003b4f] mt-3.5 text-balance"
                 style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 3.25rem)',
-                  lineHeight: 1.09,
+                  fontSize: 'clamp(2.15rem, 4vw, 3.45rem)',
+                  lineHeight: 1.07,
                 }}
               >
                 {SITE_MAP_PAGE_DATA.headline}
               </h1>
 
-              <p className="text-base sm:text-lg text-[#2e2e2e] mt-5 leading-relaxed max-w-2xl">
+              <p className="text-base sm:text-[18px] text-[#2e2e2e] mt-5 leading-relaxed max-w-2xl">
                 {SITE_MAP_PAGE_DATA.description}
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <Button
                   href="/services/"
                   onClick={(e) => {
@@ -146,13 +149,15 @@ export function SiteMapPageView({
                   }}
                   variant="primary"
                   size="lg"
-                  className="group"
+                  className="group pr-3 pl-6"
                 >
                   <span>Browse All Services Hub</span>
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                  <span
                     aria-hidden="true"
-                  />
+                    className="h-8 w-8 rounded-full bg-white text-[#003b4f] inline-flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Button>
 
                 <Button
@@ -170,7 +175,7 @@ export function SiteMapPageView({
               </div>
             </div>
 
-            <aside className="lg:col-span-4 rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-6 space-y-4">
+            <aside className="wpc-studio-card lg:col-span-4 rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-7 space-y-4 shadow-[0_14px_34px_-22px_rgba(0,59,79,0.18)]">
               <div className="flex items-center gap-2.5 text-[#003b4f]">
                 <FolderTree className="h-4 w-4 text-[#00749c] shrink-0" aria-hidden="true" />
                 <p className="text-xs font-mono font-semibold uppercase tracking-wider">
@@ -204,13 +209,15 @@ export function SiteMapPageView({
           </div>
 
           {/* Factual Standards Strip */}
-          <div className="mt-10 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="mt-12 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {SITE_MAP_PAGE_DATA.standards.map((std) => (
-              <div key={std.label} className="space-y-1">
-                <p className="text-[11px] font-mono uppercase tracking-wider text-[#5a6570]">
+              <div key={std.label} className="space-y-1.5">
+                <p className="text-[11px] font-mono uppercase tracking-[0.1em] text-[#5a6570]">
                   {std.label}
                 </p>
-                <p className="text-sm font-semibold text-[#003b4f] break-words">{std.value}</p>
+                <p className="text-sm sm:text-[15px] font-semibold text-[#003b4f] break-words">
+                  {std.value}
+                </p>
               </div>
             ))}
           </div>
@@ -227,7 +234,7 @@ export function SiteMapPageView({
           <section
             key={category.id}
             id={category.id}
-            className={`scroll-mt-20 py-14 lg:py-20 ${sectionBg} border-b border-[#dde6eb]`}
+            className={`scroll-mt-24 py-16 lg:py-22 ${sectionBg} border-b border-[#dde6eb]`}
           >
             <div className="max-w-7xl mx-auto px-6">
               <FadeInUpOnScroll>
@@ -238,11 +245,11 @@ export function SiteMapPageView({
                 />
               </FadeInUpOnScroll>
 
-              <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {category.entries.map((entry) => (
                   <div
                     key={entry.routePath}
-                    className={`group rounded-2xl border border-[#dde6eb] ${cardBg} p-6 sm:p-7 flex flex-col justify-between transition-colors hover:border-[#00749c]/60`}
+                    className={`group wpc-studio-card rounded-2xl border border-[#dde6eb] ${cardBg} p-6 sm:p-7 flex flex-col justify-between hover:border-[#00749c]`}
                   >
                     <div>
                       <div className="flex items-center justify-between gap-3">
@@ -254,7 +261,7 @@ export function SiteMapPageView({
                         </span>
                       </div>
 
-                      <h3 className="mt-3 text-lg font-bold tracking-tight text-[#003b4f]">
+                      <h3 className="mt-3 text-lg font-semibold tracking-tight text-[#003b4f]">
                         <a
                           href={entry.routePath}
                           onClick={(e) => {
@@ -302,9 +309,9 @@ export function SiteMapPageView({
       })}
 
       {/* Governance / Scope Note Band */}
-      <section className="py-12 lg:py-16 bg-[#f7f9fa] border-b border-[#dde6eb]">
+      <section className="py-14 lg:py-18 bg-[#f7f9fa] border-b border-[#dde6eb]">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
+          <div className="wpc-studio-card rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <div className="space-y-2 max-w-3xl">
               <div className="inline-flex items-center gap-2 text-[#00749c]">
                 <Compass className="h-4 w-4 shrink-0" aria-hidden="true" />
@@ -312,7 +319,7 @@ export function SiteMapPageView({
                   {SITE_MAP_PAGE_DATA.scopeNote.eyebrow}
                 </p>
               </div>
-              <h2 className="text-xl sm:text-2xl font-bold tracking-tight text-[#003b4f]">
+              <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#003b4f]">
                 {SITE_MAP_PAGE_DATA.scopeNote.title}
               </h2>
               <p className="text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed">

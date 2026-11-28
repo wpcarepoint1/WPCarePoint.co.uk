@@ -138,12 +138,12 @@ export function ServicesHubView({
 
   return (
     <article>
-      {/* Section 1: Premium Services Hero */}
-      <section className="bg-white bg-architectural-grid border-b border-[#dde6eb]">
-        <div className="max-w-7xl mx-auto px-6 py-10 sm:py-14 lg:py-16">
+      {/* Section 1: Studio Services Hero */}
+      <section className="bg-gradient-to-b from-[#f7f9fa] via-[#f7f9fa] to-white bg-architectural-grid border-b border-[#dde6eb]">
+        <div className="max-w-7xl mx-auto px-6 pt-8 pb-14 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
           <nav
             aria-label="Breadcrumb"
-            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-7 sm:mb-9"
+            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-6 sm:mb-8"
           >
             <a
               href="/"
@@ -163,25 +163,28 @@ export function ServicesHubView({
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-6 wpc-route-enter">
-              <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
-                {SERVICES_HUB_DATA.eyebrow}
-              </p>
+              <div className="inline-flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+                <p className="text-xs font-mono font-semibold tracking-[0.12em] uppercase text-[#00749c]">
+                  {SERVICES_HUB_DATA.eyebrow}
+                </p>
+              </div>
 
               <h1
-                className="font-bold tracking-tight text-[#003b4f] mt-3 text-balance"
+                className="font-semibold tracking-[-0.03em] text-[#003b4f] mt-3.5 text-balance"
                 style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 3.25rem)',
-                  lineHeight: 1.09,
+                  fontSize: 'clamp(2.15rem, 4vw, 3.45rem)',
+                  lineHeight: 1.07,
                 }}
               >
                 {SERVICES_HUB_DATA.headline}
               </h1>
 
-              <p className="text-base sm:text-lg text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-[18px] text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
                 {SERVICES_HUB_DATA.description}
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <Button
                   href="/contact/"
                   onClick={(e) => {
@@ -190,13 +193,15 @@ export function ServicesHubView({
                   }}
                   variant="primary"
                   size="lg"
-                  className="group"
+                  className="group pr-3 pl-6"
                 >
                   <span>Book a Consultation</span>
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                  <span
                     aria-hidden="true"
-                  />
+                    className="h-8 w-8 rounded-full bg-white text-[#003b4f] inline-flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Button>
 
                 <Button
@@ -214,7 +219,7 @@ export function ServicesHubView({
             </div>
 
             <div className="lg:col-span-6">
-              <figure className="group relative rounded-2xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6]">
+              <figure className="group relative rounded-3xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6] shadow-[0_18px_40px_-24px_rgba(0,59,79,0.2)]">
                 <div className="aspect-[16/10] overflow-hidden bg-[#eef3f6]">
                   {imgFailed ? (
                     <div className="w-full h-full flex flex-col items-center justify-center p-8 text-[#6c757d]">
@@ -234,22 +239,24 @@ export function ServicesHubView({
                       fetchPriority="high"
                       referrerPolicy="no-referrer"
                       onError={() => setImgFailed(true)}
-                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     />
                   )}
                 </div>
-                <figcaption className="px-5 py-3.5 bg-white border-t border-[#e9eff2] text-xs font-medium text-[#6c757d]">
+                <figcaption className="px-6 py-4 bg-white border-t border-[#e9eff2] text-xs font-medium text-[#6c757d]">
                   {SERVICES_HUB_DATA.heroImageCaption}
                 </figcaption>
               </figure>
             </div>
           </div>
 
-          <dl className="mt-10 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+          <dl className="mt-12 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {SERVICES_HUB_DATA.standards.map((item) => (
               <div key={item.label}>
-                <dt className="text-xs font-mono text-[#6c757d]">{item.label}</dt>
-                <dd className="text-base sm:text-lg font-bold text-[#003b4f] mt-1">
+                <dt className="text-[11px] font-mono uppercase tracking-[0.1em] text-[#6c757d]">
+                  {item.label}
+                </dt>
+                <dd className="text-base sm:text-[17px] font-semibold text-[#003b4f] mt-1.5">
                   {item.value}
                 </dd>
               </div>
@@ -261,14 +268,17 @@ export function ServicesHubView({
       {/* Section 2: Service Overview */}
       <section
         id={SERVICES_HUB_DATA.overview.id}
-        className="scroll-mt-20 py-14 lg:py-16 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           <Reveal className="lg:col-span-5">
-            <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
-              {SERVICES_HUB_DATA.overview.eyebrow}
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-bold text-[#003b4f] mt-2 text-balance">
+            <div className="inline-flex items-center gap-3">
+              <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+              <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00749c]">
+                {SERVICES_HUB_DATA.overview.eyebrow}
+              </p>
+            </div>
+            <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-semibold tracking-[-0.025em] text-[#003b4f] mt-3 leading-[1.15] text-balance">
               {SERVICES_HUB_DATA.overview.title}
             </h2>
           </Reveal>
@@ -307,10 +317,10 @@ export function ServicesHubView({
         </div>
       </section>
 
-      {/* Section 3: Five Core Service Categories */}
+      {/* Section 3: Five Core Service Categories (Studio Bento) */}
       <section
         id={SERVICES_HUB_DATA.coreTracksSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-white border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
@@ -319,7 +329,7 @@ export function ServicesHubView({
             description={SERVICES_HUB_DATA.coreTracksSection.description}
           />
 
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
             {SERVICES_HUB_DATA.coreTracksSection.tracks.map((track, idx) => {
               const Icon = getTrackIcon(track.id);
               const spanClass =
@@ -331,7 +341,7 @@ export function ServicesHubView({
                   delay={idx * 0.04}
                   className={`flex ${spanClass}`}
                 >
-                  <article className="group w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] transition-all duration-200 p-6 sm:p-8 flex flex-col justify-between">
+                  <article className="group wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] hover:bg-white hover:border-[#00749c] p-6 sm:p-8 flex flex-col justify-between">
                     <div>
                       <div className="flex items-start justify-between gap-4">
                         <div className="flex items-center gap-2 text-xs font-mono">
@@ -345,12 +355,12 @@ export function ServicesHubView({
                             {track.subtitle}
                           </span>
                         </div>
-                        <span className="h-9 w-9 rounded-xl bg-white border border-[#dde6eb] text-[#00749c] inline-flex items-center justify-center shrink-0">
+                        <span className="h-10 w-10 rounded-xl bg-white border border-[#dde6eb] group-hover:border-[#00749c]/40 text-[#00749c] inline-flex items-center justify-center shrink-0 transition-colors">
                           <Icon className="h-4 w-4" aria-hidden="true" />
                         </span>
                       </div>
 
-                      <h3 className="text-xl sm:text-2xl font-bold text-[#003b4f] mt-4 leading-snug group-hover:text-[#00749c] transition-colors">
+                      <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#003b4f] mt-4 leading-snug group-hover:text-[#00749c] transition-colors">
                         {track.title}
                       </h3>
 
@@ -358,7 +368,7 @@ export function ServicesHubView({
                         {track.description}
                       </p>
 
-                      <ul className="mt-5 pt-5 border-t border-[#dde6eb] space-y-2">
+                      <ul className="mt-5 pt-5 border-t border-[#dde6eb] space-y-2.5">
                         {track.deliverables.map((item) => (
                           <li
                             key={item}
@@ -406,7 +416,7 @@ export function ServicesHubView({
       {/* Section 4: Supporting Technical Expertise */}
       <section
         id={SERVICES_HUB_DATA.supportingExpertiseSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
@@ -415,7 +425,7 @@ export function ServicesHubView({
             description={SERVICES_HUB_DATA.supportingExpertiseSection.description}
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
             {SERVICES_HUB_DATA.supportingExpertiseSection.items.map((item, idx) => {
               const isLeadCard = idx === 0;
               return (
@@ -425,7 +435,7 @@ export function ServicesHubView({
                   className={`flex ${isLeadCard ? 'md:col-span-2 lg:col-span-3' : ''}`}
                 >
                   <article
-                    className={`w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors p-6 sm:p-7 ${
+                    className={`wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] p-6 sm:p-7 ${
                       isLeadCard
                         ? 'flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6'
                         : 'flex flex-col justify-between'
@@ -484,39 +494,45 @@ export function ServicesHubView({
         </div>
       </section>
 
-      {/* Section 5: How We Work */}
+      {/* Section 5: How We Work (Architectural Studio Cards) */}
       <section
         id={SERVICES_HUB_DATA.processSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
+            align="center"
             eyebrow={SERVICES_HUB_DATA.processSection.eyebrow}
             title={SERVICES_HUB_DATA.processSection.title}
             description={SERVICES_HUB_DATA.processSection.description}
             tone="dark"
           />
 
-          <ol className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ol className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
             {SERVICES_HUB_DATA.processSection.steps.map((step) => (
               <li
                 key={step.step}
-                className="pt-5 border-t border-[#00b2d4]/50 flex flex-col justify-between space-y-4"
+                className="group rounded-2xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.07] hover:border-[#00b2d4]/60 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between min-h-[240px]"
               >
                 <div>
-                  <span className="text-xs font-mono font-bold text-[#00b2d4] tabular-nums">
-                    {step.step}
-                  </span>
-                  <h3 className="text-lg font-bold text-white mt-2 leading-snug">
+                  <p className="text-xs font-mono text-[#00b2d4]">
+                    {step.deliverable}
+                  </p>
+                  <h3 className="text-xl font-semibold text-white mt-3 leading-snug">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-white/80 mt-2 leading-relaxed">
+                  <p className="text-sm text-white/80 mt-3 leading-relaxed">
                     {step.summary}
                   </p>
                 </div>
-                <p className="text-xs font-mono text-[#00b2d4]">
-                  {step.deliverable}
-                </p>
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-end justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-white/60">
+                    Stage
+                  </span>
+                  <span className="font-display text-3xl font-semibold text-[#00b2d4]/50 group-hover:text-[#00b2d4] transition-colors tabular-nums leading-none">
+                    .{step.step.replace('.', '')}
+                  </span>
+                </div>
               </li>
             ))}
           </ol>
@@ -526,9 +542,9 @@ export function ServicesHubView({
       {/* Section 6: Why Choose WPCarePoint (Editorial Ledger) */}
       <section
         id={SERVICES_HUB_DATA.principlesSection.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-5 lg:sticky lg:top-24">
             <SectionHeading
               eyebrow={SERVICES_HUB_DATA.principlesSection.eyebrow}
@@ -541,16 +557,16 @@ export function ServicesHubView({
             {SERVICES_HUB_DATA.principlesSection.items.map((item) => (
               <article
                 key={item.index}
-                className="py-6 sm:py-7 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
+                className="group py-7 sm:py-8 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
               >
                 <div className="sm:col-span-2">
-                  <span className="text-sm font-mono font-bold text-[#00749c] tabular-nums">
+                  <span className="font-display text-2xl font-semibold text-[#00749c]/45 group-hover:text-[#00749c] transition-colors tabular-nums">
                     {item.index}
                   </span>
                 </div>
                 <div className="sm:col-span-10 space-y-2">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
+                    <h3 className="text-lg sm:text-xl font-semibold text-[#003b4f] leading-snug">
                       {item.title}
                     </h3>
                     <span className="text-xs font-mono text-[#6c757d]">
@@ -570,9 +586,9 @@ export function ServicesHubView({
       {/* Section 7: Frequently Asked Questions */}
       <section
         id="services-faq"
-        className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-white border-b border-[#dde6eb]"
       >
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-4 lg:sticky lg:top-24">
             <SectionHeading
               eyebrow="Services FAQ"

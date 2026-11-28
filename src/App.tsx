@@ -240,7 +240,10 @@ export default function App({ initialRoute }: AppProps) {
         return (
           <div key="wpcarepoint-homepage">
             {/* Section 2: Hero Section */}
-            <HeroSection onJumpToSection={navigateHome} />
+            <HeroSection
+              onJumpToSection={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
 
             {/* Sections 3-5: Interactive Core Services, Website Care + Quick Fix, Speed & SEO/AI Spotlight */}
             <ServicesSections
@@ -264,7 +267,7 @@ export default function App({ initialRoute }: AppProps) {
   };
 
   return (
-    <div id="top" className="min-h-screen flex flex-col bg-white text-[#2e2e2e]">
+    <div id="top" className="min-h-screen flex flex-col bg-[#f7f9fa] text-[#2e2e2e]">
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-[#00749c] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"

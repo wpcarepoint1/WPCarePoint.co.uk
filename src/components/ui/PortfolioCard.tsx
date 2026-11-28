@@ -10,7 +10,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
   const [imgFailed, setImgFailed] = useState(false);
 
   return (
-    <article className="h-full rounded-2xl border border-[#dde6eb] bg-white overflow-hidden flex flex-col justify-between hover:border-[#00749c] transition-colors">
+    <article className="group wpc-studio-card h-full rounded-2xl border border-[#dde6eb] bg-white overflow-hidden flex flex-col justify-between hover:border-[#00749c]">
       <div>
         <div className="aspect-[16/9] bg-[#eef3f6] overflow-hidden border-b border-[#e9eff2]">
           {imgFailed ? (
@@ -28,12 +28,12 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
               decoding="async"
               referrerPolicy="no-referrer"
               onError={() => setImgFailed(true)}
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
             />
           )}
         </div>
 
-        <div className="p-6 sm:p-7">
+        <div className="p-6 sm:p-8">
           <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
             <span className="font-semibold text-[#00749c]">{item.eyebrow}</span>
             <span className="text-[#6c757d]" aria-hidden="true">
@@ -42,7 +42,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
             <span className="text-[#6c757d]">{item.scope}</span>
           </div>
 
-          <h3 className="text-xl sm:text-2xl font-bold text-[#003b4f] mt-2.5 leading-snug">
+          <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#003b4f] mt-3 leading-snug">
             {item.title}
           </h3>
 
@@ -50,11 +50,11 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
             {item.summary}
           </p>
 
-          <ul className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          <ul className="mt-6 pt-5 border-t border-[#e9eff2] grid grid-cols-1 sm:grid-cols-2 gap-3">
             {item.serviceTracks.map((track) => (
               <li
                 key={track}
-                className="flex items-start gap-2 text-sm text-[#2e2e2e] leading-snug"
+                className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
               >
                 <Check
                   className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
@@ -67,16 +67,16 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
         </div>
       </div>
 
-      <div className="px-6 sm:px-7 py-4 bg-[#f7f9fa] border-t border-[#e9eff2] flex flex-wrap items-center justify-between gap-3">
+      <div className="px-6 sm:px-8 py-4 bg-[#f7f9fa] border-t border-[#e9eff2] flex flex-wrap items-center justify-between gap-3">
         <a
           href={item.externalUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-1.5 min-h-[44px] text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md group"
+          className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md group/link"
         >
           <span>{item.externalLabel}</span>
           <ArrowUpRight
-            className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            className="h-4 w-4 transition-transform duration-150 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
             aria-hidden="true"
           />
         </a>

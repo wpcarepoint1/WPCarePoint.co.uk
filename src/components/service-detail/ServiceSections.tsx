@@ -495,30 +495,37 @@ export function ServiceCarePlansOverviewSection({
           description={carePlans.description}
         />
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+        <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-7 items-stretch">
           {carePlans.plans.map((tier, idx) => (
             <FadeInUpOnScroll key={tier.id} delay={idx * 0.04} className="flex">
               <article
-                className={`w-full rounded-2xl border p-6 sm:p-7 flex flex-col justify-between transition-colors ${
+                className={`wpc-studio-card w-full rounded-2xl border overflow-hidden flex flex-col justify-between ${
                   tier.highlighted
-                    ? 'bg-[#f7f9fa] border-[#00749c]'
+                    ? 'bg-[#f7f9fa] border-[#00749c] ring-1 ring-[#00749c]/25'
                     : 'bg-white border-[#dde6eb] hover:border-[#b9ccd6]'
                 }`}
               >
                 <div>
-                  <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xl font-bold text-[#003b4f]">{tier.name}</h3>
-                    {tier.highlighted && (
-                      <span className="text-xs font-mono font-semibold text-[#00749c]">
-                        Recommended
+                  {tier.highlighted && (
+                    <div className="bg-[#003b4f] px-6 py-2.5 flex items-center justify-between text-xs font-mono">
+                      <span className="font-semibold uppercase tracking-wider text-[#00b2d4]">
+                        Recommended Tier
                       </span>
-                    )}
-                  </div>
-                  <p className="text-xs text-[#6c757d] mt-1">{tier.audience}</p>
+                      <span className="text-white/80">Growth &amp; Speed</span>
+                    </div>
+                  )}
 
-                  <p className="mt-4 pb-4 border-b border-[#e9eff2] text-lg font-mono font-bold text-[#00749c]">
-                    {tier.pricingLabel}
-                  </p>
+                  <div className="p-7 sm:p-8">
+                    <div className="flex items-center justify-between gap-2">
+                      <h3 className="text-xl sm:text-2xl font-semibold tracking-tight text-[#003b4f]">
+                        {tier.name}
+                      </h3>
+                    </div>
+                    <p className="text-xs text-[#6c757d] mt-1">{tier.audience}</p>
+
+                    <p className="mt-5 pb-5 border-b border-[#e9eff2] text-lg font-mono font-bold text-[#00749c]">
+                      {tier.pricingLabel}
+                    </p>
 
                   <p className="mt-4 text-sm text-[#2e2e2e] leading-relaxed">
                     {tier.summary}
@@ -539,8 +546,9 @@ export function ServiceCarePlansOverviewSection({
                     ))}
                   </ul>
                 </div>
+                </div>
 
-                <div className="mt-6 pt-5 border-t border-[#e9eff2]">
+                <div className="px-7 sm:px-8 pb-7 sm:pb-8 pt-5 border-t border-[#e9eff2]">
                   <Button
                     href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
                       `Website Care Enquiry — ${tier.name}`
@@ -705,36 +713,42 @@ export function ServiceProcessAndTrustSection({
     <>
       <section
         id={process.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
+            align="center"
             eyebrow={process.eyebrow}
             title={process.title}
             description={process.description}
             tone="dark"
           />
 
-          <ol className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <ol className="mt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
             {process.steps.map((step) => (
               <li
                 key={step.step}
-                className="pt-5 border-t border-[#00b2d4]/50 flex flex-col justify-between space-y-4"
+                className="group rounded-2xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.07] hover:border-[#00b2d4]/60 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between min-h-[240px]"
               >
                 <div>
-                  <span className="text-xs font-mono font-bold text-[#00b2d4] tabular-nums">
-                    {step.step}
-                  </span>
-                  <h3 className="text-lg font-bold text-white mt-2 leading-snug">
+                  <p className="text-xs font-mono text-[#00b2d4]">
+                    {step.deliverable}
+                  </p>
+                  <h3 className="text-xl font-semibold text-white mt-3 leading-snug">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-white/80 mt-2 leading-relaxed">
+                  <p className="text-sm text-white/80 mt-3 leading-relaxed">
                     {step.summary}
                   </p>
                 </div>
-                <p className="text-xs font-mono text-[#00b2d4]">
-                  {step.deliverable}
-                </p>
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-end justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-white/60">
+                    Stage
+                  </span>
+                  <span className="font-display text-3xl font-semibold text-[#00b2d4]/50 group-hover:text-[#00b2d4] transition-colors tabular-nums leading-none">
+                    .{step.step.replace('.', '')}
+                  </span>
+                </div>
               </li>
             ))}
           </ol>
@@ -743,9 +757,9 @@ export function ServiceProcessAndTrustSection({
 
       <section
         id={whyChoose.id}
-        className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
+        className="scroll-mt-24 py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-5 lg:sticky lg:top-24">
             <SectionHeading
               eyebrow={whyChoose.eyebrow}
@@ -758,16 +772,16 @@ export function ServiceProcessAndTrustSection({
             {whyChoose.items.map((item) => (
               <article
                 key={item.title}
-                className="py-6 sm:py-7 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
+                className="group py-7 sm:py-8 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
               >
                 <div className="sm:col-span-2">
-                  <span className="text-sm font-mono font-bold text-[#00749c] tabular-nums">
+                  <span className="font-display text-2xl font-semibold text-[#00749c]/45 group-hover:text-[#00749c] transition-colors tabular-nums">
                     {item.index}
                   </span>
                 </div>
                 <div className="sm:col-span-10 space-y-2">
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
+                    <h3 className="text-lg sm:text-xl font-semibold text-[#003b4f] leading-snug">
                       {item.title}
                     </h3>
                     <span className="text-xs font-mono text-[#6c757d]">

@@ -171,12 +171,12 @@ export function ContactPageView({
 
   return (
     <article id="contact">
-      {/* Hero */}
-      <section className="bg-white bg-architectural-grid border-b border-[#dde6eb]">
-        <div className="max-w-7xl mx-auto px-6 py-10 sm:py-14 lg:py-16">
+      {/* Studio Contact Hero */}
+      <section className="bg-gradient-to-b from-[#f7f9fa] via-[#f7f9fa] to-white bg-architectural-grid border-b border-[#dde6eb]">
+        <div className="max-w-7xl mx-auto px-6 pt-8 pb-14 sm:pt-10 sm:pb-16 lg:pt-12 lg:pb-20">
           <nav
             aria-label="Breadcrumb"
-            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-7 sm:mb-9"
+            className="flex flex-wrap items-center gap-2 text-xs text-[#6c757d] mb-6 sm:mb-8"
           >
             <a
               href="/"
@@ -196,39 +196,44 @@ export function ContactPageView({
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             <div className="lg:col-span-6 wpc-route-enter">
-              <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
-                {CONTACT_PAGE_DATA.eyebrow}
-              </p>
+              <div className="inline-flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+                <p className="text-xs font-mono font-semibold tracking-[0.12em] uppercase text-[#00749c]">
+                  {CONTACT_PAGE_DATA.eyebrow}
+                </p>
+              </div>
 
               <h1
-                className="font-bold tracking-tight text-[#003b4f] mt-3 text-balance"
+                className="font-semibold tracking-[-0.03em] text-[#003b4f] mt-3.5 text-balance"
                 style={{
-                  fontSize: 'clamp(2rem, 3.8vw, 3.25rem)',
-                  lineHeight: 1.09,
+                  fontSize: 'clamp(2.15rem, 4vw, 3.45rem)',
+                  lineHeight: 1.07,
                 }}
               >
                 {CONTACT_PAGE_DATA.headline}
               </h1>
 
-              <p className="text-base sm:text-lg text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
+              <p className="text-base sm:text-[18px] text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
                 {CONTACT_PAGE_DATA.description}
               </p>
 
-              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
+              <div className="mt-8 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3.5 sm:gap-4">
                 <Button
                   href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
                     'WPCarePoint Project & Support Enquiry'
                   )}`}
                   variant="primary"
                   size="lg"
-                  className="group"
+                  className="group pr-3 pl-6"
                 >
                   <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                   <span>Email WPCarePoint</span>
-                  <ArrowRight
-                    className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
+                  <span
                     aria-hidden="true"
-                  />
+                    className="h-8 w-8 rounded-full bg-white text-[#003b4f] inline-flex items-center justify-center transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
                 </Button>
 
                 <Button
@@ -257,7 +262,7 @@ export function ContactPageView({
                 </Button>
               </div>
 
-              <div className="mt-6">
+              <div className="mt-5">
                 <a
                   href="/"
                   onClick={(e) => {
@@ -273,7 +278,7 @@ export function ContactPageView({
             </div>
 
             <div className="lg:col-span-6">
-              <figure className="group relative rounded-2xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6]">
+              <figure className="group relative rounded-3xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6] shadow-[0_18px_40px_-24px_rgba(0,59,79,0.2)]">
                 <div className="aspect-[16/10] overflow-hidden bg-[#eef3f6]">
                   {imgFailed ? (
                     <div className="w-full h-full flex flex-col items-center justify-center p-8 text-[#6c757d]">
@@ -293,22 +298,24 @@ export function ContactPageView({
                       fetchPriority="high"
                       referrerPolicy="no-referrer"
                       onError={() => setImgFailed(true)}
-                      className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.015]"
+                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
                     />
                   )}
                 </div>
-                <figcaption className="px-5 py-3.5 bg-white border-t border-[#e9eff2] text-xs font-medium text-[#6c757d]">
+                <figcaption className="px-6 py-4 bg-white border-t border-[#e9eff2] text-xs font-medium text-[#6c757d]">
                   {CONTACT_PAGE_DATA.imageCaption}
                 </figcaption>
               </figure>
             </div>
           </div>
 
-          <dl className="mt-10 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
+          <dl className="mt-12 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
             {CONTACT_PAGE_DATA.standards.map((item) => (
               <div key={item.label}>
-                <dt className="text-xs font-mono text-[#6c757d]">{item.label}</dt>
-                <dd className="text-base sm:text-lg font-bold text-[#003b4f] mt-1 break-words">
+                <dt className="text-[11px] font-mono uppercase tracking-[0.1em] text-[#6c757d]">
+                  {item.label}
+                </dt>
+                <dd className="text-base sm:text-[17px] font-semibold text-[#003b4f] mt-1.5 break-words">
                   {item.value}
                 </dd>
               </div>
@@ -318,16 +325,16 @@ export function ContactPageView({
       </section>
 
       {/* Direct Correspondence Details & Structured Brief Helper */}
-      <section className="py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]">
+      <section className="py-18 lg:py-24 bg-[#f7f9fa] border-b border-[#dde6eb]">
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
           {/* Primary Contact Information */}
           <Reveal className="lg:col-span-5 space-y-6">
-            <div className="rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 space-y-6">
+            <div className="wpc-studio-card rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 space-y-6">
               <div>
                 <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
                   Direct Email Correspondence
                 </p>
-                <h2 className="text-xl font-bold text-[#003b4f] mt-2">
+                <h2 className="text-xl font-semibold text-[#003b4f] mt-2">
                   Official Contact Details
                 </h2>
                 <p className="text-sm text-[#2e2e2e] mt-2 leading-relaxed">
@@ -389,17 +396,17 @@ export function ContactPageView({
             </div>
 
             {/* Optional Copyable Brief Template */}
-            <div className="rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-7 space-y-4">
+            <div className="wpc-studio-card rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-7 space-y-4">
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-2 text-[#003b4f]">
                   <FileText className="h-4 w-4 text-[#00749c] shrink-0" aria-hidden="true" />
-                  <h3 className="text-base font-bold">Quick Email Brief Outline</h3>
+                  <h3 className="text-base font-semibold">Quick Email Brief Outline</h3>
                 </div>
                 <button
                   type="button"
                   onClick={handleCopyTemplate}
                   aria-live="polite"
-                  className="inline-flex items-center gap-1.5 min-h-[44px] px-3 rounded-lg border border-[#dde6eb] hover:border-[#00749c] text-xs font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] px-3.5 rounded-full border border-[#dde6eb] hover:border-[#00749c] text-xs font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
                 >
                   {templateCopied === 'copied' ? (
                     <>
@@ -431,10 +438,13 @@ export function ContactPageView({
           {/* What to Send by Topic */}
           <div className="lg:col-span-7 space-y-6">
             <div>
-              <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
-                Enquiry Guidance by Service Track
-              </p>
-              <h2 className="text-2xl sm:text-3xl font-bold text-[#003b4f] mt-2 text-balance">
+              <div className="inline-flex items-center gap-3">
+                <span aria-hidden="true" className="h-px w-6 bg-[#b9ccd6]" />
+                <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00749c]">
+                  Enquiry Guidance by Service Track
+                </p>
+              </div>
+              <h2 className="text-2xl sm:text-3xl lg:text-[2.15rem] font-semibold tracking-[-0.025em] text-[#003b4f] mt-3 leading-[1.15] text-balance">
                 Helpful details to include when emailing our team.
               </h2>
               <p className="text-sm sm:text-base text-[#2e2e2e] mt-2 leading-relaxed">
@@ -446,13 +456,13 @@ export function ContactPageView({
             <div className="space-y-5">
               {CONTACT_PAGE_DATA.enquiryGuides.map((guide, idx) => (
                 <FadeInUpOnScroll key={guide.index} delay={idx * 0.04}>
-                  <article className="rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors p-6 sm:p-7">
+                  <article className="wpc-studio-card rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] p-6 sm:p-7">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
                       <div>
                         <p className="text-xs font-mono font-semibold text-[#00749c] tabular-nums">
                           {guide.index}
                         </p>
-                        <h3 className="text-lg font-bold text-[#003b4f] mt-1">
+                        <h3 className="text-lg font-semibold text-[#003b4f] mt-1">
                           {guide.title}
                         </h3>
                         <p className="text-sm text-[#2e2e2e] mt-2 leading-relaxed">
@@ -495,31 +505,39 @@ export function ContactPageView({
         </div>
       </section>
 
-      {/* Enquiry Process */}
-      <section className="py-16 lg:py-20 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10">
+      {/* Enquiry Process (Architectural Dark Studio Cards) */}
+      <section className="py-18 lg:py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
+            align="center"
             eyebrow="How We Respond"
             title="Transparent written scoping from first email to staging plan."
             description="No pressured sales calls or inflated commitments—just clear technical feedback in writing."
             tone="dark"
           />
 
-          <ol className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <ol className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6">
             {CONTACT_PAGE_DATA.processSteps.map((step) => (
               <li
                 key={step.step}
-                className="pt-5 border-t border-[#00b2d4]/50 space-y-2.5"
+                className="group rounded-2xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.07] hover:border-[#00b2d4]/60 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between min-h-[210px]"
               >
-                <span className="text-xs font-mono font-bold text-[#00b2d4] tabular-nums">
-                  {step.step}
-                </span>
-                <h3 className="text-lg font-bold text-white leading-snug">
-                  {step.title}
-                </h3>
-                <p className="text-sm text-white/85 leading-relaxed">
-                  {step.summary}
-                </p>
+                <div>
+                  <h3 className="text-xl font-semibold text-white leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-white/80 mt-3 leading-relaxed">
+                    {step.summary}
+                  </p>
+                </div>
+                <div className="pt-6 mt-6 border-t border-white/10 flex items-end justify-between">
+                  <span className="text-[11px] font-mono uppercase tracking-wider text-white/60">
+                    Step
+                  </span>
+                  <span className="font-display text-3xl font-semibold text-[#00b2d4]/50 group-hover:text-[#00b2d4] transition-colors tabular-nums leading-none">
+                    .{step.step.replace('.', '')}
+                  </span>
+                </div>
               </li>
             ))}
           </ol>
@@ -527,8 +545,8 @@ export function ContactPageView({
       </section>
 
       {/* Contact FAQs */}
-      <section className="py-16 lg:py-20 bg-white border-b border-[#dde6eb]">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <section className="py-18 lg:py-24 bg-white border-b border-[#dde6eb]">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
           <div className="lg:col-span-4 lg:sticky lg:top-24">
             <SectionHeading
               eyebrow="Contact FAQ"
@@ -544,7 +562,7 @@ export function ContactPageView({
       </section>
 
       {/* Explore Core Services */}
-      <section className="py-16 lg:py-20 bg-[#f7f9fa]">
+      <section className="py-18 lg:py-24 bg-[#f7f9fa]">
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
             eyebrow="Explore Service Details"
@@ -564,7 +582,7 @@ export function ContactPageView({
             }
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {CONTACT_PAGE_DATA.relatedLinks.map((item) => (
               <a
                 key={item.title}
@@ -573,13 +591,13 @@ export function ContactPageView({
                   e.preventDefault();
                   onNavigatePath(item.href);
                 }}
-                className="group w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] hover:-translate-y-0.5 transition-all duration-200 p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
+                className="group wpc-studio-card w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] p-6 sm:p-7 flex flex-col justify-between focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
               >
                 <div>
                   <p className="text-xs font-mono font-semibold text-[#00749c] uppercase tracking-wider">
                     {item.eyebrow}
                   </p>
-                  <h3 className="text-lg font-bold text-[#003b4f] mt-2 group-hover:text-[#00749c] transition-colors leading-snug">
+                  <h3 className="text-lg font-semibold text-[#003b4f] mt-2 group-hover:text-[#00749c] transition-colors leading-snug">
                     {item.title}
                   </h3>
                   <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">

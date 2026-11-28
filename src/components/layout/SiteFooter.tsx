@@ -24,35 +24,35 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
 
   return (
     <footer className="bg-[#003b4f] text-white border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 py-12 lg:py-14">
-        {/* 4 Concise Footer Groups */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10 pb-8 border-b border-white/15">
+      <div className="max-w-7xl mx-auto px-6 py-14 lg:py-16">
+        {/* 4 Concise Agency Footer Groups */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-10 border-b border-white/15">
           {/* Group 1: Brand & Official Contact */}
-          <div className="lg:col-span-4 space-y-3">
+          <div className="lg:col-span-4 space-y-4">
             <a
               href="/"
               onClick={(e) => {
                 e.preventDefault();
                 onNavigateHome();
               }}
-              className="inline-flex min-h-[44px] items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+              className="inline-flex min-h-[44px] items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-xl"
             >
               <span
                 aria-hidden="true"
-                className="h-7 w-7 rounded-md bg-[#00749c] border border-white/20 flex items-center justify-center font-mono text-[11px] font-bold text-white"
+                className="h-8 w-8 rounded-xl bg-[#00749c] border border-white/20 flex items-center justify-center font-mono text-xs font-bold text-white"
               >
                 WP
               </span>
-              <span className="font-display text-lg font-bold tracking-tight text-white">
+              <span className="font-display text-xl font-semibold tracking-tight text-white">
                 {BRAND_INFO.name}
               </span>
             </a>
 
-            <p className="text-sm text-white/85 leading-relaxed">
+            <p className="text-sm text-white/80 leading-relaxed max-w-sm">
               {BRAND_INFO.positioning}. {BRAND_INFO.tagline}
             </p>
 
-            <div className="pt-1 space-y-1.5 text-xs text-white/80">
+            <div className="pt-2 space-y-2 text-xs text-white/75">
               <p className="flex items-start gap-2 leading-relaxed">
                 <MapPin
                   className="h-3.5 w-3.5 text-[#00b2d4] shrink-0 mt-0.5"
@@ -69,16 +69,16 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                   <span>{BRAND_INFO.email}</span>
                 </a>
               </p>
-              <p className="text-white/65">Email enquiries only · United Kingdom</p>
+              <p className="text-white/60">Email enquiries only · United Kingdom</p>
             </div>
           </div>
 
           {/* Group 2: Core Services */}
-          <div className="lg:col-span-3 space-y-2">
-            <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00b2d4]">
+          <div className="lg:col-span-3 space-y-3">
+            <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00b2d4]">
               Services
             </p>
-            <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
+            <ul className="space-y-1 md:space-y-2.5 text-sm text-white/80">
               <li>
                 <a
                   href="/services/"
@@ -167,11 +167,11 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
           </div>
 
           {/* Group 3: Care & Delivery */}
-          <div className="lg:col-span-3 space-y-2">
-            <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00b2d4]">
+          <div className="lg:col-span-3 space-y-3">
+            <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00b2d4]">
               Agency &amp; Care
             </p>
-            <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
+            <ul className="space-y-1 md:space-y-2.5 text-sm text-white/80">
               <li>
                 <a
                   href="/about/"
@@ -248,11 +248,11 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
           </div>
 
           {/* Group 4: Support & Standards */}
-          <div className="lg:col-span-2 space-y-2">
-            <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00b2d4]">
+          <div className="lg:col-span-2 space-y-3">
+            <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00b2d4]">
               Standards
             </p>
-            <ul className="space-y-0.5 md:space-y-2 text-sm text-white/80">
+            <ul className="space-y-1 md:space-y-2.5 text-sm text-white/80">
               <li>
                 <a
                   href="/#faq"
@@ -289,13 +289,13 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                   Site Map
                 </a>
               </li>
-              <li className="text-xs text-white/70 pt-2">UK GDPR &amp; PECR Ready</li>
-              <li className="text-xs text-white/70">WCAG 2.2 AA Focus</li>
+              <li className="text-xs text-white/65 pt-2">UK GDPR &amp; PECR Ready</li>
+              <li className="text-xs text-white/65">WCAG 2.2 AA Focus</li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/75">
+        <div className="pt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/70">
           <p>© {new Date().getFullYear()} WPCarePoint · wpcarepoint.co.uk</p>
           <p>{BRAND_INFO.tagline}</p>
         </div>
