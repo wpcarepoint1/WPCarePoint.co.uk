@@ -29,15 +29,15 @@ export const SERVICES_HUB_DATA = {
   metaTitle: 'Services | WPCarePoint UK Web Development, eCommerce & AI Agency',
   metaDescription:
     'Explore WPCarePoint UK services: Website Design & Development, WooCommerce eCommerce, AI & Business Automation, Website Care, WordPress Speed Optimisation, and SEO & AI Search.',
-  eyebrow: 'Web Development, eCommerce & AI Solutions Agency',
-  headline: 'Building, improving and supporting digital businesses.',
+  eyebrow: 'Services Hub · WPCarePoint UK',
+  headline: 'Web engineering, WooCommerce, automation & technical care—under one roof.',
   description:
-    'WPCarePoint partners with British organisations across five integrated service tracks—combining WordPress engineering, React & Next.js builds, reliable WooCommerce stores, practical automation, and structured technical care.',
+    'Five integrated disciplines engineered cleanly in WordPress, WooCommerce, React & Next.js—built for British teams who value speed, clarity, and full ownership.',
   heroImageUrl: '/src/assets/images/services_hub_overview_1795678349831.webp',
   heroImageAlt:
     'Five connected coastal teal and frosted glass architectural modules representing WPCarePoint core service disciplines',
   heroImageCaption:
-    'Five structured service disciplines · Built for UK maintainability, speed, and client ownership',
+    'Five core service tracks · Built for UK maintainability, speed, and client ownership',
   standards: [
     { label: 'Core Specialisation', value: 'WordPress & WooCommerce' },
     { label: 'Modern Stack', value: 'React, Next.js & TypeScript' },
@@ -46,19 +46,19 @@ export const SERVICES_HUB_DATA = {
   ],
   overview: {
     id: 'service-overview',
-    eyebrow: 'How WPCarePoint Supports Your Business',
-    title: 'Clear architecture from initial build through ongoing growth and care.',
+    eyebrow: 'Unified Technical Delivery',
+    title: 'Clear architecture from initial build through ongoing care and search.',
     paragraphs: [
-      'Most digital bottlenecks occur when website design, online retail, search structure, automation, and ongoing maintenance are treated as disconnected pieces handled by separate suppliers.',
-      'WPCarePoint brings these five disciplines under one practical UK engineering workflow. Whether you are commissioning a new business website, rescuing a slow WordPress installation, tuning WooCommerce checkouts, or connecting enquiries to your CRM, every piece is engineered to remain understandable, fast, and firmly under your ownership.',
+      'Most website bottlenecks happen when design, online retail, search hygiene, automation, and maintenance are split across disconnected suppliers.',
+      'WPCarePoint brings all five disciplines into one transparent UK engineering workflow—keeping your code fast, documented, and cleanly under your business ownership.',
     ],
   },
   coreTracksSection: {
     id: 'core-services',
-    eyebrow: 'Five Core Service Categories',
-    title: 'Choose the capability track aligned with your current priorities.',
+    eyebrow: 'Five Core Service Tracks',
+    title: 'Select a capability track aligned with your immediate priorities.',
     description:
-      'Every core category leads to a dedicated service specification detailing deliverables, engineering standards, and how work is scoped.',
+      'Every core track opens a dedicated technical specification covering deliverables, safeguards, and how scoping works.',
     tracks: CORE_SERVICE_TRACKS as CoreServiceTrack[],
   },
   supportingExpertiseSection: {

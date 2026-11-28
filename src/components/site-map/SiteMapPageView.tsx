@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowRight, Compass, FolderTree, Mail } from 'lucide-react';
 import { BRAND_INFO } from '../../data/homepageData';
 import { SITE_MAP_PAGE_DATA } from '../../data/siteMapPageData';
 import { applyRouteSeo } from '../../utils/routeSeo';
-import { EASE_OUT_EXPO, FadeInUpOnScroll } from '../MotionPrimitives';
+import { FadeInUpOnScroll } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { CtaSection } from '../ui/CtaSection';
 import { SectionHeading } from '../ui/SectionHeading';
@@ -18,7 +17,6 @@ export function SiteMapPageView({
   onNavigateHome,
   onNavigatePath,
 }: SiteMapPageViewProps) {
-  const prefersReduced = useReducedMotion();
 
   useEffect(() => {
     const activeHash = window.location.hash.replace(/^#/, '');
@@ -86,6 +84,9 @@ export function SiteMapPageView({
   }, []);
 
   const handleJump = (targetId: string) => {
+    const prefersReduced =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.getElementById(targetId)?.scrollIntoView({
       behavior: prefersReduced ? 'auto' : 'smooth',
     });
@@ -117,12 +118,7 @@ export function SiteMapPageView({
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-            <motion.div
-              initial={prefersReduced ? false : { opacity: 0.94, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: EASE_OUT_EXPO }}
-              className="lg:col-span-8"
-            >
+            <div className="lg:col-span-8 wpc-route-enter">
               <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
                 {SITE_MAP_PAGE_DATA.eyebrow}
               </p>
@@ -172,18 +168,9 @@ export function SiteMapPageView({
                   <span>Contact WPCarePoint</span>
                 </Button>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.aside
-              initial={prefersReduced ? false : { opacity: 0.94, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: prefersReduced ? 0.01 : 0.45,
-                delay: prefersReduced ? 0 : 0.05,
-                ease: EASE_OUT_EXPO,
-              }}
-              className="lg:col-span-4 rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-6 space-y-4"
-            >
+            <aside className="lg:col-span-4 rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-6 space-y-4">
               <div className="flex items-center gap-2.5 text-[#003b4f]">
                 <FolderTree className="h-4 w-4 text-[#00749c] shrink-0" aria-hidden="true" />
                 <p className="text-xs font-mono font-semibold uppercase tracking-wider">
@@ -213,7 +200,7 @@ export function SiteMapPageView({
                   ))}
                 </ul>
               </nav>
-            </motion.aside>
+            </aside>
           </div>
 
           {/* Factual Standards Strip */}

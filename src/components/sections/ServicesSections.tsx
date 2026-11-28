@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type KeyboardEvent, type MouseEvent } from 'react';
 import { ArrowRight, Check, Wrench, Zap } from 'lucide-react';
 import {
   BRAND_INFO,
@@ -7,7 +7,6 @@ import {
 } from '../../data/homepageData';
 import { Button } from '../ui/Button';
 import { SectionHeading } from '../ui/SectionHeading';
-import { ServiceCard } from '../ui/ServiceCard';
 
 interface ServicesSectionsProps {
   onExploreService: (slug: string) => void;
@@ -20,99 +19,176 @@ export function ServicesSections({
   onNavigatePath,
   onJumpToSection,
 }: ServicesSectionsProps) {
+  const [activeTrackIndex, setActiveTrackIndex] = useState(0);
   const [archFailed, setArchFailed] = useState(false);
 
-  const webTrack = CORE_SERVICE_TRACKS[0];
-  const ecommerceTrack = CORE_SERVICE_TRACKS[1];
-  const aiAutomationTrack = CORE_SERVICE_TRACKS[2];
+  const activeTrack = CORE_SERVICE_TRACKS[activeTrackIndex] ?? CORE_SERVICE_TRACKS[0];
   const seoAiSearchTrack = CORE_SERVICE_TRACKS[4];
+
+  const handleTabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+      event.preventDefault();
+      setActiveTrackIndex((index + 1) % CORE_SERVICE_TRACKS.length);
+    } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+      event.preventDefault();
+      setActiveTrackIndex(
+        (index - 1 + CORE_SERVICE_TRACKS.length) % CORE_SERVICE_TRACKS.length
+      );
+    }
+  };
 
   return (
     <>
-      {/* Section 3: Services Overview */}
+      {/* Section 3: Interactive Service Capabilities Explorer */}
       <section
         id="services-overview"
         className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
-            eyebrow="Services Overview"
-            title="Integrated web engineering, commerce, AI workflows, and ongoing care."
-            description="Every engagement is built around maintainable architecture, clear ownership, and measurable business utility rather than unnecessary complexity."
+            eyebrow="Capabilities"
+            title="Five focused disciplines engineered cleanly together."
+            description="Select a track to inspect deliverables and platform standards, or open its full specification."
             actions={
-              <Button
-                href="#contact"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onJumpToSection('#contact');
-                }}
-                variant="secondary"
-                size="md"
-              >
-                Discuss Your Scope
-              </Button>
+              onNavigatePath ? (
+                <Button
+                  href="/services/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigatePath('/services/');
+                  }}
+                  variant="secondary"
+                  size="md"
+                >
+                  View Full Services Directory
+                </Button>
+              ) : undefined
             }
           />
 
-          {/* Compact 5-Track Anchor Bar */}
-          <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-            {CORE_SERVICE_TRACKS.map((track) => (
-              <a
-                key={track.id}
-                href={`#${track.anchorId}`}
-                onClick={(e) => {
-                  e.preventDefault();
-                  onJumpToSection(`#${track.anchorId}`);
-                }}
-                className="group min-h-[60px] rounded-xl border border-[#dde6eb] bg-white px-4 py-3.5 hover:border-[#00749c] hover:bg-[#f2f7f9] transition-colors flex flex-col justify-between gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c]"
+          {/* Interactive Tablist + Active Specification Panel */}
+          <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-start">
+            <div
+              role="tablist"
+              aria-label="WPCarePoint Core Services"
+              className="lg:col-span-5 rounded-2xl border border-[#dde6eb] bg-white divide-y divide-[#e9eff2] overflow-hidden"
+            >
+              {CORE_SERVICE_TRACKS.map((track, idx) => {
+                const isSelected = idx === activeTrackIndex;
+                return (
+                  <button
+                    key={track.id}
+                    id={`tab-${track.id}`}
+                    role="tab"
+                    type="button"
+                    aria-selected={isSelected}
+                    aria-controls={`panel-${track.id}`}
+                    tabIndex={isSelected ? 0 : -1}
+                    onClick={() => setActiveTrackIndex(idx)}
+                    onKeyDown={(e) => handleTabKeyDown(e, idx)}
+                    className={`w-full text-left px-5 py-4 transition-colors flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#00749c] ${
+                      isSelected ? 'bg-[#003b4f] text-white' : 'bg-white hover:bg-[#f2f7f9] text-[#003b4f]'
+                    }`}
+                  >
+                    <div className="min-w-0">
+                      <span
+                        className={`text-xs font-mono font-semibold tabular-nums ${
+                          isSelected ? 'text-[#00b2d4]' : 'text-[#00749c]'
+                        }`}
+                      >
+                        {track.index} {track.subtitle}
+                      </span>
+                      <p className="text-base font-bold mt-0.5 leading-snug">
+                        {track.title}
+                      </p>
+                    </div>
+                    <ArrowRight
+                      className={`h-4 w-4 shrink-0 transition-transform ${
+                        isSelected ? 'text-[#00b2d4] translate-x-0.5' : 'text-[#6c757d]'
+                      }`}
+                      aria-hidden="true"
+                    />
+                  </button>
+                );
+              })}
+            </div>
+
+            <div className="lg:col-span-7">
+              <div
+                id={`panel-${activeTrack.id}`}
+                role="tabpanel"
+                aria-labelledby={`tab-${activeTrack.id}`}
+                className="rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 space-y-6"
               >
-                <div className="flex items-center justify-between text-xs font-mono text-[#00749c]">
-                  <span>{track.index}</span>
-                  <ArrowRight
-                    className="h-3.5 w-3.5 opacity-60 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"
-                    aria-hidden="true"
-                  />
+                <div className="flex flex-wrap items-center justify-between gap-3 border-b border-[#e9eff2] pb-4">
+                  <div>
+                    <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                      {activeTrack.index} {activeTrack.subtitle}
+                    </p>
+                    <h3 className="text-xl sm:text-2xl font-bold text-[#003b4f] mt-1">
+                      {activeTrack.title}
+                    </h3>
+                  </div>
+                  <span className="text-xs font-mono text-[#6c757d]">
+                    {activeTrack.standards}
+                  </span>
                 </div>
-                <p className="text-sm font-semibold text-[#003b4f] leading-snug">
-                  {track.title}
+
+                <p className="text-sm sm:text-base text-[#2e2e2e] leading-relaxed">
+                  {activeTrack.description}
                 </p>
-              </a>
-            ))}
-          </div>
 
-          {/* Sections 4, 5 & 6: Website Design & Development, eCommerce, AI & Business Automation */}
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            <div className="lg:col-span-6 flex">
-              <ServiceCard
-                track={webTrack}
-                variant="featured"
-                onExploreService={onExploreService}
-                onNavigatePath={onNavigatePath}
-              />
-            </div>
+                <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 pt-2">
+                  {activeTrack.deliverables.map((item) => (
+                    <li
+                      key={item}
+                      className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
+                    >
+                      <Check
+                        className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
+                        aria-hidden="true"
+                      />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
 
-            <div className="lg:col-span-6 flex">
-              <ServiceCard
-                track={ecommerceTrack}
-                variant="featured"
-                onExploreService={onExploreService}
-                onNavigatePath={onNavigatePath}
-              />
-            </div>
+                <div className="pt-4 border-t border-[#e9eff2] flex flex-wrap items-center justify-between gap-4">
+                  <Button
+                    href={activeTrack.routePath || `/services/${activeTrack.serviceSlug}/`}
+                    onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+                      e.preventDefault();
+                      if (activeTrack.routePath && onNavigatePath) {
+                        onNavigatePath(activeTrack.routePath);
+                      } else if (activeTrack.serviceSlug) {
+                        onExploreService(activeTrack.serviceSlug);
+                      }
+                    }}
+                    variant="primary"
+                    size="md"
+                  >
+                    <span>Explore {activeTrack.title}</span>
+                    <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  </Button>
 
-            <div className="lg:col-span-7 flex">
-              <ServiceCard
-                track={aiAutomationTrack}
-                onExploreService={onExploreService}
-                onNavigatePath={onNavigatePath}
-              />
-            </div>
+                  <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onJumpToSection('#contact');
+                    }}
+                    className="inline-flex items-center min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#003b4f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md px-2"
+                  >
+                    Discuss this track by email →
+                  </a>
+                </div>
+              </div>
 
-            <div className="lg:col-span-5 flex">
-              <aside className="w-full rounded-2xl border border-[#dde6eb] bg-white overflow-hidden flex flex-col justify-between">
-                <div className="aspect-[16/10] bg-[#eef3f6] overflow-hidden border-b border-[#e9eff2]">
+              {/* Direct Crawlable Index Strip Across Core Routes */}
+              <div className="mt-5 rounded-2xl border border-[#dde6eb] bg-white p-5 grid grid-cols-1 sm:grid-cols-12 gap-5 items-center">
+                <div className="sm:col-span-5 aspect-[16/10] rounded-xl overflow-hidden bg-[#eef3f6] border border-[#e9eff2]">
                   {archFailed ? (
-                    <div className="w-full h-full flex items-center justify-center p-6 text-xs text-[#6c757d]">
+                    <div className="w-full h-full flex items-center justify-center p-4 text-xs text-[#6c757d]">
                       {BRAND_INFO.architectureImageAlt}
                     </div>
                   ) : (
@@ -128,49 +204,48 @@ export function ServicesSections({
                     />
                   )}
                 </div>
-                <div className="p-6 sm:p-7 flex-1 flex flex-col justify-between">
-                  <div>
-                    <p className="text-xs font-mono font-semibold text-[#00749c] uppercase tracking-wider">
-                      Architecture Principle
-                    </p>
-                    <h3 className="text-lg font-bold text-[#003b4f] mt-2">
-                      Clean codebases designed for straightforward handover.
-                    </h3>
-                    <p className="text-sm text-[#2e2e2e] mt-2 leading-relaxed">
-                      Whether building in WordPress Gutenberg or React and Next.js, we
-                      prioritise semantic clarity, security, and independent client ownership.
-                    </p>
-                  </div>
-                  <div className="mt-5">
-                    <Button
-                      href="#contact"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        onJumpToSection('#contact');
-                      }}
-                      variant="secondary"
-                      size="sm"
-                    >
-                      Enquire About Custom Builds
-                    </Button>
-                  </div>
+                <div className="sm:col-span-7 space-y-2.5">
+                  <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                    Engineering Principle
+                  </p>
+                  <p className="text-base font-bold text-[#003b4f] leading-snug">
+                    Lean codebases engineered for direct team ownership.
+                  </p>
+                  <ul className="flex flex-wrap gap-x-4 gap-y-1 text-xs font-medium text-[#00749c]">
+                    {CORE_SERVICE_TRACKS.map((t) => (
+                      <li key={t.id}>
+                        <a
+                          href={t.routePath || '#'}
+                          onClick={(e) => {
+                            if (t.routePath && onNavigatePath) {
+                              e.preventDefault();
+                              onNavigatePath(t.routePath);
+                            }
+                          }}
+                          className="inline-flex items-center min-h-[36px] hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded"
+                        >
+                          {t.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </aside>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Section 7: Website Care & Technical Support */}
+      {/* Section 4: Website Care & Technical Support */}
       <section
         id="website-care"
         className="scroll-mt-20 py-16 lg:py-20 bg-white border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
           <SectionHeading
-            eyebrow="04. Website Care & Technical Support"
-            title="Structured stewardship to keep business websites secure, backed up, and stable."
-            description="All care tiers are scoped accurately around your site architecture—no guesswork tiers or inflated promises."
+            eyebrow="Website Care & Support"
+            title="Predictable maintenance to keep business sites backed up and stable."
+            description="Three scoped tiers without hidden add-ons—plus one-off WordPress repairs and emergency triage."
             actions={
               onNavigatePath ? (
                 <Button
@@ -182,7 +257,7 @@ export function ServicesSections({
                   variant="secondary"
                   size="md"
                 >
-                  Explore Care &amp; Support Details
+                  Full Care Specification
                 </Button>
               ) : undefined
             }
@@ -200,12 +275,10 @@ export function ServicesSections({
               >
                 <div>
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="text-xl font-bold text-[#003b4f]">
-                      {tier.name}
-                    </h3>
+                    <h3 className="text-xl font-bold text-[#003b4f]">{tier.name}</h3>
                     {tier.highlighted && (
                       <span className="text-xs font-mono font-semibold text-[#00749c]">
-                        Recommended
+                        Popular
                       </span>
                     )}
                   </div>
@@ -263,28 +336,39 @@ export function ServicesSections({
               </div>
               <div>
                 <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
-                  One-Off Technical Pathway
+                  One-Off Repairs &amp; Emergency Triage
                 </p>
                 <h3 className="text-lg sm:text-xl font-bold text-[#003b4f] mt-1">
-                  Need a One-Off WordPress Fix?
+                  Need a standalone WordPress fix or malware triage?
                 </h3>
                 <p className="text-sm text-[#2e2e2e] mt-1.5 leading-relaxed">
-                  Resolve critical errors, plugin conflicts, broken layouts, SSL issues,
-                  or sudden site slowdowns without committing to an ongoing monthly care plan.
+                  Resolve plugin conflicts, fatal PHP errors, broken layouts, or suspected
+                  security incidents without locking into a monthly retainer.
                 </p>
               </div>
             </div>
 
-            <div className="shrink-0">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0">
+              {onNavigatePath && (
+                <a
+                  href="/services/website-care-support/#care-emergency"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigatePath('/services/website-care-support/#care-emergency');
+                  }}
+                  className="inline-flex items-center justify-center min-h-[44px] px-4 text-xs font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors rounded-xl border border-[#dde6eb] bg-white"
+                >
+                  Emergency Triage Details
+                </a>
+              )}
               <Button
                 href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
                   'WordPress Quick Fix Request'
                 )}`}
                 variant="primary"
                 size="md"
-                className="w-full sm:w-auto"
               >
-                <span>Request WordPress Quick Fix</span>
+                <span>Request Quick Fix</span>
                 <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
               </Button>
             </div>
@@ -292,70 +376,95 @@ export function ServicesSections({
         </div>
       </section>
 
-      {/* Section 8: SEO & AI Search Optimisation */}
+      {/* Section 5: Speed, Technical SEO & AI Search Spotlight */}
       <section
         id="seo-ai-search"
         className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6">
-          <SectionHeading
-            eyebrow="05. SEO & AI Search Optimisation"
-            title="Structured technical SEO, WordPress speed engineering, and AI search readiness."
-            description="Built so Google UK search crawlers and modern generative AI assistants parse your services, location, and technical authority cleanly."
-          />
-
-          <div className="mt-10 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-            <div className="lg:col-span-7 flex">
-              <ServiceCard
-                track={seoAiSearchTrack}
-                variant="featured"
-                onExploreService={onExploreService}
-                onNavigatePath={onNavigatePath}
-              />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+            <div className="lg:col-span-6 space-y-5">
+              <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                Speed, Technical SEO &amp; AI Search
+              </p>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-[#003b4f] leading-tight text-balance">
+                Faster Core Web Vitals and structured clarity for Google UK and AI search.
+              </h2>
+              <p className="text-base text-[#2e2e2e] leading-relaxed">
+                {seoAiSearchTrack.description}
+              </p>
+              <ul className="space-y-2.5 pt-2">
+                {seoAiSearchTrack.deliverables.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
+                  >
+                    <Check
+                      className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
+                      aria-hidden="true"
+                    />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="pt-3 flex flex-wrap gap-4">
+                <Button
+                  href="/services/ai-search-optimisation/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (onNavigatePath) {
+                      onNavigatePath('/services/ai-search-optimisation/');
+                    } else {
+                      onExploreService('ai-search-optimisation');
+                    }
+                  }}
+                  variant="secondary"
+                  size="md"
+                >
+                  <span>SEO &amp; AI Search Details</span>
+                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </Button>
+              </div>
             </div>
 
-            <div className="lg:col-span-5 flex">
-              <aside className="w-full rounded-2xl border border-[#b9ccd6] bg-white p-6 sm:p-7 flex flex-col justify-between">
-                <div>
-                  <div className="flex items-center gap-2 text-[#00749c]">
-                    <Zap className="h-4 w-4" aria-hidden="true" />
-                    <span className="text-xs font-mono font-semibold uppercase tracking-wider">
-                      WordPress Speed Optimisation
-                    </span>
-                  </div>
-
-                  <h3 className="text-xl font-bold text-[#003b4f] mt-3 leading-snug">
-                    Core Web Vitals &amp; Loading Speed Engineering
-                  </h3>
-
-                  <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">
-                    Slow WordPress themes and unoptimised asset payloads reduce enquiries
-                    and search visibility. We audit render-blocking scripts, database queries,
-                    image delivery, and caching rules cleanly.
-                  </p>
-
-                  <dl className="mt-5 pt-5 border-t border-[#e9eff2] space-y-3 text-sm">
-                    <div>
-                      <dt className="font-semibold text-[#003b4f]">
-                        Core Web Vitals Discipline
-                      </dt>
-                      <dd className="text-[#6c757d] mt-0.5">
-                        Focused LCP, INP, and CLS remediation across mobile and desktop.
-                      </dd>
-                    </div>
-                    <div>
-                      <dt className="font-semibold text-[#003b4f]">
-                        AI Search Optimisation (GEO / AIO)
-                      </dt>
-                      <dd className="text-[#6c757d] mt-0.5">
-                        Schema.org entities and factual structuring for Google UK, ChatGPT,
-                        Gemini, and Claude.
-                      </dd>
-                    </div>
-                  </dl>
+            <div className="lg:col-span-6">
+              <aside className="rounded-2xl border border-[#b9ccd6] bg-white p-6 sm:p-8 space-y-5">
+                <div className="flex items-center gap-2 text-[#00749c]">
+                  <Zap className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span className="text-xs font-mono font-semibold uppercase tracking-wider">
+                    WordPress Speed Optimisation
+                  </span>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-[#e9eff2] flex flex-wrap items-center justify-between gap-3">
+                <h3 className="text-xl font-bold text-[#003b4f] leading-snug">
+                  Diagnostic Core Web Vitals tuning—without brittle caching tricks.
+                </h3>
+
+                <p className="text-sm text-[#2e2e2e] leading-relaxed">
+                  We trace genuine slowdowns across images, theme scripts, autoloaded SQL tables,
+                  and UK server TTFB, then apply verified fixes safely in staging.
+                </p>
+
+                <dl className="divide-y divide-[#e9eff2] border-t border-[#e9eff2] text-sm">
+                  <div className="py-3">
+                    <dt className="font-semibold text-[#003b4f]">
+                      LCP, INP &amp; CLS Engineering
+                    </dt>
+                    <dd className="text-[#6c757d] mt-0.5">
+                      Targeted image delivery, font preloads, and zero layout shift on mobile.
+                    </dd>
+                  </div>
+                  <div className="py-3">
+                    <dt className="font-semibold text-[#003b4f]">
+                      WooCommerce-Safe Caching
+                    </dt>
+                    <dd className="text-[#6c757d] mt-0.5">
+                      Dynamic baskets, forms, and nonces kept safely excluded and tested live.
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="pt-2 flex flex-wrap items-center justify-between gap-3">
                   <a
                     href="/wordpress-speed-optimisation/"
                     onClick={(e) => {
@@ -366,11 +475,11 @@ export function ServicesSections({
                         onJumpToSection('#contact');
                       }
                     }}
-                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors whitespace-nowrap group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
+                    className="inline-flex items-center gap-1.5 min-h-[44px] text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors group"
                   >
-                    <span>Explore Speed Optimisation</span>
+                    <span>Explore WordPress Speed</span>
                     <ArrowRight
-                      className="h-3.5 w-3.5 transition-transform duration-150 group-hover:translate-x-0.5"
+                      className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
                       aria-hidden="true"
                     />
                   </a>
@@ -380,9 +489,9 @@ export function ServicesSections({
                       e.preventDefault();
                       onJumpToSection('#contact');
                     }}
-                    className="inline-flex items-center gap-1.5 min-h-[44px] px-2 -mx-2 text-xs font-semibold text-[#6c757d] hover:text-[#003b4f] transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md"
+                    className="inline-flex items-center min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#003b4f]"
                   >
-                    <span>Book Speed Audit</span>
+                    Request Speed Audit
                   </a>
                 </div>
               </aside>

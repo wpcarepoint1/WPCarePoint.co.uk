@@ -52,7 +52,7 @@
   --bg-card: #ffffff;
   --bg-muted: #eef3f6;
   --bg-hover: #f2f7f9;
-  --bg-header: #003b4f;
+  --bg-header: #ffffff;
   --bg-footer: #003b4f;
 
   --border-subtle: #dde6eb;
@@ -71,9 +71,9 @@
   --btn-primary-hover-bg: #00b2d4;
   --btn-primary-hover-text: #003b4f;
 
-  --grid-line: rgba(0, 59, 79, 0.04);
-  --grid-line-deep: rgba(255, 255, 255, 0.06);
-  --progress-bar: #00b2d4;
+  --grid-line: rgba(0, 59, 79, 0.035);
+  --grid-line-deep: rgba(255, 255, 255, 0.055);
+  --progress-bar: #00749c;
   --selection-bg: #00749c;
   --selection-text: #ffffff;
 }
@@ -102,7 +102,7 @@
     font-family: var(--font-display);
     font-optical-sizing: auto;
     text-wrap: balance;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   p {
@@ -119,19 +119,72 @@
   background-image:
     linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-size: 56px 56px;
 }
 
 .bg-deep-teal-grid {
   background-image:
     linear-gradient(to right, var(--grid-line-deep) 1px, transparent 1px),
     linear-gradient(to bottom, var(--grid-line-deep) 1px, transparent 1px);
-  background-size: 48px 48px;
+  background-size: 56px 56px;
+}
+
+/* Compositor-only progressive reveal & accordions (zero hidden opacity traps) */
+@keyframes wpc-fade-in {
+  from {
+    opacity: 0.94;
+    transform: translate3d(0, 6px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.wpc-route-enter {
+  animation: wpc-fade-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.wpc-reveal {
+  opacity: 0.96;
+  transform: translate3d(0, 8px, 0);
+  transition:
+    opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+.wpc-reveal[data-visible="true"] {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+.wpc-accordion-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.wpc-accordion-grid[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+
+.wpc-accordion-inner {
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .wpc-route-enter,
+  .wpc-reveal {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 
   *,

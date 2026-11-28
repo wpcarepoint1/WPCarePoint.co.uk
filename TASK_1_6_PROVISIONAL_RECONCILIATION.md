@@ -1,10 +1,16 @@
-# Task 1.6 & Stage 3 Provisional URL Reconciliation and Legacy Redirect Decision Map (`WPCP-P2.12-V01`)
+# Task 1.6 & Stage 3 Provisional URL Reconciliation and Legacy Redirect Decision Map (`WPCP-P2.13-V01`)
 
 **Initial Reconciliation Date:** 2026-11-23  
-**Latest Audit Update (`WPCP-P2.12-V01`):** 2026-11-27  
-**Status:** `PROVISIONAL — /site-map/ IMPLEMENTED LOCALLY (16 ROUTES); TASK 2 LEGACY SECURITY URL AUDIT COMPLETE; PRODUCTION REDIRECTS REMAIN GATED BY STAGE 3 SIGN-OFF (VER-15 DEFERRED BY OWNER)`  
-**Stage 3 Deployment Status:** `NOT READY — ZERO REDIRECTS OR HOST CONFIG EDITS EXECUTED IN CLOUDFLARE OR HOSTING (/site-map/ BUILT LOCALLY ONLY)`  
-**Decisions Preserved:** Confirmed Owner Decisions `#1–#61` preserved verbatim (`Not Indexed Pages`: `SKIPPED BY OWNER`; `Links`: `No Data`).
+**Latest Audit Update (`WPCP-P2.13-V01`):** 2026-11-28  
+**Status:** `PROVISIONAL — /site-map/ IMPLEMENTED LOCALLY (16 ROUTES); 2026-02-15 WAYBACK SECURITY SNAPSHOT VERIFIED (OUTCOME A: 301 APPROVED FOR FUTURE IMPLEMENTATION); STAGE 3 PRODUCTION REDIRECTS REMAIN UNEXECUTED (VER-15 DEFERRED BY OWNER)`  
+**Stage 3 Deployment Status:** `NOT READY — ZERO 301/410 REDIRECTS OR HOST CONFIG EDITS EXECUTED (FULL P2.13 PACKAGE IN /TASK_2_13_READINESS_AND_WAYBACK_REPORT.md)`  
+**Decisions Preserved:** Confirmed Owner Decisions `#1–#63` preserved verbatim (`Not Indexed Pages`: `SKIPPED BY OWNER`; `Links`: `No Data`).
+
+---
+
+## `WPCP-P2.13-V01` Wayback Security Snapshot Verification Addendum (`2026-11-28`)
+
+- **`/wordpress-security-emergency-support/` (`75` Imp) — Condition Cleared (`Outcome A: 301 APPROVED FOR FUTURE IMPLEMENTATION`):** Verified exact `2026-02-15` Wayback snapshot (`https://web.archive.org/web/20260215043121/https://wpcarepoint.co.uk/wordpress-security-emergency-support/`, `HTTP/2 200`, `507,356` bytes original HTML). Confirmed historical page covered UK emergency WordPress rescue, hacked-site/malware cleanup, database/plugin/theme fixes, security improvements, and no-contract one-time fixes — directly covered by `/services/website-care-support/` (while excluding banned `24/7`, `"within hours"`, `Schedule a Call`, `7+ Years`, `100k+ users`, `"full refund"` claims per `#58`). **Zero redirects implemented today**; future single-hop `301 -> /services/website-care-support/` remains Stage 3 gated pending Hostinger/Cloudflare setup (`VER-18`).
 
 ---
 
@@ -116,7 +122,7 @@ Direct codebase inspection verified **`5` concrete conflict hazards** affecting 
 |---:|---|---:|---|---|---|---|---|
 | 1 | `/` | 10 | Unavailable | No | Yes (`2026-01-13`) | Core missing from `305` Indexed | **Preserve** (Live indexation check + Manual Review) |
 | 2 | `/wordpress-maintenance-support/` | 98 | Unavailable | No | Yes (`2026-02-15`) | Highest-Imp core URL missing from `305` Indexed | **Preserve** (Live indexation check + Manual Review) |
-| 3 | `/wordpress-security-emergency-support/` | 75 | Unavailable | No | Yes (`2026-02-15`) | High-Imp core URL missing from `305` Indexed | **Preserve** (Live indexation check + Manual Review) |
+| 3 | `/wordpress-security-emergency-support/` | 75 | Unavailable | No | Yes (`2026-02-15` -> `20260215043121`) | High-Imp core URL missing from `305` Indexed | **`Outcome A: 301 APPROVED FOR FUTURE IMPLEMENTATION -> /services/website-care-support/`** (`WPCP-P2.13-V01`, not yet executed) |
 | 4 | `/blog/best-wordpress-starter-themes-developers/` | 54 | Unavailable | No | Yes (`2026-03-07`) | Pre-hack WP post (not in `305`) | **Manual Review** (`Recover` vs `301 -> /wordpress-design-development` vs `410`) |
 | 5 | `/blog/free-wordpress-themes/` | 40 | Unavailable | No | Yes (`2026-02-15`) | Near-duplicate / parent of `#13` | **Manual Review** (`Recover` vs `301` vs `410`; pair with `#13`) |
 | 6 | `/blog/drag-and-drop-page-builders-in-wordpress/` | 25 | Unavailable | Yes (`2026-09-02`) | Yes (`2026-02-15`) | Indexed pre-hack WP post | **Manual Review** (`Recover` vs `301 -> /wordpress-design-development` vs `410`) |

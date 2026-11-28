@@ -3,34 +3,29 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { AnimatePresence, MotionConfig, motion } from 'motion/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { SiteFooter } from './components/layout/SiteFooter';
 import { SiteHeader } from './components/layout/SiteHeader';
-import { EASE_OUT_EXPO, ScrollProgressBar } from './components/MotionPrimitives';
+import { ScrollProgressBar } from './components/MotionPrimitives';
 import { HeroSection } from './components/sections/HeroSection';
 import { ServicesSections } from './components/sections/ServicesSections';
 import { TrustAndProcessSections } from './components/sections/TrustAndProcessSections';
-import { AboutPageView } from './components/about/AboutPageView';
-import { ContactPageView } from './components/contact/ContactPageView';
-import { DedicatedServicePage } from './components/service-detail/DedicatedServicePage';
-import { ServicesHubView } from './components/services-hub/ServicesHubView';
-import { SiteMapPageView } from './components/site-map/SiteMapPageView';
 import { CtaSection } from './components/ui/CtaSection';
-import { NotFoundPageView } from './components/ui/NotFoundPageView';
-import { DEDICATED_SERVICE_PAGES_BY_PATH } from './data/dedicatedServicePagesData';
+import {
+  cleanRawPathname,
+  resolveRouteBundle,
+  type ResolvedRouteBundle,
+} from './routeLoader';
 import { applyHomeSeo, applyNotFoundSeo } from './utils/routeSeo';
 
-function normalizePathname(pathname: string): string {
-  const cleaned = pathname.trim().toLowerCase();
-  return cleaned === '' ? '/' : cleaned;
+interface AppProps {
+  initialRoute: ResolvedRouteBundle;
 }
 
-export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(() =>
-    normalizePathname(window.location.pathname)
-  );
-
+export default function App({ initialRoute }: AppProps) {
+  const [routeState, setRouteState] = useState<ResolvedRouteBundle>(initialRoute);
+  const currentPath = routeState.path;
+  const navigationSeqRef = useRef(0);
   const pendingHashRef = useRef<string | null>(null);
 
   const flushPendingHashScroll = useCallback(() => {
@@ -46,61 +41,54 @@ export default function App() {
     });
   }, []);
 
+  const commitRouteNavigation = useCallback(
+    async (rawPathname: string, hashId: string | null) => {
+      const seq = ++navigationSeqRef.current;
+      pendingHashRef.current = hashId;
+      const nextBundle = await resolveRouteBundle(rawPathname);
+      if (seq !== navigationSeqRef.current) {
+        return;
+      }
+      setRouteState(nextBundle);
+      if (!hashId) {
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      }
+    },
+    []
+  );
+
   useEffect(() => {
     const handlePopState = () => {
-      pendingHashRef.current = window.location.hash
+      const hashId = window.location.hash
         ? window.location.hash.replace(/^#/, '')
         : null;
-      setCurrentPath(normalizePathname(window.location.pathname));
+      void commitRouteNavigation(window.location.pathname, hashId);
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
-  const isContactPage =
-    currentPath === '/contact' || currentPath === '/contact/';
-  const isServicesHub =
-    currentPath === '/services' || currentPath === '/services/';
-  const isAboutPage =
-    currentPath === '/about' || currentPath === '/about/';
-  const isSiteMapPage =
-    currentPath === '/site-map' || currentPath === '/site-map/';
-
-  const activeDedicatedPage = useMemo(
-    () => DEDICATED_SERVICE_PAGES_BY_PATH[currentPath],
-    [currentPath]
-  );
-
-  const isHomeRoute = currentPath === '/' || currentPath === '';
-  const isNotFoundRoute =
-    !isHomeRoute &&
-    !isContactPage &&
-    !isServicesHub &&
-    !isAboutPage &&
-    !isSiteMapPage &&
-    !activeDedicatedPage;
+  }, [commitRouteNavigation]);
 
   useEffect(() => {
-    if (isHomeRoute) {
+    if (routeState.kind === 'home') {
       applyHomeSeo();
-      const activeHash = window.location.hash.replace(/^#/, '');
+      const activeHash =
+        pendingHashRef.current || window.location.hash.replace(/^#/, '');
       if (activeHash) {
-        window.requestAnimationFrame(() => {
-          window.requestAnimationFrame(() => {
-            document.getElementById(activeHash)?.scrollIntoView({ behavior: 'smooth' });
-          });
-        });
+        pendingHashRef.current = activeHash;
+        flushPendingHashScroll();
       }
-    } else if (isNotFoundRoute) {
-      applyNotFoundSeo(currentPath);
+    } else if (routeState.kind === 'not-found') {
+      applyNotFoundSeo(routeState.path);
+    } else if (pendingHashRef.current) {
+      flushPendingHashScroll();
     }
-  }, [isHomeRoute, isNotFoundRoute, currentPath]);
+  }, [routeState, flushPendingHashScroll]);
 
   const navigateToPath = useCallback(
     (rawPath: string) => {
       const withLeadingSlash = rawPath.startsWith('/') ? rawPath : `/${rawPath}`;
       const [pathOnly, hashPart] = withLeadingSlash.split('#');
-      const normalizedNext = normalizePathname(pathOnly || '/');
+      const normalizedNext = cleanRawPathname(pathOnly || '/');
       const cleanTarget = `${normalizedNext}${hashPart ? `#${hashPart}` : ''}`;
 
       if (window.location.pathname + window.location.hash !== cleanTarget) {
@@ -116,13 +104,9 @@ export default function App() {
         return;
       }
 
-      pendingHashRef.current = hashPart || null;
-      setCurrentPath(normalizedNext);
-      if (!hashPart) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
-      }
+      void commitRouteNavigation(normalizedNext, hashPart || null);
     },
-    [currentPath]
+    [currentPath, commitRouteNavigation]
   );
 
   const navigateToService = useCallback(
@@ -162,163 +146,148 @@ export default function App() {
     [navigateToPath]
   );
 
-  const navigateHome = useCallback((hash?: string) => {
-    const targetUrl = hash ? `/${hash}` : '/';
-    if (window.location.pathname !== '/') {
-      window.history.pushState({}, '', targetUrl);
-      pendingHashRef.current = hash ? hash.replace('#', '') : null;
-      setCurrentPath('/');
-      if (!hash) {
-        window.scrollTo({ top: 0, behavior: 'instant' });
+  const navigateHome = useCallback(
+    (hash?: string) => {
+      const targetUrl = hash ? `/${hash}` : '/';
+      if (window.location.pathname !== '/') {
+        window.history.pushState({}, '', targetUrl);
+        void commitRouteNavigation('/', hash ? hash.replace('#', '') : null);
+        return;
       }
-      return;
-    }
 
-    if (hash) {
-      const id = hash.replace('#', '');
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      if (hash) {
+        const id = hash.replace('#', '');
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    },
+    [commitRouteNavigation]
+  );
+
+  const renderMainContent = () => {
+    switch (routeState.kind) {
+      case 'contact': {
+        const ContactView = routeState.Component;
+        return (
+          <div key="contact-page" className="wpc-route-enter">
+            <ContactView
+              onNavigateHome={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
+          </div>
+        );
+      }
+      case 'services-hub': {
+        const ServicesView = routeState.Component;
+        return (
+          <div key="services-hub-page" className="wpc-route-enter">
+            <ServicesView
+              onNavigateHome={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
+          </div>
+        );
+      }
+      case 'about': {
+        const AboutView = routeState.Component;
+        return (
+          <div key="about-page" className="wpc-route-enter">
+            <AboutView
+              onNavigateHome={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
+          </div>
+        );
+      }
+      case 'site-map': {
+        const SiteMapView = routeState.Component;
+        return (
+          <div key="site-map-page" className="wpc-route-enter">
+            <SiteMapView
+              onNavigateHome={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
+          </div>
+        );
+      }
+      case 'dedicated-service': {
+        const ServiceView = routeState.Component;
+        return (
+          <div key={`dedicated-${routeState.page.id}`} className="wpc-route-enter">
+            <ServiceView
+              page={routeState.page}
+              onNavigateHome={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
+          </div>
+        );
+      }
+      case 'not-found': {
+        const NotFoundView = routeState.Component;
+        return (
+          <div key="not-found-page" className="wpc-route-enter">
+            <NotFoundView
+              requestedPath={routeState.path}
+              onNavigateHome={navigateHome}
+              onNavigatePath={navigateToPath}
+            />
+          </div>
+        );
+      }
+      case 'home':
+      default:
+        return (
+          <div key="wpcarepoint-homepage">
+            {/* Section 2: Hero Section */}
+            <HeroSection onJumpToSection={navigateHome} />
+
+            {/* Sections 3-5: Interactive Core Services, Website Care + Quick Fix, Speed & SEO/AI Spotlight */}
+            <ServicesSections
+              onExploreService={navigateToService}
+              onNavigatePath={navigateToPath}
+              onJumpToSection={navigateHome}
+            />
+
+            {/* Sections 6-9: Why Choose Us, Working Process, Portfolio & Proof Standards, FAQ */}
+            <TrustAndProcessSections />
+
+            {/* Section 10: Contact CTA */}
+            <CtaSection />
+          </div>
+        );
     }
-  }, []);
+  };
 
   return (
-    <MotionConfig reducedMotion="user">
-      <div id="top" className="min-h-screen flex flex-col bg-white text-[#2e2e2e]">
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-[#00749c] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
-        >
-          Skip to main content
-        </a>
+    <div id="top" className="min-h-screen flex flex-col bg-white text-[#2e2e2e]">
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-4 focus:z-[60] focus:px-4 focus:py-2 focus:bg-[#00749c] focus:text-white focus:rounded-lg focus:text-sm focus:font-semibold"
+      >
+        Skip to main content
+      </a>
 
-        <ScrollProgressBar />
+      <ScrollProgressBar />
 
-        {/* Section 1: Header & Navigation */}
-        <SiteHeader
-          currentPath={currentPath}
-          onNavigateHome={navigateHome}
-          onNavigateService={navigateToService}
-          onNavigatePath={navigateToPath}
-          hasLocalContact={true}
-        />
+      {/* Section 1: Header & Navigation */}
+      <SiteHeader
+        currentPath={currentPath}
+        onNavigateHome={navigateHome}
+        onNavigateService={navigateToService}
+        onNavigatePath={navigateToPath}
+        hasLocalContact={true}
+      />
 
-        <main id="main-content" className="flex-1">
-          <AnimatePresence mode="wait" onExitComplete={flushPendingHashScroll}>
-            {isContactPage ? (
-              <motion.div
-                key="contact-page"
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <ContactPageView
-                  onNavigateHome={navigateHome}
-                  onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : isServicesHub ? (
-              <motion.div
-                key="services-hub-page"
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <ServicesHubView
-                  onNavigateHome={navigateHome}
-                  onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : isAboutPage ? (
-              <motion.div
-                key="about-page"
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <AboutPageView
-                  onNavigateHome={navigateHome}
-                  onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : isSiteMapPage ? (
-              <motion.div
-                key="site-map-page"
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <SiteMapPageView
-                  onNavigateHome={navigateHome}
-                  onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : activeDedicatedPage ? (
-              <motion.div
-                key={`dedicated-${activeDedicatedPage.id}`}
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <DedicatedServicePage
-                  page={activeDedicatedPage}
-                  onNavigateHome={navigateHome}
-                  onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : isNotFoundRoute ? (
-              <motion.div
-                key="not-found-page"
-                initial={{ opacity: 0.94, y: 6 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0.94, y: -4 }}
-                transition={{ duration: 0.2, ease: EASE_OUT_EXPO }}
-              >
-                <NotFoundPageView
-                  requestedPath={currentPath}
-                  onNavigateHome={navigateHome}
-                  onNavigatePath={navigateToPath}
-                />
-              </motion.div>
-            ) : (
-              <motion.div
-                key="wpcarepoint-homepage"
-                initial={{ opacity: 0.96 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0.96 }}
-                transition={{ duration: 0.18 }}
-              >
-                {/* Section 2: Hero Section */}
-                <HeroSection onJumpToSection={navigateHome} />
+      <main id="main-content" className="flex-1">
+        {renderMainContent()}
+      </main>
 
-                {/* Sections 3-8: Services Overview, Web Dev, eCommerce, AI Automation, Website Care + Quick Fix, SEO & AI Search */}
-                <ServicesSections
-                  onExploreService={navigateToService}
-                  onNavigatePath={navigateToPath}
-                  onJumpToSection={navigateHome}
-                />
-
-                {/* Sections 9-13: Why Choose Us, Process, Portfolio Preview, Testimonials Placeholder, FAQ */}
-                <TrustAndProcessSections />
-
-                {/* Section 14: Contact CTA */}
-                <CtaSection />
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </main>
-
-        {/* Section 15: Professional Footer */}
-        <SiteFooter
-          onNavigateHome={navigateHome}
-          onNavigatePath={navigateToPath}
-        />
-      </div>
-    </MotionConfig>
+      {/* Professional Footer */}
+      <SiteFooter
+        onNavigateHome={navigateHome}
+        onNavigatePath={navigateToPath}
+      />
+    </div>
   );
 }

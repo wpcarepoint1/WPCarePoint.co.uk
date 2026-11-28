@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
 import { ChevronDown } from 'lucide-react';
 import type { FaqEntry } from '../../data/homepageData';
-import { EASE_OUT_EXPO } from '../MotionPrimitives';
 
 interface FaqAccordionProps {
   items: FaqEntry[];
@@ -26,28 +24,22 @@ export function FaqAccordion({ items }: FaqAccordionProps) {
               <span className="text-base font-semibold text-[#003b4f] leading-snug">
                 {item.question}
               </span>
-              <motion.span
-                animate={{ rotate: isOpen ? 180 : 0 }}
-                transition={{ duration: 0.18, ease: EASE_OUT_EXPO }}
-                className="shrink-0 text-[#00749c]"
+              <span
+                className={`shrink-0 text-[#00749c] transition-transform duration-200 ${
+                  isOpen ? 'rotate-180' : ''
+                }`}
                 aria-hidden="true"
               >
                 <ChevronDown className="h-4 w-4" />
-              </motion.span>
+              </span>
             </button>
-            <AnimatePresence initial={false}>
-              {isOpen && (
-                <motion.div
-                  initial={{ opacity: 0, y: -4 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -4 }}
-                  transition={{ duration: 0.18, ease: EASE_OUT_EXPO }}
-                  className="px-6 pb-5 text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed"
-                >
+            <div className="wpc-accordion-grid" data-open={isOpen ? 'true' : 'false'}>
+              <div className="wpc-accordion-inner">
+                <div className="px-6 pb-5 text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed">
                   {item.answer}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                </div>
+              </div>
+            </div>
           </div>
         );
       })}

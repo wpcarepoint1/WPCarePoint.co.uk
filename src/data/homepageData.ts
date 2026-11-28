@@ -62,11 +62,12 @@ export interface FaqEntry {
 
 export const BRAND_INFO = {
   name: 'WPCarePoint',
-  positioning: 'Web Development, eCommerce & AI Solutions Agency',
+  positioning: 'UK Digital Engineering · WordPress · eCommerce · AI',
+  heroHeadline: 'Websites, WooCommerce & AI systems engineered for UK businesses.',
   tagline: 'Building, improving and supporting digital businesses.',
   email: 'contact@wpcarepoint.co.uk',
   address: 'Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom',
-  channelNote: 'Email enquiries only. Direct engineering correspondence without call-centre queues.',
+  channelNote: 'Direct email scoping with engineering—no call-centre queues or sales layers.',
   heroImageUrl: '/src/assets/images/hero_wpcarepoint_studio_1795464512427.webp',
   heroImageAlt: 'WPCarePoint UK studio workspace with architectural interface schematics in soft daylight',
   architectureImageUrl: '/src/assets/images/service_web_architecture_1795464512894.webp',
@@ -91,7 +92,7 @@ export const NAV_ITEMS: Array<{
 export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
   {
     label: 'Website Design & Development',
-    description: 'Bespoke WordPress block builds, React & Next.js web applications.',
+    description: 'Bespoke WordPress block builds, React & Next.js web platforms.',
     href: '/services/website-development/',
     routePath: '/services/website-development/',
     serviceSlug: 'website-development',
@@ -104,7 +105,7 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
   },
   {
     label: 'eCommerce Development',
-    description: 'WooCommerce & custom retail checkouts for UK currency, VAT & shipping.',
+    description: 'WooCommerce & custom retail checkouts for GBP, UK VAT & shipping.',
     href: '/services/ecommerce-development/',
     routePath: '/services/ecommerce-development/',
     serviceSlug: 'ecommerce-development',
@@ -118,7 +119,7 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
   },
   {
     label: 'Website Care & Technical Support',
-    description: 'Structured backups, staging updates & WordPress Quick Fix support.',
+    description: 'Staging-tested updates, off-site backups, Care Plans & Quick Fixes.',
     href: '/services/website-care-support/',
     routePath: '/services/website-care-support/',
     serviceSlug: 'website-care-support',
@@ -133,10 +134,10 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
 ];
 
 export const HERO_COMMITMENTS = [
-  { label: 'Core Practice', value: 'Web · eCommerce · AI' },
+  { label: 'Core Craft', value: 'WordPress · React · WooCommerce' },
   { label: 'Engineering Standard', value: 'WCAG 2.2 AA & UK GDPR' },
-  { label: 'Performance Focus', value: 'Core Web Vitals Ready' },
-  { label: 'Direct Ownership', value: '100% Client-Owned Code' },
+  { label: 'Asset Ownership', value: '100% Client-Owned Code' },
+  { label: 'Direct Enquiries', value: 'Email Scoping Only' },
 ];
 
 export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
@@ -144,16 +145,16 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     id: 'website-development',
     index: '01.',
     title: 'Website Design & Development',
-    subtitle: 'WordPress · React · Next.js · TypeScript',
+    subtitle: 'WordPress · React · Next.js',
     description:
-      'Clean, responsive business websites built without bloated templates or fragile plugin stacks—giving UK teams full editorial control and long-term technical ownership.',
+      'Clean, fast business websites built without bloated multipurpose themes or fragile page builders—keeping editorial control and code ownership firmly with your team.',
     deliverables: [
-      'Custom WordPress block architecture and lightweight theme engineering',
-      'Modern React and Next.js frontend web applications',
-      'Mobile-first layouts tested for WCAG 2.2 AA accessibility and readability',
-      'Clean semantic structure with server-level 301 migration protection',
+      'Custom WordPress Gutenberg block themes with lean plugin footprint',
+      'Modern React, Next.js & TypeScript web platforms and portals',
+      'WCAG 2.2 AA mobile-first layouts tested across UK devices',
+      'Single-hop 301 redirect governance during domain or site rebuilds',
     ],
-    standards: 'WordPress Gutenberg · Next.js & TypeScript · Responsive UI',
+    standards: 'WordPress Blocks · Next.js · TypeScript',
     routePath: '/services/website-development/',
     serviceSlug: 'website-development',
     anchorId: 'website-development',
@@ -162,16 +163,16 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     id: 'ecommerce-development',
     index: '02.',
     title: 'eCommerce Development',
-    subtitle: 'WooCommerce HPOS · Custom Storefronts · UK Payments',
+    subtitle: 'WooCommerce HPOS · Stripe UK SCA',
     description:
-      'Reliable UK online stores engineered for fast mobile checkouts, clean stock management, British VAT logic, and transparent payment and courier integrations.',
+      'Reliable UK online stores built for fast mobile checkouts, clean catalogue filtering, British VAT rules, and accurate shipping workflows.',
     deliverables: [
-      'High-performance WooCommerce and bespoke online retail builds',
-      'GBP (£) pricing, UK VAT tax rules, and Royal Mail / DPD shipping configurations',
-      'Stripe, Apple Pay, and Strong Customer Authentication (3D Secure) checkouts',
-      'Product Schema markup and clean category URL architecture',
+      'WooCommerce HPOS and bespoke storefront development',
+      'GBP (£) pricing, UK VAT logic & Royal Mail / DPD courier bands',
+      'Stripe UK, Apple Pay & 3D Secure (SCA) checkout integration',
+      'Clean product taxonomy with structured Product & Offer Schema',
     ],
-    standards: 'WooCommerce · Stripe UK SCA · Royal Mail & DPD',
+    standards: 'WooCommerce HPOS · GBP/VAT · Stripe SCA',
     routePath: '/services/ecommerce-development/',
     serviceSlug: 'ecommerce-development',
     anchorId: 'ecommerce-development',
@@ -180,16 +181,16 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     id: 'ai-automation',
     index: '03.',
     title: 'AI & Business Automation',
-    subtitle: 'Workflow Automation · Custom APIs · Data Governance',
+    subtitle: 'APIs · CRM Workflows · Human Oversight',
     description:
-      'Practical automation connecting your website enquiries, CRM, invoicing, and internal operations—engineered with human oversight and UK GDPR data boundaries.',
+      'Practical workflow automation linking your website, CRM, and accounting tools—built around UK GDPR data boundaries and human approval checkpoints.',
     deliverables: [
-      'Automated enquiry triage and structured lead routing into CRM pipelines',
-      'Custom API integrations linking forms, accounting, and operations tools',
-      'Scoped AI-assisted search and qualification tools grounded in verified copy',
-      'Human-in-the-loop approval checkpoints and audit-ready workflows',
+      'Structured lead routing and validation into CRMs such as HubSpot',
+      'Defensive REST and webhook integrations for tools such as Xero & Stripe',
+      'Grounded AI brief triage and draft summaries behind staff review',
+      'Server-side secret isolation and clear failure alerts',
     ],
-    standards: 'API Integration · UK GDPR Boundaries · Human Approval',
+    standards: 'API Pipelines · UK GDPR · Human Review',
     routePath: '/services/ai-business-automation/',
     serviceSlug: 'ai-business-automation',
     anchorId: 'ai-automation',
@@ -198,16 +199,16 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     id: 'website-care',
     index: '04.',
     title: 'Website Care & Technical Support',
-    subtitle: 'Essential · Advanced · Elite Care + Quick Fix',
+    subtitle: 'Staging Updates · Backups · Quick Fix',
     description:
-      'Structured website stewardship keeping WordPress and custom web builds secure, backed up off-site, and updated cleanly on staging before touching production.',
+      'Calm website stewardship keeping WordPress and WooCommerce updated on staging first, backed up off-site, and supported directly by engineering.',
     deliverables: [
-      'Scheduled core, theme, and plugin updates validated on staging',
-      'Encrypted off-site backups stored safely across UK / EEA infrastructure',
-      'Uptime monitoring, security hardening, and SSL / DNS stewardship',
-      'One-off WordPress Quick Fix pathway for urgent standalone repairs',
+      'Core, theme & plugin updates validated on staging before release',
+      'Encrypted off-site backups stored independently from primary hosting',
+      'Availability monitoring, hardening & Emergency & Malware Triage',
+      'One-off WordPress Quick Fix repairs without a monthly contract',
     ],
-    standards: 'Staging Validation · Off-Site Backups · Email-First Support',
+    standards: 'Staging First · Off-Site Backups · No Lock-In',
     routePath: '/services/website-care-support/',
     serviceSlug: 'website-care-support',
     anchorId: 'website-care',
@@ -216,16 +217,16 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     id: 'seo-ai-search',
     index: '05.',
     title: 'SEO & AI Search Optimisation',
-    subtitle: 'Technical SEO · Speed Optimisation · GEO & AI Search',
+    subtitle: 'Technical SEO · Speed · GEO & AIO',
     description:
-      'Structured technical SEO, WordPress Core Web Vitals speed engineering, and consolidated AI Search Optimisation so UK buyers discover your brand across Google and AI assistants.',
+      'Technical search foundations, WordPress Core Web Vitals speed engineering, and Schema.org clarity helping both Google UK and AI assistants read your business accurately.',
     deliverables: [
-      'Technical SEO audits, clean crawl hierarchy, and Schema.org JSON-LD graphs',
-      'Dedicated WordPress Speed Optimisation and Core Web Vitals tuning',
-      'Consolidated AI Search Optimisation (GEO & AIO) for ChatGPT, Gemini & Claude',
-      'Clean redirection governance preserving historical .co.uk search authority',
+      'Technical crawl audits, clean canonicals & single-hop 301 hygiene',
+      'Dedicated WordPress Speed Optimisation (LCP, INP & CLS tuning)',
+      'Structured JSON-LD entities & plain-English AIO / GEO clarity',
+      'Honest search consultancy with zero fabricated ranking promises',
     ],
-    standards: 'Technical SEO · Core Web Vitals · AI Search Readiness',
+    standards: 'Technical SEO · Core Web Vitals · AIO/GEO',
     routePath: '/services/ai-search-optimisation/',
     serviceSlug: 'ai-search-optimisation',
     anchorId: 'seo-ai-search',
@@ -236,44 +237,44 @@ export const CARE_PLAN_TIERS: CarePlanTier[] = [
   {
     id: 'essential',
     name: 'Essential Care',
-    audience: 'For brochure websites & small UK businesses',
+    audience: 'Brochure sites & small UK firms',
     pricingLabel: 'Enquire for Pricing',
     summary:
-      'Core security hygiene, scheduled off-site backups, and tested staging updates to keep business websites dependable.',
+      'Core security hygiene, scheduled off-site backups, and staging-tested updates to keep brochure sites dependable.',
     highlights: [
-      'Off-site encrypted backups with structured restore points',
-      'Core, theme, and plugin updates tested before deployment',
-      'Continuous availability checks and security hardening',
-      'Direct email technical support from WPCarePoint',
+      'Encrypted off-site backups with verified restore points',
+      'WordPress core, theme & plugin updates tested on staging',
+      'Uptime monitoring and access security checks',
+      'Direct email support from senior engineering',
     ],
   },
   {
     id: 'advanced',
     name: 'Advanced Care',
-    audience: 'For growing service companies & lead-gen sites',
+    audience: 'Growing service & lead-gen sites',
     pricingLabel: 'Enquire for Pricing',
     highlighted: true,
     summary:
-      'Proactive speed oversight, priority incident remediation, and recurring engineering time for continuous site improvements.',
+      'Proactive speed oversight, priority incident remediation, and recurring monthly engineering time for site improvements.',
     highlights: [
-      'More frequent encrypted off-site backups and staging checks',
-      'WordPress performance tuning and Core Web Vitals review',
-      'Priority malware investigation and clean site remediation',
-      'Dedicated monthly engineering hours for content or UI updates',
+      'Higher-frequency off-site backups & staging checks',
+      'WordPress speed tuning & Core Web Vitals review',
+      'Priority malware investigation & remediation triage',
+      'Monthly engineering allocation for UI or content updates',
     ],
   },
   {
     id: 'elite',
     name: 'Elite Care',
-    audience: 'For WooCommerce stores & business-critical platforms',
+    audience: 'WooCommerce & critical platforms',
     pricingLabel: 'Enquire for Pricing',
     summary:
-      'Comprehensive technical governance, transactional checkout checks, and tailored roadmap support for revenue-critical sites.',
+      'High-frequency database protection and full checkout regression testing for revenue-critical retail and portal sites.',
     highlights: [
-      'High-frequency database snapshots for active eCommerce orders',
-      'Checkout, payment gateway, and critical-path regression checks',
-      'Structured monthly engineering allocation for feature delivery',
-      'Bespoke retainer scope agreed around operational requirements',
+      'Frequent database snapshots protecting active orders',
+      'Checkout, gateway & basket regression checks on staging',
+      'Structured monthly engineering allocation for roadmap work',
+      'Bespoke written scope around operational demands',
     ],
   },
 ];
@@ -283,81 +284,81 @@ export const WHY_CHOOSE_POINTS: WhyChoosePoint[] = [
     index: '01.',
     title: '100% Client Code & Domain Ownership',
     description:
-      'Every website, domain, repository, and hosting account stays registered cleanly in your business name—no proprietary lock-in or captive agency tooling.',
-    standard: 'Full Ownership · Clean Handover',
+      'Domains, hosting accounts, and repositories stay in your business name—zero proprietary lock-in or captive tooling.',
+    standard: 'Full Asset Ownership',
   },
   {
     index: '02.',
-    title: 'Engineering Over Heavy Page Builders',
+    title: 'Clean Code Over Page Builders',
     description:
-      'We build clean WordPress block themes and TypeScript/React interfaces engineered for Core Web Vitals, maintainability, and fast UK mobile loading.',
-    standard: 'Clean Semantic Code · Fast Mobile Load',
+      'Custom WordPress blocks and TypeScript interfaces built for Core Web Vitals, accessibility, and straightforward long-term editing.',
+    standard: 'Fast UK Mobile Load',
   },
   {
     index: '03.',
     title: 'UK Standards, Accessibility & Privacy',
     description:
-      'Websites and workflows are planned around British English (en-GB), WCAG 2.2 AA accessibility clarity, and UK GDPR / PECR data discipline.',
-    standard: 'en-GB · WCAG 2.2 AA · UK GDPR',
+      'Engineered around British English (en-GB), WCAG 2.2 AA contrast and keyboard focus, and UK GDPR / PECR discipline.',
+    standard: 'WCAG 2.2 AA · UK GDPR',
   },
   {
     index: '04.',
-    title: 'Transparent Email-First Delivery',
+    title: 'Direct Senior Email Scoping',
     description:
-      'Clear written scoping, staged preview links, and documented milestones directly with senior engineering rather than multi-layer sales handoffs.',
-    standard: 'Written Scope · Clear Milestones',
+      'Clear written proposals, staging preview links, and candid technical trade-offs directly with engineering—no sales layers.',
+    standard: 'Written Scope · Zero Fluff',
   },
 ];
 
 export const WORKING_PROCESS_STEPS: ProcessStep[] = [
   {
     step: '01.',
-    title: 'Discovery & Technical Audit',
+    title: 'Discovery & Audit',
     summary:
-      'We inspect your commercial goals, existing URLs, hosting setup, performance bottlenecks, and integration needs before recommending architecture.',
-    deliverable: 'Written scope & technical plan',
+      'Review commercial goals, existing URLs, hosting constraints, and integration needs before recommending architecture.',
+    deliverable: 'Written technical scope',
   },
   {
     step: '02.',
-    title: 'Design & Staging Architecture',
+    title: 'Staging Architecture',
     summary:
-      'Page hierarchy, component systems, WooCommerce rules, or automation workflows are built cleanly in an isolated staging environment for review.',
+      'Build page systems, WooCommerce logic, or API connectors on an isolated staging link for direct review.',
     deliverable: 'Interactive staging preview',
   },
   {
     step: '03.',
-    title: 'QA, Speed & Launch Governance',
+    title: 'QA & Safe Launch',
     summary:
-      'We test responsive breakpoints, WCAG contrast, SSL, 301 redirects, and Core Web Vitals prior to controlled DNS cut-over with minimal disruption.',
-    deliverable: 'Verified production release',
+      'Verify mobile breakpoints, WCAG contrast, SSL, 301 redirects, and Core Web Vitals before coordinated DNS cut-over.',
+    deliverable: 'Verified live release',
   },
   {
     step: '04.',
-    title: 'Ongoing Care & Search Growth',
+    title: 'Care & Growth',
     summary:
-      'Post-launch, structured Care Plans, WordPress Speed Optimisation, SEO, and AI Search enhancements keep your platform accurate and competitive.',
-    deliverable: 'Continuous stewardship',
+      'Retain full independence or pair with Website Care, WordPress Speed Optimisation, and SEO & AI Search tuning.',
+    deliverable: 'Ongoing stewardship',
   },
 ];
 
 export const PORTFOLIO_PLACEHOLDER_SLOTS: PortfolioSlot[] = [
   {
     id: 'portfolio-recovery-web',
-    status: 'Portfolio Recovery in Progress',
+    status: 'Verification in Progress',
     sector: 'Website Design & Development',
-    title: 'Verified UK Business Website Archive Pending Publication',
-    scope: 'WordPress Block Architecture · Next.js Builds · Clean Responsive UX',
-    note: 'Historical client examples are currently undergoing independent verification and permission review prior to public republication.',
+    title: 'Verified UK Business Website Archive Pending Sign-Off',
+    scope: 'WordPress Blocks · Next.js · Responsive UX',
+    note: 'Client examples are held off-site until written client publication approval and platform verification complete.',
     imageUrl: BRAND_INFO.portfolioImageUrl,
     imageAlt: BRAND_INFO.portfolioImageAlt,
   },
   {
     id: 'portfolio-recovery-ecommerce',
-    status: 'Portfolio Recovery in Progress',
+    status: 'Verification in Progress',
     sector: 'eCommerce & Speed Engineering',
-    title: 'UK Retail & WooCommerce Case Record Pending Sign-Off',
-    scope: 'WooCommerce HPOS · GBP/VAT Checkouts · WordPress Speed Optimisation',
-    note: 'Verified performance benchmarks and approved storefront screenshots will appear here once current documentation checks complete.',
+    title: 'UK Retail & WooCommerce Record Pending Publication',
+    scope: 'WooCommerce HPOS · GBP/VAT · Speed Tuning',
+    note: 'Verified performance benchmarks and client storefront case records will publish once formal review completes.',
     imageUrl: BRAND_INFO.architectureImageUrl,
     imageAlt: BRAND_INFO.architectureImageAlt,
   },
@@ -368,30 +369,30 @@ export const HOMEPAGE_FAQS: FaqEntry[] = [
     id: 'faq-platforms',
     question: 'Do you build exclusively with WordPress, or modern React and Next.js as well?',
     answer:
-      'We work with both. For marketing and content-led UK business websites requiring familiar editorial control, we engineer lightweight custom WordPress block themes. For web applications, customer portals, and headless frontends, we build with React, Next.js, and TypeScript.',
+      'We build with both. For marketing and service websites where teams edit pages regularly, we build lightweight custom WordPress block themes. For portals, web apps, and headless storefronts, we build with React, Next.js, and TypeScript.',
   },
   {
     id: 'faq-care-pricing',
     question: 'Why do Essential, Advanced, and Elite Care Plans show "Enquire for Pricing"?',
     answer:
-      'Website complexity varies significantly between a brochure WordPress installation, a multi-plugin membership portal, and an active WooCommerce store. Enquiring by email lets us scope the exact backup frequency, staging needs, and support allocation fairly with no hidden surcharges.',
+      'Support effort varies substantially between a five-page brochure site, a multi-API portal, and an active WooCommerce store. Scoping in writing via email ensures you pay fairly for the backup frequency and staging time your site genuinely needs.',
   },
   {
     id: 'faq-quick-fix',
     question: 'Can we request a one-off WordPress fix without signing up for a Care Plan?',
     answer:
-      'Yes. Our WordPress Quick Fix pathway handles urgent standalone issues—such as plugin conflicts, critical errors, broken layouts, or speed bottlenecks—without locking you into a monthly contract.',
+      'Yes. Our WordPress Quick Fix pathway covers standalone plugin conflicts, fatal errors, broken layouts, or urgent troubleshooting without committing to an ongoing monthly retainer.',
   },
   {
     id: 'faq-speed-seo',
     question: 'What is included in SEO & AI Search Optimisation alongside WordPress Speed?',
     answer:
-      'We combine clean technical SEO (crawl hygiene, semantic structure, Schema.org JSON-LD, and 301 preservation) with WordPress Speed Optimisation for Core Web Vitals and consolidated AI Search Optimisation (GEO / AIO) so search engines and AI assistants interpret your services accurately.',
+      'We pair technical crawl hygiene, clean headings, single-hop 301 governance, and Schema.org JSON-LD with WordPress Speed Optimisation and clear AIO / GEO structuring so search crawlers and AI systems interpret your services accurately.',
   },
   {
     id: 'faq-contact',
     question: 'How do we start a project or enquiry with WPCarePoint?',
     answer:
-      'We handle all initial enquiries and technical scoping by email at contact@wpcarepoint.co.uk. Simply outline your website URL, goals, or technical challenge, and we will respond in writing with clear next steps.',
+      'Write directly to contact@wpcarepoint.co.uk with your website URL, commercial goals, or technical fault. We review every brief in writing and respond with clear next steps.',
   },
 ];

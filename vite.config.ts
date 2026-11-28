@@ -65,7 +65,7 @@ function buildHomePrerenderBody(): string {
   return `<main>
         <header><a href="/">WPCarePoint</a> · <a href="/contact/">Contact</a></header>
         <section>
-          <h1>${escapeHtml(BRAND_INFO.tagline)}</h1>
+          <h1>${escapeHtml(BRAND_INFO.heroHeadline)}</h1>
           <p>WPCarePoint is a UK ${escapeHtml(BRAND_INFO.positioning)} delivering bespoke websites, WooCommerce stores, AI workflow automation, structured website care, and SEO &amp; AI search optimisation.</p>
           <p>United Kingdom: ${escapeHtml(BRAND_INFO.address)} · Email: ${escapeHtml(BRAND_INFO.email)}</p>
         </section>
@@ -247,6 +247,10 @@ function buildDedicatedServicePrerenderHtml(
       /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
       `<script id="wpc-route-jsonld" type="application/ld+json">${jsonLd}</script>`
     )
+    .replace(
+      '</head>',
+      `    <link rel="preload" as="image" href="${escapeHtml(page.hero.imageUrl)}" fetchpriority="high" />\n  </head>`
+    )
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }
 
@@ -368,6 +372,10 @@ function buildContactPrerenderHtml(templateHtml: string): string {
     .replace(
       /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
       `<script id="wpc-route-jsonld" type="application/ld+json">${jsonLd}</script>`
+    )
+    .replace(
+      '</head>',
+      `    <link rel="preload" as="image" href="${escapeHtml(CONTACT_PAGE_DATA.imageUrl)}" fetchpriority="high" />\n  </head>`
     )
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }
@@ -520,6 +528,10 @@ function buildServicesHubPrerenderHtml(templateHtml: string): string {
       /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
       `<script id="wpc-route-jsonld" type="application/ld+json">${jsonLd}</script>`
     )
+    .replace(
+      '</head>',
+      `    <link rel="preload" as="image" href="${escapeHtml(SERVICES_HUB_DATA.heroImageUrl)}" fetchpriority="high" />\n  </head>`
+    )
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }
 
@@ -643,6 +655,10 @@ function buildAboutPrerenderHtml(templateHtml: string): string {
     .replace(
       /<script(?:\s+id="[^"]*")?\s+type="application\/ld\+json">[\s\S]*?<\/script>/,
       `<script id="wpc-route-jsonld" type="application/ld+json">${jsonLd}</script>`
+    )
+    .replace(
+      '</head>',
+      `    <link rel="preload" as="image" href="${escapeHtml(ABOUT_PAGE_DATA.heroImageUrl)}" fetchpriority="high" />\n  </head>`
     )
     .replace('<div id="root"></div>', `<div id="root">${prerenderBody}</div>`);
 }

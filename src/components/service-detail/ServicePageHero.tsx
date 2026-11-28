@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import { ArrowLeft, ArrowRight, Layers } from 'lucide-react';
 import type { DedicatedServicePageConfig } from '../../data/dedicatedServicePagesData';
-import { EASE_OUT_EXPO } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 
 interface ServicePageHeroProps {
@@ -18,7 +16,6 @@ export function ServicePageHero({
   onNavigatePath,
   onJumpToSection,
 }: ServicePageHeroProps) {
-  const prefersReduced = useReducedMotion();
   const [imgFailed, setImgFailed] = useState(false);
 
   return (
@@ -61,12 +58,7 @@ export function ServicePageHero({
         </nav>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <motion.div
-            initial={prefersReduced ? false : { opacity: 0.94, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: EASE_OUT_EXPO }}
-            className="lg:col-span-6"
-          >
+          <div className="lg:col-span-6 wpc-route-enter">
             <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
               {page.hero.eyebrow}
             </p>
@@ -133,18 +125,9 @@ export function ServicePageHero({
                 <span>Back to all WPCarePoint services</span>
               </a>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={prefersReduced ? false : { opacity: 0.94, scale: 0.99 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{
-              duration: prefersReduced ? 0.01 : 0.45,
-              delay: prefersReduced ? 0 : 0.05,
-              ease: EASE_OUT_EXPO,
-            }}
-            className="lg:col-span-6"
-          >
+          <div className="lg:col-span-6">
             <figure className="group relative rounded-2xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6]">
               <div className="aspect-[16/10] overflow-hidden bg-[#eef3f6]">
                 {imgFailed ? (
@@ -171,7 +154,7 @@ export function ServicePageHero({
                 {page.hero.imageCaption}
               </figcaption>
             </figure>
-          </motion.div>
+          </div>
         </div>
 
         {/* 4-Column Engineering Standards Strip */}

@@ -30,10 +30,10 @@ export const ABOUT_PAGE_DATA = {
   metaTitle: 'About WPCarePoint | UK Web Development, eCommerce & AI Agency',
   metaDescription:
     'Learn about WPCarePoint—a UK Web Development, eCommerce & AI Solutions Agency specialising in WordPress engineering, WooCommerce, modern web apps, automation, and website care.',
-  eyebrow: 'About WPCarePoint · United Kingdom',
-  headline: 'Building, Improving and Supporting Digital Businesses.',
+  eyebrow: 'About WPCarePoint · Surrey, United Kingdom',
+  headline: 'Practical UK web engineering rooted in clarity and client ownership.',
   description:
-    'WPCarePoint is a Web Development, eCommerce & AI Solutions Agency working with UK organisations. WordPress engineering remains our core craft alongside bespoke web applications, workflow automation, ongoing site stewardship, and search readiness.',
+    'A Surrey-based WordPress, WooCommerce, Next.js, and AI solutions agency helping British organisations build fast, dependable digital assets they genuinely own.',
   heroImageUrl: '/src/assets/images/about_studio_craft_1795678351505.webp',
   heroImageAlt:
     'WPCarePoint engineering studio desk with open coastal teal architectural sketchbook, fountain pen, and precision compass',
@@ -48,11 +48,11 @@ export const ABOUT_PAGE_DATA = {
   storySection: {
     id: 'our-story',
     eyebrow: 'Our Story & Purpose',
-    title: 'Focused digital engineering rooted in reliability, clarity, and ownership.',
+    title: 'Focused digital craft built for day-to-day operational reliability.',
     paragraphs: [
-      'WPCarePoint began with a straightforward engineering focus: helping businesses keep their WordPress websites fast, secure, cleanly structured, and dependable in day-to-day operation.',
-      'As client requirements evolved beyond isolated websites, our technical practice expanded naturally to bring connected commerce, modern frontend engineering, practical business automation, and structured search optimisation under one roof—without losing the care and attention to detail that reliable WordPress stewardship demands.',
-      'Today, operating from Nutfield in Surrey (RH1 4HW) with clients across the United Kingdom, we remain deliberately focused on clear communication, clean handovers, and honest technical recommendations over inflated agency rhetoric.',
+      'WPCarePoint started with a straightforward goal: keeping WordPress websites fast, clean, and reliable in daily operation rather than patching over fragile page builders.',
+      'As client needs grew, our work expanded into WooCommerce retail, React and Next.js web builds, API workflow automation, and Technical SEO / AI Search—guided by the same disciplined engineering standards.',
+      'From Nutfield, Surrey (RH1 4HW), we work remotely with UK businesses that prefer candid technical advice, clean handovers, and direct written scoping over agency layers.',
     ],
     summaryCard: {
       eyebrow: 'Agency Positioning',

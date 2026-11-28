@@ -1,40 +1,65 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { motion, useReducedMotion, useScroll, useSpring } from 'motion/react';
 
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
 
 export function ScrollProgressBar() {
-  const prefersReduced = useReducedMotion();
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, {
-    stiffness: 260,
-    damping: 32,
-    restDelta: 0.001,
-  });
+  const barRef = useRef<HTMLDivElement>(null);
 
-  if (prefersReduced) {
-    return null;
-  }
+  useEffect(() => {
+    if (
+      typeof window === 'undefined' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    ) {
+      return;
+    }
+
+    let rafId = 0;
+
+    const updateProgress = () => {
+      rafId = 0;
+      const el = barRef.current;
+      if (!el) return;
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = maxScroll > 0 ? Math.min(1, Math.max(0, window.scrollY / maxScroll)) : 0;
+      el.style.transform = `scale3d(${ratio}, 1, 1)`;
+    };
+
+    const onScroll = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(updateProgress);
+      }
+    };
+
+    updateProgress();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+
+    return () => {
+      if (rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, []);
 
   return (
-    <motion.div
+    <div
+      ref={barRef}
       aria-hidden="true"
-      className="fixed top-0 left-0 right-0 z-50 h-[3px] bg-[var(--progress-bar)] origin-left pointer-events-none"
-      style={{ scaleX }}
+      className="fixed top-0 left-0 right-0 z-50 h-[2px] bg-[var(--progress-bar)] origin-left pointer-events-none"
+      style={{ transform: 'scale3d(0, 1, 1)' }}
     />
   );
 }
 
 /**
- * Progressive scroll-triggered section reveal.
- * Never hides content if JavaScript or IntersectionObserver stalls: renders at high visibility
- * (>= 0.9 opacity when JS animations settle and full opacity immediately on reduced motion or
- * fallback timeout), applying subtle compositor-only transform settling.
+ * Progressive scroll-triggered section reveal using IntersectionObserver + CSS transitions.
+ * Never blocks readability when JS or IntersectionObserver is unavailable.
  */
 export function FadeInUpOnScroll({
   children,
   delay = 0,
-  distance = 12,
   className = '',
 }: {
   children: ReactNode;
@@ -42,80 +67,69 @@ export function FadeInUpOnScroll({
   distance?: number;
   className?: string;
 }) {
-  const prefersReduced = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const [entered, setEntered] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (prefersReduced) {
-      setEntered(true);
+    if (
+      typeof window === 'undefined' ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+      typeof IntersectionObserver === 'undefined'
+    ) {
+      setVisible(true);
       return;
     }
 
     const el = ref.current;
-    if (!el || typeof IntersectionObserver === 'undefined') {
-      setEntered(true);
+    if (!el) {
+      setVisible(true);
       return;
     }
 
     const rect = el.getBoundingClientRect();
     if (rect.top <= window.innerHeight * 1.1) {
-      setEntered(true);
+      setVisible(true);
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
-          setEntered(true);
+          setVisible(true);
           observer.disconnect();
         }
       },
-      { rootMargin: '80px 0px -40px 0px', threshold: 0.01 }
+      { rootMargin: '80px 0px -32px 0px', threshold: 0.01 }
     );
 
     observer.observe(el);
 
-    // Fail-safe so rapid programmatic jumps or headless renders never remain subtly shifted
     const safetyTimer = window.setTimeout(() => {
-      setEntered(true);
+      setVisible(true);
       observer.disconnect();
-    }, 900);
+    }, 800);
 
     return () => {
       window.clearTimeout(safetyTimer);
       observer.disconnect();
     };
-  }, [prefersReduced]);
-
-  if (prefersReduced) {
-    return <div className={className}>{children}</div>;
-  }
+  }, []);
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      initial={false}
-      animate={{
-        opacity: entered ? 1 : 0.92,
-        y: entered ? 0 : distance,
-      }}
-      transition={{
-        duration: 0.36,
-        delay: entered ? delay : 0,
-        ease: EASE_OUT_EXPO,
-      }}
-      className={className}
+      data-visible={visible ? 'true' : 'false'}
+      style={delay > 0 && visible ? { transitionDelay: `${Math.round(delay * 1000)}ms` } : undefined}
+      className={`wpc-reveal ${className}`.trim()}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 export function Reveal({
   children,
   delay = 0,
-  y = 10,
   className = '',
 }: {
   children: ReactNode;
@@ -124,7 +138,7 @@ export function Reveal({
   className?: string;
 }) {
   return (
-    <FadeInUpOnScroll delay={delay} distance={y} className={className}>
+    <FadeInUpOnScroll delay={delay} className={className}>
       {children}
     </FadeInUpOnScroll>
   );
@@ -140,7 +154,7 @@ export function StaggerGrid({
   delay?: number;
 }) {
   return (
-    <FadeInUpOnScroll delay={delay} distance={8} className={className}>
+    <FadeInUpOnScroll delay={delay} className={className}>
       {children}
     </FadeInUpOnScroll>
   );

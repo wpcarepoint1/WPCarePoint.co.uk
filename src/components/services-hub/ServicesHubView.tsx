@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
 import {
   ArrowRight,
   Check,
@@ -14,7 +13,7 @@ import {
 import { SERVICES_HUB_DATA } from '../../data/servicesHubData';
 import { BRAND_INFO } from '../../data/homepageData';
 import { applyRouteSeo } from '../../utils/routeSeo';
-import { EASE_OUT_EXPO, FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
+import { FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
 import { CtaSection } from '../ui/CtaSection';
 import { FaqAccordion } from '../ui/FaqAccordion';
@@ -46,7 +45,6 @@ export function ServicesHubView({
   onNavigateHome,
   onNavigatePath,
 }: ServicesHubViewProps) {
-  const prefersReduced = useReducedMotion();
   const [imgFailed, setImgFailed] = useState(false);
 
   useEffect(() => {
@@ -163,12 +161,7 @@ export function ServicesHubView({
           </nav>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-            <motion.div
-              initial={prefersReduced ? false : { opacity: 0.94, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: prefersReduced ? 0.01 : 0.4, ease: EASE_OUT_EXPO }}
-              className="lg:col-span-6"
-            >
+            <div className="lg:col-span-6 wpc-route-enter">
               <p className="text-xs font-mono font-semibold tracking-wider uppercase text-[#00749c]">
                 {SERVICES_HUB_DATA.eyebrow}
               </p>
@@ -217,18 +210,9 @@ export function ServicesHubView({
                   Explore Core Categories
                 </Button>
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              initial={prefersReduced ? false : { opacity: 0.94, scale: 0.99 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{
-                duration: prefersReduced ? 0.01 : 0.45,
-                delay: prefersReduced ? 0 : 0.05,
-                ease: EASE_OUT_EXPO,
-              }}
-              className="lg:col-span-6"
-            >
+            <div className="lg:col-span-6">
               <figure className="group relative rounded-2xl overflow-hidden border border-[#dde6eb] bg-[#eef3f6]">
                 <div className="aspect-[16/10] overflow-hidden bg-[#eef3f6]">
                   {imgFailed ? (
@@ -257,7 +241,7 @@ export function ServicesHubView({
                   {SERVICES_HUB_DATA.heroImageCaption}
                 </figcaption>
               </figure>
-            </motion.div>
+            </div>
           </div>
 
           <dl className="mt-10 pt-8 border-t border-[#dde6eb] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-8">
@@ -491,63 +475,71 @@ export function ServicesHubView({
             tone="dark"
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-            {SERVICES_HUB_DATA.processSection.steps.map((step, idx) => (
-              <FadeInUpOnScroll key={step.step} delay={idx * 0.04} className="flex">
-                <article className="w-full rounded-2xl border border-white/15 bg-white/5 hover:border-[#00b2d4]/60 transition-colors p-6 flex flex-col justify-between">
-                  <div>
-                    <p className="text-sm font-mono font-bold text-[#00b2d4] tabular-nums">
-                      {step.step}
-                    </p>
-                    <h3 className="text-lg font-bold text-white mt-2.5 leading-snug">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-white/80 mt-2.5 leading-relaxed">
-                      {step.summary}
-                    </p>
-                  </div>
-                  <p className="mt-5 pt-4 border-t border-white/15 text-xs font-mono text-[#00b2d4]">
-                    {step.deliverable}
+          <ol className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {SERVICES_HUB_DATA.processSection.steps.map((step) => (
+              <li
+                key={step.step}
+                className="pt-5 border-t border-[#00b2d4]/50 flex flex-col justify-between space-y-4"
+              >
+                <div>
+                  <span className="text-xs font-mono font-bold text-[#00b2d4] tabular-nums">
+                    {step.step}
+                  </span>
+                  <h3 className="text-lg font-bold text-white mt-2 leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-white/80 mt-2 leading-relaxed">
+                    {step.summary}
                   </p>
-                </article>
-              </FadeInUpOnScroll>
+                </div>
+                <p className="text-xs font-mono text-[#00b2d4]">
+                  {step.deliverable}
+                </p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
-      {/* Section 6: Why Choose WPCarePoint */}
+      {/* Section 6: Why Choose WPCarePoint (Editorial Ledger) */}
       <section
         id={SERVICES_HUB_DATA.principlesSection.id}
         className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeading
-            eyebrow={SERVICES_HUB_DATA.principlesSection.eyebrow}
-            title={SERVICES_HUB_DATA.principlesSection.title}
-            description={SERVICES_HUB_DATA.principlesSection.description}
-          />
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          <div className="lg:col-span-5 lg:sticky lg:top-24">
+            <SectionHeading
+              eyebrow={SERVICES_HUB_DATA.principlesSection.eyebrow}
+              title={SERVICES_HUB_DATA.principlesSection.title}
+              description={SERVICES_HUB_DATA.principlesSection.description}
+            />
+          </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-stretch">
-            {SERVICES_HUB_DATA.principlesSection.items.map((item, idx) => (
-              <FadeInUpOnScroll key={item.index} delay={idx * 0.03} className="flex">
-                <article className="w-full rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-7 flex flex-col justify-between">
-                  <div>
-                    <p className="text-xs font-mono font-bold text-[#00749c] tabular-nums">
-                      {item.index}
-                    </p>
-                    <h3 className="text-lg font-bold text-[#003b4f] mt-2 leading-snug">
+          <div className="lg:col-span-7 divide-y divide-[#dde6eb] border-t border-b border-[#dde6eb]">
+            {SERVICES_HUB_DATA.principlesSection.items.map((item) => (
+              <article
+                key={item.index}
+                className="py-6 sm:py-7 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
+              >
+                <div className="sm:col-span-2">
+                  <span className="text-sm font-mono font-bold text-[#00749c] tabular-nums">
+                    {item.index}
+                  </span>
+                </div>
+                <div className="sm:col-span-10 space-y-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">
-                      {item.summary}
-                    </p>
+                    <span className="text-xs font-mono text-[#6c757d]">
+                      {item.standard}
+                    </span>
                   </div>
-                  <p className="mt-5 pt-4 border-t border-[#e9eff2] text-xs font-mono text-[#6c757d]">
-                    {item.standard}
+                  <p className="text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed">
+                    {item.summary}
                   </p>
-                </article>
-              </FadeInUpOnScroll>
+                </div>
+              </article>
             ))}
           </div>
         </div>

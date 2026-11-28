@@ -620,60 +620,74 @@ export function ServiceTechnicalGridSection({
         />
 
         <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
-          {technical.pillars.map((pillar, idx) => (
-            <FadeInUpOnScroll key={pillar.id} delay={idx * 0.04} className="flex">
-              <article
-                id={pillar.id}
-                className={`scroll-mt-24 w-full rounded-2xl border border-[#dde6eb] ${cardBg} hover:border-[#00749c] transition-colors duration-200 p-6 sm:p-7 flex flex-col justify-between`}
-              >
-                <div>
-                  <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
-                    <span className="font-semibold text-[#00749c] tabular-nums">
-                      {pillar.index}
-                    </span>
-                    <span aria-hidden="true" className="text-[#6c757d]">
-                      ·
-                    </span>
-                    <span className="font-semibold uppercase tracking-wider text-[#6c757d]">
-                      {pillar.eyebrow}
-                    </span>
+          {technical.pillars.map((pillar, idx) => {
+            const isEmergencyTriage = pillar.id === 'care-emergency';
+            return (
+              <FadeInUpOnScroll key={pillar.id} delay={idx * 0.04} className="flex">
+                <article
+                  id={pillar.id}
+                  className={`scroll-mt-24 w-full rounded-2xl border transition-colors duration-200 p-6 sm:p-7 flex flex-col justify-between ${
+                    isEmergencyTriage
+                      ? 'border-[#00749c] bg-[#f2f7f9] hover:border-[#003b4f]'
+                      : `border-[#dde6eb] ${cardBg} hover:border-[#00749c]`
+                  }`}
+                >
+                  <div>
+                    <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <span className="font-semibold text-[#00749c] tabular-nums">
+                          {pillar.index}
+                        </span>
+                        <span aria-hidden="true" className="text-[#6c757d]">
+                          ·
+                        </span>
+                        <span className="font-semibold uppercase tracking-wider text-[#6c757d]">
+                          {pillar.eyebrow}
+                        </span>
+                      </div>
+                      {isEmergencyTriage && (
+                        <span className="font-semibold text-[#00749c] uppercase tracking-wider">
+                          Urgent Support Pathway
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="text-xl font-bold text-[#003b4f] mt-2.5 leading-snug">
+                      {pillar.title}
+                    </h3>
+
+                    <p className="text-sm sm:text-[15px] text-[#2e2e2e] mt-2.5 leading-relaxed">
+                      {pillar.summary}
+                    </p>
+
+                    <ul className="mt-5 pt-5 border-t border-[#dde6eb] space-y-2.5">
+                      {pillar.bullets.map((bullet) => (
+                        <li
+                          key={bullet}
+                          className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
+                        >
+                          <Check
+                            className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
+                            aria-hidden="true"
+                          />
+                          <span>{bullet}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
 
-                  <h3 className="text-xl font-bold text-[#003b4f] mt-2.5 leading-snug">
-                    {pillar.title}
-                  </h3>
-
-                  <p className="text-sm sm:text-[15px] text-[#2e2e2e] mt-2.5 leading-relaxed">
-                    {pillar.summary}
-                  </p>
-
-                  <ul className="mt-5 pt-5 border-t border-[#dde6eb] space-y-2.5">
-                    {pillar.bullets.map((bullet) => (
-                      <li
-                        key={bullet}
-                        className="flex items-start gap-2.5 text-sm text-[#2e2e2e] leading-snug"
-                      >
-                        <Check
-                          className="h-4 w-4 text-[#00749c] shrink-0 mt-0.5"
-                          aria-hidden="true"
-                        />
-                        <span>{bullet}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {pillar.calloutLabel && pillar.calloutText && (
-                  <div className="mt-6 pt-4 border-t border-[#dde6eb] text-xs leading-relaxed">
-                    <span className="font-mono font-semibold text-[#00749c]">
-                      {pillar.calloutLabel}:{' '}
-                    </span>
-                    <span className="text-[#2e2e2e]">{pillar.calloutText}</span>
-                  </div>
-                )}
-              </article>
-            </FadeInUpOnScroll>
-          ))}
+                  {pillar.calloutLabel && pillar.calloutText && (
+                    <div className="mt-6 pt-4 border-t border-[#dde6eb] text-xs leading-relaxed">
+                      <span className="font-mono font-semibold text-[#00749c]">
+                        {pillar.calloutLabel}:{' '}
+                      </span>
+                      <span className="text-[#2e2e2e]">{pillar.calloutText}</span>
+                    </div>
+                  )}
+                </article>
+              </FadeInUpOnScroll>
+            );
+          })}
         </div>
       </div>
     </section>
@@ -701,28 +715,29 @@ export function ServiceProcessAndTrustSection({
             tone="dark"
           />
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-            {process.steps.map((step, idx) => (
-              <FadeInUpOnScroll key={step.step} delay={idx * 0.05} className="flex">
-                <article className="w-full rounded-2xl border border-white/15 bg-white/5 hover:border-[#00b2d4]/60 transition-colors duration-200 p-6 flex flex-col justify-between">
-                  <div>
-                    <p className="text-sm font-mono font-bold text-[#00b2d4] tabular-nums">
-                      {step.step}
-                    </p>
-                    <h3 className="text-lg font-bold text-white mt-2.5 leading-snug">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-white/80 mt-2.5 leading-relaxed">
-                      {step.summary}
-                    </p>
-                  </div>
-                  <p className="mt-5 pt-4 border-t border-white/15 text-xs font-mono text-[#00b2d4]">
-                    {step.deliverable}
+          <ol className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {process.steps.map((step) => (
+              <li
+                key={step.step}
+                className="pt-5 border-t border-[#00b2d4]/50 flex flex-col justify-between space-y-4"
+              >
+                <div>
+                  <span className="text-xs font-mono font-bold text-[#00b2d4] tabular-nums">
+                    {step.step}
+                  </span>
+                  <h3 className="text-lg font-bold text-white mt-2 leading-snug">
+                    {step.title}
+                  </h3>
+                  <p className="text-sm text-white/80 mt-2 leading-relaxed">
+                    {step.summary}
                   </p>
-                </article>
-              </FadeInUpOnScroll>
+                </div>
+                <p className="text-xs font-mono text-[#00b2d4]">
+                  {step.deliverable}
+                </p>
+              </li>
             ))}
-          </div>
+          </ol>
         </div>
       </section>
 
@@ -730,33 +745,40 @@ export function ServiceProcessAndTrustSection({
         id={whyChoose.id}
         className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
-        <div className="max-w-7xl mx-auto px-6">
-          <SectionHeading
-            eyebrow={whyChoose.eyebrow}
-            title={whyChoose.title}
-            description={whyChoose.description}
-          />
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+          <div className="lg:col-span-5 lg:sticky lg:top-24">
+            <SectionHeading
+              eyebrow={whyChoose.eyebrow}
+              title={whyChoose.title}
+              description={whyChoose.description}
+            />
+          </div>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
-            {whyChoose.items.map((item, idx) => (
-              <FadeInUpOnScroll key={item.title} delay={idx * 0.04} className="flex">
-                <article className="w-full rounded-2xl border border-[#dde6eb] bg-white hover:border-[#00749c] transition-colors duration-200 p-6 flex flex-col justify-between">
-                  <div>
-                    <p className="text-xs font-mono font-semibold text-[#00749c] tabular-nums">
-                      {item.index}
-                    </p>
-                    <h3 className="text-lg font-bold text-[#003b4f] mt-2.5 leading-snug">
+          <div className="lg:col-span-7 divide-y divide-[#dde6eb] border-t border-b border-[#dde6eb]">
+            {whyChoose.items.map((item) => (
+              <article
+                key={item.title}
+                className="py-6 sm:py-7 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-6 items-start"
+              >
+                <div className="sm:col-span-2">
+                  <span className="text-sm font-mono font-bold text-[#00749c] tabular-nums">
+                    {item.index}
+                  </span>
+                </div>
+                <div className="sm:col-span-10 space-y-2">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="text-lg font-bold text-[#003b4f] leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-sm text-[#2e2e2e] mt-2.5 leading-relaxed">
-                      {item.summary}
-                    </p>
+                    <span className="text-xs font-mono text-[#6c757d]">
+                      {item.standard}
+                    </span>
                   </div>
-                  <p className="mt-5 pt-4 border-t border-[#e9eff2] text-xs font-mono text-[#6c757d]">
-                    {item.standard}
+                  <p className="text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed">
+                    {item.summary}
                   </p>
-                </article>
-              </FadeInUpOnScroll>
+                </div>
+              </article>
             ))}
           </div>
         </div>
