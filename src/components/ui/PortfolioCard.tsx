@@ -28,7 +28,7 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
               decoding="async"
               referrerPolicy="no-referrer"
               onError={() => setImgFailed(true)}
-              className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.02]"
+              className="wpc-media-reveal w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.035]"
             />
           )}
         </div>
@@ -72,13 +72,15 @@ export function PortfolioCard({ item }: PortfolioCardProps) {
           href={item.externalUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 min-h-[44px] text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md group/link"
+          className="inline-flex items-center gap-2.5 min-h-[44px] text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md group/link"
         >
           <span>{item.externalLabel}</span>
-          <ArrowUpRight
-            className="h-4 w-4 transition-transform duration-150 group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5"
+          <span
             aria-hidden="true"
-          />
+            className="h-7 w-7 rounded-full bg-white border border-[#dde6eb] text-[#00749c] inline-flex items-center justify-center transition-all duration-200 group-hover/link:border-[#00749c] group-hover/link:bg-[#00749c] group-hover/link:text-white group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5 group-focus-visible/link:border-[#00749c] group-focus-visible/link:bg-[#00749c] group-focus-visible/link:text-white group-focus-visible/link:translate-x-0.5 group-focus-visible/link:-translate-y-0.5"
+          >
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </span>
         </a>
         <span className="text-xs font-mono text-[#6c757d]">Opens official Fiverr portfolio</span>
       </div>

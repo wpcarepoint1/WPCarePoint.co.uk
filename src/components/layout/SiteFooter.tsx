@@ -1,5 +1,10 @@
-import { Mail, MapPin } from 'lucide-react';
+import { ArrowUp, Mail, MapPin } from 'lucide-react';
 import { BRAND_INFO } from '../../data/homepageData';
+import {
+  FadeInUpOnScroll,
+  StaggerItem,
+  usePrefersReducedMotion,
+} from '../MotionPrimitives';
 
 interface SiteFooterProps {
   onNavigateHome: (hash?: string) => void;
@@ -7,9 +12,11 @@ interface SiteFooterProps {
 }
 
 const FOOTER_LINK_CLASS =
-  'inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center hover:text-[#00b2d4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md';
+  'wpc-footer-link inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center hover:text-[#00b2d4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md';
 
 export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) {
+  const reducedMotion = usePrefersReducedMotion();
+
   const handleAnchor = (hash: string) => {
     onNavigateHome(hash);
   };
@@ -22,24 +29,31 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
     }
   };
 
+  const handleBackToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: reducedMotion ? 'auto' : 'smooth',
+    });
+  };
+
   return (
     <footer className="bg-[#003b4f] text-white border-t border-white/10">
       <div className="max-w-7xl mx-auto px-6 py-14 lg:py-16">
-        {/* 4 Concise Agency Footer Groups */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-10 border-b border-white/15">
+        {/* 4 Concise Agency Footer Groups with Staggered Reveal */}
+        <FadeInUpOnScroll className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-10 border-b border-white/15">
           {/* Group 1: Brand & Official Contact */}
-          <div className="lg:col-span-4 space-y-4">
+          <StaggerItem index={0} className="lg:col-span-4 space-y-4">
             <a
               href="/"
               onClick={(e) => {
                 e.preventDefault();
                 onNavigateHome();
               }}
-              className="inline-flex min-h-[44px] items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-xl"
+              className="group inline-flex min-h-[44px] items-center gap-3 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-xl"
             >
               <span
                 aria-hidden="true"
-                className="h-8 w-8 rounded-xl bg-[#00749c] border border-white/20 flex items-center justify-center font-mono text-xs font-bold text-white"
+                className="h-8 w-8 rounded-xl bg-[#00749c] border border-white/20 flex items-center justify-center font-mono text-xs font-bold text-white transition-transform duration-200 group-hover:scale-105 group-focus-visible:scale-105"
               >
                 WP
               </span>
@@ -63,7 +77,7 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               <p>
                 <a
                   href={`mailto:${BRAND_INFO.email}`}
-                  className="inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center gap-2 text-[#00b2d4] hover:text-white font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                  className="wpc-footer-link inline-flex min-h-[44px] md:min-h-0 py-1 md:py-0.5 items-center gap-2 text-[#00b2d4] hover:text-white font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
                 >
                   <Mail className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
                   <span>{BRAND_INFO.email}</span>
@@ -71,10 +85,10 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               </p>
               <p className="text-white/60">Email enquiries only · United Kingdom</p>
             </div>
-          </div>
+          </StaggerItem>
 
           {/* Group 2: Core Services */}
-          <div className="lg:col-span-3 space-y-3">
+          <StaggerItem index={1} className="lg:col-span-3 space-y-3">
             <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00b2d4]">
               Services
             </p>
@@ -164,10 +178,10 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                 </a>
               </li>
             </ul>
-          </div>
+          </StaggerItem>
 
           {/* Group 3: Care & Delivery */}
-          <div className="lg:col-span-3 space-y-3">
+          <StaggerItem index={2} className="lg:col-span-3 space-y-3">
             <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00b2d4]">
               Agency &amp; Care
             </p>
@@ -245,10 +259,10 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                 </a>
               </li>
             </ul>
-          </div>
+          </StaggerItem>
 
           {/* Group 4: Support & Standards */}
-          <div className="lg:col-span-2 space-y-3">
+          <StaggerItem index={3} className="lg:col-span-2 space-y-3">
             <p className="text-xs font-mono font-semibold uppercase tracking-[0.12em] text-[#00b2d4]">
               Standards
             </p>
@@ -292,12 +306,27 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
               <li className="text-xs text-white/65 pt-2">UK GDPR &amp; PECR Ready</li>
               <li className="text-xs text-white/65">WCAG 2.2 AA Focus</li>
             </ul>
-          </div>
-        </div>
+          </StaggerItem>
+        </FadeInUpOnScroll>
 
-        <div className="pt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/70">
+        <div className="pt-7 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 text-xs text-white/70">
           <p>© {new Date().getFullYear()} WPCarePoint · wpcarepoint.co.uk</p>
-          <p>{BRAND_INFO.tagline}</p>
+          <div className="flex flex-wrap items-center justify-between sm:justify-end gap-5">
+            <p>{BRAND_INFO.tagline}</p>
+            <button
+              type="button"
+              onClick={handleBackToTop}
+              className="group inline-flex min-h-[44px] sm:min-h-[36px] items-center gap-2 rounded-full border border-white/20 bg-white/[0.04] hover:bg-white/10 hover:border-[#00b2d4] px-3.5 py-1.5 text-xs font-semibold text-white transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] cursor-pointer"
+            >
+              <span>Back to top</span>
+              <span
+                aria-hidden="true"
+                className="h-5 w-5 rounded-full bg-white/15 inline-flex items-center justify-center transition-transform duration-200 group-hover:-translate-y-0.5 group-focus-visible:-translate-y-0.5"
+              >
+                <ArrowUp className="h-3 w-3" />
+              </span>
+            </button>
+          </div>
         </div>
       </div>
     </footer>

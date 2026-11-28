@@ -1,6 +1,7 @@
 import { useRef, useState, type MouseEvent as ReactMouseEvent } from 'react';
 import { ArrowRight, Check, Copy, Mail, MapPin } from 'lucide-react';
 import { BRAND_INFO } from '../../data/homepageData';
+import { FadeInUpOnScroll, StaggerItem } from '../MotionPrimitives';
 import { Button } from './Button';
 
 interface CtaSectionProps {
@@ -80,13 +81,19 @@ export function CtaSection({
   return (
     <section
       id={id}
-      className="scroll-mt-24 py-20 lg:py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-t border-white/10"
+      className="relative overflow-hidden scroll-mt-24 py-20 lg:py-24 bg-[#003b4f] bg-deep-teal-grid text-white border-t border-white/10"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
-          <div className="lg:col-span-7 space-y-5">
+      {/* Subtle decorative radial ambient glow (disabled automatically under prefers-reduced-motion) */}
+      <div
+        aria-hidden="true"
+        className="wpc-cta-ambient pointer-events-none absolute -top-24 right-[-6rem] h-80 w-80 rounded-full bg-[radial-gradient(circle,rgba(0,178,212,0.18)_0%,rgba(0,178,212,0)_70%)]"
+      />
+
+      <div className="relative max-w-7xl mx-auto px-6">
+        <FadeInUpOnScroll className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+          <StaggerItem index={0} className="lg:col-span-7 space-y-5">
             <div className="inline-flex items-center gap-3">
-              <span aria-hidden="true" className="h-px w-6 bg-white/25" />
+              <span aria-hidden="true" className="wpc-rule-draw h-px w-6 bg-white/25" />
               <p className="text-xs font-mono font-semibold tracking-[0.12em] uppercase text-[#00b2d4]">
                 {eyebrow}
               </p>
@@ -114,7 +121,7 @@ export function CtaSection({
                 >
                   <span>{contactRouteLabel}</span>
                   <ArrowRight
-                    className="h-4 w-4 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5"
+                    className="h-4 w-4 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
                     aria-hidden="true"
                   />
                 </Button>
@@ -126,11 +133,15 @@ export function CtaSection({
                 )}`}
                 variant={contactRouteHref ? 'ghostOnDark' : 'onDark'}
                 size="lg"
+                className="group"
               >
                 <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{primaryButtonLabel}</span>
                 {!contactRouteHref && (
-                  <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <ArrowRight
+                    className="h-4 w-4 shrink-0 transition-transform duration-150 group-hover:translate-x-0.5 group-focus-visible:translate-x-0.5"
+                    aria-hidden="true"
+                  />
                 )}
               </Button>
 
@@ -143,7 +154,10 @@ export function CtaSection({
               >
                 {copyState === 'copied' ? (
                   <>
-                    <Check className="h-4 w-4 shrink-0 text-[#00b2d4]" aria-hidden="true" />
+                    <Check
+                      className="wpc-icon-pop h-4 w-4 shrink-0 text-[#00b2d4]"
+                      aria-hidden="true"
+                    />
                     <span>Email Address Copied</span>
                   </>
                 ) : copyState === 'manual' ? (
@@ -159,40 +173,42 @@ export function CtaSection({
                 )}
               </Button>
             </div>
-          </div>
+          </StaggerItem>
 
-          <aside className="lg:col-span-5 rounded-2xl border border-white/15 bg-white/[0.04] backdrop-blur-xs p-7 sm:p-8 space-y-6">
-            <div>
-              <p className="text-xs font-mono uppercase tracking-[0.12em] text-[#00b2d4]">
-                Official Contact Channel
-              </p>
-              <a
-                ref={emailLinkRef}
-                href={`mailto:${BRAND_INFO.email}`}
-                className="mt-2 inline-flex min-h-[44px] items-center gap-2.5 text-lg sm:text-xl font-semibold text-white hover:text-[#00b2d4] transition-colors break-all"
-              >
-                <Mail className="h-4 w-4 shrink-0 text-[#00b2d4]" aria-hidden="true" />
-                <span>{BRAND_INFO.email}</span>
-              </a>
-              <p className="text-xs sm:text-sm text-white/75 mt-1.5 leading-relaxed">
-                {BRAND_INFO.channelNote}
-              </p>
-            </div>
+          <StaggerItem index={1} className="lg:col-span-5">
+            <aside className="rounded-2xl border border-white/15 bg-white/[0.04] hover:bg-white/[0.06] hover:border-[#00b2d4]/40 transition-all duration-200 backdrop-blur-xs p-7 sm:p-8 space-y-6">
+              <div>
+                <p className="text-xs font-mono uppercase tracking-[0.12em] text-[#00b2d4]">
+                  Official Contact Channel
+                </p>
+                <a
+                  ref={emailLinkRef}
+                  href={`mailto:${BRAND_INFO.email}`}
+                  className="wpc-footer-link mt-2 inline-flex min-h-[44px] items-center gap-2.5 text-lg sm:text-xl font-semibold text-white hover:text-[#00b2d4] transition-colors break-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00b2d4] rounded-md"
+                >
+                  <Mail className="h-4 w-4 shrink-0 text-[#00b2d4]" aria-hidden="true" />
+                  <span>{BRAND_INFO.email}</span>
+                </a>
+                <p className="text-xs sm:text-sm text-white/75 mt-1.5 leading-relaxed">
+                  {BRAND_INFO.channelNote}
+                </p>
+              </div>
 
-            <div className="pt-6 border-t border-white/15">
-              <p className="text-xs font-mono uppercase tracking-[0.12em] text-[#00b2d4]">
-                United Kingdom Address
-              </p>
-              <p className="mt-2 text-sm text-white/90 leading-relaxed flex items-start gap-2.5">
-                <MapPin
-                  className="h-4 w-4 shrink-0 text-[#00b2d4] mt-0.5"
-                  aria-hidden="true"
-                />
-                <span>{BRAND_INFO.address}</span>
-              </p>
-            </div>
-          </aside>
-        </div>
+              <div className="pt-6 border-t border-white/15">
+                <p className="text-xs font-mono uppercase tracking-[0.12em] text-[#00b2d4]">
+                  United Kingdom Address
+                </p>
+                <p className="mt-2 text-sm text-white/90 leading-relaxed flex items-start gap-2.5">
+                  <MapPin
+                    className="h-4 w-4 shrink-0 text-[#00b2d4] mt-0.5"
+                    aria-hidden="true"
+                  />
+                  <span>{BRAND_INFO.address}</span>
+                </p>
+              </div>
+            </aside>
+          </StaggerItem>
+        </FadeInUpOnScroll>
       </div>
     </section>
   );

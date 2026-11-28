@@ -76,6 +76,16 @@
   --progress-bar: #00749c;
   --selection-bg: #00749c;
   --selection-text: #ffffff;
+
+  /* Task 2.17 Reusable Motion System Tokens */
+  --wpc-dur-fast: 160ms;
+  --wpc-dur-base: 260ms;
+  --wpc-dur-reveal: 540ms;
+  --wpc-dur-hero: 620ms;
+  --wpc-stagger: 65ms;
+  --wpc-ease-standard: cubic-bezier(0.22, 1, 0.36, 1);
+  --wpc-ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --wpc-ease-spring: cubic-bezier(0.34, 1.35, 0.64, 1);
 }
 
 @layer base {
@@ -129,33 +139,184 @@
   background-size: 64px 64px;
 }
 
+/* Studio card elevation & smooth border/shadow response */
 .wpc-studio-card {
   transition:
-    border-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
+    border-color var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    background-color var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    box-shadow var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    transform var(--wpc-dur-base) var(--wpc-ease-out-expo);
 }
 
-.wpc-studio-card:hover {
-  box-shadow: 0 14px 32px -18px rgba(0, 59, 79, 0.16);
+.wpc-studio-card:hover,
+.wpc-studio-card:focus-within {
+  box-shadow: 0 18px 36px -20px rgba(0, 59, 79, 0.18);
+  transform: translate3d(0, -3px, 0);
 }
 
-/* Compositor-only progressive reveal & accordions (zero hidden opacity traps) */
-@keyframes wpc-fade-in {
+/* Header floating rail & scroll state */
+@keyframes wpc-header-slide {
   from {
-    opacity: 0.94;
-    transform: translate3d(0, 6px, 0);
+    opacity: 0.92;
+    transform: translate3d(0, -10px, 0);
   }
   to {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+}
+
+.wpc-header-rail {
+  animation: wpc-header-slide var(--wpc-dur-reveal) var(--wpc-ease-out-expo) both;
+  transition:
+    background-color var(--wpc-dur-base) var(--wpc-ease-standard),
+    border-color var(--wpc-dur-base) var(--wpc-ease-standard),
+    box-shadow var(--wpc-dur-base) var(--wpc-ease-standard),
+    transform var(--wpc-dur-base) var(--wpc-ease-out-expo);
+}
+
+.wpc-header-rail[data-scrolled="true"] {
+  background-color: rgba(255, 255, 255, 0.98);
+  border-color: #c5d6df;
+  box-shadow: 0 18px 38px -18px rgba(0, 59, 79, 0.24);
+}
+
+/* Animated nav link underline (compositor transform scaleX only) */
+.wpc-nav-link {
+  position: relative;
+}
+
+.wpc-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: var(--wpc-primary);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--wpc-dur-fast) var(--wpc-ease-out-expo);
+}
+
+.wpc-nav-link:hover::after,
+.wpc-nav-link:focus-visible::after,
+.wpc-nav-link[data-active="true"]::after {
+  transform: scaleX(1);
+}
+
+/* Animated footer link underline */
+.wpc-footer-link {
+  position: relative;
+}
+
+.wpc-footer-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background-color: #00b2d4;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--wpc-dur-base) var(--wpc-ease-out-expo);
+}
+
+.wpc-footer-link:hover::after,
+.wpc-footer-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+/* Smooth mega-menu panel open & close */
+.wpc-dropdown-panel {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translate3d(0, -8px, 0) scale(0.985);
+  transform-origin: top center;
+  transition:
+    opacity var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    transform var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    visibility var(--wpc-dur-base) linear;
+}
+
+.wpc-dropdown-panel[data-open="true"] {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+/* Mobile drawer container + staggered nav item reveals */
+@keyframes wpc-drawer-in {
+  from {
+    opacity: 0.7;
+    transform: translate3d(0, -8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.wpc-drawer-panel {
+  animation: wpc-drawer-in var(--wpc-dur-base) var(--wpc-ease-out-expo) both;
+}
+
+.wpc-drawer-item {
+  animation: wpc-fade-in var(--wpc-dur-reveal) var(--wpc-ease-out-expo) both;
+  animation-delay: calc(var(--wpc-stagger-index, 0) * 28ms);
+}
+
+/* Compositor-only route, tab, hero, and media animations */
+@keyframes wpc-fade-in {
+  from {
+    opacity: 0.9;
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes wpc-heading-settle {
+  from {
+    transform: translate3d(0, 10px, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes wpc-hero-stagger-in {
+  from {
+    opacity: 0.84;
+    transform: translate3d(0, 14px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes wpc-hero-visual-in {
+  from {
+    opacity: 0.88;
+    transform: translate3d(0, 18px, 0) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
 @keyframes wpc-panel-switch {
   from {
-    opacity: 0.9;
-    transform: translate3d(0, 4px, 0);
+    opacity: 0.72;
+    transform: translate3d(0, 8px, 0);
   }
   to {
     opacity: 1;
@@ -163,33 +324,172 @@
   }
 }
 
+@keyframes wpc-float-slow {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -7px, 0);
+  }
+}
+
+@keyframes wpc-cta-drift {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-12px, -8px, 0) scale(1.04);
+  }
+}
+
+@keyframes wpc-icon-pop {
+  0% {
+    transform: scale(0.75);
+  }
+  65% {
+    transform: scale(1.12);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .wpc-route-enter {
-  animation: wpc-fade-in 220ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: wpc-fade-in var(--wpc-dur-base) var(--wpc-ease-out-expo) both;
 }
 
 .wpc-panel-enter {
-  animation: wpc-panel-switch 200ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: wpc-panel-switch var(--wpc-dur-base) var(--wpc-ease-out-expo) both;
 }
 
+/* Main H1 never uses opacity:0 so SEO & LCP remain instant */
+.wpc-hero-h1 {
+  animation: wpc-heading-settle var(--wpc-dur-hero) var(--wpc-ease-out-expo) both;
+}
+
+.wpc-hero-stagger {
+  animation: wpc-hero-stagger-in var(--wpc-dur-hero) var(--wpc-ease-out-expo) both;
+  animation-delay: var(--wpc-hero-delay, 0ms);
+}
+
+.wpc-hero-visual {
+  animation: wpc-hero-visual-in var(--wpc-dur-hero) var(--wpc-ease-out-expo) both;
+  animation-delay: var(--wpc-hero-delay, 90ms);
+}
+
+.wpc-float-ambient {
+  animation: wpc-float-slow 7.5s ease-in-out infinite;
+}
+
+.wpc-cta-ambient {
+  animation: wpc-cta-drift 11s ease-in-out infinite;
+}
+
+.wpc-icon-pop {
+  animation: wpc-icon-pop var(--wpc-dur-base) var(--wpc-ease-spring) both;
+}
+
+/* Progressive scroll-triggered section & staggered card reveal:
+   Always visible if JS fails; enhanced only when html.wpc-motion-ready is present */
 .wpc-reveal {
-  opacity: 0.96;
-  transform: translate3d(0, 8px, 0);
+  opacity: 1;
+  transform: none;
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="false"] {
+  opacity: 0.12;
+  transform: translate3d(0, 22px, 0);
+}
+
+html.wpc-motion-ready .wpc-reveal {
   transition:
-    opacity 320ms cubic-bezier(0.16, 1, 0.3, 1),
-    transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    opacity var(--wpc-dur-reveal) var(--wpc-ease-out-expo),
+    transform var(--wpc-dur-reveal) var(--wpc-ease-out-expo);
   will-change: transform, opacity;
 }
 
-.wpc-reveal[data-visible="true"] {
+html.wpc-motion-ready .wpc-reveal[data-visible="true"] {
   opacity: 1;
   transform: translate3d(0, 0, 0);
   will-change: auto;
 }
 
+/* Staggered child entrances inside a revealed container */
+.wpc-stagger-child {
+  opacity: 1;
+  transform: none;
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="false"] .wpc-stagger-child {
+  opacity: 0.14;
+  transform: translate3d(0, 18px, 0);
+}
+
+html.wpc-motion-ready .wpc-reveal .wpc-stagger-child {
+  transition:
+    opacity var(--wpc-dur-reveal) var(--wpc-ease-out-expo),
+    transform var(--wpc-dur-reveal) var(--wpc-ease-out-expo),
+    border-color var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    background-color var(--wpc-dur-base) var(--wpc-ease-out-expo),
+    box-shadow var(--wpc-dur-base) var(--wpc-ease-out-expo);
+  transition-delay: calc(var(--wpc-stagger-index, 0) * var(--wpc-stagger));
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="true"] .wpc-stagger-child {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Eyebrow rule & process connecting line animations */
+.wpc-rule-draw {
+  transform-origin: left center;
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="false"] .wpc-rule-draw {
+  transform: scaleX(0.15);
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="true"] .wpc-rule-draw {
+  transform: scaleX(1);
+  transition: transform var(--wpc-dur-reveal) var(--wpc-ease-out-expo);
+}
+
+.wpc-process-line {
+  transform-origin: left center;
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="false"] .wpc-process-line {
+  transform: scaleX(0);
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="true"] .wpc-process-line {
+  transform: scaleX(1);
+  transition: transform 760ms var(--wpc-ease-out-expo) 140ms;
+}
+
+/* Lightweight compositor image reveal inside cards */
+.wpc-media-reveal {
+  transform-origin: center center;
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="false"] .wpc-media-reveal {
+  opacity: 0.8;
+  transform: scale(1.03);
+}
+
+html.wpc-motion-ready .wpc-reveal[data-visible="true"] .wpc-media-reveal {
+  opacity: 1;
+  transform: scale(1);
+  transition:
+    opacity var(--wpc-dur-reveal) var(--wpc-ease-out-expo),
+    transform 680ms var(--wpc-ease-out-expo);
+}
+
+/* FAQ Accordion smooth expand/collapse + inner opacity */
 .wpc-accordion-grid {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: grid-template-rows var(--wpc-dur-base) var(--wpc-ease-out-expo);
 }
 
 .wpc-accordion-grid[data-open="true"] {
@@ -198,6 +498,16 @@
 
 .wpc-accordion-inner {
   overflow: hidden;
+  opacity: 0;
+  transform: translate3d(0, -4px, 0);
+  transition:
+    opacity var(--wpc-dur-fast) var(--wpc-ease-standard),
+    transform var(--wpc-dur-base) var(--wpc-ease-out-expo);
+}
+
+.wpc-accordion-grid[data-open="true"] .wpc-accordion-inner {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -205,14 +515,38 @@
     scroll-behavior: auto;
   }
 
+  .wpc-header-rail,
   .wpc-route-enter,
   .wpc-panel-enter,
+  .wpc-hero-h1,
+  .wpc-hero-stagger,
+  .wpc-hero-visual,
+  .wpc-drawer-panel,
+  .wpc-drawer-item,
+  .wpc-float-ambient,
+  .wpc-cta-ambient,
+  .wpc-icon-pop,
   .wpc-reveal,
+  .wpc-stagger-child,
+  .wpc-rule-draw,
+  .wpc-process-line,
+  .wpc-media-reveal,
   .wpc-studio-card {
     animation: none !important;
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+    will-change: auto !important;
+  }
+
+  .wpc-dropdown-panel[data-open="false"] {
+    opacity: 0 !important;
+    visibility: hidden !important;
+  }
+
+  .wpc-dropdown-panel[data-open="true"] {
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 
   *,

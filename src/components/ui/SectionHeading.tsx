@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { FadeInUpOnScroll } from '../MotionPrimitives';
 
 interface SectionHeadingProps {
   eyebrow: string;
@@ -26,7 +27,7 @@ export function SectionHeading({
   const descColor = tone === 'dark' ? 'text-white/80' : 'text-[#6c757d]';
 
   return (
-    <div
+    <FadeInUpOnScroll
       className={`flex flex-col ${
         actions ? 'lg:flex-row lg:items-end lg:justify-between gap-6' : 'gap-3'
       } ${isCentered ? 'text-center items-center mx-auto max-w-3xl' : ''} ${className}`.trim()}
@@ -34,15 +35,15 @@ export function SectionHeading({
       <div className={isCentered ? 'max-w-2xl flex flex-col items-center' : 'max-w-2xl'}>
         {isCentered ? (
           <div className="inline-flex items-center gap-3.5">
-            <span aria-hidden="true" className={`h-px w-8 ${ruleColor}`} />
+            <span aria-hidden="true" className={`wpc-rule-draw h-px w-8 ${ruleColor}`} />
             <p className={`text-xs font-mono font-semibold tracking-[0.14em] uppercase ${eyebrowColor}`}>
               {eyebrow}
             </p>
-            <span aria-hidden="true" className={`h-px w-8 ${ruleColor}`} />
+            <span aria-hidden="true" className={`wpc-rule-draw h-px w-8 ${ruleColor}`} />
           </div>
         ) : (
           <div className="inline-flex items-center gap-3">
-            <span aria-hidden="true" className={`h-px w-6 ${ruleColor}`} />
+            <span aria-hidden="true" className={`wpc-rule-draw h-px w-6 ${ruleColor}`} />
             <p className={`text-xs font-mono font-semibold tracking-[0.12em] uppercase ${eyebrowColor}`}>
               {eyebrow}
             </p>
@@ -61,6 +62,6 @@ export function SectionHeading({
         )}
       </div>
       {actions && <div className="shrink-0">{actions}</div>}
-    </div>
+    </FadeInUpOnScroll>
   );
 }

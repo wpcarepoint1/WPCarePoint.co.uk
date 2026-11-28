@@ -1,6 +1,55 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 
 export const EASE_OUT_EXPO = [0.16, 1, 0.3, 1] as const;
+
+export function usePrefersReducedMotion(): boolean {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.matchMedia) return;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setReduced(mq.matches);
+    sync();
+    if (typeof mq.addEventListener === 'function') {
+      mq.addEventListener('change', sync);
+      return () => mq.removeEventListener('change', sync);
+    }
+    mq.addListener(sync);
+    return () => mq.removeListener(sync);
+  }, []);
+
+  return reduced;
+}
+
+export function useScrolled(threshold = 24): boolean {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    let rafId = 0;
+
+    const update = () => {
+      rafId = 0;
+      const next = window.scrollY > threshold;
+      setScrolled((prev) => (prev === next ? prev : next));
+    };
+
+    const onScroll = () => {
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(update);
+      }
+    };
+
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, [threshold]);
+
+  return scrolled;
+}
 
 export function ScrollProgressBar() {
   const barRef = useRef<HTMLDivElement>(null);
@@ -12,6 +61,8 @@ export function ScrollProgressBar() {
     ) {
       return;
     }
+
+    document.documentElement.classList.add('wpc-motion-ready');
 
     let rafId = 0;
 
@@ -55,7 +106,7 @@ export function ScrollProgressBar() {
 
 /**
  * Progressive scroll-triggered section reveal using IntersectionObserver + CSS transitions.
- * Never blocks readability when JS or IntersectionObserver is unavailable.
+ * Never blocks readability when JS is disabled, reduced-motion is set, or the page loads mid-scroll.
  */
 export function FadeInUpOnScroll({
   children,
@@ -80,37 +131,54 @@ export function FadeInUpOnScroll({
       return;
     }
 
+    document.documentElement.classList.add('wpc-motion-ready');
+
     const el = ref.current;
     if (!el) {
       setVisible(true);
       return;
     }
 
-    const rect = el.getBoundingClientRect();
-    if (rect.top <= window.innerHeight * 1.1) {
-      setVisible(true);
+    const revealNowIfInOrAboveViewport = () => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= window.innerHeight * 1.15) {
+        setVisible(true);
+        return true;
+      }
+      return false;
+    };
+
+    if (revealNowIfInOrAboveViewport()) {
       return;
     }
 
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries.some((entry) => entry.isIntersecting)) {
+        if (entries.some((entry) => entry.isIntersecting || entry.boundingClientRect.top <= window.innerHeight)) {
           setVisible(true);
           observer.disconnect();
         }
       },
-      { rootMargin: '80px 0px -32px 0px', threshold: 0.01 }
+      { rootMargin: '80px 0px -24px 0px', threshold: 0.01 }
     );
 
     observer.observe(el);
 
+    const onHashOrJump = () => {
+      if (revealNowIfInOrAboveViewport()) {
+        observer.disconnect();
+      }
+    };
+
+    window.addEventListener('hashchange', onHashOrJump, { passive: true });
     const safetyTimer = window.setTimeout(() => {
       setVisible(true);
       observer.disconnect();
-    }, 800);
+    }, 1100);
 
     return () => {
       window.clearTimeout(safetyTimer);
+      window.removeEventListener('hashchange', onHashOrJump);
       observer.disconnect();
     };
   }, []);
@@ -119,7 +187,9 @@ export function FadeInUpOnScroll({
     <div
       ref={ref}
       data-visible={visible ? 'true' : 'false'}
-      style={delay > 0 && visible ? { transitionDelay: `${Math.round(delay * 1000)}ms` } : undefined}
+      style={
+        delay > 0 && visible ? { transitionDelay: `${Math.round(delay * 1000)}ms` } : undefined
+      }
       className={`wpc-reveal ${className}`.trim()}
     >
       {children}
@@ -162,10 +232,17 @@ export function StaggerGrid({
 
 export function StaggerItem({
   children,
+  index = 0,
   className = '',
 }: {
   children: ReactNode;
+  index?: number;
   className?: string;
 }) {
-  return <div className={className}>{children}</div>;
+  const style = { '--wpc-stagger-index': index } as CSSProperties;
+  return (
+    <div style={style} className={`wpc-stagger-child ${className}`.trim()}>
+      {children}
+    </div>
+  );
 }
