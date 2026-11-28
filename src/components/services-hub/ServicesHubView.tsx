@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import {
   ArrowRight,
+  ArrowUpRight,
   Check,
   Code2,
   Cpu,
@@ -11,7 +12,7 @@ import {
   Wrench,
 } from 'lucide-react';
 import { SERVICES_HUB_DATA } from '../../data/servicesHubData';
-import { BRAND_INFO } from '../../data/homepageData';
+import { BRAND_INFO, FIVERR_PROOF_LINKS } from '../../data/homepageData';
 import { applyRouteSeo } from '../../utils/routeSeo';
 import { FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
@@ -191,7 +192,7 @@ export function ServicesHubView({
                   size="lg"
                   className="group"
                 >
-                  <span>Discuss Your Scope</span>
+                  <span>Book a Consultation</span>
                   <ArrowRight
                     className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
                     aria-hidden="true"
@@ -281,6 +282,27 @@ export function ServicesHubView({
                 {p}
               </p>
             ))}
+
+            <div className="pt-2 flex flex-wrap items-center gap-x-6 gap-y-2 border-t border-[#dde6eb] text-sm">
+              <a
+                href={FIVERR_PROOF_LINKS.portfolioUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors"
+              >
+                <span>Inspect Fiverr Portfolio (@hdhiren)</span>
+                <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </a>
+              <a
+                href={FIVERR_PROOF_LINKS.profileUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors"
+              >
+                <span>Read Client Reviews on Fiverr</span>
+                <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>
@@ -572,7 +594,7 @@ export function ServicesHubView({
         headline={SERVICES_HUB_DATA.cta.headline}
         description={SERVICES_HUB_DATA.cta.description}
         mailtoSubject={SERVICES_HUB_DATA.cta.mailtoSubject}
-        primaryButtonLabel="Send Email Enquiry"
+        primaryButtonLabel="Email contact@wpcarepoint.co.uk"
         contactRouteHref="/contact/"
         contactRouteLabel={SERVICES_HUB_DATA.cta.primaryButtonLabel}
         onNavigatePath={onNavigatePath}

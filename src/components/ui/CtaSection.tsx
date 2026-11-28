@@ -17,11 +17,11 @@ interface CtaSectionProps {
 
 export function CtaSection({
   id = 'contact',
-  eyebrow = 'Start a Conversation',
-  headline = 'Plan your next website, store, or care agreement directly by email.',
-  description = 'Share your website URL, commercial priorities, or WordPress support issue with our team. All enquiries are handled directly via email—no automated sales queues or call centres.',
-  mailtoSubject = 'WPCarePoint Project & Support Enquiry',
-  primaryButtonLabel = 'Send Email Enquiry',
+  eyebrow = 'Book a Consultation',
+  headline = 'Plan your website, store, or care agreement directly by email.',
+  description = 'Share your website URL, commercial priorities, or WordPress issue with engineering at contact@wpcarepoint.co.uk. Every enquiry is reviewed in writing—no automated queues or call centres.',
+  mailtoSubject = 'WPCarePoint Consultation & Project Scoping',
+  primaryButtonLabel = 'Email contact@wpcarepoint.co.uk',
   contactRouteHref,
   contactRouteLabel,
   onNavigatePath,

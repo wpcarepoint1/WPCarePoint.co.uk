@@ -205,7 +205,7 @@ export const WEBSITE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
     headline: 'Custom websites engineered for clarity, speed, and full client ownership.',
     description:
       'Bespoke WordPress block builds and React or Next.js platforms for UK businesses—built clean without page-builder clutter or agency lock-in.',
-    primaryCtaLabel: 'Request Website Scope',
+    primaryCtaLabel: 'Book a Consultation',
     secondaryCtaLabel: 'Explore What We Build',
     secondaryCtaTargetId: 'service-intro',
     imageUrl: '/src/assets/images/service_web_design_studio_1795466283235.webp',
@@ -562,7 +562,7 @@ export const WP_SPEED_OPTIMISATION_PAGE_DATA: DedicatedServicePageConfig = {
     headline: 'WordPress speed optimisation driven by real diagnostics, not guesswork plugins.',
     description:
       'Slow pages cost enquiries across UK mobile networks. We trace the root causes inside your theme, plugins, media, database, and hosting—and resolve them safely on staging.',
-    primaryCtaLabel: 'Request Speed Audit',
+    primaryCtaLabel: 'Book a Speed Consultation',
     secondaryCtaLabel: 'Why Speed Matters',
     secondaryCtaTargetId: 'why-speed-matters',
     imageUrl: '/src/assets/images/wordpress_speed_engineering_1795466283304.webp',
@@ -921,7 +921,7 @@ export const ECOMMERCE_DEVELOPMENT_PAGE_DATA: DedicatedServicePageConfig = {
     headline: 'UK online stores built for fast mobile checkouts, VAT clarity, and clean scale.',
     description:
       'Reliable WooCommerce and custom storefronts built around GBP (£), UK VAT logic, Stripe 3D Secure checkouts, and maintainable stock operations.',
-    primaryCtaLabel: 'Request Store Scope',
+    primaryCtaLabel: 'Book a Store Consultation',
     secondaryCtaLabel: 'Explore eCommerce Architecture',
     secondaryCtaTargetId: 'service-intro',
     imageUrl: '/src/assets/images/service_ecommerce_studio_1795468677049.webp',
@@ -1635,8 +1635,8 @@ export const WEBSITE_CARE_SUPPORT_PAGE_DATA: DedicatedServicePageConfig = {
     eyebrow: '04 · Website Care & Technical Support',
     headline: 'Proactive website care keeping WordPress updated, backed up, and protected.',
     description:
-      'Staging-tested updates, encrypted off-site backups, security hardening, and direct email support—plus standalone Quick Fixes and emergency triage.',
-    primaryCtaLabel: 'Enquire About Website Care',
+      'Staging-tested updates, encrypted off-site backups, hacked-site and malware cleanup triage, plus urgent troubleshooting and standalone WordPress Quick Fixes.',
+    primaryCtaLabel: 'Book a Care Consultation',
     secondaryCtaLabel: 'View Care Tiers',
     secondaryCtaTargetId: 'care-plan-tiers',
     imageUrl: '/src/assets/images/service_website_care_1795468678272.webp',

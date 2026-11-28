@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import { ArrowRight, Check, Layers } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Check, Layers } from 'lucide-react';
 import { ABOUT_PAGE_DATA } from '../../data/aboutPageData';
-import { BRAND_INFO } from '../../data/homepageData';
+import { BRAND_INFO, FIVERR_PROOF_LINKS } from '../../data/homepageData';
 import { applyRouteSeo } from '../../utils/routeSeo';
 import { FadeInUpOnScroll, Reveal } from '../MotionPrimitives';
 import { Button } from '../ui/Button';
@@ -489,12 +489,42 @@ export function AboutPageView({
         className="scroll-mt-20 py-16 lg:py-20 bg-white"
       >
         <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-          <div className="lg:col-span-5 lg:sticky lg:top-24">
+          <div className="lg:col-span-5 lg:sticky lg:top-24 space-y-6">
             <SectionHeading
               eyebrow={ABOUT_PAGE_DATA.whyWorkWithUsSection.eyebrow}
               title={ABOUT_PAGE_DATA.whyWorkWithUsSection.title}
               description={ABOUT_PAGE_DATA.whyWorkWithUsSection.description}
             />
+
+            <div className="rounded-2xl border border-[#dde6eb] bg-[#f7f9fa] p-5 space-y-3">
+              <p className="text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
+                Official Fiverr Portfolio &amp; Reviews
+              </p>
+              <p className="text-sm text-[#2e2e2e] leading-relaxed">
+                Verify real WordPress and WooCommerce work examples and client feedback
+                directly on our official Fiverr profile ({FIVERR_PROOF_LINKS.handle}).
+              </p>
+              <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 pt-1">
+                <a
+                  href={FIVERR_PROOF_LINKS.portfolioUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-sm font-semibold text-[#00749c] hover:text-[#003b4f] transition-colors"
+                >
+                  <span>View Fiverr Portfolio</span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </a>
+                <a
+                  href={FIVERR_PROOF_LINKS.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 min-h-[44px] sm:min-h-0 text-sm font-semibold text-[#003b4f] hover:text-[#00749c] transition-colors"
+                >
+                  <span>Read Client Reviews</span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+                </a>
+              </div>
+            </div>
           </div>
 
           <div className="lg:col-span-7 divide-y divide-[#e9eff2] border-t border-b border-[#e9eff2]">
@@ -529,7 +559,7 @@ export function AboutPageView({
         headline={ABOUT_PAGE_DATA.cta.headline}
         description={ABOUT_PAGE_DATA.cta.description}
         mailtoSubject={ABOUT_PAGE_DATA.cta.mailtoSubject}
-        primaryButtonLabel="Send Email Enquiry"
+        primaryButtonLabel="Email contact@wpcarepoint.co.uk"
         contactRouteHref="/contact/"
         contactRouteLabel={ABOUT_PAGE_DATA.cta.primaryButtonLabel}
         onNavigatePath={onNavigatePath}

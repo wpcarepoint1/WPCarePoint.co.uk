@@ -229,7 +229,7 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
-                  Portfolio Recovery
+                  Fiverr Portfolio
                 </a>
               </li>
               <li>
@@ -241,7 +241,7 @@ export function SiteFooter({ onNavigateHome, onNavigatePath }: SiteFooterProps) 
                   }}
                   className={FOOTER_LINK_CLASS}
                 >
-                  Client Verification
+                  Client Reviews
                 </a>
               </li>
             </ul>

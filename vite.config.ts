@@ -6,6 +6,7 @@ import {defineConfig} from 'vite';
 import {
   BRAND_INFO,
   CARE_PLAN_TIERS,
+  FIVERR_PROOF_LINKS,
   HOMEPAGE_FAQS,
 } from './src/data/homepageData';
 import {ABOUT_PAGE_DATA} from './src/data/aboutPageData';
@@ -80,6 +81,10 @@ function buildHomePrerenderBody(): string {
           <ul>
           ${carePlansHtml}
           </ul>
+        </section>
+        <section>
+          <h2>Official Fiverr Portfolio &amp; Client Reviews</h2>
+          <p>Inspect real WordPress and WooCommerce work on <a href="${escapeHtml(FIVERR_PROOF_LINKS.portfolioUrl)}" target="_blank" rel="noopener noreferrer">our official Fiverr portfolio</a> and read client reviews on <a href="${escapeHtml(FIVERR_PROOF_LINKS.profileUrl)}" target="_blank" rel="noopener noreferrer">our Fiverr profile (@hdhiren)</a>.</p>
         </section>
         <section>
           <h2>Frequently Asked Questions</h2>
@@ -480,6 +485,10 @@ function buildServicesHubPrerenderHtml(templateHtml: string): string {
               )
               .join('')}
           </section>
+          <section>
+            <h2>Official Fiverr Portfolio &amp; Client Reviews</h2>
+            <p><a href="${escapeHtml(FIVERR_PROOF_LINKS.portfolioUrl)}" target="_blank" rel="noopener noreferrer">Inspect Fiverr Portfolio (@hdhiren)</a> · <a href="${escapeHtml(FIVERR_PROOF_LINKS.profileUrl)}" target="_blank" rel="noopener noreferrer">Read Client Reviews on Fiverr</a></p>
+          </section>
         </article>
       </main>`;
 
@@ -607,6 +616,10 @@ function buildAboutPrerenderHtml(templateHtml: string): string {
                   `<li><strong>${escapeHtml(v.title)}</strong>: ${escapeHtml(v.summary)}</li>`
               )
               .join('')}</ul>
+          </section>
+          <section>
+            <h2>Official Fiverr Portfolio &amp; Reviews</h2>
+            <p><a href="${escapeHtml(FIVERR_PROOF_LINKS.portfolioUrl)}" target="_blank" rel="noopener noreferrer">View Fiverr Portfolio</a> · <a href="${escapeHtml(FIVERR_PROOF_LINKS.profileUrl)}" target="_blank" rel="noopener noreferrer">Read Client Reviews</a></p>
           </section>
         </article>
       </main>`;

@@ -1,8 +1,10 @@
-import { ShieldCheck } from 'lucide-react';
+import type { MouseEvent } from 'react';
+import { ArrowUpRight, Mail, ShieldCheck } from 'lucide-react';
 import {
   BRAND_INFO,
+  FIVERR_PORTFOLIO_SHOWCASE,
+  FIVERR_PROOF_LINKS,
   HOMEPAGE_FAQS,
-  PORTFOLIO_PLACEHOLDER_SLOTS,
   WHY_CHOOSE_POINTS,
   WORKING_PROCESS_STEPS,
 } from '../../data/homepageData';
@@ -11,7 +13,13 @@ import { FaqAccordion } from '../ui/FaqAccordion';
 import { PortfolioCard } from '../ui/PortfolioCard';
 import { SectionHeading } from '../ui/SectionHeading';
 
-export function TrustAndProcessSections() {
+interface TrustAndProcessSectionsProps {
+  onNavigatePath?: (path: string) => void;
+}
+
+export function TrustAndProcessSections({
+  onNavigatePath,
+}: TrustAndProcessSectionsProps) {
   return (
     <>
       {/* Section 6: Why Choose WPCarePoint (Editorial Ledger Layout) */}
@@ -23,8 +31,8 @@ export function TrustAndProcessSections() {
           <div className="lg:col-span-5 lg:sticky lg:top-24">
             <SectionHeading
               eyebrow="Why Choose WPCarePoint"
-              title="Senior UK engineering built on ownership, clarity, and maintainability."
-              description="We avoid heavy page-builder shortcuts and agency layers so your site stays fast, clean, and firmly yours."
+              title="Direct engineering without page-builder bloat or agency lock-in."
+              description="Work directly with senior UK engineers so your website stays fast, auditable, and cleanly under your business ownership."
             />
           </div>
 
@@ -67,7 +75,7 @@ export function TrustAndProcessSections() {
           <SectionHeading
             eyebrow="Working Process"
             title="Staging-first delivery from audit to live UK release."
-            description="Every milestone is previewed on an isolated staging link before anything changes in production."
+            description="Every milestone is tested on an isolated staging link before anything changes on your live website."
             tone="dark"
           />
 
@@ -97,52 +105,99 @@ export function TrustAndProcessSections() {
         </div>
       </section>
 
-      {/* Section 8: Honest Portfolio & Proof Standards */}
+      {/* Section 8: Genuine Fiverr Portfolio & Client Reviews */}
       <section
         id="portfolio-preview"
         className="scroll-mt-20 py-16 lg:py-20 bg-[#f7f9fa] border-b border-[#dde6eb]"
       >
         <div className="max-w-7xl mx-auto px-6 space-y-10">
           <SectionHeading
-            eyebrow="Portfolio & Proof Standards"
-            title="Verification-first showcase — portfolio recovery in progress."
-            description="We publish client work and testimonials only after written client approvals and live verification complete."
+            eyebrow="Portfolio & Client Reviews"
+            title="Inspect verified work and client reviews on our official Fiverr profile."
+            description="We never publish invented case metrics or fabricated quotes. While UK case records await written client sign-off for this domain, you can review delivered WordPress and WooCommerce work directly on Fiverr."
           />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {PORTFOLIO_PLACEHOLDER_SLOTS.map((slot) => (
-              <PortfolioCard key={slot.id} item={slot} />
-            ))}
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-stretch">
+            <div className="lg:col-span-7 flex">
+              <PortfolioCard item={FIVERR_PORTFOLIO_SHOWCASE} />
+            </div>
 
-          <div
-            id="testimonials"
-            className="scroll-mt-24 rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6"
-          >
-            <div className="space-y-2 max-w-2xl">
-              <div className="inline-flex items-center gap-2 text-xs font-mono font-semibold uppercase tracking-wider text-[#00749c]">
-                <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                <span>Verified Proof Standard</span>
+            <aside
+              id="testimonials"
+              className="lg:col-span-5 scroll-mt-24 rounded-2xl border border-[#dde6eb] bg-white p-6 sm:p-8 flex flex-col justify-between gap-6"
+            >
+              <div className="space-y-4">
+                <div className="flex flex-wrap items-center gap-2 text-xs font-mono">
+                  <ShieldCheck className="h-4 w-4 text-[#00749c] shrink-0" aria-hidden="true" />
+                  <span className="font-semibold text-[#00749c]">Independent Marketplace Proof</span>
+                  <span className="text-[#6c757d]" aria-hidden="true">
+                    ·
+                  </span>
+                  <span className="text-[#6c757d]">@hdhiren</span>
+                </div>
+
+                <h3 className="text-xl sm:text-2xl font-bold text-[#003b4f] leading-snug">
+                  Authentic Client Reviews on Fiverr
+                </h3>
+
+                <p className="text-sm sm:text-[15px] text-[#2e2e2e] leading-relaxed">
+                  Genuine client feedback across WordPress builds, website redesigns, WooCommerce
+                  stores, speed tuning, and troubleshooting sits publicly on our owner-verified
+                  Fiverr account—displayed transparently at source without synthetic star widgets
+                  or rewritten quotes.
+                </p>
+
+                <dl className="pt-3 border-t border-[#e9eff2] divide-y divide-[#e9eff2] text-sm">
+                  <div className="py-2.5 flex items-baseline justify-between gap-4">
+                    <dt className="text-[#6c757d]">Official Profile</dt>
+                    <dd className="font-mono font-semibold text-[#003b4f]">
+                      {FIVERR_PROOF_LINKS.handle}
+                    </dd>
+                  </div>
+                  <div className="py-2.5 flex items-baseline justify-between gap-4">
+                    <dt className="text-[#6c757d]">Core Services Reviewed</dt>
+                    <dd className="font-medium text-[#2e2e2e] text-right">
+                      WordPress · WooCommerce · Speed
+                    </dd>
+                  </div>
+                  <div className="py-2.5 flex items-baseline justify-between gap-4">
+                    <dt className="text-[#6c757d]">Direct UK Scoping</dt>
+                    <dd className="font-medium text-[#00749c]">{BRAND_INFO.email}</dd>
+                  </div>
+                </dl>
               </div>
-              <h3 className="text-xl font-bold text-[#003b4f]">
-                Client Feedback Pending Written Sign-Off
-              </h3>
-              <p className="text-sm text-[#2e2e2e] leading-relaxed">
-                WPCarePoint never publishes invented quotes, synthetic star scores, or
-                unverified project figures. Verified client feedback will appear here once sign-off finalises.
-              </p>
-            </div>
-            <div className="shrink-0">
-              <Button
-                href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
-                  'Request Technical Walkthrough or Reference Scope'
-                )}`}
-                variant="secondary"
-                size="md"
-              >
-                Request Scope Walkthrough
-              </Button>
-            </div>
+
+              <div className="pt-4 border-t border-[#e9eff2] flex flex-col gap-3">
+                <a
+                  href={FIVERR_PROOF_LINKS.profileUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center gap-2 min-h-[44px] px-5 py-2.5 rounded-xl bg-[#00749c] text-white text-sm font-semibold hover:bg-[#00b2d4] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#00749c] group"
+                >
+                  <span>Read Client Reviews on Fiverr</span>
+                  <ArrowUpRight
+                    className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    aria-hidden="true"
+                  />
+                </a>
+
+                <Button
+                  href={onNavigatePath ? '/contact/' : `mailto:${BRAND_INFO.email}`}
+                  onClick={(e: MouseEvent<HTMLAnchorElement>) => {
+                    if (onNavigatePath) {
+                      e.preventDefault();
+                      onNavigatePath('/contact/');
+                    }
+                  }}
+                  variant="secondary"
+                  size="md"
+                  className="w-full"
+                >
+                  <Mail className="h-4 w-4 shrink-0" aria-hidden="true" />
+                  <span>Book a Consultation</span>
+                </Button>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
@@ -154,7 +209,7 @@ export function TrustAndProcessSections() {
             <SectionHeading
               eyebrow="Frequently Asked Questions"
               title="Clear answers on builds, care plans, and support."
-              description="Practical detail on platforms, pricing scoping, and how we work."
+              description="Practical detail on platforms, email scoping, and how we work."
             />
           </div>
 

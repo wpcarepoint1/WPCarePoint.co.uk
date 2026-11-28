@@ -249,11 +249,15 @@ export default function App({ initialRoute }: AppProps) {
               onJumpToSection={navigateHome}
             />
 
-            {/* Sections 6-9: Why Choose Us, Working Process, Portfolio & Proof Standards, FAQ */}
-            <TrustAndProcessSections />
+            {/* Sections 6-9: Why Choose Us, Working Process, Fiverr Portfolio & Reviews, FAQ */}
+            <TrustAndProcessSections onNavigatePath={navigateToPath} />
 
             {/* Section 10: Contact CTA */}
-            <CtaSection />
+            <CtaSection
+              contactRouteHref="/contact/"
+              contactRouteLabel="View Consultation Guides"
+              onNavigatePath={navigateToPath}
+            />
           </div>
         );
     }

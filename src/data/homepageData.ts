@@ -43,13 +43,15 @@ export interface ProcessStep {
   deliverable: string;
 }
 
-export interface PortfolioSlot {
+export interface PortfolioShowcaseItem {
   id: string;
-  status: string;
-  sector: string;
-  title: string;
+  eyebrow: string;
   scope: string;
-  note: string;
+  title: string;
+  summary: string;
+  serviceTracks: string[];
+  externalLabel: string;
+  externalUrl: string;
   imageUrl: string;
   imageAlt: string;
 }
@@ -60,6 +62,12 @@ export interface FaqEntry {
   answer: string;
 }
 
+export const FIVERR_PROOF_LINKS = {
+  profileUrl: 'https://www.fiverr.com/hdhiren',
+  portfolioUrl: 'https://www.fiverr.com/users/hdhiren/portfolio',
+  handle: 'fiverr.com/hdhiren',
+} as const;
+
 export const BRAND_INFO = {
   name: 'WPCarePoint',
   positioning: 'UK Digital Engineering · WordPress · eCommerce · AI',
@@ -67,7 +75,7 @@ export const BRAND_INFO = {
   tagline: 'Building, improving and supporting digital businesses.',
   email: 'contact@wpcarepoint.co.uk',
   address: 'Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom',
-  channelNote: 'Direct email scoping with engineering—no call-centre queues or sales layers.',
+  channelNote: 'Direct written scoping with engineering—no call-centre queues or sales layers.',
   heroImageUrl: '/src/assets/images/hero_wpcarepoint_studio_1795464512427.webp',
   heroImageAlt: 'WPCarePoint UK studio workspace with architectural interface schematics in soft daylight',
   architectureImageUrl: '/src/assets/images/service_web_architecture_1795464512894.webp',
@@ -134,10 +142,10 @@ export const NAV_SERVICE_DROPDOWN: NavServiceItem[] = [
 ];
 
 export const HERO_COMMITMENTS = [
-  { label: 'Core Craft', value: 'WordPress · React · WooCommerce' },
+  { label: 'Core Specialism', value: 'WordPress · WooCommerce · React' },
   { label: 'Engineering Standard', value: 'WCAG 2.2 AA & UK GDPR' },
   { label: 'Asset Ownership', value: '100% Client-Owned Code' },
-  { label: 'Direct Enquiries', value: 'Email Scoping Only' },
+  { label: 'Consultations', value: 'Direct Email Scoping' },
 ];
 
 export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
@@ -147,10 +155,10 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     title: 'Website Design & Development',
     subtitle: 'WordPress · React · Next.js',
     description:
-      'Clean, fast business websites built without bloated multipurpose themes or fragile page builders—keeping editorial control and code ownership firmly with your team.',
+      'Bespoke WordPress Gutenberg builds for teams publishing regularly, and React or Next.js platforms when custom web application logic is needed—free of heavy page-builder clutter.',
     deliverables: [
-      'Custom WordPress Gutenberg block themes with lean plugin footprint',
-      'Modern React, Next.js & TypeScript web platforms and portals',
+      'Custom WordPress block themes with a lean, auditable plugin footprint',
+      'React, Next.js & TypeScript frontends for bespoke web portals',
       'WCAG 2.2 AA mobile-first layouts tested across UK devices',
       'Single-hop 301 redirect governance during domain or site rebuilds',
     ],
@@ -165,9 +173,9 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     title: 'eCommerce Development',
     subtitle: 'WooCommerce HPOS · Stripe UK SCA',
     description:
-      'Reliable UK online stores built for fast mobile checkouts, clean catalogue filtering, British VAT rules, and accurate shipping workflows.',
+      'Online stores built for clear mobile checkouts, clean catalogue filtering, British VAT rules, and Royal Mail or DPD shipping workflows—in WooCommerce or custom storefronts.',
     deliverables: [
-      'WooCommerce HPOS and bespoke storefront development',
+      'WooCommerce HPOS and custom UK online retail engineering',
       'GBP (£) pricing, UK VAT logic & Royal Mail / DPD courier bands',
       'Stripe UK, Apple Pay & 3D Secure (SCA) checkout integration',
       'Clean product taxonomy with structured Product & Offer Schema',
@@ -183,12 +191,12 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     title: 'AI & Business Automation',
     subtitle: 'APIs · CRM Workflows · Human Oversight',
     description:
-      'Practical workflow automation linking your website, CRM, and accounting tools—built around UK GDPR data boundaries and human approval checkpoints.',
+      'Practical workflow automation linking your website, CRM, and accounting tools—designed around UK GDPR data boundaries and human approval checkpoints.',
     deliverables: [
       'Structured lead routing and validation into CRMs such as HubSpot',
-      'Defensive REST and webhook integrations for tools such as Xero & Stripe',
-      'Grounded AI brief triage and draft summaries behind staff review',
-      'Server-side secret isolation and clear failure alerts',
+      'Defensive REST and webhook integrations for Xero, Stripe & back-office tools',
+      'Grounded AI brief triage and draft summaries behind staff sign-off',
+      'Server-side secret isolation and reliable failure alerts',
     ],
     standards: 'API Pipelines · UK GDPR · Human Review',
     routePath: '/services/ai-business-automation/',
@@ -201,12 +209,12 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     title: 'Website Care & Technical Support',
     subtitle: 'Staging Updates · Backups · Quick Fix',
     description:
-      'Calm website stewardship keeping WordPress and WooCommerce updated on staging first, backed up off-site, and supported directly by engineering.',
+      'Ongoing website care keeping WordPress and WooCommerce updated in staging first, backed up off-site, and supported directly by engineers—plus one-off Quick Fixes.',
     deliverables: [
-      'Core, theme & plugin updates validated on staging before release',
-      'Encrypted off-site backups stored independently from primary hosting',
-      'Availability monitoring, hardening & Emergency & Malware Triage',
-      'One-off WordPress Quick Fix repairs without a monthly contract',
+      'Core, theme & plugin updates validated on staging before live release',
+      'Encrypted off-site backups stored independently from your web host',
+      'Uptime monitoring, security hardening & Emergency & Malware Triage',
+      'Standalone WordPress Quick Fix repairs without a monthly contract',
     ],
     standards: 'Staging First · Off-Site Backups · No Lock-In',
     routePath: '/services/website-care-support/',
@@ -219,12 +227,12 @@ export const CORE_SERVICE_TRACKS: CoreServiceTrack[] = [
     title: 'SEO & AI Search Optimisation',
     subtitle: 'Technical SEO · Speed · GEO & AIO',
     description:
-      'Technical search foundations, WordPress Core Web Vitals speed engineering, and Schema.org clarity helping both Google UK and AI assistants read your business accurately.',
+      'Technical crawl hygiene, WordPress Core Web Vitals speed engineering, and Schema.org clarity so both Google UK and modern AI search tools read your business accurately.',
     deliverables: [
       'Technical crawl audits, clean canonicals & single-hop 301 hygiene',
       'Dedicated WordPress Speed Optimisation (LCP, INP & CLS tuning)',
       'Structured JSON-LD entities & plain-English AIO / GEO clarity',
-      'Honest search consultancy with zero fabricated ranking promises',
+      'Candid technical search advice with zero fabricated ranking promises',
     ],
     standards: 'Technical SEO · Core Web Vitals · AIO/GEO',
     routePath: '/services/ai-search-optimisation/',
@@ -284,14 +292,14 @@ export const WHY_CHOOSE_POINTS: WhyChoosePoint[] = [
     index: '01.',
     title: '100% Client Code & Domain Ownership',
     description:
-      'Domains, hosting accounts, and repositories stay in your business name—zero proprietary lock-in or captive tooling.',
+      'Domains, hosting accounts, and repositories stay registered cleanly in your business name—zero proprietary lock-in or captive tooling.',
     standard: 'Full Asset Ownership',
   },
   {
     index: '02.',
     title: 'Clean Code Over Page Builders',
     description:
-      'Custom WordPress blocks and TypeScript interfaces built for Core Web Vitals, accessibility, and straightforward long-term editing.',
+      'Custom WordPress blocks and TypeScript interfaces built for Core Web Vitals, accessibility, and straightforward day-to-day editing.',
     standard: 'Fast UK Mobile Load',
   },
   {
@@ -303,9 +311,9 @@ export const WHY_CHOOSE_POINTS: WhyChoosePoint[] = [
   },
   {
     index: '04.',
-    title: 'Direct Senior Email Scoping',
+    title: 'Direct Senior Email Consultations',
     description:
-      'Clear written proposals, staging preview links, and candid technical trade-offs directly with engineering—no sales layers.',
+      'Clear written proposals, staging preview links, and candid technical trade-offs directly with engineering—no sales layers or scripts.',
     standard: 'Written Scope · Zero Fluff',
   },
 ];
@@ -337,32 +345,28 @@ export const WORKING_PROCESS_STEPS: ProcessStep[] = [
     title: 'Care & Growth',
     summary:
       'Retain full independence or pair with Website Care, WordPress Speed Optimisation, and SEO & AI Search tuning.',
-    deliverable: 'Ongoing stewardship',
+    deliverable: 'Ongoing support option',
   },
 ];
 
-export const PORTFOLIO_PLACEHOLDER_SLOTS: PortfolioSlot[] = [
-  {
-    id: 'portfolio-recovery-web',
-    status: 'Verification in Progress',
-    sector: 'Website Design & Development',
-    title: 'Verified UK Business Website Archive Pending Sign-Off',
-    scope: 'WordPress Blocks · Next.js · Responsive UX',
-    note: 'Client examples are held off-site until written client publication approval and platform verification complete.',
-    imageUrl: BRAND_INFO.portfolioImageUrl,
-    imageAlt: BRAND_INFO.portfolioImageAlt,
-  },
-  {
-    id: 'portfolio-recovery-ecommerce',
-    status: 'Verification in Progress',
-    sector: 'eCommerce & Speed Engineering',
-    title: 'UK Retail & WooCommerce Record Pending Publication',
-    scope: 'WooCommerce HPOS · GBP/VAT · Speed Tuning',
-    note: 'Verified performance benchmarks and client storefront case records will publish once formal review completes.',
-    imageUrl: BRAND_INFO.architectureImageUrl,
-    imageAlt: BRAND_INFO.architectureImageAlt,
-  },
-];
+export const FIVERR_PORTFOLIO_SHOWCASE: PortfolioShowcaseItem = {
+  id: 'fiverr-official-portfolio',
+  eyebrow: 'Official Portfolio · @hdhiren on Fiverr',
+  scope: 'WordPress · WooCommerce · Redesigns · Speed & Support',
+  title: 'Inspect real WordPress & WooCommerce work on our official Fiverr portfolio.',
+  summary:
+    'While curated UK case records await written client publication sign-off for this website, delivered website builds, store redesigns, speed tuning, and troubleshooting examples are publicly accessible on our official Fiverr portfolio.',
+  serviceTracks: [
+    'WordPress business website design & custom builds',
+    'Website redesigns and responsive UX cleanup',
+    'WooCommerce storefront development & fixes',
+    'Speed optimisation & WordPress troubleshooting',
+  ],
+  externalLabel: 'View Official Fiverr Portfolio',
+  externalUrl: FIVERR_PROOF_LINKS.portfolioUrl,
+  imageUrl: BRAND_INFO.portfolioImageUrl,
+  imageAlt: BRAND_INFO.portfolioImageAlt,
+};
 
 export const HOMEPAGE_FAQS: FaqEntry[] = [
   {
@@ -391,8 +395,8 @@ export const HOMEPAGE_FAQS: FaqEntry[] = [
   },
   {
     id: 'faq-contact',
-    question: 'How do we start a project or enquiry with WPCarePoint?',
+    question: 'How do we book a consultation or start an enquiry with WPCarePoint?',
     answer:
-      'Write directly to contact@wpcarepoint.co.uk with your website URL, commercial goals, or technical fault. We review every brief in writing and respond with clear next steps.',
+      'Email contact@wpcarepoint.co.uk with your website URL, commercial goals, or technical fault. We review every brief directly and reply in writing with clear next steps.',
   },
 ];

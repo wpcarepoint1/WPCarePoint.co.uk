@@ -31,10 +31,15 @@ For complete current service scope, engineering standards, process overview, and
 - **One-Off WordPress Quick Fix**: Standalone technical repair pathway without mandatory monthly retainer lock-in.
 - **Ownership**: Clients retain full ownership of domains, hosting accounts, code repositories, and content.
 
+## Official Portfolio & Independent Reviews
+- **Official Fiverr Profile & Client Reviews**: https://www.fiverr.com/hdhiren
+- **Official Fiverr Portfolio**: https://www.fiverr.com/users/hdhiren/portfolio
+- Client case studies authored natively on wpcarepoint.co.uk await written client publication sign-off.
+
 ## Contact & Regional Scope
 - **Website**: https://wpcarepoint.co.uk/
 - **Sitemap**: https://wpcarepoint.co.uk/sitemap.xml
 - **Official Email**: contact@wpcarepoint.co.uk
-- **Enquiry Channel**: Email enquiries only
+- **Enquiry Channel**: Email enquiries only (Book a consultation by email)
 - **Location**: Robert Denholm House, Bletchingley Road, Nutfield RH1 4HW, United Kingdom
 - **Language**: English (United Kingdom — `en-GB`)

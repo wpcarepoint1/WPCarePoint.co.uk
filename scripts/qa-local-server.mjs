@@ -203,6 +203,26 @@ async function runPlaywrightChecks() {
         );
         assert(audit.jsonLdCount === 1, `Expected 1 JSON-LD tag at ${route}, got ${audit.jsonLdCount}`);
 
+        const bodyCheck = await page.evaluate(() => {
+          const text = document.body?.innerText || '';
+          const unverifiedClaims = /\b300\+\b|\b5\.0\/5\b|\b4\.9\/5\b|\b2019\b/i.test(text);
+          const unloadedVisibleImgs = [...document.querySelectorAll('img')]
+            .filter((img) => {
+              const rect = img.getBoundingClientRect();
+              return rect.top < window.innerHeight && (!img.complete || img.naturalWidth === 0);
+            })
+            .map((img) => img.getAttribute('src'));
+          return { unverifiedClaims, unloadedVisibleImgs };
+        });
+        assert(
+          !bodyCheck.unverifiedClaims,
+          `Unverified or disallowed numeric/date claim detected at ${route} (${vp.width}px)`
+        );
+        assert(
+          bodyCheck.unloadedVisibleImgs.length === 0,
+          `Unloaded above-the-fold image at ${route} (${vp.width}px): ${bodyCheck.unloadedVisibleImgs.join(', ')}`
+        );
+
         const approvedSet = new Set(APPROVED_ROUTES);
         for (const href of audit.internalLinks) {
           const clean = href.split('#')[0].split('?')[0] || '/';
@@ -236,10 +256,57 @@ async function runPlaywrightChecks() {
     });
     const page = await interactiveCtx.newPage();
 
+    // Verify official Fiverr proof links on /, /about/, and /services/ with safe rel attributes
+    for (const proofRoute of ['/', '/about/', '/services/']) {
+      await page.goto(`${BASE_URL}${proofRoute}`, { waitUntil: 'load' });
+      const proofLinks = await page.evaluate(() => {
+        const anchors = [...document.querySelectorAll('a[href*="fiverr.com"]')];
+        return anchors.map((a) => ({
+          href: a.getAttribute('href') || '',
+          target: a.getAttribute('target') || '',
+          rel: a.getAttribute('rel') || '',
+        }));
+      });
+      const hasProfile = proofLinks.some((l) => l.href === 'https://www.fiverr.com/hdhiren');
+      const hasPortfolio = proofLinks.some(
+        (l) => l.href === 'https://www.fiverr.com/users/hdhiren/portfolio'
+      );
+      assert(hasProfile, `Missing official Fiverr profile link on ${proofRoute}`);
+      assert(hasPortfolio, `Missing official Fiverr portfolio link on ${proofRoute}`);
+      for (const l of proofLinks) {
+        assert(
+          l.target === '_blank' && l.rel.includes('noopener') && l.rel.includes('noreferrer'),
+          `Unsafe Fiverr link attributes on ${proofRoute}: ${JSON.stringify(l)}`
+        );
+      }
+    }
+
+    // Measure CLS and keyboard Tab traversal on /
+    await page.addInitScript(() => {
+      window.__wpcCls = 0;
+      new PerformanceObserver((list) => {
+        for (const entry of list.getEntries()) {
+          if (!entry.hadRecentInput) {
+            window.__wpcCls += entry.value;
+          }
+        }
+      }).observe({ type: 'layout-shift', buffered: true });
+    });
+    await page.goto(`${BASE_URL}/`, { waitUntil: 'load' });
+    await page.waitForSelector('#main-content h1');
+    await page.waitForTimeout(300);
+    const clsScore = await page.evaluate(() => window.__wpcCls || 0);
+    assert(clsScore < 0.05, `Elevated layout shift detected on /: CLS=${clsScore}`);
+
+    await page.keyboard.press('Tab');
+    const firstFocusedTag = await page.evaluate(() => document.activeElement?.tagName || '');
+    assert(firstFocusedTag === 'A' || firstFocusedTag === 'BUTTON', `Expected keyboard Tab focusable control, got ${firstFocusedTag}`);
+
     const notFoundResp = await page.goto(`${BASE_URL}/non-existent-route-qa/`, {
       waitUntil: 'load',
     });
     assert(notFoundResp?.status() === 404, `Expected 404 status in browser, got ${notFoundResp?.status()}`);
+    await page.waitForSelector('#main-content h1');
     const notFoundAudit = await page.evaluate(() => ({
       h1: document.querySelector('h1')?.textContent?.trim() || '',
       robots: document.querySelector('meta[name="robots"]')?.getAttribute('content') || '',
@@ -268,6 +335,7 @@ async function runPlaywrightChecks() {
 
     // Navigate via Services Hub and test FAQ accordion + Contact page email-only lock
     await page.goto(`${BASE_URL}/services/`, { waitUntil: 'load' });
+    await page.waitForSelector('#main-content button[aria-expanded]');
     const faqButton = page.locator('button[aria-expanded]').first();
     const initialExpanded = await faqButton.getAttribute('aria-expanded');
     await faqButton.click();
@@ -275,11 +343,13 @@ async function runPlaywrightChecks() {
     assert(initialExpanded !== nextExpanded, 'FAQ accordion failed to toggle aria-expanded');
 
     await page.goto(`${BASE_URL}/contact/`, { waitUntil: 'load' });
+    await page.waitForSelector('#main-content h1');
     const formCount = await page.locator('form').count();
     assert(formCount === 0, `Expected 0 <form> elements on /contact/, found ${formCount}`);
 
     // Verify /site-map/ represents all 16 approved routes cleanly and excludes legal/blog links
     await page.goto(`${BASE_URL}/site-map/`, { waitUntil: 'load' });
+    await page.waitForSelector('#main-content a[href="/"]');
     const siteMapHrefs = await page.evaluate(() =>
       [...document.querySelectorAll('#main-content a[href^="/"]')]
         .map((a) => a.getAttribute('href') || '')

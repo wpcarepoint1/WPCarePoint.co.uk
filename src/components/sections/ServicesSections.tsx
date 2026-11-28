@@ -179,7 +179,7 @@ export function ServicesSections({
                     }}
                     className="inline-flex items-center min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#003b4f] transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded-md px-2"
                   >
-                    Discuss this track by email →
+                    Book a consultation on this service →
                   </a>
                 </div>
               </div>
@@ -491,7 +491,7 @@ export function ServicesSections({
                     }}
                     className="inline-flex items-center min-h-[44px] text-xs font-semibold text-[#6c757d] hover:text-[#003b4f]"
                   >
-                    Request Speed Audit
+                    Book a Speed Consultation
                   </a>
                 </div>
               </aside>

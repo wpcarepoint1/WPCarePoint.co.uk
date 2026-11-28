@@ -30,8 +30,8 @@ export function HeroSection({ onJumpToSection }: HeroSectionProps) {
             </h1>
 
             <p className="text-base sm:text-lg text-[#2e2e2e] mt-5 leading-relaxed max-w-xl">
-              Dependable custom WordPress builds, fast WooCommerce stores, practical
-              AI workflows, and ongoing technical stewardship—built for lasting UK ownership.
+              We design, speed-tune, and support fast business websites and online
+              stores—built cleanly so you keep full control of your code, hosting, and growth.
             </p>
 
             <div className="mt-7 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-3 sm:gap-4">
@@ -45,7 +45,7 @@ export function HeroSection({ onJumpToSection }: HeroSectionProps) {
                 size="lg"
                 className="group"
               >
-                <span>Start an Email Brief</span>
+                <span>Book a Consultation</span>
                 <ArrowRight
                   className="h-4 w-4 transition-transform duration-150 group-hover:translate-x-0.5"
                   aria-hidden="true"
@@ -64,6 +64,18 @@ export function HeroSection({ onJumpToSection }: HeroSectionProps) {
                 Explore Services
               </Button>
             </div>
+
+            <p className="mt-4 text-sm text-[#6c757d]">
+              Direct enquiries:{' '}
+              <a
+                href={`mailto:${BRAND_INFO.email}?subject=${encodeURIComponent(
+                  'Consultation & Project Scoping Enquiry'
+                )}`}
+                className="font-semibold text-[#00749c] hover:text-[#003b4f] underline underline-offset-4 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#00749c] rounded"
+              >
+                {BRAND_INFO.email}
+              </a>
+            </p>
           </div>
 
           <div className="lg:col-span-6">
